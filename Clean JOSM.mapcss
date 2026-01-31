@@ -1,0 +1,39 @@
+meta {
+    title: "Clean JOSM";
+    description: "Improved and cleaner look for JOSM";
+    icon: "";
+    version: "1.0";
+    author: "Yukiroshi";
+    link: "";
+}
+node|z1-
+{
+  symbol-size: 7;
+  symbol-shape: circle;
+  symbol-stroke-opacity: 0.9;
+  symbol-stroke-color: #686868;
+  symbol-fill-color: #bbbbbb;
+  symbol-fill-opacity: 0.9;
+}
+way!:closed >[index=-1] node!:connection {  /* matches all single way end nodes */ 
+  symbol-size: 8;
+  symbol-stroke-opacity: 1;  symbol-fill-color: #ffffff;
+}
+way:closed > node!:connection
+{
+  symbol-size: 5;
+  symbol-fill-color: #ffffff;
+}
+node:selected
+{
+  symbol-size: 8;
+  symbol-fill-color: #ff7300;
+  symbol-stroke-color: #ba5400;
+  symbol-stroke-opacity: 1;
+  symbol-fill-opacity: 1;
+}
+way:selected, area:selected
+{
+  fill-color: #ff7300;
+  stroke-color: #ba5400;
+}
