@@ -4,7 +4,7 @@ meta {
     icon: "";
     version: "1.0";
     author: "Yukiroshi";
-    link: "";
+    link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
 node|z1-
 {
