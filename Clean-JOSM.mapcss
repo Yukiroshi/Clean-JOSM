@@ -19,10 +19,18 @@ way!:closed >[index=-1] node!:connection {  /* matches all single way end nodes 
   symbol-size: 8;
   symbol-stroke-opacity: 1;  symbol-fill-color: #ffffff;
 }
-way:closed > node!:connection
+way > node!:connection
 {
-  symbol-size: 5;
+  symbol-size: 6;
   symbol-fill-color: #ffffff;
+}
+node:tagged
+{
+  symbol-size: 8;
+  symbol-fill-color: #007bff;
+  symbol-stroke-color: #686868;
+  symbol-stroke-opacity: 1;
+  symbol-fill-opacity: 1;
 }
 node:selected
 {
@@ -31,4 +39,8 @@ node:selected
   symbol-stroke-color: #ba5400;
   symbol-stroke-opacity: 1;
   symbol-fill-opacity: 1;
+}
+node|z22-
+{
+  symbol-size: +1;
 }
