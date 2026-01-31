@@ -32,8 +32,3 @@ node:selected
   symbol-stroke-opacity: 1;
   symbol-fill-opacity: 1;
 }
-way:selected, area:selected
-{
-  fill-color: #ff7300;
-  stroke-color: #ba5400;
-}
