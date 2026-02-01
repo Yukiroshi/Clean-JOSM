@@ -44,4 +44,7 @@ node|z22-
 {
   symbol-size: +1;
 }
-
+node|z10-
+{
+  symbol-size: -1;
+}
