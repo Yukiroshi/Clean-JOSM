@@ -1,7 +1,7 @@
 meta {
     title: "Clean JOSM";
     description: "Improved and cleaner look for JOSM";
-    icon: "";
+    icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
     version: "1.0";
     author: "Yukiroshi";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
@@ -44,3 +44,4 @@ node|z22-
 {
   symbol-size: +1;
 }
+
