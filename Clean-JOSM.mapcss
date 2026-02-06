@@ -6,7 +6,7 @@ meta {
     author: "Yukiroshi";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
-node|z1-
+node|z10-
 {
   symbol-size: 7;
   symbol-shape: circle;
@@ -44,7 +44,14 @@ node|z22-
 {
   symbol-size: +1;
 }
-node|z10-
+node|z-10
 {
   symbol-size: -1;
+}
+
+way:closed
+{
+  fill-opacity: 0.5;
+  fill-extent: 50;
+  fill-extent-threshold: 50;
 }
