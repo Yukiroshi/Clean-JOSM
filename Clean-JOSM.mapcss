@@ -2,56 +2,763 @@ meta {
     title: "Clean JOSM";
     description: "Improved and cleaner look for JOSM";
     icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
-    version: "1.0";
+    version: "1.1";
     author: "Yukiroshi";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
-node|z10-
-{
+canvas {
+    fill-color: #828282;
+}
+
+/*Node and line base style*/
+
+node,
+area:closed {
+  text: auto;
+  text-anchor-horizontal: center;
+  text-halo-radius: 1.5;
+  text-color: #fff;
+  text-halo-color: #555;
+}
+node {
+  text-offset-y: -10;
+}
+area:closed {
+  text-position: center;
+  text-offset-y: -15;
+}
+node[/^disused:/] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/marker-stroked.svg";
+  icon-offset-y: -5;
+  text: tr("");
+}
+way:closed[is_prop_set(icon-image)] {
+  icon-position: center;
+}
+node|z10- {
   symbol-size: 7;
   symbol-shape: circle;
   symbol-stroke-opacity: 0.9;
-  symbol-stroke-color: #686868;
-  symbol-fill-color: #bbbbbb;
+  symbol-stroke-color: #fff;
+  symbol-fill-color: #000;
   symbol-fill-opacity: 0.9;
 }
-way!:closed >[index=-1] node!:connection {  /* matches all single way end nodes */ 
+way!:closed >[index=-1] node!:connection {
   symbol-size: 8;
-  symbol-stroke-opacity: 1;  symbol-fill-color: #ffffff;
+  symbol-stroke-opacity: 1;
+  symbol-fill-color: #000;
 }
-way > node!:connection
-{
+way > node!:connection {
   symbol-size: 6;
-  symbol-fill-color: #ffffff;
+  symbol-fill-color: #000;
 }
-node:tagged
-{
+node:tagged,
+node:selected {
   symbol-size: 8;
+  symbol-stroke-opacity: 1;
+  symbol-fill-opacity: 1;
+}
+node:tagged {
   symbol-fill-color: #007bff;
-  symbol-stroke-color: #686868;
-  symbol-stroke-opacity: 1;
-  symbol-fill-opacity: 1;
 }
-node:selected
-{
-  symbol-size: 8;
+node:selected {
   symbol-fill-color: #ff7300;
-  symbol-stroke-color: #ba5400;
-  symbol-stroke-opacity: 1;
-  symbol-fill-opacity: 1;
+  symbol-stroke-color: #fff;
 }
-node|z22-
-{
-  symbol-size: +1;
+node|z-15 {
+  symbol-size: 5;
+  symbol-stroke-color: #000;
+  symbol-fill-opacity: 0;
 }
-node|z-10
-{
-  symbol-size: -1;
+way:closed {
+  fill-opacity: 0.25;
 }
 
-way:closed
-{
-  fill-opacity: 0.5;
-  fill-extent: 50;
-  fill-extent-threshold: 50;
+node[traffic_calming],
+node[noexit] {
+  icon-rotation: way;
 }
+/*Highways*/
+
+node[highway=street_lamp] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/street_lamp_arm.svg";
+}
+node[highway=speed_camera] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/security_camera.svg";
+}
+node[highway=toll_gantry] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/toll_gantry.svg";
+}
+node[highway=crossing] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/pedestrian_crosswalk.svg";
+}
+node[crossing=traffic_signals] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/traffic_signals.svg";
+}
+node[traffic_calming=hump] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/speed_hump.svg";
+}
+node[traffic_calming=bump] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/speed_bump.svg";
+}
+node[traffic_calming=mini_bumps] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/rumble_strip.svg";
+}
+node[traffic_calming=dip] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/speed_dip.svg";
+}
+node[traffic_calming=chicane] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/chicane_arrow.svg";
+}
+
+/*Railways*/
+
+node[railway=buffer_stop] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/buffer_stop.svg";
+}
+node[railway=tram_stop] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/board_tram.svg";
+}
+node[railway=signal] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/railway_signals.svg";
+}
+way > node[railway=tram_level_crossing] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/x_oblique.svg";
+  icon-rotation: parent_way_angle();
+}
+
+/*Infrastracture*/
+
+node[building][!building?!] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/building.svg";
+}
+node[entrance][entrance!=no] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/entrance-alt1.svg";
+}
+
+/*Man made*/
+node[man_made=surveillance] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/security_camera.svg";
+}
+node[tower:type=lighting] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/mast_lighting.svg";
+}
+node[waterway=milestone],
+node[highway=milestone],
+node[railway=milestone] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/milestone.svg";
+}
+
+/*Shops*/
+
+node[shop][!is_prop_set(icon-image)] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/shop.svg";
+}
+node[shop=alcohol],
+area[shop=alcohol] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/alcohol-shop.svg";
+}
+node[shop=anime],
+area[shop=anime] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/book_store.svg";
+}
+/*node[shop=antiques] {
+  icon-image: "";
+}*/
+node[shop=appliance],
+area[shop=appliance],
+node[shop=dry_cleaning],
+area[shop=dry_cleaning] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/laundry.svg";
+}
+node[shop=art],
+area[shop=art] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/portrait_framed.svg";
+}
+node[shop=atv],
+area[shop=atv] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/golf_cart.svg";
+}
+node[shop=baby_goods],
+area[shop=baby_goods] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/balloon.svg";
+}
+node[shop=bag],
+area[shop=bag] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/suitcase.svg";
+}
+node[shop=bakery],
+area[shop=bakery] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/bakery.svg";
+}
+node[shop=bathroom_furnishing],
+area[shop=bathroom_furnishing] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/shower.svg";
+}
+node[shop=beauty],
+area[shop=beauty] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/lipstick.svg";
+}
+node[shop=bed],
+area[shop=bed] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/lodging.svg";
+}
+node[shop=beverages],
+area[shop=beverages] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bottles.svg";
+}
+node[shop=bicycle],
+area[shop=bicycle] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/bicycle.svg";
+}
+node[shop=boat],
+area[shop=boat] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/boat.svg";
+}
+node[shop=bookmaker],
+area[shop=bookmaker] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/money_hand.svg";
+}
+node[shop=books],
+area[shop=books] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/book_store.svg";
+}
+node[shop=boutique],
+area[shop=boutique] { 
+  icon-image: "presets/misc/deprecated.svg";
+  text: Use shop=clothes + clothes=luxury instead;
+}
+node[shop=brewing_supplies],
+area[shop=brewing_supplies] { 
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/storage_fermenter.svg";
+}
+node[shop=butcher],
+area[shop=butcher] {  
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cleaver.svg";
+}
+/*node[shop=camera],
+area[shop=camera] {
+  icon-image: "";
+}*/
+node[shop=candles],
+area[shop=candles] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/gas.svg";
+}
+node[shop=cannabis],
+area[shop=cannabis] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/plant.svg";
+}
+node[shop=car],
+area[shop=car] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/car.svg";
+}
+/*node[shop=car_parts],
+area[shop=car_parts] {
+  icon-image: "";
+}*/
+node[shop=car_repair],
+area[shop=car_repair] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/car-repair.svg";
+}
+node[shop=caravan],
+area[shop=caravan] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/camper_trailer.svg";
+}
+node[shop=carpet],
+area[shop=carpet] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cloth.svg";
+}
+node[shop=charity],
+area[shop=charity] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/social_facility.svg";
+}
+/*node[shop=cheese],
+area[shop=cheese] {
+  icon-image: "";
+}*/
+node[shop=chemist],
+area[shop=chemist] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/convenience.svg";
+}
+node[shop=chocolate],
+area[shop=chocolate] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/chocolate.svg";
+}
+node[shop=clothes],
+area[shop=clothes] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/clothing-store.svg";
+}
+node[shop=clothes][second_hand=only],
+area[shop=clothes][second_hand=only] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/clothes_hanger.svg";
+}
+node[shop=clothes][clothes=women],
+area[shop=clothes][clothes=women] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/dress.svg";
+}
+node[shop=clothes][clothes=underwear],
+area[shop=clothes][clothes=underwear] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bikini.svg";
+}
+node[shop=clothes][clothes=swimwear],
+area[shop=clothes][clothes=swimwear] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tanning2.svg";
+}
+node[shop=coffee],
+area[shop=coffee] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/coffee.svg";
+}
+node[shop=collector],
+area[shop=collector] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cable.svg";
+}
+/*node[shop=computer],
+area[shop=computer] {
+  icon-image: "";
+}*/
+node[shop=confectionery],
+area[shop=confectionery] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/confectionery.svg";
+}
+node[shop=convenience],
+area[shop=convenience] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/convenience.svg";
+}
+/*node[shop=copyshop],
+area[shop=copyshop] {
+  icon-image: "";
+}*/
+node[shop=cosmetics],
+area[shop=cosmetics] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/lipstick.svg";
+}
+node[shop=country_store],
+area[shop=country_store] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/milk_jug.svg";
+}
+node[shop=curtain],
+area[shop=curtain] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/curtains.svg";
+}
+node[shop=diary],
+area[shop=diary] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/milk_jug.svg";
+}
+node[shop=deli],
+area[shop=deli] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/can.svg";
+}
+node[shop=department_store],
+area[shop=department_store] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/shop.svg";
+}
+node[shop=doityourself],
+area[shop=doityourself],
+node[shop=hardware],
+area[shop=hardware] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tools.svg";
+}
+node[shop=doors],
+area[shop=doors] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/room.svg";
+}
+node[shop=e-cigarette],
+area[shop=e-cigarette] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/chimney.svg";
+}
+node[shop=electrical],
+area[shop=electrical] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/power.svg";
+}
+node[shop=electronics],
+area[shop=electronics] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/electronic.svg";
+}
+node[shop=energy],
+area[shop=energy] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/power_device.svg";
+}
+node[shop=erotic],
+area[shop=erotic] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/heart.svg";
+}
+node[shop=fabric],
+area[shop=fabric] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cloth.svg";
+}
+node[shop=farm],
+area[shop=farm] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/milk_jug.svg";
+}
+node[shop=fashion_accessories],
+area[shop=fashion_accessories] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/fashion_accessories.svg";
+}
+node[shop=fireplace],
+area[shop=fireplace] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/fireplace.svg";
+}
+node[shop=fishing],
+area[shop=fishing] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/ice_fishing.svg";
+}
+node[shop=flooring],
+area[shop=flooring] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/room.svg";
+}
+node[shop=florist],
+area[shop=florist] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/florist.svg";
+}
+node[shop=food],
+area[shop=food] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/hotpot.svg";
+}
+node[shop=frame],
+area[shop=frame] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/portrait_framed.svg";
+}
+node[shop=frozen_food],
+area[shop=frozen_food] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/snow.svg";
+}
+node[shop=fuel],
+area[shop=fuel] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/propane_tank.svg";
+}
+node[shop=funeral_directors],
+area[shop=funeral_directors] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/cemetery.svg";
+}
+node[shop=furniture],
+area[shop=furniture] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/furniture.svg";
+}
+node[shop=games],
+area[shop=games] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/dice.svg";
+}
+node[shop=garden_centre],
+area[shop=garden_centre] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/garden_bed.svg";
+}
+node[shop=garden_furniture],
+area[shop=garden_furniture] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_and_bench.svg";
+}
+node[shop=gas],
+area[shop=gas] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/propane_tank.svg";
+}
+node[shop=general],
+area[shop=general] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/shop.svg";
+}
+node[shop=gift],
+area[shop=gift] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/gift.svg";
+}
+node[shop=glaziery],
+area[shop=glaziery] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/window.svg";
+}
+node[shop=golf],
+area[shop=golf] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/golf_green.svg";
+}
+node[shop=greengrocer],
+area[shop=greengrocer] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/grapes.svg";
+}
+node[shop=groundskeeping],
+area[shop=groundskeeping] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/lawn.svg";
+}
+node[shop=hairdresser],
+area[shop=hairdresser] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/beauty_salon.svg";
+}
+node[shop=hairdresser_supply],
+area[shop=hairdresser_supply] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/hair_care.svg";
+}
+node[shop=games],
+area[shop=games] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/dice.svg";
+}
+node[shop=games],
+area[shop=games] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/dice.svg";
+}
+node[shop=games],
+area[shop=games] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/dice.svg";
+}
+
+
+node[shop=supermarket],
+area[shop=supermarket] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/grocery.svg";
+}
+
+node[shop=mall],
+area[shop=mall] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/shopping_mall.svg";
+}
+  /*Crafts*/
+
+node[shop=craft],
+area[shop=craft] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/needle_and_spool.svg";
+}
+
+
+/*Offices*/
+
+node[office][!is_prop_set(icon-image)] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/briefcase.svg";
+}
+
+/*Amenities*/
+
+node[amenity][!is_prop_set(icon-image)] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/marker-stroked.svg";
+}
+node[amenity=bar],
+area[amenity=bar] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/bar.svg";
+}
+node[amenity=bench] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bench.svg";
+}
+node[amenity=bicycle_parking],
+area[amenity=bicycle_parking] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bicycle_parked.svg";
+}
+node[amenity=bicycle_rental],
+area[amenity=bicycle_rental] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bicycle_rental.svg";
+}
+node[amenity=cafe],
+area[amenity=cafe] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/cafe.svg";
+}
+node[amenity=cafe][cuisine=bubble_tea],
+area[amenity=cafe][cuisine=bubble_tea] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bubble_tea.svg";
+}
+node[amenity=fast_food],
+area[amenity=fast_food] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/food.svg";
+}
+node[amenity=fountain],
+area[amenity=fountain] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/fountain.svg";
+}
+area[amenity*=parking] {
+  color: #00329b;
+  fill-color: #00329b;
+}
+node[amenity=parking],
+area[amenity=parking] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/car_parked.svg";
+}
+area[amenity=parking_space] {
+  color: #999;
+  fill-color: #999;
+}
+node[amenity=restaurant],
+area[amenity=restaurant] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=sushi],
+area[amenity=~/restaurant|fast_food/][cuisine=sushi] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-sushi.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=seafood],
+area[amenity=~/restaurant|fast_food/][cuisine=seafood] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-seafood.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=pizza],
+area[amenity=~/restaurant|fast_food/][cuisine=pizza] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-pizza.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=~/ramen|noodle|chinese/],
+area[amenity=~/restaurant|fast_food/][cuisine=~/ramen|noodle|chinese/] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-noodle.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=barbecue],
+area[amenity=~/restaurant|fast_food/][cuisine=barbecue] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-bbq.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=barbecue],
+area[amenity=~/restaurant|fast_food/][cuisine=barbecue] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/restaurant-bbq.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=sandwich],
+area[amenity=~/restaurant|fast_food/][cuisine=sandwich] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/sandwich.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=burger],
+area[amenity=~/restaurant|fast_food/][cuisine=burger] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/fast-food.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=kebab],
+area[amenity=~/restaurant|fast_food/][cuisine=kebab] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/vertical_rotisserie.svg";
+}
+node[amenity=~/restaurant|fast_food/][cuisine=kebab],
+area[amenity=~/restaurant|fast_food/][cuisine=kebab] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/vertical_rotisserie.svg";
+}
+node[amenity=waste_basket] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/waste-basket.svg";
+}
+
+
+node[office],
+area[office] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/suitcase.svg";
+}
+
+/*Leisure*/
+
+node[leisure=sports_centre],
+area[leisure=sports_centre] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/pitch.svg";
+}
+
+/*Tourism*/
+
+node[tourism=hostel],
+area[tourism=hostel] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bunk_beds.svg";
+}
+
+node[tourism=viewpoint] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/spotting_scope.svg";
+}
+
+/*Emergencies*/
+node[emergency=defibrillator] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/defibrillator.svg";
+}
+
+/*Barriers*/
+
+node[barrier=kerb] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/kerb-unspecified.svg";
+}
+node[barrier=kerb][kerb=raised] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/kerb-raised.svg";
+}
+node[barrier=kerb][kerb=lowered] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/kerb-lowered.svg";
+}
+node[barrier=kerb][kerb=flush] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/kerb-flush.svg";
+}
+node[barrier=kerb][kerb=rolled] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/kerb-rolled.svg";
+}
+node[barrier=block] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/roadblock.svg";
+}
+node[barrier=chain] {
+  icon-image: "presets/barrier/chain.svg";
+}
+node[barrier=stile] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/stile_squeezer.svg";
+}
+node[barrier=turnstile] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/turnstile.svg";
+}
+node[barrier=full-height_turnstile] {
+  icon-image: "presets/barrier/full-height_turnstile.svg";
+}
+node[barrier=cycle_barrier] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cycle_barrier.svg";
+}
+node[barrier=planter] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/roadblock.svg";
+}
+node[barrier=~/gate|swing_gate|bump_gate/] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/gate.svg";
+}
+node[barrier=lift_gate] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/lift-gate.svg";
+}
+node[barrier=wicket_gate] {
+  icon-image: "presets/barrier/wicket_gate.svg";
+}
+node[barrier=toll_booth] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/toll.svg";
+}
+node[barrier=entrance] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/pedestrian_walled.svg";
+}
+node[barrier=cattle_grid] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/cattle_grid.svg";
+}
+node[barrier=border_control] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/passport_checkpoint.svg";
+}
+node[barrier=sally_port] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tall_gate.svg";
+}
+node[barrier=spikes] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/spike_strip.svg";
+}
+node[barrier=jersey_barrier] {
+  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/barrier.svg";
+}
+node[barrier=log] {
+  icon-image: "presets/barrier/log.svg";
+}
+node[barrier=kissing_gate] {
+  icon-image: "presets/barrier/kissing_gate.svg";
+}
+node[barrier=bus_trap] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/trench.svg";
+}
+node[barrier=height_restrictor] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/height_restrictor.svg";
+}
+node[barrier=guard_rail] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/guard_rail.svg";
+}
+
+/*Water*/
+
+node[seamark:type*=buoy] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/buoy.svg";
+}
+
+/*Natural tags*/
+node[natural=tree] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_leafless.svg";
+}
+node[natural=tree][leaf_type=broadleaved] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_broadleaved.svg";
+}
+node[natural=tree][leaf_type=needleleaved] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_needleleaved.svg";
+}
+node[natural=tree][leaf_type=leafless] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_leafless.svg";
+}
+node[natural=tree][leaf_type=palm] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_palm.svg";
+}
+node[natural=tree_stump] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_stump.svg";
+}
+node[natural=shrub] {
+  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/shrub.svg";
+}
+
+/* Licences
+
+Maki icons by Mapbox (CC0-1.0)
+Temaki icons by Rapideditor (CC0-1.0)
+*/
