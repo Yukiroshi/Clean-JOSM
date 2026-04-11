@@ -129,9 +129,15 @@ way > node[railway=tram_level_crossing] {
 
 /*Infrastracture*/
 
-node[building][!building?!] {
-  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/building.svg";
+node[building],
+area[building] {
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
 }
+node[building][building:levels>=10],
+area[building][building:levels>=10] {
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building-high.svg";
+}
+
 node[entrance][entrance!=no] {
   icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/entrance-alt1.svg";
 }
@@ -736,25 +742,29 @@ node[seamark:type*=buoy] {
 
 /*Natural tags*/
 node[natural=tree] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_leafless.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
 }
 node[natural=tree][leaf_type=broadleaved] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_broadleaved.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-broadleaved.svg";
 }
 node[natural=tree][leaf_type=needleleaved] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_needleleaved.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved.svg";
 }
 node[natural=tree][leaf_type=leafless] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_leafless.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
 }
 node[natural=tree][leaf_type=palm] {
   icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_palm.svg";
 }
 node[natural=tree_stump] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/tree_stump.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
 node[natural=shrub] {
   icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/shrub.svg";
+}
+node[natural=wetland],
+area[natural=wetland] {
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wetland.svg";
 }
 
 /* Licences
