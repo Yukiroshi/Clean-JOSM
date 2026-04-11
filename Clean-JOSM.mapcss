@@ -215,7 +215,7 @@ area[shop=beverages] {
 }
 node[shop=bicycle],
 area[shop=bicycle] {
-  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/bicycle.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-box.svg";
 }
 node[shop=boat],
 area[shop=boat] {
@@ -256,7 +256,7 @@ area[shop=cannabis] {
 }
 node[shop=car],
 area[shop=car] {
-  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/car.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-dealer.svg";
 }
 /*node[shop=car_parts],
 area[shop=car_parts] {
@@ -264,7 +264,7 @@ area[shop=car_parts] {
 }*/
 node[shop=car_repair],
 area[shop=car_repair] {
-  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/car-repair.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-repair.svg";
 }
 node[shop=caravan],
 area[shop=caravan] {
@@ -539,11 +539,11 @@ node[amenity=bench] {
 }
 node[amenity=bicycle_parking],
 area[amenity=bicycle_parking] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bicycle_parked.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-parked.svg";
 }
 node[amenity=bicycle_rental],
 area[amenity=bicycle_rental] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/bicycle_rental.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-rental.svg";
 }
 node[amenity=cafe],
 area[amenity=cafe] {
@@ -567,7 +567,7 @@ area[amenity*=parking] {
 }
 node[amenity=parking],
 area[amenity=parking] {
-  icon-image: "https://raw.githubusercontent.com/rapideditor/temaki/refs/heads/main/icons/car_parked.svg";
+  icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-parked.svg";
 }
 area[amenity=parking_space] {
   color: #999;
