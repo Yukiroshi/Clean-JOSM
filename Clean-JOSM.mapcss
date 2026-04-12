@@ -3603,7 +3603,7 @@ node[amenity=trolley_bay] {
 }
 node[amenity=parking],
 area[amenity=parking] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-parked.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking.svg";
 }
 node[amenity=parking_entrance] {
     icon-image: "presets/vehicle/parking/parking.svg";
@@ -4431,7 +4431,7 @@ area[landuse=farmyard] {
     width: 1;
 }
 area[landuse=meadow] {
-    fill-color: meadow#bee53f;
+    fill-color: meadow#adca96;
     width: 1;
 }
 area[landuse=vineyard] {
@@ -4455,6 +4455,7 @@ area[landuse=basin] {
 }
 area[landuse=forest] {
     fill-color: forest#0dc243;
+    width: 1;
 }
 area[landuse=allotments] {
     fill-color: allotments#5dbf80;
@@ -4473,7 +4474,8 @@ area[landuse=aquaculture] {
     width: 1;
 }
 area[landuse=grass]{
-    fill-color: grass#97ca96;
+    fill-color: grass#77cc77;
+    width: 1;
 }
 area[landuse=residential] {
     fill-color: residential#c4bd19;
@@ -5393,6 +5395,7 @@ way[natural=tree_row] {
 }
 area[natural=wood] {
     fill-color: woodarea#0DC243;
+    width: 1;
 }
 area[natural=grassland] {
     fill-color: green#8cD05F;
@@ -5402,7 +5405,7 @@ area[natural=wetland] {
     fill-color: marsh#9bd6a1;
 }
 area[natural=water] {
-    fill-color: water#72cbd5;
+    fill-color: water#77d3ee;
 }
 area[natural=water][intermittent=yes] {
     width: 2;
