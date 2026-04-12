@@ -3433,15 +3433,142 @@ area[shop][brand*="Dino"] {
     icon-width: 35;
 }
 /*Carrefour*/
-node[shop]["brand"="Carrefour"],
-area[shop]["brand"="Carrefour"] {
+node[shop][brand*="Carrefour"],
+area[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
     icon-width: 30;
+}
+/*Rossmann*/
+node[shop][brand*="Rossmann"],
+area[shop][brand*="Rossmann"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
+    icon-width: 30;
+}
+/*Hebe*/
+node[shop][brand*="Hebe"],
+area[shop][brand*="Hebe"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
+    icon-width: 30;
+}
+/*dm*/
+node[shop][brand*="dm"],
+area[shop][brand*="dm"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
+    icon-width: 30;
+}
+/*Dealz*/
+node[shop][brand*="Dealz"],
+area[shop][brand*="Dealz"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a9/Dealz_2023.svg";
+    icon-width: 35;
+}
+/*TEDi*/
+node[shop][brand*="TEDi"],
+area[shop][brand*="TEDi"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
+    icon-width: 25;
+}
+/*Pepco*/
+node[shop][brand*="Pepco"],
+area[shop][brand*="Pepco"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
+    icon-width: 40;
+}
+/*H&M*/
+node[shop][brand*="H&M"],
+area[shop][brand*="H&M"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
+    icon-width: 30;
+}
+/*New Yorker*/
+node[shop][brand*="New Yorker"],
+area[shop][brand*="New Yorker"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
+    icon-width: 65;
+}
+/*CCC*/
+node[shop][brand*="CCC"],
+area[shop][brand*="CCC"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
+    icon-width: 40;
+}
+/*Cropp*/
+node[shop][brand*="Cropp"],
+area[shop][brand*="Cropp"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
+    icon-width: 55;
+}
+/*House*/
+node[shop][brand*="House"],
+area[shop][brand*="House"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
+    icon-width: 55;
+}
+/*Mohito*/
+node[shop][brand*="Mohito"],
+area[shop][brand*="Mohito"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
+    icon-width: 65;
+}
+/*Reserved*/
+node[shop][brand*="Reserved"],
+area[shop][brand*="Reserved"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
+    icon-width: 65;
+}
+/*Sinsay*/
+node[shop][brand*="Sinsay"],
+area[shop][brand*="Sinsay"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
+    icon-width: 55;
+}
+/*Zara*/
+node[shop][brand*="Zara"],
+area[shop][brand*="Zara"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
+    icon-width: 50;
+}
+/*Zara Home*/
+node[shop][brand*="Zara Home"],
+area[shop][brand*="Zara Home"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
+    icon-width: 65;
+}
+/*Bershka*/
+node[shop][brand*="Bershka"],
+area[shop][brand*="Bershka"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
+    icon-width: 65;
+}
+/*Stradivarius*/
+node[shop][brand*="Stradivarius"],
+area[shop][brand*="Stradivarius"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
+    icon-width: 85;
+}
+/*Pull & Bear*/
+node[shop][brand*="Pull & Bear"],
+area[shop][brand*="Pull & Bear"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
+    icon-width: 65;
+}
+/*HalfPrice*/
+node[shop][brand*="HalfPrice"],
+area[shop][brand*="HalfPrice"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
+    icon-width: 65;
+}
+/*TK Maxx*/
+node[shop][brand*="TK Maxx"],
+area[shop][brand*="TK Maxx"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
+    icon-width: 65;
 }
 
 /******************/
 /* emergency tags */
 /******************/
+
 area[emergency=ambulance_station],
 area[emergency=water_tank] {
     fill-color: emergency#eeeeee;
