@@ -14,71 +14,73 @@ canvas {
 
 node,
 area:closed {
-  text: auto;
-  text-anchor-horizontal: center;
-  text-halo-radius: 1.5;
-  text-color: #fff;
-  text-halo-color: #555;
+    text: auto;
+    text-anchor-horizontal: center;
+    text-halo-radius: 1.3;
+    text-color: #ddd;
+    text-halo-color: #333;
+    set icon_z17;
 }
 node {
-  text-offset-y: -10;
+    text-offset-y: -10;
+}
+node|z20-:tagged {
+    icon-width: +2;
+
 }
 area:closed {
-  text-position: center;
-  text-offset-y: -15;
+    text-position: center;
+    text-offset-y: -15;
 }
 node[/^disused:/] {
-  icon-image: "https://raw.githubusercontent.com/mapbox/maki/refs/heads/main/icons/marker-stroked.svg";
-  icon-offset-y: -5;
-  text: tr("");
+    text: tr("");
 }
 way:closed[is_prop_set(icon-image)] {
-  icon-position: inside;
+    icon-position: inside;
 }
 node|z10- {
-  symbol-size: 7;
-  symbol-shape: circle;
-  symbol-stroke-opacity: 0.9;
-  symbol-stroke-color: #fff;
-  symbol-fill-color: #000;
-  symbol-fill-opacity: 0.9;
+    symbol-size: 7;
+    symbol-shape: circle;
+    symbol-stroke-opacity: 0.9;
+    symbol-stroke-color: #aaa;
+    symbol-fill-color: #333;
+    symbol-fill-opacity: 0.9;
 }
 way!:closed >[index=-1] node!:connection {
-  symbol-size: 8;
-  symbol-stroke-opacity: 1;
-  symbol-fill-color: #000;
+    symbol-size: 8;
+    symbol-stroke-opacity: 1;
+    symbol-fill-color: #333;
 }
 way > node!:connection {
-  symbol-size: 5;
-  symbol-fill-color: #000;
+    symbol-size: 6;
+    symbol-fill-color: #333;
 }
 node:tagged,
 node:selected {
-  symbol-size: 8;
-  symbol-stroke-opacity: 1;
-  symbol-fill-opacity: 1;
+    symbol-size: 8;
+    symbol-stroke-opacity: 1;
+    symbol-fill-opacity: 1;
 }
 node:tagged {
-  symbol-fill-color: #007bff;
+    symbol-fill-color: #007bff;
 }
 node:selected {
-  symbol-fill-color: #ff7300;
-  symbol-stroke-color: #fff;
+    symbol-size: 10;
+    symbol-fill-color: #ff7300;
+    symbol-stroke-color: #ddd;
 }
 node|z-15 {
-  symbol-size: 5;
-  symbol-stroke-color: #000;
-  symbol-fill-opacity: 0;
+    symbol-size: 5;
+    symbol-stroke-color: #333;
+    symbol-fill-opacity: 0;
 }
 way:closed {
-  fill-opacity: 0.25;
-  fill-extent: 15;
-  fill-extent-threshold: 1;
+    fill-opacity: 0.25;
 }
 
 node[traffic_calming],
 node[noexit] {
-  icon-rotation: way;
+    icon-rotation: way; /*rotates the noexit icon to match way direction*/
 }
 
 /* create style settings */
@@ -132,57 +134,46 @@ setting::partial_fill {
 
 relation[restriction=no_left_turn][!setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_left_turn_red.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_left_turn][setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_left_turn.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_right_turn][!setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_right_turn_red.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_right_turn][setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_right_turn.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_straight_on][!setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_straight_on_red.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_straight_on][setting("alt_turn_icons")] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_straight_on.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=no_u_turn] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/no_u_turn.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=only_left_turn] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/only_left_turn.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=only_right_turn] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/only_right_turn.svg";
-    set icon_z17;
     text: auto;
 }
 relation[restriction=only_straight_on] {
     icon-image: "presets/vehicle/restriction/turn_restrictions/only_straight_on.svg";
-    set icon_z17;
     text: auto;
 }
 node[restriction] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
     text: auto;
 }
 
@@ -202,7 +193,7 @@ way[bridge=aqueduct]::core_bridge {
     major-z-index: 2;
     object-z-index: -1;
     width: +10;
-    color: bridge#000000;
+    color: bridge#333;
     opacity: 0.8;
 }
 way[tunnel=yes]::core_tunnel,
@@ -222,7 +213,6 @@ node[tunnel?!],
 node[cutting?!],
 node[embankment?!] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /****************************/
@@ -232,88 +222,68 @@ node[embankment?!] {
 
 node[traffic_sign][access?!] {
     icon-image: "presets/vehicle/restriction/restrictions.svg";
-    set icon_z17;
 }
 node[traffic_sign][access=permissive][!is_prop_set(icon-image)],
 node[traffic_sign][access=private][!is_prop_set(icon-image)],
 node[traffic_sign][access=destination][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[traffic_sign][bicycle?!] {
     icon-image: "presets/vehicle/restriction/bicycle.svg";
-    set icon_z17;
 }
 node[traffic_sign][bicycle=designated] {
     icon-image: "presets/vehicle/restriction/bicycle-designated.svg";
-    set icon_z17;
 }
 node[traffic_sign][foot?!] {
     icon-image: "presets/vehicle/restriction/foot.svg";
-    set icon_z17;
 }
 node[traffic_sign][foot=designated] {
     icon-image: "presets/vehicle/restriction/foot-designated.svg";
-    set icon_z17;
 }
 node[traffic_sign][goods?!],
 node[traffic_sign][hgv?!] {
     icon-image: "presets/vehicle/restriction/goods.svg";
-    set icon_z17;
 }
 node[traffic_sign][horse?!] {
     icon-image: "presets/vehicle/restriction/horse.svg";
-    set icon_z17;
 }
 node[traffic_sign][horse=designated] {
     icon-image: "presets/vehicle/restriction/horse-designated.svg";
-    set icon_z17;
 }
 node[traffic_sign][motorcycle?!] {
     icon-image: "presets/vehicle/restriction/motorbike.svg";
-    set icon_z17;
 }
 node[traffic_sign][motorcar?!] {
     icon-image: "presets/vehicle/restriction/motorcar.svg";
-    set icon_z17;
 }
 node[traffic_sign][psv?!] {
     icon-image: "presets/vehicle/restriction/psv.svg";
-    set icon_z17;
 }
 node[traffic_sign][motorboat?!][!is_prop_set(icon-image)],
 node[traffic_sign][boat?!][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[noexit=yes] {
     icon-image: "presets/vehicle/restriction/dead_end.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxweight] {
     icon-image: "presets/vehicle/restriction/maxweight.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxheight] {
     icon-image: "presets/vehicle/restriction/maxheight.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxwidth] {
     icon-image: "presets/vehicle/restriction/maxwidth.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxlength] {
     icon-image: "presets/vehicle/restriction/maxlength.svg";
-    set icon_z17;
 }
 node[traffic_sign][minspeed] {
     icon-image: "presets/vehicle/restriction/minspeed.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxstay][!is_prop_set(icon-image)],
 node[traffic_sign][toll][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 
 /*****************************/
@@ -322,7 +292,6 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
 
 node["addr:housenumber"] {
     icon-image: "presets/misc/housenumber_small.svg";
-    set icon_z17;
 }
 way["addr:interpolation"=odd] {
     width: 1;
@@ -348,49 +317,38 @@ area[building][!building?!][wall?!],
 area[building:part][!building:part?!] {
     fill-color: buildingpart#dcbbbb;
 }
-node[building][!building?!],
-area[building][!building?!] {
+node[building][!building?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
-    set icon_z17;
 }
 node[building=garage] {
     icon-image: "presets/landuse/garages.svg";
-    set icon_z17;
 }
 node[building=garages] {
     icon-image: "presets/landuse/garages.svg";
-    set icon_z17;
 }
 node[building=transformer_tower] {
     icon-image: "presets/power/transformer_tower.svg";
-    set icon_z17;
 }
 node[entrance=yes],
 node[entrance=home],
 node[entrance=staircase] {
     icon-image: "presets/misc/entrance_yes.svg";
-    set icon_z17;
 }
 node[entrance=main] {
     icon-image: "presets/misc/entrance_main.svg";
-    set icon_z17;
 }
 node[entrance=service] {
     icon-image: "presets/misc/entrance_service.svg";
-    set icon_z17;
 }
 node[entrance=exit] {
     icon-image: "presets/misc/entrance_exit.svg";
-    set icon_z17;
 }
 node[entrance=emergency] {
     icon-image: "presets/misc/entrance_emergency.svg";
-    set icon_z17;
 }
 node[building=entrance],
 node[building:part] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -404,11 +362,9 @@ way[barrier=bollard] {
 }
 node[barrier=bollard] {
     icon-image: "presets/barrier/bollard.svg";
-    set icon_z17;
 }
 node[barrier=gate] {
     icon-image: "presets/barrier/gate.svg";
-    set icon_z17;
 }
 way[barrier=yes],
 
@@ -475,92 +431,71 @@ node[barrier=city_wall],
 node[barrier=retaining_wall],
 node[barrier=ditch] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[barrier=kerb] {
     icon-image: "presets/barrier/kerb.svg";
-    set icon_z17;
 }
 node[barrier=block] {
     icon-image: "presets/barrier/block.svg";
-    set icon_z17;
 }
 node[barrier=chain] {
     icon-image: "presets/barrier/chain.svg";
-    set icon_z17;
 }
 node[barrier=stile] {
     icon-image: "presets/barrier/stile.svg";
-    set icon_z17;
 }
 node[barrier=turnstile] {
     icon-image: "presets/barrier/turnstile.svg";
-    set icon_z17;
 }
 node[barrier=full-height_turnstile] {
     icon-image: "presets/barrier/full-height_turnstile.svg";
-    set icon_z17;
 }
 node[barrier=cycle_barrier] {
     icon-image: "presets/barrier/cycle_barrier.svg";
-    set icon_z17;
 }
 node[barrier=lift_gate] {
     icon-image: "presets/barrier/lift_gate.svg";
-    set icon_z17;
 }
 node[barrier=swing_gate] {
     icon-image: "presets/barrier/swing_gate.svg";
-    set icon_z17;
 }
 node[barrier=wicket_gate] {
     icon-image: "presets/barrier/wicket_gate.svg";
-    set icon_z17;
 }
 area[barrier=toll_booth]:closed {
     fill-color: barrier#F0F050;
 }
 node[barrier=toll_booth] {
     icon-image: "presets/barrier/toll_station.svg";
-    set icon_z17;
 }
 node[barrier=entrance] {
     icon-image: "presets/barrier/entrance.svg";
-    set icon_z17;
 }
 node[barrier=cattle_grid] {
     icon-image: "presets/barrier/cattle_grid.svg";
-    set icon_z17;
 }
 node[barrier=border_control] {
     icon-image: "presets/barrier/douane.svg";
-    set icon_z17;
 }
 node[barrier=sally_port] {
     icon-image: "presets/barrier/sally_port.svg";
-    set icon_z17;
 }
 node[barrier=spikes] {
     icon-image: "presets/barrier/spikes.svg";
-    set icon_z17;
 }
 node[barrier=jersey_barrier] {
     icon-image: "presets/barrier/jersey_barrier.svg";
-    set icon_z17;
 }
 node[barrier=log] {
     icon-image: "presets/barrier/log.svg";
-    set icon_z17;
 }
 node[barrier=kissing_gate] {
     icon-image: "presets/barrier/kissing_gate.svg";
-    set icon_z17;
 }
 node[barrier=bump_gate][!is_prop_set(icon-image)],
 node[barrier=bus_trap][!is_prop_set(icon-image)],
 node[barrier=hampshire_gate][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -961,7 +896,7 @@ way|z-14[highway=secondary_link][tunnel] {
 way|z16-[highway=tertiary][!tunnel] {
     width: 6;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -969,7 +904,7 @@ way|z16-[highway=tertiary][!tunnel] {
 way|z16-[highway=tertiary_link][!tunnel] {
     width: 4;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -977,7 +912,7 @@ way|z16-[highway=tertiary_link][!tunnel] {
 way|z15[highway=tertiary][!tunnel] {
     width: 3.46;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -985,7 +920,7 @@ way|z15[highway=tertiary][!tunnel] {
 way|z15[highway=tertiary_link][!tunnel] {
     width: 1.73;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -993,7 +928,7 @@ way|z15[highway=tertiary_link][!tunnel] {
 way|z-14[highway=tertiary][!tunnel] {
     width: 2;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -1001,7 +936,7 @@ way|z-14[highway=tertiary][!tunnel] {
  way|z-14[highway=tertiary_link][!tunnel] {
     width: 1;
     z-index: 0.05;
-    color: tertiary#fff9b3;
+    color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
@@ -1060,7 +995,7 @@ way|z16-[highway=unclassified][!tunnel] {
     color: street#ddccaa;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=unclassified][!tunnel] {
     width: 3.46;
@@ -1068,7 +1003,7 @@ way|z15[highway=unclassified][!tunnel] {
     color: street#ddccaa;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=unclassified][!tunnel] {
     width: 2;
@@ -1076,7 +1011,7 @@ way|z-14[highway=unclassified][!tunnel] {
     color: street#ddccaa;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z16-[highway=unclassified][tunnel] {
     width: 6;
@@ -1084,7 +1019,7 @@ way|z16-[highway=unclassified][tunnel] {
     color: street#745e46;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=unclassified][tunnel] {
     width: 3.46;
@@ -1092,7 +1027,7 @@ way|z15[highway=unclassified][tunnel] {
     color: street#745e46;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=unclassified][tunnel] {
     width: 2;
@@ -1100,7 +1035,7 @@ way|z-14[highway=unclassified][tunnel] {
     color: street#745e46;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way[highway=escape] {
     width: 3;
@@ -1110,14 +1045,14 @@ way[highway=escape] {
 way[highway=road][!tunnel] {
     width: 2;
     casing-width: 0.5;
-    casing-color: #666666;
+    casing-color: #555;
     color: highway_road#9E9E9E;
     opacity: 1;
 }
 way[highway=road][tunnel] {
     width: 2;
     casing-width: 0.5;
-    casing-color: #333333;
+    casing-color: #333;
     color: highway_road#535353;
     opacity: 1;
 }
@@ -1128,46 +1063,46 @@ way|z16-[highway=track] {
     width: 4;
     color: highway_track#c5b59f;
     casing-dashes: 4,4;
-    casing-color: #cccccc;
+    casing-color: #ccc;
     casing-width: 1;
 }
 way|z15[highway=track] {
     width: 2.58;
     color: highway_track#c5b59f;
     casing-dashes: 4,4;
-    casing-color: #cccccc;
+    casing-color: #ccc;
     casing-width: 0.7;
 }
 way|z-14[highway=track] {
     width: 1.67;
     color: highway_track#c5b59f;
     casing-dashes: 4,4;
-    casing-color: #cccccc;
+    casing-color: #ccc;
     casing-width: 0.3;
 }
 way|z16-[highway=residential][!tunnel] {
     width: 6;
     z-index: 0.02;
-    color: street#ffffff;
+    color: street#ddd;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=residential][!tunnel] {
     width: 3.46;
     z-index: 0.02;
-    color: street#ffffff;
+    color: street#ddd;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=residential][!tunnel] {
     width: 2;
     z-index: 0.02;
-    color: street#ffffff;
+    color: street#ddd;
     opacity: 1;
     casing-width: 0.6;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z16-[highway=residential][tunnel] {
     width: 6;
@@ -1175,7 +1110,7 @@ way|z16-[highway=residential][tunnel] {
     color: street#5b564b;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=residential][tunnel] {
     width: 3.46;
@@ -1183,7 +1118,7 @@ way|z15[highway=residential][tunnel] {
     color: street#5b564b;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=residential][tunnel] {
     width: 2;
@@ -1191,7 +1126,7 @@ way|z-14[highway=residential][tunnel] {
     color: street#5b564b;
     opacity: 1;
     casing-width: 0.6;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z16-[highway=living_street][!tunnel] {
     width: 6;
@@ -1199,7 +1134,7 @@ way|z16-[highway=living_street][!tunnel] {
     color: street#c0c0c0;
     opacity: 1;
     casing-width: 2;
-    casing-color: #ffffff;
+    casing-color: #ddd;
 }
 way|z15[highway=living_street][!tunnel] {
     width: 3.46;
@@ -1207,7 +1142,7 @@ way|z15[highway=living_street][!tunnel] {
     color: street#c0c0c0;
     opacity: 1;
     casing-width: 1.16;
-    casing-color: #ffffff;
+    casing-color: #ddd;
 }
 way|z-14[highway=living_street][!tunnel] {
     width: 2;
@@ -1215,7 +1150,7 @@ way|z-14[highway=living_street][!tunnel] {
     color: street#c0c0c0;
     opacity: 1;
     casing-width: 1;
-    casing-color: #ffffff;
+    casing-color: #ddd;
 }
 way|z16-[highway=living_street][tunnel] {
     width: 6;
@@ -1223,7 +1158,7 @@ way|z16-[highway=living_street][tunnel] {
     color: street#656565;
     opacity: 1;
     casing-width: 2;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=living_street][tunnel] {
     width: 3.46;
@@ -1231,7 +1166,7 @@ way|z15[highway=living_street][tunnel] {
     color: street#656565;
     opacity: 1;
     casing-width: 1.16;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=living_street][tunnel] {
     width: 2;
@@ -1239,7 +1174,7 @@ way|z-14[highway=living_street][tunnel] {
     color: street#656565;
     opacity: 1;
     casing-width: 1;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
@@ -1247,23 +1182,23 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
 way|z16-[highway=service][!area?][!tunnel],
 way|z16-[highway=service][service=driveway][!tunnel] {
     width: 4;
-    color: service#ffffff;
+    color: service#ddd;
     casing-width: 0.7;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=service][!area?][!tunnel],
 way|z15[highway=service][service=driveway][!tunnel] {
     width: 1.73;
-    color: service#ffffff;
+    color: service#ddd;
     casing-width: 0.5;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=service][!area?][!tunnel],
 way|z-14[highway=service][service=driveway][!tunnel] {
     width: 1;
-    color: service#ffffff;
+    color: service#ddd;
     casing-width: 0.2;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z16-[highway=service][!area?][tunnel],
 way|z16-[highway=service][service=driveway][tunnel] {
@@ -1310,7 +1245,7 @@ way|z16-[highway=service][service=access][!tunnel] {
     width: 4;
     color: service#ddccaa;
     casing-width: 0.7;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z15[highway=service][service=alley][!tunnel],
 way|z15[highway=service][service=yard][!tunnel],
@@ -1336,7 +1271,7 @@ way|z15[highway=service][service=access][!tunnel] {
     width: 1.73;
     color: service#ddccaa;
     casing-width: 0.5;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way|z-14[highway=service][service=alley][!tunnel],
 way|z-14[highway=service][service=yard][!tunnel],
@@ -1362,7 +1297,7 @@ way|z-14[highway=service][service=access][!tunnel] {
     width: 1;
     color: service#ddccaa;
     casing-width: 0.3;
-    casing-color: #444444;
+    casing-color: #444;
     z-index: 0.009;
 }
 way|z16-[highway=service][service=alley][tunnel],
@@ -1468,19 +1403,19 @@ way|z16-[highway=service][service=parking_aisle][!tunnel] {
     width: 4;
     color: parking_aisle#CCCAC7;
     casing-width: 0.7;
-    casing-color: #666666;
+    casing-color: #555;
 }
 way|z15[highway=service][service=parking_aisle][!tunnel] {
     width: 1.73;
     color: parking_aisle#CCCAC7;
     casing-width: 0.7;
-    casing-color: #666666;
+    casing-color: #555;
 }
 way|z-14[highway=service][service=parking_aisle][!tunnel] {
     width: 1;
     color: parking_aisle#CCCAC7;
     casing-width: 0.7;
-    casing-color: #666666;
+    casing-color: #555;
 }
 way|z16-[highway=service][service=parking_aisle][tunnel] {
     width: 4;
@@ -1541,7 +1476,7 @@ way[highway=bridleway][!tunnel] {
     color: horse#e06d5f;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #ffffff;
+    casing-color: #ddd;
     z-index: 0.009;
 }
 way[highway=bridleway][tunnel] {
@@ -1557,7 +1492,7 @@ way[highway=cycleway][!tunnel] {
     color: bicycle#58a9ed;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #ffffff;
+    casing-color: #ddd;
     z-index: 0.009;
 }
 way[highway=cycleway][tunnel] {
@@ -1576,7 +1511,7 @@ way[highway=footway][!area] {
     color: foot#998888;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #ffffff;
+    casing-color: #ddd;
     z-index: 0.009;
 }
 way[highway=footway][!area?][footway=crossing], 
@@ -1590,7 +1525,7 @@ way[highway=footway][!area?][footway=parking_aisle] {
 }
 way[highway=footway][!area?][footway=sidewalk][!tunnel] {
     width: 3.3;
-    color: foot#FFFFFF;
+    color: foot#ddd;
     dashes: 6,6;
     casing-width: 1;
     casing-color: #D4B4B4;
@@ -1626,7 +1561,7 @@ way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] 
 }
 way[highway=pedestrian][!area?] {
     width: 3.3;
-    color: foot#ffffff;
+    color: foot#ddd;
     dashes: 5,5;
     casing-width: 1;
     casing-color: #8cd05f;
@@ -1637,7 +1572,7 @@ way[highway=steps][!tunnel] {
     color: foot#81d25c;
     dashes: 3,3;
     casing-width: 1;
-    casing-color: #ffffff;
+    casing-color: #ddd;
     z-index: 0.009;
 }
 way[highway=steps][tunnel] {
@@ -1665,157 +1600,119 @@ area[junction=yes] {
 }
 node[junction=yes] {
     icon-image: "presets/vehicle/junction.svg";
-    set icon_z17;
 }
 node[highway=traffic_mirror] {
     icon-image: "presets/vehicle/traffic_mirror.svg";
-    set icon_z17;
 }
 node[highway=milestone] {
     icon-image: "presets/vehicle/milestone.svg";
-    set icon_z17;
 }
 node[direction=clockwise] {
     icon-image: "presets/vehicle/restriction/roundabout_left.svg";
-    set icon_z17;
 }
 node[highway=mini_roundabout] {
     icon-image: "presets/vehicle/restriction/mini_roundabout_left.svg";
-    set icon_z17;
 }
 node:righthandtraffic[highway=mini_roundabout] {
     icon-image: "presets/vehicle/restriction/mini_roundabout_right.svg";
-    set icon_z17;
 }
 node[highway=stop] {
     icon-image: "presets/vehicle/restriction/stop.svg";
-    set icon_z17;
 }
 node[highway=give_way] {
     icon-image: "presets/vehicle/restriction/give_way.svg";
-    set icon_z17;
 }
 node[cycleway=asl] {
     icon-image: "presets/vehicle/asl.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals] {
     icon-image: "presets/vehicle/traffic_signals.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals][crossing][crossing!=no] {
     icon-image: "presets/vehicle/traffic_signals_crossing.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals][crossing:island=yes] {
     icon-image: "presets/vehicle/traffic_signals_crossing_island.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals][crossing_ref=zebra] {
     icon-image: "presets/vehicle/traffic_signals_crossing_ref_zebra.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals][crossing=island] {
     icon-image: "presets/vehicle/traffic_signals_crossing_island.svg";
-    set icon_z17;
 }
 node[highway=traffic_signals][crossing=traffic_signals] {
     icon-image: "presets/vehicle/traffic_signals_crossing_traffic_signals.svg";
-    set icon_z17;
 }
 node[highway=street_lamp] {
     icon-image: "presets/misc/streetlamp.svg";
-    set icon_z17;
 }
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
-    set icon_z17;
 }
 relation[type=enforcement] >[role="device"] node {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
-    set icon_z17;
 }
 node[highway=toll_gantry] {
     icon-image: "presets/vehicle/restriction/toll_gantry.svg";
-    set icon_z17;
 }
 node[traffic_sign=city_limit] {
     icon-image: "presets/vehicle/restriction/city_limit.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "presets/vehicle/crossing.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing:island=yes] {
     icon-image: "presets/vehicle/crossing_island.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing=unmarked],
 node[highway=crossing][crossing=informal] {
     icon-image: "presets/vehicle/crossing_unmarked.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing=island] {
     icon-image: "presets/vehicle/crossing_island.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"=surface] {
     icon-image: "presets/vehicle/crossing_markings_surface.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"=lines] {
     icon-image: "presets/vehicle/crossing_markings_lines.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="lines:paired"] {
     icon-image: "presets/vehicle/crossing_markings_lines_paired.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"=dashes] {
     icon-image: "presets/vehicle/crossing_markings_dashes.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"=dots] {
     icon-image: "presets/vehicle/crossing_markings_dots.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="zebra:double"] {
     icon-image: "presets/vehicle/crossing_markings_zebra_double.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="zebra:paired"] {
     icon-image: "presets/vehicle/crossing_markings_zebra_paired.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="zebra:bicolour"] {
     icon-image: "presets/vehicle/crossing_markings_zebra_bicolour.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"=ladder] {
     icon-image: "presets/vehicle/crossing_markings_ladder.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="ladder:skewed"] {
     icon-image: "presets/vehicle/crossing_markings_ladder_skewed.svg";
-    set icon_z17;
 }
 node[highway=crossing]["crossing:markings"="ladder:paired"] {
     icon-image: "presets/vehicle/crossing_markings_ladder_paired.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing_ref=zebra],
 node[highway=crossing]["crossing:markings"=zebra] {
     icon-image: "presets/vehicle/crossing_ref_zebra.svg";
-    set icon_z17;
 }
 node[highway=crossing][crossing=traffic_signals] {
     icon-image: "presets/vehicle/crossing_traffic_signals.svg";
-    set icon_z17;
 }
 node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
-    set icon_z17;
     text: eval(cond(has_tag_key(ref), concat(tag(name), " (", tag(ref), ")"), tag(name)));
 }
 area[highway=services]:closed {
@@ -1823,35 +1720,30 @@ area[highway=services]:closed {
 }
 node[highway=services] {
     icon-image: "presets/vehicle/services.svg";
-    set icon_z17;
 }
 area[highway=rest_area] {
     fill-color: services#c0c0c0;
 }
 node[highway=rest_area] {
     icon-image: "presets/vehicle/rest_area.svg";
-    set icon_z17;
 }
 node[highway=trailhead] {
     icon-image: "presets/landmark/trailhead.svg";
-    set icon_z17;
 }
 node[ford=stepping_stones],
 node[ford?] {
     icon-image: "presets/vehicle/ford.svg";
-    set icon_z17;
 }
 way[ford=stepping_stones]::core_ford,
 way[ford?]::core_ford {
     z-index: 1;
     width: 2;
-    color: water#0000ff;
+    color: water#3330ff;
     dashes: 9,9;
     dashes-offset: 9;
 }
 node[hazard] {
     icon-image: "presets/transport/hazard.svg";
-    set icon_z17;
 }
 area[highway=platform]:closed {
     fill-color: highway_platform#c0c0c0;
@@ -1862,32 +1754,27 @@ way[highway=platform] {
 }
 node[highway=turning_circle] {
     icon-image: "presets/vehicle/turning_circle.svg";
-    set icon_z17;
 }
 node[highway=turning_loop] {
     icon-image: "presets/vehicle/turning_loop.svg";
-    set icon_z17;
 }
 node[highway=passing_place] {
     icon-image: "presets/vehicle/passing_place.svg";
-    set icon_z17;
 }
 node[highway=emergency_bay] {
     icon-image: "presets/vehicle/emergency_bay.svg";
-    set icon_z17;
 }
 area[highway=elevator] {
     fill-color: elevator#a6bace;
 }
 node[highway=elevator] {
     icon-image: "presets/service/elevator.svg";
-    set icon_z17;
 }
 way|z16-[highway=construction][!tunnel][!bridge] {
     width: 6;
     z-index: 0.01;
     dashes: 9,9;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #C0C0C0;
@@ -1896,7 +1783,7 @@ way|z15[highway=construction][!tunnel][!bridge] {
     width: 3.46;
     z-index: 0.01;
     dashes: 6,6;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #C0C0C0;
@@ -1906,7 +1793,7 @@ way|z-14[highway=construction][!tunnel][!bridge] {
     width: 2;
     z-index: 0.01;
     dashes: 3,3;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #C0C0C0;
@@ -1945,7 +1832,7 @@ way|z16-[highway=construction][bridge] {
     width: 6;
     z-index: 0.01;
     dashes: 9,9;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #504F4D;
@@ -1954,7 +1841,7 @@ way|z15[highway=construction][bridge] {
     width: 3.46;
     z-index: 0.01;
     dashes: 6,6;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #504F4D;
@@ -1963,7 +1850,7 @@ way|z-14[highway=construction][bridge] {
     width: 2;
     z-index: 0.01;
     dashes: 3,3;
-    dashes-background-color: constructdashed#ffffff;
+    dashes-background-color: constructdashed#ddd;
     color: street#FC6C14;
     casing-width: 1;
     casing-color: #504F4D;
@@ -1972,7 +1859,7 @@ way|z16-[highway=proposed][!tunnel] {
     width: 6;
     z-index: 0.01;
     dashes: 9,3;
-    color: street#CCCCCC;
+    color: street#ccc;
     casing-width: 1;
     casing-color: #888888;
     opacity: 1;
@@ -1983,7 +1870,7 @@ way|z15[highway=proposed][!tunnel] {
     width: 3.46;
     z-index: 0.01;
     dashes: 6,2;
-    color: street#CCCCCC;
+    color: street#ccc;
     casing-width: 1;
     casing-color: #888888;
     opacity: 1;
@@ -1994,7 +1881,7 @@ way|z-14[highway=proposed][!tunnel] {
     width: 2;
     z-index: 0.01;
     dashes: 3,1;
-    color: street#CCCCCC;
+    color: street#ccc;
     casing-width: 1;
     casing-color: #888888;
     opacity: 1;
@@ -2036,14 +1923,12 @@ way|z-14[highway=proposed][tunnel] {
 }
 node[highway=construction] {
     icon-image: "presets/misc/construction.svg";
-    set icon_z17;
 }
 area[highway=emergency_access_point] {
     fill-color: emergency_access_point#c0c0c0;
 }
 node[highway=emergency_access_point] {
     icon-image: "presets/service/emergency_access_point.svg";
-    set icon_z17;
 }
 node[highway=motorway], node[highway=motorway_link],
 node[highway=trunk], node[highway=trunk_link],
@@ -2065,7 +1950,6 @@ node[highway=pedestrian],
 node[highway=bus_guideway],
 node[highway=platform] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 area["area:highway"] {
@@ -2079,47 +1963,36 @@ area["area:highway"] {
 
 node[traffic_calming] {
     icon-image: "presets/vehicle/traffic_calming.svg";
-    set icon_z17;
 }
 node[traffic_calming=chicane] {
     icon-image: "presets/vehicle/chicane.svg";
-    set icon_z17;
 }
 node[traffic_calming=choker] {
     icon-image: "presets/vehicle/choker.svg";
-    set icon_z17;
 }
 node[traffic_calming=island] {
     icon-image: "presets/vehicle/island.svg";
-    set icon_z17;
 }
 node[traffic_calming=bump] {
     icon-image: "presets/vehicle/bump.svg";
-    set icon_z17;
 }
 node[traffic_calming=hump] {
     icon-image: "presets/vehicle/hump.svg";
-    set icon_z17;
 }
 node[traffic_calming=table] {
     icon-image: "presets/vehicle/table.svg";
-    set icon_z17;
 }
 node[traffic_calming=cushion] {
     icon-image: "presets/vehicle/cushion.svg";
-    set icon_z17;
 }
 node[traffic_calming=rumble_strip] {
     icon-image: "presets/vehicle/rumble_strip.svg";
-    set icon_z17;
 }
 node[traffic_calming=dip] {
     icon-image: "presets/vehicle/dip.svg";
-    set icon_z17;
 }
 node[traffic_calming=mini_bumps] {
     icon-image: "presets/vehicle/mini_bumps.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -2128,11 +2001,9 @@ node[traffic_calming=mini_bumps] {
 
 node[junction=roundabout] {
     icon-image: "presets/vehicle/restriction/roundabout_left.svg";
-    set icon_z17;
 }
 node:righthandtraffic[junction=roundabout] {
     icon-image: "presets/vehicle/restriction/roundabout_right.svg";
-    set icon_z17;
 }
 
 /*****************/
@@ -2142,7 +2013,6 @@ node[cycleway=lane ], node[cycleway=opposite_lane ],
 node[cycleway=track], node[cycleway=opposite_track],
 node[cycleway=opposite] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /**************/
@@ -2156,13 +2026,13 @@ way[route=ski]::core_piste {
     color: ski#809bc0;
 }
 area[piste:difficulty=easy][!highway][area=yes]::core_piste {
-    fill-color: piste_easy#0000ff;
+    fill-color: piste_easy#3330ff;
 }
 way[piste:difficulty=easy]::core_piste {
     z-index: -1; /* below line style from highway=* tag */
     modifier: false; /* suppress default line if there is no style on default layer */
     width: 6;
-    color: piste_easy#0000ff;
+    color: piste_easy#3330ff;
 }
 area[piste:difficulty=intermediate][!highway][area=yes]::core_piste {
     fill-color: piste_intermediate#ff0000;
@@ -2192,13 +2062,13 @@ way[piste:difficulty=expert]::core_piste {
     color: piste_expert#606060;
 }
 area[piste:difficulty=freeride][!highway][area=yes]::core_piste {
-    fill-color: piste_freeride#ffff00;
+    fill-color: piste_freeride#dddf00;
 }
 way[piste:difficulty=freeride]::core_piste {
     z-index: -1;
     modifier: false;
     width: 6;
-    color: piste_freeride#ffff00;
+    color: piste_freeride#dddf00;
 }
 area[piste:difficulty=novice][!highway][area=yes]::core_piste {
     fill-color: piste_novice#00ff00;
@@ -2254,7 +2124,6 @@ node[piste:type=sled],
 node[piste:type=sleigh],
 node[piste:type=snow_park] {
     icon-image: "presets/sport/skiing.svg";
-    set icon_z17;
 }
 
 /**************/
@@ -2263,31 +2132,24 @@ node[piste:type=snow_park] {
 
 node[power=portal] {
     icon-image: "presets/power/portal.svg";
-    set icon_z17;
 }
 node[power=tower] {
     icon-image: "presets/power/tower.svg";
-    set icon_z17;
 }
 node[power=pole] {
     icon-image: "presets/power/pole.svg";
-    set icon_z17;
 }
 node[power=pole][switch] {
     icon-image: "presets/power/pole_switch.svg";
-    set icon_z17;
 }
 node[power=pole][transformer=distribution] {
     icon-image: "presets/power/pole_transformer.svg";
-    set icon_z17;
 }
 node[power=catenary_mast] {
     icon-image: "presets/power/catenary_mast.svg";
-    set icon_z17;
 }
 node[power=insulator] {
     icon-image: "presets/power/insulator.svg";
-    set icon_z17;
 }
 way[power=portal],
 way[power=line],
@@ -2306,7 +2168,6 @@ node[power=line],
 node[power=cable],
 node[power=minor_line] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 area[power=plant],
 area[power=substation],
@@ -2319,39 +2180,30 @@ area[man_made=street_cabinet][street_cabinet=power] {
 }
 node[man_made=street_cabinet][street_cabinet=power] {
     icon-image: "presets/power/cable_distribution_cabinet.svg";
-    set icon_z17;
 }
 node[power=generator] {
     icon-image: "presets/power/generator.svg";
-    set icon_z17;
 }
 node[power=heliostat] {
     icon-image: "presets/power/heliostat.svg";
-    set icon_z17;
 }
 node[power=substation] {
     icon-image: "presets/power/substation.svg";
-    set icon_z17;
 }
 node[power=transformer] {
     icon-image: "presets/power/transformer.svg";
-    set icon_z17;
 }
 node[power=terminal] {
     icon-image: "presets/power/terminal.svg";
-    set icon_z17;
 }
 node[power=switch] {
     icon-image: "presets/power/switch.svg";
-    set icon_z17;
 }
 node[power=converter] {
     icon-image: "presets/power/converter.svg";
-    set icon_z17;
 }
 node[power=compensator] {
     icon-image: "presets/power/compensator.svg";
-    set icon_z17;
 }
 
 
@@ -2380,54 +2232,43 @@ area[generator:source=waste] {
 }
 node[generator:source=nuclear] {
     icon-image: "presets/power/power_source-nuclear.svg";
-    set icon_z17;
 }
 node[generator:source=wind] {
     icon-image: "presets/power/power_source-wind.svg";
-    set icon_z17;
 }
 node[generator:source=hydro],
 node[generator:source=tidal],
 node[generator:source=wave],
 node[generator:source=osmotic] {
     icon-image: "presets/power/power_source-water.svg";
-    set icon_z17;
 }
 node[generator:source=geothermal] {
     icon-image: "presets/power/power_source-geothermal.svg";
-    set icon_z17;
 }
 node[generator:source=solar] {
     icon-image: "presets/power/power_source-sun.svg";
-    set icon_z17;
 }
 node[generator:source=coal] {
     icon-image: "presets/power/power_source-coal.svg";
-    set icon_z17;
 }
 node[generator:source=gas] {
     icon-image: "presets/power/power_source-gas.svg";
-    set icon_z17;
 }
 node[generator:source=biomass],
 node[generator:source=biofuel],
 node[generator:source=biogas] {
     icon-image: "presets/power/power_source-biofuel.svg";
-    set icon_z17;
 }
 node[generator:source=oil],
 node[generator:source=diesel],
 node[generator:source=gasoline] {
     icon-image: "presets/power/power_source-oil.svg";
-    set icon_z17;
 }
 node[generator:source=waste] {
     icon-image: "presets/power/power_source-waste.svg";
-    set icon_z17;
 }
 node[power_source] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 /*****************/
 /* man_made tags */
@@ -2449,51 +2290,39 @@ area[man_made=mineshaft] {
 }
 node[man_made=street_cabinet][street_cabinet!=power] {
     icon-image: "presets/misc/street_cabinet.svg";
-    set icon_z17;
 }
 node[man_made=beacon] {
     icon-image: "presets/landmark/beacon.svg";
-    set icon_z17;
 }
 node[man_made=bridge] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
-    set icon_z17;
 }
 node[man_made=chimney] {
     icon-image: "presets/landmark/chimney.svg";
-    set icon_z17;
 }
 node[man_made=kiln] {
     icon-image: "presets/misc/kiln.svg";
-    set icon_z17;
 }
 node[man_made=flagpole] {
     icon-image: "presets/misc/flag.svg";
-    set icon_z17;
 }
 node[man_made=cross] {
     icon-image: "presets/landmark/cross.svg";
-    set icon_z17;
 }
 node[man_made=gasometer] {
     icon-image: "presets/landmark/gasometer.svg";
-    set icon_z17;
 }
 node[man_made=silo] {
     icon-image: "presets/landmark/silo.svg";
-    set icon_z17;
 }
 node[man_made=storage_tank] {
     icon-image: "presets/landmark/storage_tank.svg";
-    set icon_z17;
 }
 node[man_made=bunker_silo] {
     icon-image: "presets/landmark/bunker_silo.svg";
-    set icon_z17;
 }
 area[man_made=groyne]:closed {
     fill-color: manmade#d8d8d8;
@@ -2515,19 +2344,15 @@ way[man_made=dyke] {
 }
 node[man_made=lighthouse] {
     icon-image: "presets/landmark/lighthouse.svg";
-    set icon_z17;
 }
 node[man_made=monitoring_station] {
     icon-image: "presets/misc/monitoring_station.svg";
-    set icon_z17;
 }
 node[man_made=pumping_station] {
     icon-image: "presets/misc/pumping_station.svg";
-    set icon_z17;
 }
 node[man_made=mineshaft] {
     icon-image: "presets/landmark/mine.svg";
-    set icon_z17;
 }
 area[man_made=crane]:closed {
     fill-color: manmade#d8d8d8;
@@ -2538,15 +2363,12 @@ way[man_made=crane] {
 }
 node[man_made=crane] {
     icon-image: "presets/landmark/crane.svg";
-    set icon_z17;
 }
 node[man_made=adit] {
     icon-image: "presets/landmark/adit.svg";
-    set icon_z17;
 }
 node[man_made=cairn] {
     icon-image: "presets/landmark/cairn.svg";
-    set icon_z17;
 }
 area[man_made=pier]:closed {
     fill-color: pier#660000;
@@ -2557,7 +2379,6 @@ way[man_made=pier] {
 }
 node[man_made=pier] {
     icon-image: "presets/nautical/pier.svg";
-    set icon_z17;
 }
 way[embankment?][!highway][!railway][!waterway],
 way[man_made=embankment][!highway][!railway][!waterway] {
@@ -2606,67 +2427,51 @@ way[man_made=pipeline][!waterway] {
 }
 node[pipeline=substation] {
     icon-image: "presets/misc/pipeline_substation.svg";
-    set icon_z17;
 }
 node[pipeline=marker] {
     icon-image: "presets/misc/pipeline_marker.svg";
-    set icon_z17;
 }
 node[pipeline=valve] {
     icon-image: "presets/misc/valve.svg";
-    set icon_z17;
 }
 node[man_made=manhole] {
     icon-image: "presets/misc/manhole.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well] {
     icon-image: "presets/landmark/petroleum_well.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][substance=gas] {
     icon-image: "presets/landmark/gas_well.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][substance=oil] {
     icon-image: "presets/landmark/oil_well.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][mechanical_coupling=nodding_donkey] {
     icon-image: "presets/landmark/well_donkey.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][mechanical_coupling=nodding_donkey][substance=gas] {
     icon-image: "presets/landmark/gas_well_donkey.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][mechanical_coupling=nodding_donkey][substance=oil] {
     icon-image: "presets/landmark/oil_well_donkey.svg";
-    set icon_z17;
 }
 node[man_made=pump] {
     icon-image: "presets/landmark/pump.svg";
-    set icon_z17;
 }
 node[man_made=pump][substance=gas] {
     icon-image: "presets/landmark/pump_gas.svg";
-    set icon_z17;
 }
 node[man_made=pump][substance=oil] {
     icon-image: "presets/landmark/pump_oil.svg";
-    set icon_z17;
 }
 node[man_made=pump][substance=sewage] {
     icon-image: "presets/landmark/pump_sewage.svg";
-    set icon_z17;
 }
 node[man_made=pump][substance=steam] {
     icon-image: "presets/landmark/pump_steam.svg";
-    set icon_z17;
 }
 node[man_made=pump][substance=~/(^|_)?water$/] {
     icon-image: "presets/landmark/pump_water.svg";
-    set icon_z17;
 }
 node[man_made=breakwater],
 node[man_made=groyne],
@@ -2674,11 +2479,9 @@ node[man_made=embankment],
 node[man_made=pumping_rig],
 node[man_made=pipeline] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[man_made=petroleum_well][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 area[man_made=reservoir_covered],
 area[man_made=tower],
@@ -2693,103 +2496,78 @@ area[man_made=water_works] {
 }
 node[man_made=reservoir_covered] {
     icon-image: "presets/landmark/reservoir_covered.svg";
-    set icon_z17;
 }
 node[man_made=surveillance] {
     icon-image: "presets/service/surveillance.svg";
-    set icon_z17;
 }
 node[man_made=survey_point] {
     icon-image: "presets/landmark/survey_point.svg";
-    set icon_z17;
 }
 node[man_made=tower] {
     icon-image: "presets/tower/tower.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=bell_tower] {
     icon-image: "presets/tower/bell_tower.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=communication] {
     icon-image: "presets/tower/communication.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=cooling] {
     icon-image: "presets/tower/cooling.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=defensive] {
     icon-image: "presets/tower/defensive.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=lighting] {
     icon-image: "presets/tower/lighting.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=observation] {
     icon-image: "presets/tower/observation.svg";
-    set icon_z17;
 }
 node[man_made=tower][tower:type=watchtower] {
     icon-image: "presets/tower/observation.svg";
-    set icon_z17;
 }
 node[man_made=communications_tower] {
     icon-image: "presets/tower/communications_tower.svg";
-    set icon_z17;
 }
 node[man_made=wastewater_plant] {
     icon-image: "presets/landmark/wastewater_plant.svg";
-    set icon_z17;
 }
 node[man_made=watermill] {
     icon-image: "presets/landmark/watermill.svg";
-    set icon_z17;
 }
 node[man_made=water_tower] {
     icon-image: "presets/tower/water_tower.svg";
-    set icon_z17;
 }
 node[man_made=water_well] {
     icon-image: "presets/landmark/water_well.svg";
-    set icon_z17;
 }
 node[man_made=water_well][mechanical_coupling=nodding_donkey] {
     icon-image: "presets/landmark/water_well_donkey.svg";
-    set icon_z17;
 }
 node[man_made=windmill] {
     icon-image: "presets/landmark/windmill.svg";
-    set icon_z17;
 }
 node[man_made=windpump] {
     icon-image: "presets/landmark/windpump.svg";
-    set icon_z17;
 }
 node[man_made=windpump][substance=gas] {
     icon-image: "presets/landmark/windpump_gas.svg";
-    set icon_z17;
 }
 node[man_made=windpump][substance=oil] {
     icon-image: "presets/landmark/windpump_oil.svg";
-    set icon_z17;
 }
 node[man_made=windpump][substance=sewage] {
     icon-image: "presets/landmark/windpump_sewage.svg";
-    set icon_z17;
 }
 node[man_made=windpump][substance=steam] {
     icon-image: "presets/landmark/windpump_steam.svg";
-    set icon_z17;
 }
 node[man_made=works] {
     icon-image: "presets/landmark/works.svg";
-    set icon_z17;
 }
 node[man_made=water_works] {
     icon-image: "presets/landmark/water_works.svg";
-    set icon_z17;
 }
 way[man_made=cutline] {
     width: 2;
@@ -2797,43 +2575,33 @@ way[man_made=cutline] {
 }
 node[man_made=cutline] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[man_made=telescope] {
     icon-image: "presets/tower/telescope_dish.svg";
-    set icon_z17;
 }
 node[man_made=telescope][telescope:type=optical] {
     icon-image: "presets/tower/telescope_dome.svg";
-    set icon_z17;
 }
 node[man_made=antenna] {
     icon-image: "presets/tower/antenna.svg";
-    set icon_z17;
 }
 node[man_made=mast] {
     icon-image: "presets/tower/mast.svg";
-    set icon_z17;
 }
 node[man_made=mast][tower:type=communication] {
     icon-image: "presets/tower/mast_communication.svg";
-    set icon_z17;
 }
 node[man_made=mast][tower:type=lighting] {
     icon-image: "presets/tower/mast_lighting.svg";
-    set icon_z17;
 }
 node[man_made=utility_pole] {
     icon-image: "presets/tower/pole.svg";
-    set icon_z17;
 }
 node[man_made=utility_pole][utility~=power] {
     icon-image: "presets/power/pole.svg";
-    set icon_z17;
 }
 node[man_made=utility_pole][utility~=street_lighting] {
     icon-image: "presets/tower/pole_street_light.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -2842,19 +2610,15 @@ node[man_made=utility_pole][utility~=street_lighting] {
 
 node[telecom=exchange] {
     icon-image: "presets/telecom/exchange.svg";
-    set icon_z17;
 }
 node[telecom=connection_point] {
     icon-image: "presets/telecom/connection_point.svg";
-    set icon_z17;
 }
 node[telecom=service_device] {
     icon-image: "presets/telecom/service_device.svg";
-    set icon_z17;
 }
 node[man_made=street_cabinet][street_cabinet=telecom] {
     icon-image: "presets/telecom/telecom_cabinet.svg";
-    set icon_z17;
 }
 
 /***************/
@@ -2886,95 +2650,72 @@ area[office=telecommunication] {
 }
 node[office=accountant] {
     icon-image: "presets/office/accountant.svg";
-    set icon_z17;
 }
 node[office=advertising_agency] {
     icon-image: "presets/office/advertising_agency.svg";
-    set icon_z17;
 }
 node[office=architect] {
     icon-image: "presets/office/architect.svg";
-    set icon_z17;
 }
 node[office=association] {
     icon-image: "presets/office/association.svg";
-    set icon_z17;
 }
 node[office=company] {
     icon-image: "presets/office/private_company.svg";
-    set icon_z17;
 }
 node[office=diplomatic] {
     icon-image: "presets/office/diplomatic.svg";
-    set icon_z17;
 }
 node[office=educational_institution] {
     icon-image: "presets/office/educational_institution.svg";
-    set icon_z17;
 }
 node[office=employment_agency] {
     icon-image: "presets/office/employment_agency.svg";
-    set icon_z17;
 }
 node[office=estate_agent] {
     icon-image: "presets/office/real_state.svg";
-    set icon_z17;
 }
 node[office=financial] {
     icon-image: "presets/office/financial.svg";
-    set icon_z17;
 }
 node[office=foundation] {
     icon-image: "presets/office/foundation.svg";
-    set icon_z17;
 }
 node[office=insurance] {
     icon-image: "presets/office/insurance.svg";
-    set icon_z17;
 }
 node[office=it] {
     icon-image: "presets/office/it.svg";
-    set icon_z17;
 }
 node[office=lawyer] {
     icon-image: "presets/office/lawyer.svg";
-    set icon_z17;
 }
 node[office=newspaper] {
     icon-image: "presets/office/newspaper.svg";
-    set icon_z17;
 }
 node[office=ngo] {
     icon-image: "presets/office/ong.svg";
-    set icon_z17;
 }
 node[office=notary] {
     icon-image: "presets/office/notary.svg";
-    set icon_z17;
 }
 node[office=political_party] {
     icon-image: "presets/office/political_party.svg";
-    set icon_z17;
 }
 node[office=religion] {
     icon-image: "presets/office/religion.svg";
-    set icon_z17;
 }
 node[office=research] {
     icon-image: "presets/office/research.svg";
-    set icon_z17;
 }
 node[office=tax_advisor] {
     icon-image: "presets/office/tax_advisor.svg";
-    set icon_z17;
 }
 node[office=telecommunication] {
     icon-image: "presets/office/telecommunication.svg";
-    set icon_z17;
 }
 node[office=government] {
     icon-image: "presets/office/government.svg";
-    set icon_z17;
 }
 
 /*************/
@@ -2982,7 +2723,6 @@ node[office=government] {
 /*************/
 node[club] {
     icon-image: "presets/leisure/club.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -2996,60 +2736,48 @@ area[leisure=stadium],
 area[leisure=horse_riding],
 area[leisure=resort],
 area[leisure=beach_resort],
-area[leisure=water_park] {
+area[leisure=water_park],
+area[leisure=outdoor_seating] {
     fill-color: leisure#c7f1a3;
 }
 node[leisure=bandstand] {
     icon-image: "presets/leisure/bandstand.svg";
-    set icon_z17;
 }
 node[leisure=bleachers] {
     icon-image: "presets/leisure/bleachers.svg";
-    set icon_z17;
 }
 node[leisure=sports_centre] {
     icon-image: "presets/sport/sports_centre.svg";
-    set icon_z17;
 }
 node[leisure=fitness_centre] {
     icon-image: "presets/sport/fitness_centre.svg";
-    set icon_z17;
 }
 node[leisure=stadium] {
     icon-image: "presets/sport/stadium.svg";
-    set icon_z17;
 }
 node[leisure=horse_riding] {
     icon-image: "presets/leisure/horse_riding.svg";
-    set icon_z17;
 }
 node[leisure=amusement_arcade] {
     icon-image: "presets/leisure/amusement_arcade.svg";
-    set icon_z17;
 }
 node[leisure=adult_gaming_centre] {
     icon-image: "presets/leisure/adult_gaming_centre.svg";
-    set icon_z17;
 }
 node[leisure=hackerspace] {
     icon-image: "presets/leisure/hackerspace.svg";
-    set icon_z17;
 }
 node[leisure=outdoor_seating] {
     icon-image: "presets/leisure/outdoor_seating.svg";
-    set icon_z17;
 }
 node[leisure=resort] {
     icon-image: "presets/leisure/resort.svg";
-    set icon_z17;
 }
 node[leisure=beach_resort] {
     icon-image: "presets/leisure/beach_resort.svg";
-    set icon_z17;
 }
 node[leisure=water_park] {
     icon-image: "presets/leisure/water_park.svg";
-    set icon_z17;
 }
 area[leisure=track][!area?!]:closed {
     fill-color: leisuretrack#d4f4b9;
@@ -3060,21 +2788,18 @@ way[leisure=track] {
 }
 node[leisure=track] {
     icon-image: "presets/sport/track.svg";
-    set icon_z17;
 }
 area[leisure=pitch] {
     fill-color: pitch#baee8d;
 }
 node[leisure=pitch] {
     icon-image: "presets/sport/pitch.svg";
-    set icon_z17;
 }
 area[leisure=marina] {
     fill-color: marina#0070cf;
 }
 node[leisure=marina] {
     icon-image: "presets/nautical/marina.svg";
-    set icon_z17;
 }
 way[leisure=slipway] {
     width: 2;
@@ -3082,7 +2807,6 @@ way[leisure=slipway] {
 }
 node[leisure=slipway] {
     icon-image: "presets/nautical/slipway.svg";
-    set icon_z17;
 }
 area[leisure=fishing],
 area[leisure=bird_hide],
@@ -3097,50 +2821,39 @@ area[leisure=firepit] {
 }
 node[leisure=fishing] {
     icon-image: "presets/sport/fishing.svg";
-    set icon_z17;
 }
 node[leisure=bird_hide] {
     icon-image: "presets/leisure/bird_hide.svg";
-    set icon_z17;
 }
 node[leisure=nature_reserve] {
     icon-image: "presets/leisure/nature_reserve.svg";
-    set icon_z17;
 }
 node[leisure=park] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[leisure=playground] {
     icon-image: "presets/leisure/playground.svg";
-    set icon_z17;
 }
 node[leisure=garden] {
     icon-image: "presets/leisure/garden.svg";
-    set icon_z17;
 }
 node[leisure=common] {
     icon-image: "presets/leisure/common.svg";
-    set icon_z17;
 }
 node[leisure=firepit] { 
     icon-image: "presets/leisure/firepit.svg";
-    set icon_z17;
 }
 node[leisure=picnic_table] {
     icon-image: "presets/leisure/picnic.svg";
-    set icon_z17;
 }
 area[leisure=swimming_pool] {
     fill-color: swimming_pool#51c4ef;
 }
 node[leisure=swimming_pool] {
     icon-image: "presets/sport/swimming.svg";
-    set icon_z17;
 }
 node[playground] {
     icon-image: "presets/leisure/playground_device.svg";
-    set icon_z17;
 }
 area[leisure=fitness_station],
 area[leisure=miniature_golf],
@@ -3151,30 +2864,24 @@ area[leisure=sauna] {
 }
 node[leisure=fitness_station] {
     icon-image: "presets/leisure/fitness_station.svg";
-    set icon_z17;
 }
 node[leisure=miniature_golf] {
     icon-image: "presets/sport/miniature_golf.svg";
-    set icon_z17;
 }
 node[leisure=dog_park] {
     icon-image: "presets/leisure/dogpark.svg";
-    set icon_z17;
 }
 node[leisure=ice_rink] {
     icon-image: "presets/sport/ice_hockey.svg";
-    set icon_z17;
 }
 node[leisure=sauna] {
     icon-image: "presets/leisure/sauna.svg";
-    set icon_z17;
 }
 area[leisure=golf_course] {
     fill-color: leisure#c7f1a3;
 }
 node[leisure=golf_course] {
     icon-image: "presets/sport/golf/golf.svg";
-    set icon_z17;
 }
 
 /*************/
@@ -3185,7 +2892,6 @@ area[golf=tee] {
 }
 node[golf=tee] {
     icon-image: "presets/sport/golf/tee.svg";
-    set icon_z17;
 }
 way[golf=hole] {
     width: 1;
@@ -3194,14 +2900,13 @@ way[golf=hole] {
 }
 node[golf=pin] {
     icon-image: "presets/sport/golf/pin.svg";
-    set icon_z17;
 }
 area[golf=bunker] {
     fill-color: golf_bunker#ffab00;
 }
 area[golf=water_hazard],
 area[golf=lateral_water_hazard] {
-    fill-color: golf_water_hazard#0000ff;
+    fill-color: golf_water_hazard#3330ff;
 }
 area[golf=green] {
     fill-color: golf_green#00e700;
@@ -3217,7 +2922,6 @@ area[golf=driving_range] {
 }
 node[golf=driving_range] {
     icon-image: "presets/sport/golf/driving_range.svg";
-    set icon_z17;
 }
 
 /********************/
@@ -3226,22 +2930,18 @@ node[golf=driving_range] {
 
 node[advertising=column] {
     icon-image: "presets/leisure/advertising_column.svg";
-    set icon_z17;
 }
 area[advertising=column] {
     fill-color: advertising#880000;
 }
 node[advertising=billboard] {
     icon-image: "presets/leisure/billboard.svg";
-    set icon_z17;
 }
 node[advertising=poster_box] {
     icon-image: "presets/leisure/poster_box.svg";
-    set icon_z17;
 }
 node[advertising=totem] {
     icon-image: "presets/leisure/totem.svg";
-    set icon_z17;
 }
 way[advertising=billboard],
 way[advertising=poster_box],
@@ -3344,461 +3044,348 @@ area[shop=farm],
 area[shop=tattoo],
 area[shop=art],
 area[shop=bag] {
-    fill-color: shop#00005f;
+    fill-color: shop#33305f;
 }
 node[shop=supermarket] {
     icon-image: "presets/shop/supermarket.svg";
-    set icon_z17;
 }
 node[shop=convenience] {
     icon-image: "presets/shop/convenience.svg";
-    set icon_z17;
 }
 node[shop=bakery] {
     icon-image: "presets/shop/groceries/bakery.svg";
-    set icon_z17;
 }
 node[shop=butcher] {
     icon-image: "presets/shop/groceries/butcher.svg";
-    set icon_z17;
 }
 node[shop=bicycle] {
     icon-image: "presets/shop/bicycle.svg";
-    set icon_z17;
 }
 node[shop=doityourself] {
     icon-image: "presets/shop/diy_store.svg";
-    set icon_z17;
 }
 node[shop=dry_cleaning],
 node[shop=laundry] {
     icon-image: "presets/shop/laundry.svg";
-    set icon_z17;
 }
 node[shop=outdoor] {
     icon-image: "presets/shop/outdoor.svg";
-    set icon_z17;
 }
 node[shop=kiosk] {
     icon-image: "presets/shop/kiosk.svg";
-    set icon_z17;
 }
 node[shop=beverages] {
     icon-image: "presets/shop/beverages.svg";
-    set icon_z17;
 }
 node[shop=alcohol] {
     icon-image: "presets/shop/alcohol.svg";
-    set icon_z17;
 }
 node[shop=books] {
     icon-image: "presets/shop/book.svg";
-    set icon_z17;
 }
 node[shop=boutique] {
     icon-image: "presets/shop/boutique.svg";
-    set icon_z17;
 }
 node[shop=car] {
     icon-image: "presets/shop/vehicle.svg";
-    set icon_z17;
 }
 node[shop=car_repair] {
     icon-image: "presets/vehicle/repair_shop.svg";
-    set icon_z17;
 }
 node[shop=tyres] {
     icon-image: "presets/vehicle/tyres.svg";
-    set icon_z17;
 }
 node[shop=chemist] {
     icon-image: "presets/shop/chemist.svg";
-    set icon_z17;
 }
 node[shop=tobacco] {
     icon-image: "presets/shop/tobacco.svg";
-    set icon_z17;
 }
 node[shop=e-cigarette] {
     icon-image: "presets/shop/e-cigarette.svg";
-    set icon_z17;
 }
 node[shop=clothes] {
     icon-image: "presets/shop/clothes.svg";
-    set icon_z17;
 }
 node[shop=computer] {
     icon-image: "presets/shop/computer.svg";
-    set icon_z17;
 }
 node[shop=confectionery] {
     icon-image: "presets/shop/groceries/confectionery.svg";
-    set icon_z17;
 }
 node[shop=chocolate] {
     icon-image: "presets/shop/groceries/chocolate.svg";
-    set icon_z17;
 }
 node[shop=pastry] {
     icon-image: "presets/shop/groceries/pastry.svg";
-    set icon_z17;
 }
 node[shop=copyshop] {
     icon-image: "presets/shop/copyshop.svg";
-    set icon_z17;
 }
 node[shop=craft] {
     icon-image: "presets/shop/craft.svg";
-    set icon_z17;
 }
 node[shop=curtain] {
     icon-image: "presets/shop/curtain.svg";
-    set icon_z17;
 }
 node[shop=cycle_repair] {
     icon-image: "presets/shop/bicycle.svg";
-    set icon_z17;
 }
 node[shop=department_store] {
     icon-image: "presets/shop/mall.svg";
-    set icon_z17;
 }
 node[shop=deli] {
     icon-image: "presets/shop/groceries/deli.svg";
-    set icon_z17;
 }
 node[shop=doors] {
     icon-image: "presets/shop/doors.svg";
-    set icon_z17;
 }
 node[shop=electronics] {
     icon-image: "presets/shop/electronics.svg";
-    set icon_z17;
 }
 node[shop=erotic] {
     icon-image: "presets/shop/erotic.svg";
-    set icon_z17;
 }
 node[shop=furniture] {
     icon-image: "presets/shop/furniture.svg";
-    set icon_z17;
 }
 node[shop=fabric] {
     icon-image: "presets/shop/fabric.svg";
-    set icon_z17;
 }
 node[shop=florist] {
     icon-image: "presets/shop/florist.svg";
-    set icon_z17;
 }
 node[shop=frame] {
     icon-image: "presets/shop/frame.svg";
-    set icon_z17;
 }
 node[shop=gas] {
     icon-image: "presets/shop/gas.svg";
-    set icon_z17;
 }
 node[shop=general] {
     icon-image: "presets/shop/mall.svg";
-    set icon_z17;
 }
 node[shop=gift] {
     icon-image: "presets/shop/present.svg";
-    set icon_z17;
 }
 node[shop=greengrocer] {
     icon-image: "presets/shop/groceries/greengrocer.svg";
-    set icon_z17;
 }
 node[shop=garden_centre] {
     icon-image: "presets/shop/garden_centre.svg";
-    set icon_z17;
 }
 node[shop=hairdresser] {
     icon-image: "presets/shop/hairdresser.svg";
-    set icon_z17;
 }
 node[shop=hardware] {
     icon-image: "presets/shop/hardware.svg";
-    set icon_z17;
 }
 node[shop=hearing_aids] {
     icon-image: "presets/shop/hearing_aids.svg";
-    set icon_z17;
 }
 node[shop=hifi] {
     icon-image: "presets/shop/hifi.svg";
-    set icon_z17;
 }
 node[shop=houseware] {
     icon-image: "presets/shop/houseware.svg";
-    set icon_z17;
 }
 node[shop=pottery] {
     icon-image: "presets/shop/pottery.svg";
-    set icon_z17;
 }
 node[shop=jewelry] {
     icon-image: "presets/shop/jewelry.svg";
-    set icon_z17;
 }
 node[shop=kitchen] {
     icon-image: "presets/shop/kitchen.svg";
-    set icon_z17;
 }
 node[shop=mall] {
     icon-image: "presets/shop/mall.svg";
-    set icon_z17;
 }
 node[shop=massage] {
     icon-image: "presets/shop/massage.svg";
-    set icon_z17;
 }
 node[shop=mobile_phone] {
     icon-image: "presets/shop/mobile_phone.svg";
-    set icon_z17;
 }
 node[shop=watches] {
     icon-image: "presets/shop/watches.svg";
-    set icon_z17;
 }
 node[shop=motorcycle] {
     icon-image: "presets/vehicle/motorbike.svg";
-    set icon_z17;
 }
 node[shop=musical_instrument] {
     icon-image: "presets/shop/musical_instrument.svg";
-    set icon_z17;
 }
 node[shop=newsagent] {
     icon-image: "presets/shop/news.svg";
-    set icon_z17;
 }
 node[shop=optician] {
     icon-image: "presets/shop/optician.svg";
-    set icon_z17;
 }
 node[shop=medical_supply] {
     icon-image: "presets/shop/medical_supply.svg";
-    set icon_z17;
 }
 node[shop=paint] {
     icon-image: "presets/shop/paint.svg";
-    set icon_z17;
 }
 node[shop=party] {
     icon-image: "presets/shop/party.svg";
-    set icon_z17;
 }
 node[shop=pawnbroker] {
     icon-image: "presets/shop/pawnbroker.svg";
-    set icon_z17;
 }
 node[shop=seafood] {
     icon-image: "presets/shop/groceries/seafood.svg";
-    set icon_z17;
 }
 node[shop=dairy] {
     icon-image: "presets/shop/groceries/dairy.svg";
-    set icon_z17;
 }
 node[shop=cheese] {
     icon-image: "presets/shop/groceries/cheese.svg";
-    set icon_z17;
 }
 node[shop=shoes] {
     icon-image: "presets/shop/shoes.svg";
-    set icon_z17;
 }
 node[shop=sports] {
     icon-image: "presets/sport/multi.svg";
-    set icon_z17;
 }
 node[shop=stationery] {
     icon-image: "presets/shop/stationery.svg";
-    set icon_z17;
 }
 node[shop=tailor] {
     icon-image: "presets/shop/tailor.svg";
-    set icon_z17;
 }
 node[shop=travel_agency] {
     icon-image: "presets/shop/travel_agency.svg";
-    set icon_z17;
 }
 node[shop=scuba_diving] {
     icon-image: "presets/shop/scuba_diving.svg";
-    set icon_z17;
 }
 node[shop=fishing] {
     icon-image: "presets/shop/fishing.svg";
-    set icon_z17;
 }
 node[shop=toys] {
     icon-image: "presets/shop/toys.svg";
-    set icon_z17;
 }
 node[shop=vacuum_cleaner] {
     icon-image: "presets/shop/vacuum_cleaner.svg";
-    set icon_z17;
 }
 node[shop=variety_store] {
     icon-image: "presets/shop/variety_store.svg";
-    set icon_z17;
 }
 node[shop=charity] {
     icon-image: "presets/shop/charity.svg";
-    set icon_z17;
 }
 node[shop=second_hand] {
     icon-image: "presets/shop/second_hand.svg";
-    set icon_z17;
 }
 node[shop=video] {
     icon-image: "presets/shop/video.svg";
-    set icon_z17;
 }
 node[shop=bookmaker] {
     icon-image: "presets/shop/lottery.svg";
-    set icon_z17;
 }
 node[shop=lottery] {
     icon-image: "presets/shop/lottery.svg";
-    set icon_z17;
 }
 /* duplicate of shopping_centre? */
 node[shop=shopping_centre] {
     icon-image: "presets/shop/mall.svg";
-    set icon_z17;
 }
 node[shop=pet] {
     icon-image: "presets/shop/pet.svg";
-    set icon_z17;
 }
 node[shop=pet_grooming] {
     icon-image: "presets/shop/pet_grooming.svg";
-    set icon_z17;
 }
 node[shop=photo] {
     icon-image: "presets/shop/photo.svg";
-    set icon_z17;
 }
 node[shop=ticket] {
     icon-image: "presets/shop/ticket.svg";
-    set icon_z17;
 }
 node[shop=carpet] {
     icon-image: "presets/shop/carpet.svg";
-    set icon_z17;
 }
 node[shop=interior_decoration] {
     icon-image: "presets/shop/interior_decoration.svg";
-    set icon_z17;
 }
 node[shop=car_parts] {
     icon-image: "presets/vehicle/car_parts.svg";
-    set icon_z17;
 }
 node[shop=video_games] {
     icon-image: "presets/shop/video_games.svg";
-    set icon_z17;
 }
 node[shop=bed] {
     icon-image: "presets/shop/bed.svg";
-    set icon_z17;
 }
 node[shop=beauty] {
     icon-image: "presets/shop/beauty.svg";
-    set icon_z17;
 }
 node[shop=cosmetics] {
     icon-image: "presets/shop/cosmetics.svg";
-    set icon_z17;
 }
 node[shop=perfumery] {
     icon-image: "presets/shop/perfumery.svg";
-    set icon_z17;
 }
 node[shop=herbalist] {
     icon-image: "presets/shop/groceries/herbalist.svg";
-    set icon_z17;
 }
 node[shop=tea] {
     icon-image: "presets/shop/groceries/tea.svg";
-    set icon_z17;
 }
 node[shop=coffee] {
     icon-image: "presets/shop/groceries/coffee.svg";
-    set icon_z17;
 }
 node[shop=frozen_food] {
     icon-image: "presets/shop/groceries/frozen_food.svg";
-    set icon_z17;
 }
 node[shop=antiques] {
     icon-image: "presets/shop/antique.svg";
-    set icon_z17;
 }
 node[shop=swimming_pool] {
     icon-image: "presets/shop/swimming_pool.svg";
-    set icon_z17;
 }
 node[shop=storage_rental] {
     icon-image: "presets/shop/storage_rental.svg";
-    set icon_z17;
 }
 node[shop=music] {
     icon-image: "presets/shop/music.svg";
-    set icon_z17;
 }
 node[shop=weapons] {
     icon-image: "presets/shop/weapons.svg";
-    set icon_z17;
 }
 node[shop=funeral_directors] {
     icon-image: "presets/shop/funeral_directors.svg";
-    set icon_z17;
 }
 node[shop=agrarian] {
     icon-image: "presets/shop/agrarian.svg";
-    set icon_z17;
 }
 node[shop=wine] {
     icon-image: "presets/shop/wine.svg";
-    set icon_z17;
 }
 node[shop=farm] {
     icon-image: "presets/shop/groceries/farm.svg";
-    set icon_z17;
 }
 node[shop=tattoo] {
     icon-image: "presets/shop/tattoo.svg";
-    set icon_z17;
 }
 node[shop=art] {
     icon-image: "presets/shop/art.svg";
-    set icon_z17;
 }
 node[shop=lighting] {
     icon-image: "presets/shop/lighting.svg";
-    set icon_z17;
 }
 node[shop=security] {
     icon-image: "presets/shop/security.svg";
-    set icon_z17;
 }
 node[shop=wholesale] {
     icon-image: "presets/shop/wholesale.svg";
-    set icon_z17;
 }
 node[shop=trade] {
     icon-image: "presets/shop/trade.svg";
-    set icon_z17;
 }
 node[shop=bag] {
     icon-image: "presets/shop/bag.svg";
-    set icon_z17;
 }
 
 /******************/
@@ -3810,55 +3397,45 @@ area[emergency=water_tank] {
 }
 node[emergency=ambulance_station] {
     icon-image: "presets/emergency/ambulance_station.svg";
-    set icon_z17;
 }
 node[emergency=water_tank] {
     icon-image: "presets/emergency/water_tank.svg";
-    set icon_z17;
 }
 node[emergency=suction_point] {
     icon-image: "presets/emergency/suction_point.svg";
-    set icon_z17;
 }
 node[emergency=life_ring] {
     icon-image: "presets/emergency/life_ring.svg";
-    set icon_z17;
 }
 node[emergency=lifeguard] {
     icon-image: "presets/emergency/lifeguard.svg";
-    set icon_z17;
 }
 node[emergency=emergency_ward_entrance] {
     icon-image: "presets/emergency/emergency_ward_entrance.svg";
-    set icon_z17;
 }
 node[emergency=phone] {
     icon-image: "presets/vehicle/emergency_phone.svg";
-    set icon_z17;
 }
 node[emergency=defibrillator] {
     icon-image: "presets/emergency/aed.svg";
-    set icon_z17;
 }
 node[emergency=fire_hydrant] {
-    icon-image: "presets/service/fire_hydrant.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/fire-hydrant.svg";
+}
+node[emergency=fire_hydrant][fire_hydrant:type=underground] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/fire-hydrant-underground.svg";
 }
 node[emergency=fire_extinguisher] {
     icon-image: "presets/emergency/fire_extinguisher.svg";
-    set icon_z17;
 }
 node[emergency=fire_hose] {
     icon-image: "presets/emergency/fire_hose.svg";
-    set icon_z17;
 }
 node[emergency=assembly_point] {
     icon-image: "presets/emergency/assembly_point.svg";
-    set icon_z17;
 }
 node[emergency=siren] {
     icon-image: "presets/emergency/siren.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -3875,7 +3452,6 @@ node[police=storage],
 node[police=training_node],
 node[police=yes] {
     icon-image: "presets/service/police_non_public.svg";
-    set icon_z17;
 }
 
 /*******************/
@@ -3883,7 +3459,6 @@ node[police=yes] {
 /*******************/
 node[healthcare=laboratory] {
     icon-image: "presets/health/laboratory.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -3906,62 +3481,49 @@ area[amenity=ice_cream] {
 }
 node[amenity=pub] {
     icon-image: "presets/food/pub.svg";
-    set icon_z17;
 }
 node[amenity=biergarten] {
     icon-image: "presets/food/biergarten.svg";
-    set icon_z17;
 }
 node[amenity=nightclub] {
     icon-image: "presets/leisure/nightclub.svg";
-    set icon_z17;
 }
 node[amenity=gambling] {
     icon-image: "presets/leisure/gambling.svg";
-    set icon_z17;
 }
 node[amenity=stripclub] {
     icon-image: "presets/leisure/stripclub.svg";
-    set icon_z17;
 }
 node[amenity=casino] {
     icon-image: "presets/leisure/casino.svg";
-    set icon_z17;
 }
 node[amenity=brothel] {
     icon-image: "presets/leisure/brothel.svg";
-    set icon_z17;
 }
 node[amenity=cafe] {
     icon-image: "presets/food/cafe.svg";
-    set icon_z17;
 }
 node[amenity=restaurant] {
     icon-image: "presets/food/restaurant.svg";
-    set icon_z17;
 }
 node[amenity=food_court] {
     icon-image: "presets/food/food_court.svg";
-    set icon_z17;
 }
 node[amenity=fast_food] {
     icon-image: "presets/food/fast_food.svg";
-    set icon_z17;
 }
 node[amenity=bar] {
     icon-image: "presets/food/bar.svg";
-    set icon_z17;
 }
 node[amenity=ice_cream] {
     icon-image: "presets/food/ice_cream.svg";
-    set icon_z17;
 }
 area[amenity=bicycle_parking]:closed {
-    fill-color: amenity_traffic#f7efb7;
+    fill-color: amenity_parking#00329b;
 }
 way[amenity=bicycle_parking] {
     width: 2;
-    color: amenity_traffic#f7efb7;
+    color: amenity_parking#00329b;
 }
 area[amenity=parking_space] {
     fill-color: parking_space#f7efb8;
@@ -3980,106 +3542,83 @@ area[amenity=taxi],
 area[amenity=fuel],
 area[amenity=prison],
 area[amenity=driver_training]{
-    fill-color: amenity_traffic#adadad;
+    fill-color: amenity_parking#00329b;
 }
 node[amenity=parking_space] {
     icon-image: "presets/vehicle/parking/parking_space.svg";
-    set icon_z17;
 }
 node[amenity=trolley_bay] {
     icon-image: "presets/vehicle/parking/trolley_bay.svg";
-    set icon_z17;
 }
 node[amenity=parking],
 area[amenity=parking] {
-    icon-image: "presets/vehicle/parking/parking.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-parked.svg";
 }
 node[amenity=parking_entrance] {
     icon-image: "presets/vehicle/parking/parking.svg";
-    set icon_z17;
 }
 node[amenity=parking_entrance][parking=multi-storey],
 node[amenity=parking][parking=multi-storey] {
     icon-image: "presets/vehicle/parking/multi-storey.svg";
-    set icon_z17;
 }
 node[amenity=parking_entrance][parking=underground],
 node[amenity=parking][parking=underground] {
     icon-image: "presets/vehicle/parking/underground.svg";
-    set icon_z17;
 }
 node[amenity=motorcycle_parking] {
     icon-image: "presets/vehicle/parking/motorbike.svg";
-    set icon_z17;
-}
-node[amenity=bicycle_parking] {
-    icon-image: "presets/vehicle/parking/bicycle.svg";
-    set icon_z17;
+} 
+node[amenity=bicycle_parking],
+area[amenity=bicycle_parking] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-parked.svg";
 }
 node[park_ride][park_ride!=no] {
     icon-image: "presets/vehicle/parking/park_ride.svg";
-    set icon_z17;
 }
 node[amenity=parking_space][wheelchair?] {
     icon-image: "presets/vehicle/parking/handicapped.svg";
-    set icon_z17;
 }
 node[amenity=bicycle_rental] {
     icon-image: "presets/vehicle/bicycle_rental.svg";
-    set icon_z17;
 }
 node[amenity=bicycle_repair_station] {
     icon-image: "presets/vehicle/bicycle_repair_station.svg";
-    set icon_z17;
 }
 node[amenity=bicycle_wash] {
     icon-image: "presets/vehicle/bicycle_wash.svg";
-    set icon_z17;
 }
 node[amenity=car_rental] {
     icon-image: "presets/vehicle/car_rental.svg";
-    set icon_z17;
 }
 node[amenity=car_pooling] {
     icon-image: "presets/vehicle/car_pooling.svg";
-    set icon_z17;
 }
 node[amenity=car_sharing] {
     icon-image: "presets/vehicle/car_sharing.svg";
-    set icon_z17;
 }
 node[amenity=car_wash] {
     icon-image: "presets/vehicle/car_wash.svg";
-    set icon_z17;
 }
 node[amenity=taxi] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/taxi-stand.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/taxi.svg";
 }
 node[amenity=fuel] {
     icon-image: "presets/vehicle/fuel.svg";
-    set icon_z17;
 }
 node[amenity=charging_station] {
     icon-image: "presets/vehicle/charging_station.svg";
-    set icon_z17;
 }
 node[amenity=grit_bin] {
     icon-image: "presets/misc/grit_bin.svg";
-    set icon_z17;
 }
 node[amenity=telephone] {
     icon-image: "presets/service/telephone.svg";
-    set icon_z17;
 }
 node[amenity=clock] {
     icon-image: "presets/service/clock.svg";
-    set icon_z17;
 }
 node[amenity=photo_booth] {
     icon-image: "presets/service/photo_booth.svg";
-    set icon_z17;
 }
 area[amenity=toilets],
 area[amenity=shower],
@@ -4090,19 +3629,15 @@ area[amenity=sanitary_dump_station] {
 }
 node[amenity=toilets] {
     icon-image: "presets/service/toilets.svg";
-    set icon_z17;
 }
 node[amenity=shower] { 
     icon-image: "presets/service/shower.svg";
-    set icon_z17;
 }
 node[amenity=internet_cafe] { 
     icon-image: "presets/service/internet_cafe.svg";
-    set icon_z17;
 }
 node[amenity=recycling] {
     icon-image: "presets/service/recycling/recycling.svg";
-    set icon_z17;
 }
 node[amenity=recycling][recycling_type=container] {
     icon-image: "presets/service/recycling/recycling_container.svg";
@@ -4111,16 +3646,13 @@ node[amenity=recycling][recycling_type=centre] {
     icon-image: "presets/service/recycling/recycling_centre.svg";
 }
 node[amenity=waste_basket] {
-    icon-image: "presets/service/recycling/waste_basket.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/trash-bin.svg";
 }
 node[amenity=waste_disposal] {
     icon-image: "presets/service/recycling/waste_disposal.svg";
-    set icon_z17;
 }
 node[amenity=sanitary_dump_station] {
     icon-image: "presets/service/recycling/sanitary_dump_station.svg";
-    set icon_z17;
 }
 area[amenity=townhall],
 area[amenity=community_centre] {
@@ -4128,31 +3660,25 @@ area[amenity=community_centre] {
 }
 node[amenity=townhall] {
     icon-image: "presets/service/townhall.svg";
-    set icon_z17;
 }
 node[amenity=events_venue] {
     icon-image: "presets/service/events_venue.svg";
-    set icon_z17;
 }
 node[amenity=community_centre] {
     icon-image: "presets/service/community_centre.svg";
-    set icon_z17;
 }
 area[amenity=water_point],
 area[amenity=fountain] {
-    fill-color: light_water#00005f;
+    fill-color: light_water#3959ff;
 }
 node[amenity=drinking_water] {
     icon-image: "presets/food/drinking_water.svg";
-    set icon_z17;
 }
 node[amenity=water_point] {
     icon-image: "presets/accommodation/water.svg";
-    set icon_z17;
 }
 node[amenity=fountain] {
     icon-image: "presets/misc/fountain.svg";
-    set icon_z17;
 }
 area[amenity=animal_boarding],
 area[amenity=animal_breeding],
@@ -4175,136 +3701,103 @@ area[amenity=driver_training] {
 }
 node[amenity=animal_boarding] {
     icon-image: "presets/accommodation/animal_boarding.svg";
-    set icon_z17;
 }
 node[amenity=animal_breeding] {
     icon-image: "presets/misc/animal_breeding.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship] {
     icon-image: "presets/religion/religion.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=bahai] {
     icon-image: "presets/religion/bahai.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=buddhist] {
     icon-image: "presets/religion/buddhism.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=caodaism][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=christian] {
     icon-image: "presets/religion/church.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=confucian] {
     icon-image: "presets/religion/confucian.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=hindu] {
     icon-image: "presets/religion/hinduism.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=jain] {
     icon-image: "presets/religion/jainism.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=jewish] {
     icon-image: "presets/religion/jewish.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=muslim] {
     icon-image: "presets/religion/muslim.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=sikh] {
     icon-image: "presets/religion/sikhism.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=shinto] {
     icon-image: "presets/religion/shinto.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=spiritualist][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=taoist] {
     icon-image: "presets/religion/taoism.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=tenrikyo] {
     icon-image: "presets/religion/tenrikyo.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=unitarian][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[amenity=place_of_worship][religion=zoroastrian][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[amenity=monastery] {
     icon-image: "presets/religion/monastery.svg";
-    set icon_z17;
 }
 node[amenity=grave_yard] {
     icon-image: "presets/landuse/graveyard.svg";
-    set icon_z17;
 }
 node[amenity=crematorium][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[amenity=post_office] {
     icon-image: "presets/service/post_office.svg";
-    set icon_z17;
 }
 node[amenity=post_box] {
     icon-image: "presets/service/post_box.svg";
-    set icon_z17;
 }
 node[amenity=letter_box] {
     icon-image: "presets/service/letter_box.svg";
-    set icon_z17;
 }
 node[amenity=studio] {
     icon-image: "presets/service/studio.svg";
-    set icon_z17;
 }
 node[amenity=school] {
     icon-image: "presets/education/school.svg";
-    set icon_z17;
 }
 node[amenity=university] {
     icon-image: "presets/education/university.svg";
-    set icon_z17;
 }
 node[amenity=college] {
     icon-image: "presets/education/college.svg";
-    set icon_z17;
 }
 node[amenity=kindergarten] {
     icon-image: "presets/education/kindergarten.svg";
-    set icon_z17;
 }
 node[amenity=language_school] {
     icon-image: "presets/education/language_school.svg";
-    set icon_z17;
 }
 node[amenity=driving_school],
 node[amenity=driver_training] {
     icon-image: "presets/education/driving_school.svg";
-    set icon_z17;
 }
 node[amenity=music_school] {
     icon-image: "presets/education/music_school.svg";
-    set icon_z17;
 }
 area[amenity=pharmacy],
 area[amenity=hospital],
@@ -4320,60 +3813,46 @@ area[amenity=veterinary] {
 }
 node[amenity=pharmacy] {
     icon-image: "presets/health/pharmacy.svg";
-    set icon_z17;
 }
 node[amenity=hospital] {
     icon-image: "presets/health/hospital.svg";
-    set icon_z17;
 }
 node[amenity=clinic] {
     icon-image: "presets/health/clinic.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=nursing_home],
 node[amenity=nursing_home] {
     icon-image: "presets/social_facility/nursing_home.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=group_home] {
     icon-image: "presets/social_facility/group_home.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=assisted_living] {
     icon-image: "presets/social_facility/assisted_living.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=outreach] {
     icon-image: "presets/social_facility/outreach.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=shelter] {
     icon-image: "presets/social_facility/shelter.svg";
-    set icon_z17;
 }
 node[amenity=social_facility][social_facility=food_bank] {
     icon-image: "presets/social_facility/food_bank.svg";
-    set icon_z17;
 }
 node[amenity=baby_hatch] {
     icon-image: "presets/health/baby_hatch.svg";
-    set icon_z17;
 }
 node[amenity=doctors] {
     icon-image: "presets/health/doctors.svg";
-    set icon_z17;
 }
 node[amenity=dentist] {
     icon-image: "presets/health/dentist.svg";
-    set icon_z17;
 }
 node[amenity=animal_shelter] {
     icon-image: "presets/health/animal_shelter.svg";
-    set icon_z17;
 }
 node[amenity=veterinary] {
     icon-image: "presets/health/veterinary.svg";
-    set icon_z17;
 }
 area[amenity=library],
 area[amenity=public_bookcase],
@@ -4398,95 +3877,73 @@ area[amenity=watering_place] {
 }
 node[amenity=library] {
     icon-image: "presets/education/library.svg";
-    set icon_z17;
 }
 node[amenity=public_bookcase] {
     icon-image: "presets/education/public_bookcase.svg";
-    set icon_z17;
 }
 node[amenity=police] {
     icon-image: "presets/service/police.svg";
-    set icon_z17;
 }
 node[amenity=ranger_station] {
     icon-image: "presets/service/ranger_station.svg";
-    set icon_z17;
 }
 node[amenity=fire_station] {
     icon-image: "presets/service/firebrigade.svg";
-    set icon_z17;
 }
 node[amenity=bus_station] {
     icon-image: "presets/transport/bus_old.svg";
-    set icon_z17;
 }
 node[amenity=ferry_terminal] {
     icon-image: "presets/nautical/ferry.svg";
-    set icon_z17;
 }
 node[amenity=theatre] {
     icon-image: "presets/leisure/theater.svg";
-    set icon_z17;
 }
 node[amenity=cinema] {
     icon-image: "presets/leisure/cinema.svg";
-    set icon_z17;
 }
 node[amenity=dive_centre] {
     icon-image: "presets/leisure/dive_centre.svg";
-    set icon_z17;
 }
 node[amenity=public_bath] {
     icon-image: "presets/leisure/public_bath.svg";
-    set icon_z17;
 }
 node[amenity=arts_centre] {
     icon-image: "presets/sightseeing/arts_centre.svg";
-    set icon_z17;
 }
 node[amenity=courthouse] {
     icon-image: "presets/service/courthouse.svg";
-    set icon_z17;
 }
 node[amenity=prison] {
     icon-image: "presets/service/prison.svg";
-    set icon_z17;
 }
 node[amenity=bank] {
-    icon-image: "presets/money/bank.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bank.svg";
 }
 node[amenity=bureau_de_change] {
     icon-image: "presets/money/exchange.svg";
-    set icon_z17;
 }
 node[amenity=money_transfer] {
     icon-image: "presets/money/money_transfer.svg";
-    set icon_z17;
 }
 node[amenity=atm] {
     icon-image: "presets/money/atm.svg";
-    set icon_z17;
 }
 way[amenity=bench] {
     width: 2;
     color: amenity_light#f7efb7;
 }
 node[amenity=bench] {
-    icon-image: "presets/leisure/bench.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench.svg";
 }
 node[amenity=bbq] {
     icon-image: "presets/leisure/bbq.svg";
-    set icon_z17;
 }
 node[amenity=compressed_air] {
     icon-image: "presets/vehicle/compressed_air.svg";
-    set icon_z17;
 }
 node[amenity=watering_place] {
     icon-image: "presets/misc/watering_place.svg";
-    set icon_z17;
 }
 area[amenity=shelter],
 area[amenity=marketplace],
@@ -4495,47 +3952,36 @@ area[amenity=wlan] {
 }
 node[amenity=shelter] {
     icon-image: "presets/accommodation/shelter.svg";
-    set icon_z17;
 }
 node[amenity=shelter][shelter_type=public_transport] {
     icon-image: "presets/accommodation/shelter_public_transport.svg";
-    set icon_z17;
 }
 node[amenity=shelter][shelter_type=picnic_shelter] {
     icon-image: "presets/accommodation/shelter_picnic.svg";
-    set icon_z17;
 }
 node[amenity=shelter][shelter_type=basic_hut] {
     icon-image: "presets/accommodation/basic_hut.svg";
-    set icon_z17;
 }
 node[amenity=shelter][shelter_type=gazebo] {
     icon-image: "presets/accommodation/gazebo.svg";
-    set icon_z17;
 }
 node[amenity=shelter][shelter_type=lean_to] {
     icon-image: "presets/accommodation/shelter_lean_to.svg";
-    set icon_z17;
 }
 node[amenity=hunting_stand] {
     icon-image: "presets/landmark/hunting_stand.svg";
-    set icon_z17;
 }
 node[amenity=marketplace] {
     icon-image: "presets/shop/marketplace.svg";
-    set icon_z17;
 }
 node[amenity=vending_machine] {
     icon-image: "presets/transport/ticket-machine.svg";
-    set icon_z17;
 }
 node[vending=excrement_bags] {
     icon-image: "presets/service/excrement_bags.svg";
-    set icon_z17;
 }
 node[amenity=parcel_locker] {
     icon-image: "presets/service/parcel_locker.svg";
-    set icon_z17;
 }
 
 
@@ -4572,103 +4018,78 @@ area[craft=tiler] {
 }
 node[craft=carpenter] {
     icon-image: "presets/craft/carpenter.svg";
-    set icon_z17;
 }
 node[craft=shoemaker] {
     icon-image: "presets/craft/shoemaker.svg";
-    set icon_z17;
 }
 node[craft=photographer] {
     icon-image: "presets/craft/photographer.svg";
-    set icon_z17;
 }
 node[craft=metal_construction] {
     icon-image: "presets/craft/metal_construction.svg";
-    set icon_z17;
 }
 node[craft=electrician] {
     icon-image: "presets/craft/electrician.svg";
-    set icon_z17;
 }
 node[craft=electronics_repair] {
     icon-image: "presets/craft/electronics_repair.svg";
-    set icon_z17;
 }
 node[craft=brewery] {
     icon-image: "presets/craft/brewery.svg";
-    set icon_z17;
 }
 node[craft=plumber] {
     icon-image: "presets/craft/plumber.svg";
-    set icon_z17;
 }
 node[craft=sawmill] {
     icon-image: "presets/craft/sawmill.svg";
-    set icon_z17;
 }
 node[craft=gardener] {
     icon-image: "presets/craft/gardener.svg";
-    set icon_z17;
 }
 node[craft=winery] {
     icon-image: "presets/craft/winery.svg";
-    set icon_z17;
 }
 node[craft=hvac] {
     icon-image: "presets/craft/hvac.svg";
-    set icon_z17;
 }
 node[craft=painter] {
     icon-image: "presets/craft/painter.svg";
-    set icon_z17;
 }
 node[craft=stonemason] {
     icon-image: "presets/craft/stonemason.svg";
-    set icon_z17;
 }
 node[craft=handicraft] {
     icon-image: "presets/craft/handicraft.svg";
-    set icon_z17;
 }
 node[craft=pottery] {
     icon-image: "presets/craft/pottery.svg";
-    set icon_z17;
 }
 node[craft=key_cutter] {
     icon-image: "presets/craft/key_cutter.svg";
-    set icon_z17;
 }
 node[craft=caterer] {
     icon-image: "presets/craft/caterer.svg";
-    set icon_z17;
 }
 node[craft=roofer] {
     icon-image: "presets/craft/roofer.svg";
-    set icon_z17;
 }
 node[craft=beekeeper] {
     icon-image: "presets/craft/beekeeper.svg";
-    set icon_z17;
 }
 node[craft=blacksmith] {
     icon-image: "presets/craft/blacksmith.svg";
-    set icon_z17;
 }
 node[craft=locksmith] {
     icon-image: "presets/craft/locksmith.svg";
-    set icon_z17;
 }
 node[craft=window_construction] {
     icon-image: "presets/craft/window_construction.svg";
-    set icon_z17;
 }
 node[craft=upholsterer] {
     icon-image: "presets/craft/upholsterer.svg";
-    set icon_z17;
 }
 node[craft=tiler] {
     icon-image: "presets/craft/tiler.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -4690,47 +4111,36 @@ area[tourism=caravan_site] {
 }
 node[tourism=hotel] {
     icon-image: "presets/accommodation/hotel.svg";
-    set icon_z17;
 }
 node[tourism=motel] {
     icon-image: "presets/accommodation/motel.svg";
-    set icon_z17;
 }
 node[tourism=guest_house] {
     icon-image: "presets/accommodation/guest_house.svg";
-    set icon_z17;
 }
 node[tourism=apartment] {
     icon-image: "presets/accommodation/apartment.svg";
-    set icon_z17;
 }
 node[tourism=hostel] {
     icon-image: "presets/accommodation/hostel.svg";
-    set icon_z17;
 }
 node[tourism=chalet] {
     icon-image: "presets/accommodation/chalet.svg";
-    set icon_z17;
 }
 node[tourism=alpine_hut] {
     icon-image: "presets/accommodation/alpine_hut.svg";
-    set icon_z17;
 }
 node[tourism=wilderness_hut] {
     icon-image: "presets/accommodation/wilderness_hut.svg";
-    set icon_z17;
 }
 node[tourism=camp_site] {
     icon-image: "presets/accommodation/camping.svg";
-    set icon_z17;
 }
 node[tourism=camp_pitch] {
     icon-image: "presets/accommodation/camp_pitch.svg";
-    set icon_z17;
 }
 node[tourism=caravan_site] {
     icon-image: "presets/accommodation/caravan.svg";
-    set icon_z17;
 }
 area[tourism=attraction]:closed {
     fill-color: tourism#e180a2;
@@ -4741,7 +4151,6 @@ way[tourism=attraction] {
 }
 node[tourism=attraction] {
     icon-image: "presets/sightseeing/attraction.svg";
-    set icon_z17;
 }
 area[tourism=picnic_site],
 area[tourism=viewpoint],
@@ -4753,19 +4162,15 @@ area[tourism=museum] {
 }
 node[tourism=picnic_site] {
     icon-image: "presets/leisure/picnic.svg";
-    set icon_z17;
 }
 node[tourism=viewpoint] {
     icon-image: "presets/sightseeing/viewpoint.svg";
-    set icon_z17;
 }
 node[tourism=theme_park] {
     icon-image: "presets/leisure/theme_park.svg";
-    set icon_z17;
 }
 node[tourism=zoo] {
     icon-image: "presets/leisure/zoo.svg";
-    set icon_z17;
 }
 area[tourism=artwork]:closed {
     fill-color: tourism#e180a2;
@@ -4776,15 +4181,12 @@ way[tourism=artwork][!highway] {
 }
 node[tourism=artwork] {
     icon-image: "presets/sightseeing/arts_centre.svg";
-    set icon_z17;
 }
 node[tourism=gallery] {
     icon-image: "presets/sightseeing/gallery.svg";
-    set icon_z17;
 }
 node[tourism=museum] {
     icon-image: "presets/sightseeing/museum.svg";
-    set icon_z17;
 }
 
 /********************/
@@ -4797,7 +4199,6 @@ area[attraction=animal] {
 }
 node[attraction=animal] {
     icon-image: "presets/attraction/animal.svg";
-    set icon_z17;
 }
 way[attraction=summer_toboggan] {
     width: 4;
@@ -4807,7 +4208,6 @@ way[attraction=summer_toboggan] {
 }
 node[attraction=water_slide] {
     icon-image: "presets/attraction/water_slide.svg";
-    set icon_z17;
 }
 
 /********************/
@@ -4819,34 +4219,27 @@ area[tourism=information] {
 }
 node[tourism=information] {
     icon-image: "presets/misc/information/information.svg";
-    set icon_z17;
 }
 node[tourism=information][information=guidepost] {
     icon-image: "presets/misc/information/guidepost.svg";
-    set icon_z17;
 }
 node[tourism=information][information=route_marker] {
     icon-image: "presets/misc/information/route_marker.svg";
-    set icon_z17;
 }
 node[tourism=information][information=audioguide] {
     icon-image: "presets/misc/information/audioguide.svg";
-    set icon_z17;
 }
 area[tourism=information][information=office] {
     fill-color: tourism#e180a2;
 }
 node[tourism=information][information=office] {
     icon-image: "presets/misc/information/informationoffice.svg";
-    set icon_z17;
 }
 node[tourism=information][information=map] {
     icon-image: "presets/misc/information/map.svg";
-    set icon_z17;
 }
 node[tourism=information][information=board] {
     icon-image: "presets/misc/information/board.svg";
-    set icon_z17;
 }
 
 /*****************/
@@ -4878,95 +4271,73 @@ area[historic=milestone] {
 }
 node[historic=fort] {
     icon-image: "presets/sightseeing/fort.svg";
-    set icon_z17;
 }
 node[historic=castle] {
     icon-image: "presets/sightseeing/castle.svg";
-    set icon_z17;
 }
 node[historic=monument] {
     icon-image: "presets/sightseeing/monument.svg";
-    set icon_z17;
 }
 node[historic=memorial] {
     icon-image: "presets/sightseeing/memorial.svg";
-    set icon_z17;
 }
 node[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
-    set icon_z17;
 }
 node[historic=ruins] {
     icon-image: "presets/sightseeing/ruins.svg";
-    set icon_z17;
 }
 node[historic=battlefield] {
     icon-image: "presets/sightseeing/battlefield.svg";
-    set icon_z17;
 }
 node[geological=palaeontological_site] {
     icon-image: "presets/sightseeing/palaeontological_site.svg";
-    set icon_z17;
 }
 node[historic=city_gate] {
     icon-image: "presets/sightseeing/city_gate.svg";
-    set icon_z17;
 }
 node[historic=manor] {
     icon-image: "presets/sightseeing/manor.svg";
-    set icon_z17;
 }
 node[historic=church] {
     icon-image: "presets/religion/historic_church.svg";
-    set icon_z17;
 }
 node[historic=monastery] {
     icon-image: "presets/sightseeing/monastery.svg";
-    set icon_z17;
 }
 node[historic=charcoal_pile] {
     icon-image: "presets/misc/charcoal_pile.svg";
-    set icon_z17;
 }
 node[historic=mine],
 node[historic=mine_shaft] {
     icon-image: "presets/landmark/historic_mine.svg";
-    set icon_z17;
 }
 node[historic=shieling] {
     icon-image: "presets/landmark/shieling.svg";
-    set icon_z17;
 }
 node[historic=wayside_cross] {
     icon-image: "presets/religion/wayside_cross.svg";
-    set icon_z17;
 }
 node[historic=wayside_shrine] {
     icon-image: "presets/religion/wayside_shrine.svg";
-    set icon_z17;
 }
 node[historic=boundary_stone] {
     icon-image: "presets/landmark/boundary_stone.svg";
-    set icon_z17;
 }
 node[historic=milestone] {
     icon-image: "presets/landmark/milestone.svg";
-    set icon_z17;
 }
 area[cemetery=grave] {
     fill-color: grave#663300;
 }
 node[cemetery=grave] {
     icon-image: "presets/misc/grave.svg";
-    set icon_z17;
 }
 node[cemetery=sector] {
     icon-image: "presets/misc/cemetery_sector.svg";
-    set icon_z17;
 }
 node[historic=tomb] {
     icon-image: "presets/misc/tomb.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -5071,12 +4442,12 @@ area[landuse=railway] {
     width: 1;
 }
 area[landuse=construction] {
-    fill-color: construction#ffff00;
+    fill-color: construction#dddf00;
     width: 1;
 }
 way[landuse=construction] {
     width: 1;
-    color: construction#ffff00;
+    color: construction#dddf00;
     dashes: 9,9;
 }
 area[landuse=military] {
@@ -5100,7 +4471,6 @@ area[landuse=recreation_ground] {
 }
 node[landuse] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /*****************/
@@ -5116,23 +4486,18 @@ area[military=range] {
 }
 node[military=airfield] {
     icon-image: "presets/transport/airport/airfield.svg";
-    set icon_z17;
 }
 node[military=bunker] {
     icon-image: "presets/landmark/bunker.svg";
-    set icon_z17;
 }
 node[military=barracks][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[military=danger_area] {
     icon-image: "presets/misc/danger.svg";
-    set icon_z17;
 }
 node[military=range] {
     icon-image: "presets/sport/range.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -5144,31 +4509,25 @@ area[railway=station] {
 }
 node[railway=station] {
     icon-image: "presets/transport/railway_station.svg";
-    set icon_z17;
 }
 node[railway=halt] {
     icon-image: "presets/transport/railway_halt.svg";
-    set icon_z17;
 }
 node[railway=tram_stop] {
     icon-image: "presets/transport/tram.svg";
-    set icon_z17;
 }
 node[railway=subway_entrance] {
     icon-image: "presets/transport/underground.svg";
-    set icon_z17;
 }
 node[railway=crossing] {
     icon-image: "presets/transport/railway/crossing.svg";
-    set icon_z17;
 }
 node[railway=level_crossing] {
     icon-image: "presets/transport/railway/level_crossing.svg";
-    set icon_z17;
 }
 way[railway=rail][!tunnel] {
     width: 2;
-    color: rail#ffffff;
+    color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
     casing-width: 2;
@@ -5188,7 +4547,7 @@ way[!highway][railway=tram][!tunnel] {
     object-z-index: 1;
     modifier: false; /* don't draw default way if there is no line on default layer */
     width: 2;
-    color: rail#ffffff;
+    color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
     casing-width: 2;
@@ -5204,7 +4563,7 @@ way[!highway][railway=tram][tunnel] {
 }
 way[railway=light_rail][!tunnel] {
     width: 2;
-    color: rail#ffffff;
+    color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
     casing-width: 2;
@@ -5218,14 +4577,14 @@ way[railway=light_rail][!tunnel] {
 }
 way[railway=subway][!tunnel] {
     width: 2;
-    color: rail#ffffff;
+    color: rail#ddd;
     dashes: 12,12;
-    dashes-background-color: raildashed#000000;
+    dashes-background-color: raildashed#333;
     casing-width: 2;
 }
 way[railway=subway][tunnel] {
     width: 2;
-    color: rail#444444;
+    color: rail#444;
     dashes: 12,12;
     dashes-background-color: raildashed#111111;
     casing-width: 2;
@@ -5233,7 +4592,7 @@ way[railway=subway][tunnel] {
 
 way[railway=preserved][!tunnel] {
     width: 2;
-    color: oldrail#ffffff;
+    color: oldrail#ddd;
     dashes: 9,9;
     dashes-background-color: raildashed#555555;
     casing-width: 2;
@@ -5266,7 +4625,7 @@ way[railway=preserved][service=siding][!tunnel],
 way[railway=preserved][service=yard][!tunnel],
 way[railway=preserved][service=spur][!tunnel] {
     width: 2;
-    color: rail#ffffff;
+    color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#ddccaa;
     opacity: 2;
@@ -5296,7 +4655,7 @@ way[railway=preserved][service=siding][tunnel],
 way[railway=preserved][service=yard][tunnel],
 way[railway=preserved][service=spur][tunnel] {
     width: 2;
-    color: rail#333333;
+    color: rail#333;
     dashes: 12,12;
     dashes-background-color: raildashed#676257;
     opacity: 2;
@@ -5351,11 +4710,9 @@ area[railway=turntable] {
 }
 node[railway=turntable] {
     icon-image: "presets/transport/railway/turntable.svg";
-    set icon_z17;
 }
 node[railway=buffer_stop] {
     icon-image: "presets/transport/railway/buffer_stop.svg";
-    set icon_z17;
 }
 area[railway=platform]:closed {
     fill-color: rail#404040;
@@ -5371,19 +4728,15 @@ way[railway=funicular] {
 }
 node[railway=switch] {
     icon-image: "presets/transport/railway/switch.svg";
-    set icon_z17;
 }
 node[railway=railway_crossing] {
     icon-image: "presets/transport/railway/railway_crossing.svg";
-    set icon_z17;
 }
 node[railway=signal] {
     icon-image: "presets/transport/railway/signal.svg";
-    set icon_z17;
 }
 node[railway=milestone] {
     icon-image: "presets/transport/railway/milestone.svg";
-    set icon_z17;
 }
 node[railway=rail], node[railway=tram], node[railway=light_rail],
 node[railway=subway], node[railway=preserved],
@@ -5392,18 +4745,17 @@ node[railway=narrow_gauge], node[railway=monorail],
 node[railway=platform], node[railway=funicular],
 node[service=yard], node[service=siding], node[service=spur] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 way[railway=construction][!highway] {
     width: 1;
-    color: construction#ffff00;
+    color: construction#dddf00;
     dashes: 9,9;
 }
 way[railway=construction][construction=rail] {
     width: 2;
     color: rail#404040;
     dashes: 9,9;
-    dashes-background-color: construction#ffff00;
+    dashes-background-color: construction#dddf00;
 }
 way[railway=construction][construction=light_rail] {
     width: 2;
@@ -5415,7 +4767,7 @@ way[railway=construction][construction=tram][!highway] {
     color: railover#202020;
     dashes: 9,9;
     casing-width: 1;
-    casing-color: construction#ffff00;
+    casing-color: construction#dddf00;
     casing-linecap: round;
     casing-dashes: 9,9;
 }
@@ -5431,21 +4783,18 @@ area[aeroway=aerodrome] {
 }
 node[aeroway=aerodrome][military!=airfield] {
     icon-image: "presets/transport/airport.svg";
-    set icon_z17;
 }
 area[aeroway=terminal] {
     fill-color: terminal#bb0000;
 }
 node[aeroway=terminal] {
     icon-image: "presets/transport/airport/terminal.svg";
-    set icon_z17;
 }
 area[aeroway=helipad] {
     fill-color: aeroway_dark#330000;
 }
 node[aeroway=helipad] {
     icon-image: "presets/transport/airport/helipad.svg";
-    set icon_z17;
 }
 area[aeroway=runway]:closed {
     fill-color: aeroway_dark#330000;
@@ -5454,7 +4803,7 @@ way[aeroway=runway] {
     z-index: 2;
     modifier: false;
     width: 3;
-    color: runway#FFFFFF;
+    color: runway#ddd;
     casing-color: #330000;
     casing-width: 2;
     dashes: 20,20;
@@ -5464,7 +4813,7 @@ area[aeroway=taxiway]:closed {
 }
 way[aeroway=taxiway] {
     width: 2;
-    color: aeroway#FFFF00;
+    color: aeroway#dddF00;
 }
 way[aeroway=parking_position] {
     width: 1;
@@ -5472,7 +4821,6 @@ way[aeroway=parking_position] {
 }
 node[aeroway=parking_position] {
     icon-image: "presets/transport/airport/parking_position.svg";
-    set icon_z17;
 }
 area[aeroway=apron],
 area[aeroway=hangar] {
@@ -5482,39 +4830,30 @@ node[aeroway=apron],
 node[aeroway=runway],
 node[aeroway=taxiway] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[aeroway=holding_position] {
     icon-image: "presets/transport/airport/holding_position.svg";
-    set icon_z17;
 }
 node[aeroway=hangar] {
     icon-image: "presets/transport/airport/hangar.svg";
-    set icon_z17;
 }
 node[aeroway=gate] {
     icon-image: "presets/transport/airport/gate.svg";
-    set icon_z17;
 }
 node[airmark=beacon] {
     icon-image: "presets/transport/airport/airmark_beacon.svg";
-    set icon_z17;
 }
 node[aeroway=navigationaid] {
     icon-image: "presets/transport/airport/navigationaid.svg";
-    set icon_z17;
 }
 node[aeroway=navigationaid][navigationaid=papi] {
     icon-image: "presets/transport/airport/papi.svg";
-    set icon_z17;
 }
 node[aeroway=navigationaid][navigationaid=vasi] {
     icon-image: "presets/transport/airport/vasi.svg";
-    set icon_z17;
 }
 node[aeroway=windsock] {
     icon-image: "presets/transport/airport/windsock.svg";
-    set icon_z17;
 }
 
 /******************/
@@ -5535,7 +4874,7 @@ way[aerialway=goods][!tunnel] {
     width: 4;
     color: aerialway#cc5555;
     casing-width: 0.5;
-    casing-color: #444444;
+    casing-color: #444;
 }
 way[aerialway=cable_car][tunnel],
 way[aerialway=gondola][tunnel],
@@ -5559,11 +4898,9 @@ area[aerialway=station] {
 }
 node[aerialway=station] {
     icon-image: "presets/transport/aerialway/station.svg";
-    set icon_z17;
 }
 node[aerialway=pylon] {
     icon-image: "presets/transport/aerialway/pylon.svg";
-    set icon_z17;
 }
 node[aerialway=cable_car],
 node[aerialway=gondola],
@@ -5577,7 +4914,6 @@ node[aerialway=magic_carpet],
 node[aerialway=rope_tow],
 node[aerialway=goods] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /*************************/
@@ -5586,55 +4922,42 @@ node[aerialway=goods] {
 
 node[highway=bus_stop] {
     icon-image: "presets/transport/bus_small.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position] {
     icon-image: "presets/transport/stop_position.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][share_taxi=yes] {
     icon-image: "presets/transport/share_taxi.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][bus=yes] {
     icon-image: "presets/transport/bus.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][train=yes] {
     icon-image: "presets/transport/train.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][light_rail=yes] {
     icon-image: "presets/transport/railway/light_rail.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][tram=yes] {
     icon-image: "presets/transport/railway/tram.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][subway=yes] {
     icon-image: "presets/transport/railway/subway.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][monorail=yes] {
     icon-image: "presets/transport/railway/monorail.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][trolleybus=yes] {
     icon-image: "presets/transport/trolleybus.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][funicular=yes] {
     icon-image: "presets/transport/railway/funicular.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][aerialway=yes] {
     icon-image: "presets/transport/aerialway/station.svg";
-    set icon_z17;
 }
 node[public_transport=stop_position][ferry=yes] {
     icon-image: "presets/nautical/ferry.svg";
-    set icon_z17;
 }
 area[public_transport=platform]:closed {
     fill-color: service#808080;
@@ -5645,14 +4968,12 @@ way[public_transport=platform]!:closed {
 }
 node[public_transport=platform] {
     icon-image: "presets/transport/platform.svg";
-    set icon_z17;
 }
 area[public_transport=station] {
     fill-color: railwaypoint#808080;
 }
 node[public_transport=station] {
     icon-image: "presets/transport/station.svg";
-    set icon_z17;
 }
 
 /**************/
@@ -5689,16 +5010,13 @@ area[sport=rugby_union] {
 }
 node[sport="9pin"] {
     icon-image: "presets/sport/9pin.svg";
-    set icon_z17;
 }
 node[sport="10pin"] {
     icon-image: "presets/sport/10pin.svg";
-    set icon_z17;
 }
 node[sport=soccer],
 node[sport=gaelic_games] {
     icon-image: "presets/sport/soccer.svg";
-    set icon_z17;
 }
 node[sport=australian_football],
 node[sport=american_football],
@@ -5706,7 +5024,6 @@ node[sport=canadian_football],
 node[sport=rugby_league],
 node[sport=rugby_union] {
     icon-image: "presets/sport/football.svg";
-    set icon_z17;
 }
 area[sport=baseball],
 area[sport=basketball],
@@ -5721,47 +5038,36 @@ area[sport=croquet] {
 }
 node[sport=baseball] {
     icon-image: "presets/sport/baseball.svg";
-    set icon_z17;
 }
 node[sport=basketball] {
     icon-image: "presets/sport/basketball.svg";
-    set icon_z17;
 }
 node[sport=boules] {
     icon-image: "presets/sport/boule.svg";
-    set icon_z17;
 }
 node[sport=bowls] {
     icon-image: "presets/sport/boule.svg";
-    set icon_z17;
 }
 node[sport=canoe] {
     icon-image: "presets/sport/canoe.svg";
-    set icon_z17;
 }
 node[sport=chess] {
     icon-image: "presets/sport/chess.svg";
-    set icon_z17;
 }
 node[sport=climbing] {
     icon-image: "presets/sport/climbing.svg";
-    set icon_z17;
 }
 node[climbing=route_bottom] {
     icon-image: "presets/sport/climbing_route_bottom.svg";
-    set icon_z17;
 }
 node[climbing=route_top] {
     icon-image: "presets/sport/climbing_route_top.svg";
-    set icon_z17;
 }
 node[sport=cricket] {
     icon-image: "presets/sport/cricket.svg";
-    set icon_z17;
 }
 node[sport=croquet] {
     icon-image: "presets/sport/croquet.svg";
-    set icon_z17;
 }
 area[sport=cycling],
 area[sport=dog_racing],
@@ -5781,72 +5087,57 @@ area[sport=motor][highway=raceway][area=yes] {
 }
 node[sport=cycling] {
     icon-image: "presets/sport/cycling.svg";
-    set icon_z17;
 }
 node[sport=dog_racing] {
     icon-image: "presets/sport/dog_racing.svg";
-    set icon_z17;
 }
 node[sport=equestrian] {
     icon-image: "presets/sport/equestrian.svg";
-    set icon_z17;
 }
 node[sport=golf] {
     icon-image: "presets/sport/golf.svg";
-    set icon_z17;
 }
 node[sport=gymnastics] {
     icon-image: "presets/sport/gymnastics.svg";
-    set icon_z17;
 }
 node[sport=field_hockey] {
     icon-image: "presets/sport/field_hockey.svg";
-    set icon_z17;
 }
 node[sport=ice_hockey] {
     icon-image: "presets/sport/ice_hockey.svg";
-    set icon_z17;
 }
 node[sport=curling] {
     icon-image: "presets/sport/curling.svg";
-    set icon_z17;
 }
 node[sport=horse_racing] {
     icon-image: "presets/sport/riding.svg";
-    set icon_z17;
 }
 node[sport=karting] {
     icon-image: "presets/sport/karting.svg";
-    set icon_z17;
 }
 node[sport=motocross] {
     icon-image: "presets/sport/motocross.svg";
-    set icon_z17;
 }
 node[sport=motor] {
     icon-image: "presets/sport/motor.svg";
-    set icon_z17;
 }
 area[sport=athletics] {
     fill-color: sport_athletics#cfebd7;
 }
 node[sport=athletics] {
     icon-image: "presets/sport/athletics.svg";
-    set icon_z17;
 }
 area[sport=running] {
     fill-color: sport_running#cfebd8;
 }
 node[sport=running] {
     icon-image: "presets/sport/running.svg";
-    set icon_z17;
 }
 area[sport=multi] {
     fill-color: sport_multi#cfebd9;
 }
 node[sport=multi] {
     icon-image: "presets/sport/multi.svg";
-    set icon_z17;
 }
 area[sport=pelota],
 area[sport=racquet],
@@ -5857,34 +5148,27 @@ area[sport=skateboard] {
 }
 node[sport=pelota] {
     icon-image: "presets/sport/pelota.svg";
-    set icon_z17;
 }
 node[sport=racquet] {
     icon-image: "presets/sport/racquetball.svg";
-    set icon_z17;
 }
 node[sport=ice_skating] {
     icon-image: "presets/sport/ice_skating.svg";
-    set icon_z17;
 }
 node[sport=roller_skating] {
     icon-image: "presets/sport/roller_skating.svg";
-    set icon_z17;
 }
 node[sport=skating] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[sport=skateboard] {
     icon-image: "presets/sport/skateboard.svg";
-    set icon_z17;
 }
 area[sport=swimming] {
     fill-color: swimming_pool#51c4ef;
 }
 node[sport=swimming] {
     icon-image: "presets/sport/swimming.svg";
-    set icon_z17;
 }
 area[sport=table_tennis],
 area[sport=tennis],
@@ -5893,15 +5177,12 @@ area[sport=paintball] {
 }
 node[sport=table_tennis] {
     icon-image: "presets/sport/table_tennis.svg";
-    set icon_z17;
 }
 node[sport=tennis] {
     icon-image: "presets/sport/tennis.svg";
-    set icon_z17;
 }
 node[sport=paintball][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 area[sport=squash],
 area[sport=shooting],
@@ -5918,47 +5199,36 @@ area[sport=badminton] {
 }
 node[sport=squash][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[sport=shooting] {
     icon-image: "presets/sport/range.svg";
-    set icon_z17;
 }
 node[sport=volleyball] {
     icon-image: "presets/sport/volleyball.svg";
-    set icon_z17;
 }
 node[sport=beachvolleyball] {
     icon-image: "presets/sport/beachvolleyball.svg";
-    set icon_z17;
 }
 node[sport=billiards] {
     icon-image: "presets/sport/billiards.svg";
-    set icon_z17;
 }
 node[sport=bowling] {
     icon-image: "presets/sport/9pin.svg";
-    set icon_z17;
 }
 node[sport=handball] {
     icon-image: "presets/sport/handball.svg";
-    set icon_z17;
 }
 node[sport=rowing] {
     icon-image: "presets/sport/rowing.svg";
-    set icon_z17;
 }
 node[sport=sailing][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 node[sport=scuba_diving] {
     icon-image: "presets/sport/scuba_diving.svg";
-    set icon_z17;
 }
 node[sport=badminton][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
-    set icon_z17;
 }
 area[sport=archery],
 area[sport=fishing],
@@ -5968,19 +5238,15 @@ area[sport=rc_car] {
 }
 node[sport=archery] {
     icon-image: "presets/sport/archery.svg";
-    set icon_z17;
 }
 node[sport=fishing] {
     icon-image: "presets/sport/fishing.svg";
-    set icon_z17;
 }
 node[sport=model_aerodrome] {
     icon-image: "presets/transport/airport.svg";
-    set icon_z17;
 }
 node[sport=rc_car] {
     icon-image: "presets/sport/rc_car.svg";
-    set icon_z17;
 }
 
 /****************/
@@ -5988,11 +5254,10 @@ node[sport=rc_car] {
 /****************/
 
 area[natural=spring] {
-    fill-color: light_water#00005f;
+    fill-color: light_water#3959ff;
 }
 node[natural=spring] {
     icon-image: "presets/landmark/spring.svg";
-    set icon_z17;
 }
 node[natural=saddle] {
     icon-image: "presets/landmark/saddle.svg";
@@ -6010,7 +5275,7 @@ node[natural=peak][tourism=viewpoint] {
     set text_z0;
 }
 area[natural=glacier] {
-    fill-color: glacier#ffffff;
+    fill-color: glacier#ddd;
 }
 node[natural=volcano] {
     icon-image: "presets/landmark/volcano.svg";
@@ -6028,7 +5293,6 @@ way[natural=cliff] {
 }
 node[natural=cliff] {
     icon-image: "presets/misc/cliff.svg";
-    set icon_z17;
 }
 way[natural=ridge] {
     width: 1;
@@ -6051,7 +5315,7 @@ area[natural=fell] {
     fill-color: natural#002f00;
 }
 area[natural=heath] {
-    fill-color: heath#ffffc0;
+    fill-color: heath#dddfc0;
 }
 way[natural=tree_row] {
     width: 4;
@@ -6098,14 +5362,12 @@ area[natural=rock] {
 }
 node[natural=rock] {
     icon-image: "presets/misc/rock.svg";
-    set icon_z17;
 }
 area[natural=stone] {
     fill-color: stone#f8f8c7;
 }
 node[natural=stone] {
     icon-image: "presets/misc/stone.svg";
-    set icon_z17;
 }
 area[natural=bay] {
     fill-color: natural#77D3DE;
@@ -6116,73 +5378,65 @@ area[natural=cave_entrance] {
 }
 node[natural=bay] {
     icon-image: "presets/nautical/bay.svg";
-    set icon_z17;
 }
 node[natural=strait] {
     icon-image: "presets/nautical/strait.svg";
-    set icon_z17;
 }
 node[natural=cape] {
     icon-image: "presets/nautical/cape.svg";
-    set icon_z17;
 }
 node[natural=sinkhole] {
     icon-image: "presets/landmark/sinkhole.svg";
-    set icon_z17;
 }
 node[natural=sinkhole][sinkhole=bluehole] {
     icon-image: "presets/landmark/bluehole.svg";
-    set icon_z17;
 }
 node[natural=sinkhole][sinkhole=doline] {
     icon-image: "presets/landmark/doline.svg";
-    set icon_z17;
 }
 node[natural=sinkhole][sinkhole=estavelle] {
     icon-image: "presets/landmark/estavelle.svg";
-    set icon_z17;
 }
 node[natural=sinkhole][sinkhole=pit] {
     icon-image: "presets/landmark/pit.svg";
-    set icon_z17;
 }
 node[natural=sinkhole][sinkhole=ponor] {
     icon-image: "presets/landmark/ponor.svg";
-    set icon_z17;
 }
 node[natural=cave_entrance] {
     icon-image: "presets/landmark/cave_entrance.svg";
-    set icon_z17;
 }
+node[natural=reef],
 area[natural=reef] {
     fill-color: reef#80c9ff;
-}
-node[natural=reef] {
-    icon-image: "presets/landmark/reef.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/reef.svg";
 }
 node[natural=cave_entrance] {
     icon-image: "presets/landmark/cave_entrance.svg";
-    set icon_z17;
 }
 node[natural=shrub] {
     icon-image: "presets/landmark/shrub.svg";
-    set icon_z17;
 }
 node[natural=tree] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
+    icon-width: 20;
 }
 node[natural=tree][type=conifer],
 node[natural=tree][leaf_type=needleleaved] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
+    icon-width: 20;
 }
 node[natural=tree][type=broad_leaved],
 node[natural=tree][leaf_type=broadleaved] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-broadleaved.svg";
-    set icon_z17;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-broadleaved-BDOT.svg";
+    icon-width: 20;
 }
+node[natural=wetland],
+area[natural=wetland] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wetland.svg";
+    icon-width: 20;
+}
+
 node[natural=glacier],
 node[natural=scree],
 node[natural=shingle],
@@ -6205,7 +5459,6 @@ node[natural=arete],
 node[natural=ridge],
 node[natural=valley] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 /*****************/
 /* waterway tags */
@@ -6236,9 +5489,9 @@ way|z-14[waterway=river][tunnel] {
     casing-color: #3d6c71;
 }
 area[waterway=riverbank] {
-    fill-color: riverbanak#0000cf;
+    fill-color: riverbanak#3330cf;
     width: 1;
-    color: riverbank#0000cf;
+    color: riverbank#3330cf;
 }
 way|z15-[waterway=pressurised],
 way|z15-[waterway=canal] {
@@ -6328,11 +5581,10 @@ way[waterway=drain][intermittent=yes] {
     casing-dashes: 7,3;
 }
 area[waterway=dock] {
-    fill-color: dock#0000cf;
+    fill-color: dock#3330cf;
 }
 node[waterway=dock] {
     icon-image: "presets/nautical/boatyard.svg";
-    set icon_z17;
 }
 way[waterway=lock_gate] {
     width: 3;
@@ -6340,35 +5592,29 @@ way[waterway=lock_gate] {
 }
 node[waterway=lock_gate] {
     icon-image: "presets/nautical/lock_gate.svg";
-    set icon_z17;
 }
 node[waterway=turning_point] {
     icon-image: "presets/nautical/turning.svg";
-    set icon_z17;
 }
 area[waterway=boatyard] {
     fill-color: manmade#d8d8d8;
 }
 node[waterway=boatyard] {
     icon-image: "presets/nautical/boatyard.svg";
-    set icon_z17;
 }
 node[waterway=water_point],
 node[waterway=waste_disposal],
 node[waterway=mooring] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 node[mooring] {
     icon-image: "presets/nautical/marina.svg";
-    set icon_z17;
 }
 area[waterway=fuel] {
     fill-color: amenity_traffic#f7efb7;
 }
 node[waterway=fuel] {
     icon-image: "presets/nautical/marine_fuel.svg";
-    set icon_z17;
 }
 way[waterway=weir] {
     width: 4;
@@ -6379,7 +5625,6 @@ way[waterway=weir] {
 }
 node[waterway=weir] {
     icon-image: "presets/nautical/weir.svg";
-    set icon_z17;
 }
 area[waterway=dam] {
     fill-color: manmade#A8A8A8;
@@ -6404,7 +5649,6 @@ way[waterway=fish_pass][tunnel] {
 }
 node[waterway=dam] {
     icon-image: "presets/nautical/dam.svg";
-    set icon_z17;
 }
 /* it's not possible to have both line and area, line seems more likely */
 way[waterway=waterfall] {
@@ -6413,14 +5657,12 @@ way[waterway=waterfall] {
 }
 node[waterway=waterfall] {
     icon-image: "presets/nautical/waterfall.svg";
-    set icon_z17;
 }
 node[waterway=river], node[waterway=riverbank],
 node[waterway=canal], node[waterway=wadi],
 node[waterway=stream],
 node[waterway=ditch], node[waterway=drain] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /**************/
@@ -6441,7 +5683,6 @@ node[route=ski],
 node[route=tour],
 node[route=pub_crawl] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /*******************/
@@ -6466,7 +5707,7 @@ way[boundary=maritime]::core_boundary {
     z-index: 2;
     modifier: false;
     width: 2;
-    color: boundary#FFFFFF;
+    color: boundary#ddd;
     casing-color: #82B5FE;
     casing-width: 2;
     dashes: 16,4,4,4;
@@ -6478,7 +5719,7 @@ relation[boundary=national_park] > way::core_boundary {
     z-index: 2;
     modifier: false;
     width: 2;
-    color: boundary#FFFFFF;
+    color: boundary#ddd;
     casing-color: #b0e298;
     casing-width: 2;
     dashes: 16,4,4,4;
@@ -6486,7 +5727,6 @@ relation[boundary=national_park] > way::core_boundary {
 
 node[boundary=marker] {
     icon-image: "presets/landmark/boundary_marker.svg";
-    set icon_z17;
 }
 
 node[boundary=national],
@@ -6495,7 +5735,6 @@ node[boundary=postal_code],
 node[boundary=political],
 node[boundary=national_park] {
     icon-image: "presets/misc/deprecated.svg";
-    set icon_z17;
 }
 
 /******************/
@@ -6503,7 +5742,6 @@ node[boundary=national_park] {
 /******************/
 node[traffic_sign][maxspeed=none][!is_prop_set(icon-image)] {
     icon-image: "presets/vehicle/restriction/maxspeed_none.svg";
-    set icon_z17;
 }
 node[traffic_sign][maxspeed=~/^[0-9]+$/][!is_prop_set(icon-image)] {
     maxspeedprop: tag(maxspeed);
@@ -6690,7 +5928,6 @@ area[place=square] {
 }
 node[place=square] {
     icon-image: "presets/place/square.svg";
-    set icon_z17;
 }
 
 /***************************/
@@ -6741,22 +5978,10 @@ node|z-16[setting("hide_icons")],
 node|z17-[!is_prop_set("icon-image")][setting("hide_icons")]!.maxspeedclass,
 node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
     symbol-size: 2;
-    symbol-shape: square;
-    symbol-stroke-color: node_standard#ffff00;
     major-z-index: 4.95; /* put node squares above line text */
 }
-way > node|z-15[setting("shrink_nodes")]!:tagged {
-    symbol-shape: none;
-}
-node:connection {
-    symbol-stroke-color: node_connection#ffff00;
-}
-node:tagged {
-    symbol-stroke-color: none;
-    symbol-fill-color: node_tagged#00ffff;
-}
 way > node|z-14[setting("shrink_nodes")][setting("hide_tagged_waynodes")]:tagged {
-    symbol-shape: none;
+    symbol-shape: circle;
 }
 
 way > node|z16[setting("shrink_nodes")]!:tagged { symbol-size: 1; }
@@ -6776,13 +6001,6 @@ node|z19-[setting("shrink_nodes")]:connection   { symbol-size: 6; }
 node[!setting("shrink_nodes")]                  { symbol-size: 4; }
 way > node[!setting("shrink_nodes")]            { symbol-size: 4; }
 node[!setting("shrink_nodes")]:connection       { symbol-size: 6; }
-
-node:selected {
-    symbol-shape: square;
-    symbol-size: 6;
-    symbol-fill-color: node_selected#ff0000;
-    symbol-stroke-color: node_selected#ff0000;
-}
 
 node|z-16[setting("hide_icons")].icon_z17!.icon_z0,
 relation|z-16[type=restriction][setting("hide_icons")] {
@@ -6892,7 +6110,7 @@ way|z18-[highway=raceway][setting("highway_labels")] {
     text-halo-color: raceway#ff80ff;
 }
 way|z18-[highway=construction][setting("highway_labels")] {
-    text-halo-color: construction#ffff00;
+    text-halo-color: construction#dddf00;
 }
 way|z18-[highway=road][setting("highway_labels")] {
     text-halo-color: highway_road#770000;
@@ -6916,7 +6134,7 @@ way|z20-[highway][setting("highway_labels")] {
 
 /* small extent for unclosed area (see below for closed) */
 area[setting("partial_fill")] {
-    fill-extent: 15;
+    fill-extent: 10;
 }
 
 /* Turn partial fill off and use plain fill, when the partial fill covers about
@@ -6931,7 +6149,7 @@ area|z-13[setting("partial_fill")] {
    Turn partial fill off, when it covers more than about 50% of the area. This avoids
    areas with small unfilled patches in the center. */
 area[setting("partial_fill")]:closed2 {
-    fill-extent: 25;
+    fill-extent: 15;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
 
