@@ -35,7 +35,7 @@ way:closed[is_prop_set(icon-image)] {
     icon-position: inside;
 }
 node|z10- {
-    symbol-size: 7;
+    symbol-size: 78;
     symbol-shape: circle;
     symbol-stroke-opacity: 0.9;
     symbol-stroke-color: #ddd;
@@ -278,74 +278,13 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
 
-/*****************************/
-/* building/entrance/address */
-/*****************************/
 
-node["addr:housenumber"] {
-    icon-image: "presets/misc/housenumber_small.svg";
-}
-way["addr:interpolation"=odd] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 15,4;
-}
-way["addr:interpolation"=even] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 4,4;
-}
-way["addr:interpolation"=all],
-way["addr:interpolation"=alphabetic] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 2,2;
-}
-area[building][!building?!][building!=y][building!=1] {
-    fill-color: building#e06e5f;
-}
-area[building=roof],
-area[building][!building?!][wall?!],
-area[building:part][!building:part?!] {
-    fill-color: buildingpart#dcbbbb;
-}
-node[building][!building?!] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
-}
-node[building=garage] {
-    icon-image: "presets/landuse/garages.svg";
-}
-node[building=garages] {
-    icon-image: "presets/landuse/garages.svg";
-}
-node[building=transformer_tower] {
-    icon-image: "presets/power/transformer_tower.svg";
-}
-node[entrance=yes],
-node[entrance=home],
-node[entrance=staircase] {
-    icon-image: "presets/misc/entrance_yes.svg";
-}
-node[entrance=main] {
-    icon-image: "presets/misc/entrance_main.svg";
-}
-node[entrance=service] {
-    icon-image: "presets/misc/entrance_service.svg";
-}
-node[entrance=exit] {
-    icon-image: "presets/misc/entrance_exit.svg";
-}
-node[entrance=emergency] {
-    icon-image: "presets/misc/entrance_emergency.svg";
-}
-node[building=entrance],
-node[building:part] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 
 /****************/
 /* barrier tags */
 /****************/
+
+
 
 way[barrier=bollard] {
     width: 2;
@@ -353,7 +292,7 @@ way[barrier=bollard] {
     dashes: 3,9;
 }
 node[barrier=bollard] {
-    icon-image: "presets/barrier/bollard.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
 }
 node[barrier=gate] {
     icon-image: "presets/barrier/gate.svg";
@@ -1635,9 +1574,43 @@ node[highway=traffic_signals][crossing=island] {
 node[highway=traffic_signals][crossing=traffic_signals] {
     icon-image: "presets/vehicle/traffic_signals_crossing_traffic_signals.svg";
 }
+
 node[highway=street_lamp] {
-    icon-image: "presets/misc/streetlamp.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-arm.svg";
 }
+node|z17-[highway="street_lamp"]::Lighting_1
+{
+    symbol-shape: circle;
+    symbol-size: 40;
+    symbol-fill-color: white;
+    symbol-fill-opacity: 0.5;
+    object-z-index: -1.0;
+}
+node|z17-[highway="street_lamp"]::Lighting_2
+{
+    symbol-shape: circle;
+    symbol-size: eval(4 * prop(pixel_per_metre,"default"));
+    symbol-fill-color: white;
+    symbol-fill-opacity: 0.07;
+    object-z-index: -1.0;
+}
+node|z17-[highway="street_lamp"]::Lighting_3
+{
+    symbol-shape: circle;
+    symbol-size: eval(6 * prop(pixel_per_metre,"default"));
+    symbol-fill-color: white;
+    symbol-fill-opacity: 0.05;
+    object-z-index: -1.0;
+}
+node|z17-[highway="street_lamp"]::Lighting_4
+{
+    symbol-shape: circle;
+    symbol-size: eval(8 * prop(pixel_per_metre,"default"));
+    symbol-fill-color: white;
+    symbol-fill-opacity: 0.05;
+    object-z-index: -1.0;
+}
+
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
 }
@@ -2125,11 +2098,11 @@ node[piste:type=snow_park] {
 node[power=portal] {
     icon-image: "presets/power/portal.svg";
 }
-node[power=tower] {
-    icon-image: "presets/power/tower.svg";
+*[power=tower] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/power-tower.svg";
 }
 node[power=pole] {
-    icon-image: "presets/power/pole.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/power-pole.svg";
 }
 node[power=pole][switch] {
     icon-image: "presets/power/pole_switch.svg";
@@ -2182,8 +2155,8 @@ node[power=heliostat] {
 node[power=substation] {
     icon-image: "presets/power/substation.svg";
 }
-node[power=transformer] {
-    icon-image: "presets/power/transformer.svg";
+*[power=transformer] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/power-transformer.svg";
 }
 node[power=terminal] {
     icon-image: "presets/power/terminal.svg";
@@ -2525,11 +2498,11 @@ node[man_made=communications_tower] {
 node[man_made=wastewater_plant] {
     icon-image: "presets/landmark/wastewater_plant.svg";
 }
-node[man_made=watermill] {
-    icon-image: "presets/landmark/watermill.svg";
+*[man_made=watermill] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/watermill.svg";
 }
-node[man_made=water_tower] {
-    icon-image: "presets/tower/water_tower.svg";
+*[man_made=water_tower] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/water-tower.svg";
 }
 node[man_made=water_well] {
     icon-image: "presets/landmark/water_well.svg";
@@ -2590,7 +2563,7 @@ node[man_made=utility_pole] {
     icon-image: "presets/tower/pole.svg";
 }
 node[man_made=utility_pole][utility~=power] {
-    icon-image: "presets/power/pole.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/power-pole.svg";
 }
 node[man_made=utility_pole][utility~=street_lighting] {
     icon-image: "presets/tower/pole_street_light.svg";
@@ -2673,8 +2646,9 @@ node[office=financial] {
 node[office=foundation] {
     icon-image: "presets/office/foundation.svg";
 }
-node[office=insurance] {
-    icon-image: "presets/office/insurance.svg";
+node[office=insurance],
+area[office=insurance] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-shield.svg";
 }
 node[office=it] {
     icon-image: "presets/office/it.svg";
@@ -2928,7 +2902,7 @@ area[advertising=column] {
     fill-color: advertising#880000;
 }
 node[advertising=billboard] {
-    icon-image: "presets/leisure/billboard.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/billboard.svg";
 }
 node[advertising=poster_box] {
     icon-image: "presets/leisure/poster_box.svg";
@@ -3071,10 +3045,10 @@ node[shop=beverages] {
     icon-image: "presets/shop/beverages.svg";
 }
 node[shop=alcohol] {
-    icon-image: "presets/shop/alcohol.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/alcohol.svg";
 }
 node[shop=books] {
-    icon-image: "presets/shop/book.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/book-store.svg";
 }
 node[shop=boutique] {
     icon-image: "presets/shop/boutique.svg";
@@ -3097,8 +3071,9 @@ node[shop=tobacco] {
 node[shop=e-cigarette] {
     icon-image: "presets/shop/e-cigarette.svg";
 }
-node[shop=clothes] {
-    icon-image: "presets/shop/clothes.svg";
+node[shop=clothes],
+area[shop=clothes] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/clothing-store.svg";
 }
 node[shop=computer] {
     icon-image: "presets/shop/computer.svg";
@@ -3142,8 +3117,9 @@ node[shop=erotic] {
 node[shop=furniture] {
     icon-image: "presets/shop/furniture.svg";
 }
-node[shop=fabric] {
-    icon-image: "presets/shop/fabric.svg";
+node[shop=fabric],
+area[shop=fabric] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
 }
 node[shop=florist] {
     icon-image: "presets/shop/florist.svg";
@@ -3244,8 +3220,9 @@ node[shop=sports] {
 node[shop=stationery] {
     icon-image: "presets/shop/stationery.svg";
 }
-node[shop=tailor] {
-    icon-image: "presets/shop/tailor.svg";
+node[shop=tailor],
+area[shop=tailor] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
 }
 node[shop=travel_agency] {
     icon-image: "presets/shop/travel_agency.svg";
@@ -3324,7 +3301,7 @@ node[shop=herbalist] {
     icon-image: "presets/shop/groceries/herbalist.svg";
 }
 node[shop=tea] {
-    icon-image: "presets/shop/groceries/tea.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/teahouse.svg";
 }
 node[shop=coffee] {
     icon-image: "presets/shop/groceries/coffee.svg";
@@ -3384,183 +3361,153 @@ node[shop=bag] {
 /*Custom Shops*/
 
 /*Żabka*/
-node[shop][brand*="Żabka"],
-area[shop][brand*="Żabka"] {
+*[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
     icon-width: 35;
     text-offset-y: -15;
 }
 /*Biedronka*/
-node[shop][brand*="Biedronka"],
-area[shop][brand*="Biedronka"] {
+*[shop][brand*="Biedronka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
     icon-width: 50;
 }
 /*Lidl*/
-node[shop][brand*="Lidl"],
-area[shop][brand*="Lidl"]  {
+*[shop][brand*="Lidl"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
     icon-width: 25;
 }
 /*Aldi*/
-node[shop][brand*="Aldi"],
-area[shop][brand*="Aldi"]  {
+*[shop][brand*="Aldi"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
     icon-width: 25;
 }
 /*Kaufland*/
-node[shop][brand*="Kaufland"],
-area[shop][brand*="Kaufland"]  {
+*[shop][brand*="Kaufland"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
     icon-width: 25;
 }
 /*Netto*/
-node[shop][brand*="Netto"],
-area[shop][brand*="Netto"]  {
+*[shop][brand*="Netto"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Netto_2019.svg";
     icon-width: 50;
 }
 /*Auchan*/
-node[shop][brand*="Auchan"],
-area[shop][brand*="Auchan"]  {
+*[shop][brand*="Auchan"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9e/Auchan_2018.svg";
     icon-width: 50;
 }
 /*Dino*/
-node[shop][brand*="Dino"],
-area[shop][brand*="Dino"] {
+*[shop][brand*="Dino"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
     icon-width: 35;
 }
 /*Carrefour*/
-node[shop][brand*="Carrefour"],
-area[shop][brand*="Carrefour"] {
+*[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
     icon-width: 30;
 }
 /*Rossmann*/
-node[shop][brand*="Rossmann"],
-area[shop][brand*="Rossmann"] {
+*[shop][brand*="Rossmann"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
     icon-width: 30;
 }
 /*Hebe*/
-node[shop][brand*="Hebe"],
-area[shop][brand*="Hebe"] {
+*[shop][brand*="Hebe"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
     icon-width: 30;
 }
 /*dm*/
-node[shop][brand*="dm"],
-area[shop][brand*="dm"] {
+*[shop][brand*="dm"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
     icon-width: 30;
 }
 /*Dealz*/
-node[shop][brand*="Dealz"],
-area[shop][brand*="Dealz"] {
+*[shop][brand*="Dealz"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a9/Dealz_2023.svg";
     icon-width: 35;
 }
 /*TEDi*/
-node[shop][brand*="TEDi"],
-area[shop][brand*="TEDi"] {
+*[shop][brand*="TEDi"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
     icon-width: 25;
 }
 /*Pepco*/
-node[shop][brand*="Pepco"],
-area[shop][brand*="Pepco"] {
+*[shop][brand*="Pepco"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
     icon-width: 40;
 }
 /*H&M*/
-node[shop][brand*="H&M"],
-area[shop][brand*="H&M"] {
+*[shop][brand*="H&M"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
     icon-width: 30;
 }
 /*New Yorker*/
-node[shop][brand*="New Yorker"],
-area[shop][brand*="New Yorker"] {
+*[shop][brand*="New Yorker"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
     icon-width: 65;
 }
 /*CCC*/
-node[shop][brand*="CCC"],
-area[shop][brand*="CCC"] {
+*[shop][brand*="CCC"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
     icon-width: 40;
 }
 /*Cropp*/
-node[shop][brand*="Cropp"],
-area[shop][brand*="Cropp"] {
+*[shop][brand*="Cropp"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
     icon-width: 55;
 }
 /*House*/
-node[shop][brand*="House"],
-area[shop][brand*="House"] {
+*[shop][brand*="House"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
     icon-width: 55;
 }
 /*Mohito*/
-node[shop][brand*="Mohito"],
-area[shop][brand*="Mohito"] {
+*[shop][brand*="Mohito"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
     icon-width: 65;
 }
 /*Reserved*/
-node[shop][brand*="Reserved"],
-area[shop][brand*="Reserved"] {
+*[shop][brand*="Reserved"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
     icon-width: 65;
 }
 /*Sinsay*/
-node[shop][brand*="Sinsay"],
-area[shop][brand*="Sinsay"] {
+*[shop][brand*="Sinsay"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
     icon-width: 55;
 }
 /*Zara*/
-node[shop][brand*="Zara"],
-area[shop][brand*="Zara"] {
+*[shop][brand*="Zara"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
     icon-width: 50;
 }
 /*Zara Home*/
-node[shop][brand*="Zara Home"],
-area[shop][brand*="Zara Home"] {
+*[shop][brand*="Zara Home"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
     icon-width: 65;
 }
 /*Bershka*/
-node[shop][brand*="Bershka"],
-area[shop][brand*="Bershka"] {
+*[shop][brand*="Bershka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
     icon-width: 65;
 }
 /*Stradivarius*/
-node[shop][brand*="Stradivarius"],
-area[shop][brand*="Stradivarius"] {
+*[shop][brand*="Stradivarius"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
     icon-width: 85;
 }
 /*Pull & Bear*/
-node[shop][brand*="Pull & Bear"],
-area[shop][brand*="Pull & Bear"] {
+*[shop][brand*="Pull & Bear"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
     icon-width: 65;
 }
 /*HalfPrice*/
-node[shop][brand*="HalfPrice"],
-area[shop][brand*="HalfPrice"] {
+*[shop][brand*="HalfPrice"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
     icon-width: 65;
 }
 /*TK Maxx*/
-node[shop][brand*="TK Maxx"],
-area[shop][brand*="TK Maxx"] {
+*[shop][brand*="TK Maxx"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
     icon-width: 65;
 }
@@ -3693,6 +3640,14 @@ node[amenity=fast_food] {
 node[amenity=bar] {
     icon-image: "presets/food/bar.svg";
 }
+*[cuisine=kebab] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kebab.svg";
+}
+*[cuisine=bubble_tea] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bubble-tea.svg";
+}
+
+
 node[amenity=ice_cream] {
     icon-image: "presets/food/ice_cream.svg";
 }
@@ -3849,14 +3804,17 @@ area[amenity=water_point],
 area[amenity=fountain] {
     fill-color: light_water#3959ff;
 }
-node[amenity=drinking_water] {
-    icon-image: "presets/food/drinking_water.svg";
-}
-node[amenity=water_point] {
-    icon-image: "presets/accommodation/water.svg";
+node[amenity=water_point],
+area[amenity=water_point]
+node[man_made=water_tap] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/water-tap.svg";
 }
 node[amenity=fountain] {
     icon-image: "presets/misc/fountain.svg";
+}
+node[amenity=drinking_water],
+node[drinking_water=yes] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/water-tap-drinkable.svg";
 }
 area[amenity=animal_boarding],
 area[amenity=animal_breeding],
@@ -4105,7 +4063,10 @@ node[amenity=money_transfer] {
     icon-image: "presets/money/money_transfer.svg";
 }
 node[amenity=atm] {
-    icon-image: "presets/money/atm.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/atm2.svg";
+}
+node[amenity=atm][cash_in=~/yes|only|customers/] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/atm.svg";
 }
 way[amenity=bench] {
     width: 2;
@@ -4158,25 +4119,21 @@ node[amenity=vending_machine] {
 node[vending=excrement_bags] {
     icon-image: "presets/service/excrement_bags.svg";
 }
-node[amenity=parcel_locker],
-area[amenity=parcel_locker]{
+*[amenity=parcel_locker]{
     icon-image: "presets/service/parcel_locker.svg";
 }
 /*InPost*/
-node[amenity=parcel_locker][brand*="InPost"],
-area[amenity=parcel_locker][brand*="InPost"]{
+*[brand*="InPost"]{
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
     icon-width: 35;
 }
 /*DHL*/
-node[amenity=parcel_locker][brand*="DHL"],
-area[amenity=parcel_locker][brand*="DHL"]{
+*[brand*="DHL"]{
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
     icon-width: 35;
 }
 /*DPD*/
-node[amenity=parcel_locker][brand*="DPD"],
-area[amenity=parcel_locker][brand*="DPD"]{
+*[brand*="DPD"]{
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
     icon-width: 45;
 }
@@ -4187,6 +4144,7 @@ area[amenity=parcel_locker][brand*="DPD"]{
 /**************/
 
 area[craft=carpenter],
+area[craft=dressmaker],
 area[craft=shoemaker],
 area[craft=photographer],
 area[craft=metal_construction],
@@ -4216,11 +4174,14 @@ area[craft=tiler] {
 node[craft=carpenter] {
     icon-image: "presets/craft/carpenter.svg";
 }
+node[craft=dressmaker] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
+}
 node[craft=shoemaker] {
     icon-image: "presets/craft/shoemaker.svg";
 }
-node[craft=photographer] {
-    icon-image: "presets/craft/photographer.svg";
+*[craft=photographer] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/camera.svg";
 }
 node[craft=metal_construction] {
     icon-image: "presets/craft/metal_construction.svg";
@@ -4411,11 +4372,9 @@ node[attraction=water_slide] {
 /* information tags */
 /********************/
 
-area[tourism=information] {
+*[tourism=information] {
     fill-color: tourism#e180a2;
-}
-node[tourism=information] {
-    icon-image: "presets/misc/information/information.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/information.svg";
 }
 node[tourism=information][information=guidepost] {
     icon-image: "presets/misc/information/guidepost.svg";
@@ -4426,17 +4385,15 @@ node[tourism=information][information=route_marker] {
 node[tourism=information][information=audioguide] {
     icon-image: "presets/misc/information/audioguide.svg";
 }
-area[tourism=information][information=office] {
+*[tourism=information][information=office] {
     fill-color: tourism#e180a2;
-}
-node[tourism=information][information=office] {
-    icon-image: "presets/misc/information/informationoffice.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-info.svg";
 }
 node[tourism=information][information=map] {
     icon-image: "presets/misc/information/map.svg";
 }
 node[tourism=information][information=board] {
-    icon-image: "presets/misc/information/board.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-board.svg";
 }
 
 /*****************/
@@ -5518,7 +5475,7 @@ area[natural=heath] {
 }
 way[natural=tree_row] {
     width: 4;
-    color: woodarea#008000;
+    color: woodarea#0DC243;
 }
 area[natural=wood] {
     fill-color: woodarea#0DC243;
@@ -6126,6 +6083,76 @@ node[place=square] {
     icon-image: "presets/place/square.svg";
 }
 
+
+
+/*****************************/
+/* building/entrance/address */
+/*****************************/
+
+
+
+node["addr:housenumber"] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/address.svg";
+}
+way["addr:interpolation"=odd] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 15,4;
+}
+way["addr:interpolation"=even] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 4,4;
+}
+way["addr:interpolation"=all],
+way["addr:interpolation"=alphabetic] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 2,2;
+}
+area[building][!building?!][building!=y][building!=1] {
+    fill-color: building#e06e5f;
+    width: 3;
+}
+area[building=roof],
+area[building][!building?!][wall?!],
+area[building:part][!building:part?!] {
+    fill-color: buildingpart#dcbbbb;
+}
+node[building][!building?!] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
+}
+node[building=garage] {
+    icon-image: "presets/landuse/garages.svg";
+}
+node[building=garages] {
+    icon-image: "presets/landuse/garages.svg";
+}
+node[building=transformer_tower] {
+    icon-image: "presets/power/transformer_tower.svg";
+}
+node[entrance=yes],
+node[entrance=home],
+node[entrance=staircase] {
+    icon-image: "presets/misc/entrance_yes.svg";
+}
+node[entrance=main] {
+    icon-image: "presets/misc/entrance_main.svg";
+}
+node[entrance=service] {
+    icon-image: "presets/misc/entrance_service.svg";
+}
+node[entrance=exit] {
+    icon-image: "presets/misc/entrance_exit.svg";
+}
+node[entrance=emergency] {
+    icon-image: "presets/misc/entrance_emergency.svg";
+}
+node[building=entrance],
+node[building:part] {
+    icon-image: "presets/misc/deprecated.svg";
+}
+
 /***************************/
 /* "work in progress" tags */
 /***************************/
@@ -6176,19 +6203,14 @@ node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
     symbol-size: 2;
     major-z-index: 4.95; /* put node squares above line text */
 }
-way > node|z-14[setting("shrink_nodes")][setting("hide_tagged_waynodes")]:tagged {
-    symbol-shape: circle;
-}
 
-way > node|z16[setting("shrink_nodes")]!:tagged { symbol-size: 1; }
-
-node|z17[setting("shrink_nodes")]               { symbol-size: 4; }
-way > node|z17[setting("shrink_nodes")]         { symbol-size: 2; }
+node|z17-[setting("shrink_nodes")]               { symbol-size: 4; }
+way > node|z17[setting("shrink_nodes")]         { symbol-size: 3; }
 node|z17[setting("shrink_nodes")]:connection    { symbol-size: 4; }
 
-node|z15[setting("shrink_nodes")]               { symbol-size: 4; }
-way > node|z15[setting("shrink_nodes")]         { symbol-size: 3; }
-node|z15[setting("shrink_nodes")]:connection    { symbol-size: 5; }
+node|z15-[setting("shrink_nodes")]               { symbol-size: 4; }
+way > node|z15-[setting("shrink_nodes")]         { symbol-size: 4; }
+node|z15-[setting("shrink_nodes")]:connection    { symbol-size: 5; }
 
 node|z19-[setting("shrink_nodes")]              { symbol-size: 4; }
 way > node|z19-[setting("shrink_nodes")]        { symbol-size: 4; }
