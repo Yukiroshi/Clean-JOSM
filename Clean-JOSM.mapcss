@@ -120,6 +120,30 @@ setting::partial_fill {
   default: true;
 }
 
+/**************/
+/* addresses  */
+/**************/
+
+node["addr:housenumber"] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/address.svg";
+}
+way["addr:interpolation"=odd] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 15,4;
+}
+way["addr:interpolation"=even] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 4,4;
+}
+way["addr:interpolation"=all],
+way["addr:interpolation"=alphabetic] {
+    width: 1;
+    color: address#1C86EE;
+    dashes: 2,2;
+}
+
 /*********************/
 /* turn restrictions */
 /*********************/
@@ -2733,9 +2757,8 @@ node[leisure=adult_gaming_centre] {
 node[leisure=hackerspace] {
     icon-image: "presets/leisure/hackerspace.svg";
 }
-node[leisure=outdoor_seating],
-area[leisure=outdoor_seating] {
-    icon-image: "presets/leisure/outdoor_seating.svg";
+*[leisure=outdoor_seating] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/outdoor-seating.svg";
 }
 node[leisure=resort] {
     icon-image: "presets/leisure/resort.svg";
@@ -3142,8 +3165,8 @@ node[shop=greengrocer] {
 node[shop=garden_centre] {
     icon-image: "presets/shop/garden_centre.svg";
 }
-node[shop=hairdresser] {
-    icon-image: "presets/shop/hairdresser.svg";
+*[shop=hairdresser] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/hairdresser.svg";
 }
 node[shop=hardware] {
     icon-image: "presets/shop/hardware.svg";
@@ -3629,7 +3652,7 @@ node[amenity=cafe] {
     icon-image: "presets/food/cafe.svg";
 }
 node[amenity=restaurant] {
-    icon-image: "presets/food/restaurant.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/restaurant.svg";
 }
 node[amenity=food_court] {
     icon-image: "presets/food/food_court.svg";
@@ -4492,6 +4515,16 @@ node[cemetery=sector] {
 }
 node[historic=tomb] {
     icon-image: "presets/misc/tomb.svg";
+}
+
+*[heritage] {
+    icon-width: 20;
+    text-offset-y: -25;
+}
+*[heritage]::heritage {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/heritage.svg";
+    icon-width: 15;
+    icon-offset-y: 15;
 }
 
 /****************/
@@ -5563,8 +5596,7 @@ node[natural=sinkhole][sinkhole=ponor] {
 node[natural=cave_entrance] {
     icon-image: "presets/landmark/cave_entrance.svg";
 }
-node[natural=reef],
-area[natural=reef] {
+*[natural=reef] {
     fill-color: reef#80c9ff;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/reef.svg";
 }
@@ -5577,16 +5609,19 @@ node[natural=shrub] {
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
 }
-node[natural=tree][type=conifer],
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
 }
-node[natural=tree][type=broad_leaved],
 node[natural=tree][leaf_type=broadleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-broadleaved-BDOT.svg";
 }
-node[natural=wetland],
-area[natural=wetland] {
+node[natural=tree][leaf_type=palm] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-palm.svg";
+}
+node[natural=tree][leaf_type=leafless] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
+}
+*[natural=wetland] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wetland.svg";
 }
 
@@ -6086,30 +6121,9 @@ node[place=square] {
 
 
 /*****************************/
-/* building/entrance/address */
+/* building/entrance */
 /*****************************/
 
-
-
-node["addr:housenumber"] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/address.svg";
-}
-way["addr:interpolation"=odd] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 15,4;
-}
-way["addr:interpolation"=even] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 4,4;
-}
-way["addr:interpolation"=all],
-way["addr:interpolation"=alphabetic] {
-    width: 1;
-    color: address#1C86EE;
-    dashes: 2,2;
-}
 area[building][!building?!][building!=y][building!=1] {
     fill-color: building#e06e5f;
     width: 3;
