@@ -7,7 +7,7 @@ meta {
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
 canvas {
-    fill-color: #828282;
+    fill-color: #5b5b5b;
 }
 
 /*Node and line base style*/
@@ -37,14 +37,11 @@ way:closed[is_prop_set(icon-image)] {
 node|z10- {
     symbol-size: 78;
     symbol-shape: circle;
-    symbol-stroke-opacity: 0.9;
     symbol-stroke-color: #ddd;
     symbol-fill-color: #333;
-    symbol-fill-opacity: 0.9;
 }
 way!:closed >[index=-1] node!:connection {
     symbol-size: 8;
-    symbol-stroke-opacity: 1;
 }
 way > node!:connection {
     symbol-size: 6;
@@ -67,7 +64,7 @@ node|z-15 {
     symbol-fill-opacity: 0;
 }
 way:closed {
-    fill-opacity: 0.25;
+    fill-opacity: 0.3;
 }
 
 node[traffic_calming],
@@ -2614,31 +2611,14 @@ node[man_made=street_cabinet][street_cabinet=telecom] {
 /* office tags */
 /***************/
 
-area[office=accountant],
-area[office=advertising_agency],
-area[office=architect],
-area[office=association],
-area[office=company],
-area[office=educational_institution],
-area[office=employment_agency],
-area[office=estate_agent],
-area[office=foundation],
-area[office=government],
-area[office=insurance],
-area[office=it],
-area[office=lawyer],
-area[office=newspaper],
-area[office=ngo],
-area[office=notary],
-area[office=political_party],
-area[office=religion],
-area[office=research],
-area[office=tax_advisor],
-area[office=telecommunication] {
+area[office] {
     fill-color: office#de5696;
 }
-node[office=accountant] {
-    icon-image: "presets/office/accountant.svg";
+*[office] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase.svg";
+}
+*[office=accountant] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/calculator.svg";
 }
 node[office=advertising_agency] {
     icon-image: "presets/office/advertising_agency.svg";
@@ -2677,8 +2657,8 @@ area[office=insurance] {
 node[office=it] {
     icon-image: "presets/office/it.svg";
 }
-node[office=lawyer] {
-    icon-image: "presets/office/lawyer.svg";
+*[office=lawyer] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-law.svg";
 }
 node[office=newspaper] {
     icon-image: "presets/office/newspaper.svg";
@@ -3284,11 +3264,11 @@ node[shop=lottery] {
 node[shop=shopping_centre] {
     icon-image: "presets/shop/mall.svg";
 }
-node[shop=pet] {
-    icon-image: "presets/shop/pet.svg";
+*[shop=pet] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pet-store.svg";
 }
-node[shop=pet_grooming] {
-    icon-image: "presets/shop/pet_grooming.svg";
+*[shop=pet_grooming] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pet-grooming.svg";
 }
 node[shop=photo] {
     icon-image: "presets/shop/photo.svg";
@@ -3323,11 +3303,11 @@ node[shop=perfumery] {
 node[shop=herbalist] {
     icon-image: "presets/shop/groceries/herbalist.svg";
 }
-node[shop=tea] {
+*[shop=tea] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/teahouse.svg";
 }
-node[shop=coffee] {
-    icon-image: "presets/shop/groceries/coffee.svg";
+*[shop=coffee] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/coffee.svg";
 }
 node[shop=frozen_food] {
     icon-image: "presets/shop/groceries/frozen_food.svg";
@@ -3341,8 +3321,8 @@ node[shop=swimming_pool] {
 node[shop=storage_rental] {
     icon-image: "presets/shop/storage_rental.svg";
 }
-node[shop=music] {
-    icon-image: "presets/shop/music.svg";
+*[shop=music] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg";
 }
 node[shop=weapons] {
     icon-image: "presets/shop/weapons.svg";
@@ -3353,8 +3333,8 @@ node[shop=funeral_directors] {
 node[shop=agrarian] {
     icon-image: "presets/shop/agrarian.svg";
 }
-node[shop=wine] {
-    icon-image: "presets/shop/wine.svg";
+*[shop=wine] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/alcohol.svg";
 }
 node[shop=farm] {
     icon-image: "presets/shop/groceries/farm.svg";
@@ -3534,10 +3514,49 @@ node[shop=bag] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
     icon-width: 65;
 }
+/*Media Markt*/
+*[shop][brand*="Media Markt"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/57/MediaMarkt_2024.svg";
+    icon-width: 65;
+}
+/*Media Expert*/
+*[shop][brand*="Media Expert"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
+    icon-width: 65;
+}
+/*RTV Euro AGD*/
+*[shop][brand*="RTV Euro AGD"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/66/RTV_Euro_AGD.svg";
+    icon-width: 65;
+}
+/*IKEA*/
+*[shop][brand*="IKEA"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/IKEA_2019.svg";
+    icon-width: 50;
+}
+/*McDonald's*/
+*[amenity][brand*="McDonald's"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
+    icon-width: 35;
+}
+/*Burger King*/
+*[amenity][brand*="Burger King"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
+    icon-width: 35;
+}
+/*KFC*/
+*[amenity][brand*="KFC"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
+    icon-width: 50;
+}
+
+
 
 /******************/
 /* emergency tags */
 /******************/
+
+
 
 area[emergency=ambulance_station],
 area[emergency=water_tank] {
@@ -3793,7 +3812,7 @@ node[amenity=internet_cafe] {
     icon-image: "presets/service/internet_cafe.svg";
 }
 node[amenity=recycling] {
-    icon-image: "presets/service/recycling/recycling.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/recycling.svg";
 }
 node[amenity=recycling][recycling_type=container] {
     icon-image: "presets/service/recycling/recycling_container.svg";
@@ -3804,7 +3823,10 @@ node[amenity=recycling][recycling_type=centre] {
 node[amenity=waste_basket] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/trash-bin.svg";
 }
-node[amenity=waste_disposal] {
+node[amenity=waste_basket][waste=dog_excrement] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-pet-waste.svg";
+}
+*[amenity=waste_disposal] {
     icon-image: "presets/service/recycling/waste_disposal.svg";
 }
 node[amenity=sanitary_dump_station] {
@@ -4010,8 +4032,8 @@ node[amenity=dentist] {
 node[amenity=animal_shelter] {
     icon-image: "presets/health/animal_shelter.svg";
 }
-node[amenity=veterinary] {
-    icon-image: "presets/health/veterinary.svg";
+*[amenity=veterinary] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/veterinary-care.svg";
 }
 area[amenity=library],
 area[amenity=public_bookcase],
@@ -4071,7 +4093,7 @@ node[amenity=arts_centre] {
     icon-image: "presets/sightseeing/arts_centre.svg";
 }
 node[amenity=courthouse] {
-    icon-image: "presets/service/courthouse.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/law.svg";
 }
 node[amenity=prison] {
     icon-image: "presets/service/prison.svg";
@@ -4569,10 +4591,6 @@ area[landuse=landfill] {
 }
 area[landuse=basin] {
     fill-color: forest#8bcc5d;
-}
-area[landuse=forest] {
-    fill-color: forest#0dc243;
-    width: 1;
 }
 area[landuse=allotments] {
     fill-color: allotments#5dbf80;
@@ -5498,7 +5516,12 @@ area[natural=shingle] {
     fill-color: shingle#c3c3c3;
 }
 area[natural=scrub] {
-    fill-color: scrub#007000;
+    fill-color: scrub#207000;
+    width: 2;
+    fill-opacity: 0.15;
+}
+area[natural=scrub]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wood.svg";
 }
 area[natural=fell] {
     fill-color: natural#002f00;
@@ -5508,18 +5531,26 @@ area[natural=heath] {
 }
 way[natural=tree_row] {
     width: 4;
-    color: woodarea#0DC243;
+    color: wood#077e07;
 }
-area[natural=wood] {
-    fill-color: woodarea#0DC243;
-    width: 1;
+area[natural=wood],
+area[landuse=forest] {
+    fill-color: wood#077e07;
+    width: 2;
+    fill-opacity: 0.15;
+}
+area[natural=wood]::fill,
+area[landuse=forest]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wood.svg";
 }
 area[natural=grassland] {
     fill-color: green#8cD05F;
 }
-area[natural=wetland] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wetland.svg";
+area[natural=wetland]{
     fill-color: marsh#9bd6a1;
+}
+area[natural=wetland]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wet.svg";
 }
 area[natural=water] {
     fill-color: water#77d3ee;
@@ -5620,9 +5651,6 @@ node[natural=tree][leaf_type=palm] {
 }
 node[natural=tree][leaf_type=leafless] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
-}
-*[natural=wetland] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wetland.svg";
 }
 
 node[natural=glacier],
@@ -6381,6 +6409,10 @@ area|z-13[setting("partial_fill")] {
    Turn partial fill off, when it covers more than about 50% of the area. This avoids
    areas with small unfilled patches in the center. */
 area[setting("partial_fill")]:closed2 {
+    fill-extent: 15;
+    fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
+}
+area[setting("partial_fill")]:closed2::fill {
     fill-extent: 15;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
