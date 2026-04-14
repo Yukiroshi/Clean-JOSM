@@ -35,7 +35,7 @@ way:closed[is_prop_set(icon-image)] {
     icon-position: inside;
 }
 node|z10- {
-    symbol-size: 78;
+    symbol-size: 7;
     symbol-shape: circle;
     symbol-stroke-color: #ddd;
     symbol-fill-color: #333;
@@ -44,7 +44,7 @@ way!:closed >[index=-1] node!:connection {
     symbol-size: 8;
 }
 way > node!:connection {
-    symbol-size: 6;
+    symbol-size: 7;
 }
 node:tagged,
 node:selected {
@@ -55,17 +55,26 @@ node:selected {
 node:tagged {
     symbol-fill-color: #007bff;
 }
-node:selected {
-    symbol-size: 10;
-    symbol-fill-color: #ff7300;
-}
+
 node|z-15 {
-    symbol-size: 5;
+    symbol-size: 6;
     symbol-fill-opacity: 0;
 }
 way:closed {
     fill-opacity: 0.3;
 }
+
+*|z16  { pixel_per_metre: 0.625; }
+*|z17  { pixel_per_metre: 1.25; }
+*|z18  { pixel_per_metre: 2.5; }
+*|z19  { pixel_per_metre: 5; }
+*|z20  { pixel_per_metre: 10; }
+*|z21  { pixel_per_metre: 20; }
+*|z22  { pixel_per_metre: 40; }
+*|z23  { pixel_per_metre: 80; }
+*|z24  { pixel_per_metre: 160; }
+*|z25  { pixel_per_metre: 320; }
+*|z26- { pixel_per_metre: 640; }
 
 node[traffic_calming],
 node[noexit] {
@@ -5639,6 +5648,10 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
+    icon-width: eval(1.5 * prop(pixel_per_metre,"default"));
+}
+node|z22-[natural=tree] {
+    icon-width: eval(1 * prop(pixel_per_metre,"default"));
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -6415,6 +6428,10 @@ area[setting("partial_fill")]:closed2 {
 area[setting("partial_fill")]:closed2::fill {
     fill-extent: 15;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
+}
+node:selected {
+    symbol-size: 9;
+    symbol-fill-color: #ff7300;
 }
 
 /*shhh*/
