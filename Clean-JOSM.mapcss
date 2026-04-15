@@ -78,7 +78,7 @@ way:closed {
 
 node[traffic_calming],
 node[noexit] {
-    icon-rotation: way; /*rotates the noexit icon to match way direction*/
+    icon-rotation: way; /*rotates to match way direction*/
 }
 
 /* create style settings */
@@ -87,7 +87,7 @@ node[noexit] {
 setting::hide_icons {
   type: boolean;
   label: tr("Hide icons at low zoom");
-  default: false;
+  default: true;
 }
 
 setting::shrink_nodes {
@@ -286,7 +286,7 @@ node[traffic_sign][boat?!][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
 node[noexit=yes] {
-    icon-image: "presets/vehicle/restriction/dead_end.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/noexit.svg";
 }
 node[traffic_sign][maxweight] {
     icon-image: "presets/vehicle/restriction/maxweight.svg";
@@ -325,7 +325,7 @@ node[barrier=bollard] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
 }
 node[barrier=gate] {
-    icon-image: "presets/barrier/gate.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/gate.svg";
 }
 way[barrier=yes],
 
@@ -5648,10 +5648,7 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
-    icon-width: eval(1.5 * prop(pixel_per_metre,"default"));
-}
-node|z22-[natural=tree] {
-    icon-width: eval(1 * prop(pixel_per_metre,"default"));
+    icon-width: eval(2 * prop(pixel_per_metre,"default"));
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
