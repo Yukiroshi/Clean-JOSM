@@ -1,6 +1,6 @@
 meta {
     title: "Clean JOSM";
-    description: "Improved and cleaner look for JOSM";
+    description: "Improved and cleaner look for JOSM, similiar to iD. All in one. Made with reference to Better-iD by Maerek (spam46200)";
     icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
     version: "1.1";
     author: "Yukiroshi";
@@ -9,11 +9,13 @@ meta {
 canvas {
     fill-color: #5b5b5b;
 }
+* {
+    font-family: "Bahnschrift";
+}
 
 /*Node and line base style*/
 
-node,
-area:closed {
+* {
     text: auto;
     text-anchor-horizontal: center;
     text-halo-radius: 1.3;
@@ -24,15 +26,26 @@ area:closed {
 node {
     text-offset-y: -10;
 }
-area:closed {
-    text-position: center;
-    text-offset-y: -15;
-}
 node[/^disused:/] {
     text: tr("");
 }
-way:closed[is_prop_set(icon-image)] {
-    icon-position: inside;
+node:tagged,
+node:selected {
+    symbol-size: 8;
+    symbol-stroke-opacity: 1;
+    symbol-fill-opacity: 1;
+}
+node:tagged {
+    symbol-fill-color: #007bff;
+}
+node|z20- {
+    icon-height: 20;
+}
+node|z21- {
+    icon-height: 25;
+}
+node|z-15 {
+    symbol-fill-opacity: 0;
 }
 node|z10- {
     symbol-size: 7;
@@ -46,43 +59,179 @@ way!:closed >[index=-1] node!:connection {
 way > node!:connection {
     symbol-size: 7;
 }
-node:tagged,
-node:selected {
-    symbol-size: 8;
-    symbol-stroke-opacity: 1;
-    symbol-fill-opacity: 1;
-}
-node:tagged {
-    symbol-fill-color: #007bff;
-}
-
-node|z-15 {
-    symbol-size: 6;
-    symbol-fill-opacity: 0;
+way:closed[is_prop_set(icon-image)] {
+    icon-position: inside;
 }
 way:closed {
     fill-opacity: 0.3;
 }
-
-*|z16  { pixel_per_metre: 0.625; }
-*|z17  { pixel_per_metre: 1.25; }
-*|z18  { pixel_per_metre: 2.5; }
-*|z19  { pixel_per_metre: 5; }
-*|z20  { pixel_per_metre: 10; }
-*|z21  { pixel_per_metre: 20; }
-*|z22  { pixel_per_metre: 40; }
-*|z23  { pixel_per_metre: 80; }
-*|z24  { pixel_per_metre: 160; }
-*|z25  { pixel_per_metre: 320; }
-*|z26- { pixel_per_metre: 640; }
-
-node[traffic_calming],
-node[noexit] {
-    icon-rotation: way; /*rotates to match way direction*/
+way!:closed {
+    icon-position: line;
 }
+area:closed {
+    text-position: center;
+    text-offset-y: -15;
+}
+
+/*most accurate pixel/metre*/
+*|z16  { pixel_per_metre: 0.664; }
+*|z17  { pixel_per_metre: 1.328; }
+*|z18  { pixel_per_metre: 2.656; }
+*|z19  { pixel_per_metre: 5.3125; }
+*|z20  { pixel_per_metre: 10.625; }
+*|z21  { pixel_per_metre: 21.25; }
+*|z22  { pixel_per_metre: 42.5; }
+*|z23  { pixel_per_metre: 85; }
+*|z24  { pixel_per_metre: 170; }
+*|z25  { pixel_per_metre: 340; }
+*|z26- { pixel_per_metre: 680; }
+
+
+
+way[highway] > node[traffic_calming],
+way[highway] > node[noexit],
+way[highway=~/footway|pedestrian|cycleway|path/] > node[highway=crossing],
+way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+    icon-height: prop(icon-height, "default") ;
+}
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+    icon-height: prop(icon-height, "default");
+}
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+    icon-height: prop(icon-height, "default");
+}
+
+
+
+/* Numeric and cardinal directions */
+
+node[direction>=0][direction<360]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: degree_to_radians(tag(direction));
+}
+
+node[direction=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: cardinal_to_radians(tag(direction));
+}
+
+/* Numeric and cardinal directions (copies for camera:direction and light:direction) */
+
+node["camera:direction">=0]["camera:direction"<360]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: degree_to_radians(tag("camera:direction"));
+}
+
+node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: cardinal_to_radians(tag("camera:direction"));
+}
+
+node["light:direction">=0]["light:direction"<360]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: degree_to_radians(tag("light:direction"));
+}
+
+node["light:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: cardinal_to_radians(tag("light:direction"));
+}
+
+/* Secondary intercardinal direction (not supported by cardinal_to_radians) */
+
+node[camera:direction=NNE]::direction_cone_layer,
+node[light:direction=NNE]::direction_cone_layer,
+node[direction=NNE]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 22.5deg;
+}
+
+node[camera:direction=ENE]::direction_cone_layer,
+node[light:direction=ENE]::direction_cone_layer,
+node[direction=ENE]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 67.5deg;
+}
+
+node[camera:direction=ESE]::direction_cone_layer,
+node[light:direction=ESE]::direction_cone_layer,
+node[direction=ESE]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 112.5deg;
+}
+
+node[camera:direction=SSE]::direction_cone_layer,
+node[light:direction=SSE]::direction_cone_layer,
+node[direction=SSE]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 157.5deg;
+}
+
+node[camera:direction=SSW]::direction_cone_layer,
+node[camera:direction=SSW]::direction_cone_layer,
+node[direction=SSW]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 202.5deg;
+}
+
+node[camera:direction=WSW]::direction_cone_layer,
+node[light:direction=WSW]::direction_cone_layer,
+node[direction=WSW]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 247.5deg;
+}
+
+node[camera:direction=WNW]::direction_cone_layer,
+node[light:direction=WNW]::direction_cone_layer,
+node[direction=WNW]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 292.5deg;
+}
+
+node[camera:direction=NNW]::direction_cone_layer,
+node[light:direction=NNW]::direction_cone_layer,
+node[direction=NNW]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: 337.5deg;
+}
+
+/* Forward/backward direction along the parent way angle */
+
+way[oneway != -1] > node[stop_position:direction=forward]::direction_cone_layer,
+way[railway][oneway != -1] > node[railway:signal:direction=forward]::direction_cone_layer,
+way[highway][oneway != -1] > node[traffic_sign:direction=forward]::direction_cone_layer,
+way[highway][oneway != -1] > node[traffic_signals:direction=forward]::direction_cone_layer,
+way[oneway != -1] > node[direction=forward]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: parent_way_angle() - 180deg;
+}
+
+way[oneway != -1] > node[stop_position:direction=backward]::direction_cone_layer,
+way[railway][oneway != -1] > node[railway:signal:direction=backward]::direction_cone_layer,
+way[highway][oneway != -1] > node[traffic_sign:direction=backward]::direction_cone_layer,
+way[highway][oneway != -1] > node[traffic_signals:direction=backward]::direction_cone_layer,
+way[oneway != -1] > node[direction=backward]::direction_cone_layer {
+    set has_cone;
+    icon-rotation: parent_way_angle();
+}
+
+/* Render the cone icon for all previously matched nodes */
+node|z17-.has_cone::direction_cone_layer {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
+    icon-height: 20;
+    icon-offset-y: -8;
+    z-index: -1;
+}
+
+
 
 /* create style settings */
 /*************************/
+
+
 
 setting::hide_icons {
   type: boolean;
@@ -108,12 +257,6 @@ setting::highway_labels {
   default: true;
 }
 
-setting::alt_turn_icons {
-  type: boolean;
-  label: tr("Use alternative turn restriction icon set");
-  default: false;
-}
-
 setting::place_fill_colour {
   type: boolean;
   label: tr("Display fill colour of areas with place=*");
@@ -126,9 +269,13 @@ setting::partial_fill {
   default: true;
 }
 
+
+
 /**************/
 /* addresses  */
 /**************/
+
+
 
 node["addr:housenumber"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/address.svg";
@@ -150,58 +297,50 @@ way["addr:interpolation"=alphabetic] {
     dashes: 2,2;
 }
 
+
+
 /*********************/
 /* turn restrictions */
 /*********************/
 
-relation[restriction=no_left_turn][!setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_left_turn_red.svg";
+
+
+relation[restriction=no_left_turn] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-no-left-turn.svg";
     text: auto;
 }
-relation[restriction=no_left_turn][setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_left_turn.svg";
+relation[restriction=no_right_turn] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-no-right-turn.svg";
     text: auto;
 }
-relation[restriction=no_right_turn][!setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_right_turn_red.svg";
-    text: auto;
-}
-relation[restriction=no_right_turn][setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_right_turn.svg";
-    text: auto;
-}
-relation[restriction=no_straight_on][!setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_straight_on_red.svg";
-    text: auto;
-}
-relation[restriction=no_straight_on][setting("alt_turn_icons")] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_straight_on.svg";
+relation[restriction=no_straight_on] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-no-straight-on.svg";
     text: auto;
 }
 relation[restriction=no_u_turn] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/no_u_turn.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-no-u-turn.svg";
     text: auto;
 }
 relation[restriction=only_left_turn] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/only_left_turn.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-only-left-turn.svg";
     text: auto;
 }
 relation[restriction=only_right_turn] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/only_right_turn.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-only-right-turn.svg";
     text: auto;
 }
 relation[restriction=only_straight_on] {
-    icon-image: "presets/vehicle/restriction/turn_restrictions/only_straight_on.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-only-straight-on.svg";
     text: auto;
 }
-node[restriction] {
-    icon-image: "presets/misc/deprecated.svg";
-    text: auto;
-}
+
+
 
 /******************/
 /* bridge, tunnel */
 /******************/
+
+
 
 way[bridge=yes]::core_bridge,
 way[bridge=viaduct]::core_bridge,
@@ -228,18 +367,13 @@ way[tunnel=avalanche_protector]::core_tunnel {
     color: tunnel#964B00;
     opacity: 0.5;
 }
-node[oneway],
-node[bridge],
-node[tunnel?],
-node[tunnel?!],
-node[cutting?!],
-node[embankment?!] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 
-/****************************/
-/* access restrictions tags */
-/****************************/
+
+
+/*****************/
+/* traffic signs */
+/*****************/
+
 
 
 node[traffic_sign][access?!] {
@@ -316,10 +450,8 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
 
 
 
-way[barrier=bollard] {
-    width: 2;
-    color: barrier#F0F050;
-    dashes: 3,9;
+node[barrier] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barrier.svg";
 }
 node[barrier=bollard] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
@@ -327,74 +459,20 @@ node[barrier=bollard] {
 node[barrier=gate] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/gate.svg";
 }
-way[barrier=yes],
-
-way[barrier=fence],
-way[barrier=block],
-way[barrier=chain],
-way[barrier=ditch],
-way[barrier=gate],
-way[barrier=jersey_barrier] {
-    width: 2;
-    color: barrier#DDDDDD;
-    dashes: 12,2,2,2;
-}
-way[barrier=hedge] {
-    width: 2;
-    color: barrier#8cd05f;
-    dashes: 12,2,2,2;
-}
-way[barrier=kerb] {
-    width: 2;
-    color: barrier#DDDDDD;
-    dashes: 12,2,2,2;
-    right-casing-color: coastline#dade72;
-    right-casing-width: 2;
-    right-casing-opacity: 0.35;
-}
-way[barrier=wall] {
-    width: 2;
-    color: barrier#dddddd;
-    dashes: 12,3,6,3;
-}
-way[barrier=city_wall] {
-    width: 2;
-    color: barrier#dddddd;
-    dashes: 12,3,6,3;
-    right-casing-color: coastline#dddddd;
-    right-casing-width: 2;
-    right-casing-opacity: 0.35;
-}
-way[barrier=guard_rail] {
-    width: 2;
-    color: barrier#DDDDDD;
-    dashes: 12,2,2,2;
-    right-casing-color: #DDDDDD;
-    right-casing-width: 4;
-    right-casing-opacity: 0.35;
-}
-way[barrier=retaining_wall] {
-    width: 2;
-    color: barrier#DDDDDD;
-    dashes: 12,3,6,3;
-    right-casing-color: coastline#996644;
-    right-casing-width: 8;
-    right-casing-opacity: 0.35;
-}
-way[barrier=jersey_barrier] {
-    repeat-image: "presets/barrier/kerb_pattern.svg";
-    repeat-image-align: top;
-}
-node[barrier=hedge],
-node[barrier=wall],
-node[barrier=guard_rail],
-node[barrier=city_wall],
-node[barrier=retaining_wall],
-node[barrier=ditch] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[barrier=kerb] {
-    icon-image: "presets/barrier/kerb.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-unspecified.svg";
+}
+node[barrier=kerb][kerb=lowered] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-lowered.svg";
+}
+node[barrier=kerb][kerb=raised] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-raised.svg";
+}
+node[barrier=kerb][kerb=flush] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-flush.svg";
+}
+node[barrier=kerb][kerb=rolled] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-rolled.svg";
 }
 node[barrier=block] {
     icon-image: "presets/barrier/block.svg";
@@ -415,13 +493,13 @@ node[barrier=cycle_barrier] {
     icon-image: "presets/barrier/cycle_barrier.svg";
 }
 node[barrier=lift_gate] {
-    icon-image: "presets/barrier/lift_gate.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/lift-gate.svg";
 }
 node[barrier=swing_gate] {
     icon-image: "presets/barrier/swing_gate.svg";
 }
 node[barrier=wicket_gate] {
-    icon-image: "presets/barrier/wicket_gate.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wicket-gate.svg";
 }
 area[barrier=toll_booth]:closed {
     fill-color: barrier#F0F050;
@@ -453,11 +531,72 @@ node[barrier=log] {
 node[barrier=kissing_gate] {
     icon-image: "presets/barrier/kissing_gate.svg";
 }
-node[barrier=bump_gate][!is_prop_set(icon-image)],
-node[barrier=bus_trap][!is_prop_set(icon-image)],
-node[barrier=hampshire_gate][!is_prop_set(icon-image)] {
+node[barrier=bump_gate] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bump-gate.svg";
+}
+node[barrier=bus_trap],
+
+node[barrier=hampshire_gate] {
     icon-image: "presets/misc/no_icon.svg";
 }
+way[barrier=~/yes|fence|block|chain|ditch|gate|jersey_barrier/] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+}
+way[barrier=bollard] {
+    width: 2;
+    color: barrier#F0F050;
+    dashes: 3,9;
+}
+way[barrier=hedge] {
+    width: 2;
+    color: wood#8cd05f;
+    dashes: 12,2,2,2;
+}
+way[barrier=kerb] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    right-casing-color: coastline#dade72;
+    right-casing-width: 2;
+    right-casing-opacity: 0.35;
+}
+way[barrier=wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+}
+way[barrier=city_wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+    right-casing-color: coastline#ddd;
+    right-casing-width: 2;
+    right-casing-opacity: 0.35;
+}
+way[barrier=guard_rail] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    right-casing-color: #ddd;
+    right-casing-width: 4;
+    right-casing-opacity: 0.35;
+}
+way[barrier=retaining_wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+    right-casing-color: coastline#996644;
+    right-casing-width: 8;
+    right-casing-opacity: 0.35;
+}
+way[barrier=jersey_barrier] {
+    repeat-image: "presets/barrier/kerb_pattern.svg";
+    repeat-image-align: top;
+}
+
+
 
 /****************/
 /* highway tags */
@@ -1587,64 +1726,33 @@ node[cycleway=asl] {
     icon-image: "presets/vehicle/asl.svg";
 }
 node[highway=traffic_signals] {
-    icon-image: "presets/vehicle/traffic_signals.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-signals.svg";
 }
-node[highway=traffic_signals][crossing][crossing!=no] {
-    icon-image: "presets/vehicle/traffic_signals_crossing.svg";
-}
-node[highway=traffic_signals][crossing:island=yes] {
-    icon-image: "presets/vehicle/traffic_signals_crossing_island.svg";
-}
-node[highway=traffic_signals][crossing_ref=zebra] {
-    icon-image: "presets/vehicle/traffic_signals_crossing_ref_zebra.svg";
-}
-node[highway=traffic_signals][crossing=island] {
-    icon-image: "presets/vehicle/traffic_signals_crossing_island.svg";
-}
-node[highway=traffic_signals][crossing=traffic_signals] {
-    icon-image: "presets/vehicle/traffic_signals_crossing_traffic_signals.svg";
-}
-
 node[highway=street_lamp] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-arm.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp.svg";
 }
-node|z17-[highway="street_lamp"]::Lighting_1
+node[highway=street_lamp][lamp_mount=straight_mast] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-straight.svg";
+}
+node[highway=street_lamp][lamp_mount=bent_mast] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
+}
+node|z17-[highway="street_lamp"]::Light
 {
     symbol-shape: circle;
-    symbol-size: 40;
-    symbol-fill-color: white;
-    symbol-fill-opacity: 0.5;
+    symbol-size: 35;
+    symbol-fill-color: #ffee55;
+    symbol-fill-opacity: 0.4;
     object-z-index: -1.0;
 }
-node|z17-[highway="street_lamp"]::Lighting_2
+node|z17-[highway="street_lamp"][lamp_type=electric]::Light
 {
-    symbol-shape: circle;
-    symbol-size: eval(4 * prop(pixel_per_metre,"default"));
     symbol-fill-color: white;
-    symbol-fill-opacity: 0.07;
-    object-z-index: -1.0;
 }
-node|z17-[highway="street_lamp"]::Lighting_3
-{
-    symbol-shape: circle;
-    symbol-size: eval(6 * prop(pixel_per_metre,"default"));
-    symbol-fill-color: white;
-    symbol-fill-opacity: 0.05;
-    object-z-index: -1.0;
-}
-node|z17-[highway="street_lamp"]::Lighting_4
-{
-    symbol-shape: circle;
-    symbol-size: eval(8 * prop(pixel_per_metre,"default"));
-    symbol-fill-color: white;
-    symbol-fill-opacity: 0.05;
-    object-z-index: -1.0;
-}
-
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
 }
-relation[type=enforcement] >[role="device"] node {
+relation[type=enforcement] > node[role="device"] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
 }
 node[highway=toll_gantry] {
@@ -1654,57 +1762,55 @@ node[traffic_sign=city_limit] {
     icon-image: "presets/vehicle/restriction/city_limit.svg";
 }
 node[highway=crossing][crossing!=no] {
-    icon-image: "presets/vehicle/crossing.svg";
-}
-node[highway=crossing][crossing:island=yes] {
-    icon-image: "presets/vehicle/crossing_island.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
 }
 node[highway=crossing][crossing=unmarked],
 node[highway=crossing][crossing=informal] {
-    icon-image: "presets/vehicle/crossing_unmarked.svg";
-}
-node[highway=crossing][crossing=island] {
-    icon-image: "presets/vehicle/crossing_island.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-unmarked.svg";
 }
 node[highway=crossing]["crossing:markings"=surface] {
-    icon-image: "presets/vehicle/crossing_markings_surface.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-surface.svg";
 }
 node[highway=crossing]["crossing:markings"=lines] {
-    icon-image: "presets/vehicle/crossing_markings_lines.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-lines.svg";
 }
 node[highway=crossing]["crossing:markings"="lines:paired"] {
-    icon-image: "presets/vehicle/crossing_markings_lines_paired.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-lines-paired.svg";
 }
 node[highway=crossing]["crossing:markings"=dashes] {
-    icon-image: "presets/vehicle/crossing_markings_dashes.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-dashes.svg";
 }
 node[highway=crossing]["crossing:markings"=dots] {
-    icon-image: "presets/vehicle/crossing_markings_dots.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-dots.svg";
+}
+node[highway=crossing]["crossing:markings"=zebra],
+node[highway=crossing][crossing_ref=zebra] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-zebra.svg";
 }
 node[highway=crossing]["crossing:markings"="zebra:double"] {
-    icon-image: "presets/vehicle/crossing_markings_zebra_double.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-zebra-double.svg";
 }
 node[highway=crossing]["crossing:markings"="zebra:paired"] {
-    icon-image: "presets/vehicle/crossing_markings_zebra_paired.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-zebra-paired.svg";
 }
 node[highway=crossing]["crossing:markings"="zebra:bicolour"] {
-    icon-image: "presets/vehicle/crossing_markings_zebra_bicolour.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-zebra-bicolour.svg";
 }
 node[highway=crossing]["crossing:markings"=ladder] {
-    icon-image: "presets/vehicle/crossing_markings_ladder.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder.svg";
 }
 node[highway=crossing]["crossing:markings"="ladder:skewed"] {
-    icon-image: "presets/vehicle/crossing_markings_ladder_skewed.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder-skewed.svg";
 }
 node[highway=crossing]["crossing:markings"="ladder:paired"] {
-    icon-image: "presets/vehicle/crossing_markings_ladder_paired.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder-paired.svg";
 }
-node[highway=crossing][crossing_ref=zebra],
-node[highway=crossing]["crossing:markings"=zebra] {
-    icon-image: "presets/vehicle/crossing_ref_zebra.svg";
+node[highway=crossing][crossing:island=yes]::traffic_island,
+node[highway=crossing][crossing=island]::traffic_island {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
 }
-node[highway=crossing][crossing=traffic_signals] {
-    icon-image: "presets/vehicle/crossing_traffic_signals.svg";
+node[highway=crossing][crossing=traffic_signals]::traffic_signals {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
 }
 node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
@@ -1741,12 +1847,13 @@ node[hazard] {
     icon-image: "presets/transport/hazard.svg";
 }
 area[highway=platform]:closed {
-    fill-color: highway_platform#c0c0c0;
+    fill-color: highway_platform#e5c200;
 }
 way[highway=platform] {
-    width: 2;
-    color: highway_platform#c0c0c0;
+    width: 5;
+    color: highway_platform#e5c200;
 }
+
 node[highway=turning_circle] {
     icon-image: "presets/vehicle/turning_circle.svg";
 }
@@ -1925,27 +2032,7 @@ area[highway=emergency_access_point] {
 node[highway=emergency_access_point] {
     icon-image: "presets/service/emergency_access_point.svg";
 }
-node[highway=motorway], node[highway=motorway_link],
-node[highway=trunk], node[highway=trunk_link],
-node[highway=primary], node[highway=primary_link],
-node[highway=secondary], node[highway=secondary_link],
-node[highway=tertiary], node[highway=tertiary_link],
-node[highway=unclassified],
-node[highway=road],
-node[highway=unsurfaced],
-node[highway=track],
-node[highway=residential],
-node[highway=living_street],
-node[highway=service],
-node[highway=bridleway],
-node[highway=cycleway],
-node[highway=footway],
-node[highway=path],
-node[highway=pedestrian],
-node[highway=bus_guideway],
-node[highway=platform] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
 
 area["area:highway"] {
     fill-color: #888888;
@@ -1955,9 +2042,13 @@ area["area:highway"] {
 /************************/
 /* traffic_calming tags */
 /************************/
-
-node[traffic_calming] {
+way > node[traffic_calming] {
     icon-image: "presets/vehicle/traffic_calming.svg";
+    icon-height: eval(5 * prop(pixel_per_metre, "default"));
+}
+way[highway][width] > node[traffic_calming] {
+    icon-image: "presets/vehicle/traffic_calming.svg";
+    icon-height: eval(concat(parent_tag("width")) * prop(pixel_per_metre,"default"));
 }
 node[traffic_calming=chicane] {
     icon-image: "presets/vehicle/chicane.svg";
@@ -1969,13 +2060,13 @@ node[traffic_calming=island] {
     icon-image: "presets/vehicle/island.svg";
 }
 node[traffic_calming=bump] {
-    icon-image: "presets/vehicle/bump.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/speed-bump-top.svg";
 }
 node[traffic_calming=hump] {
-    icon-image: "presets/vehicle/hump.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/speed-hump-top.svg";
 }
 node[traffic_calming=table] {
-    icon-image: "presets/vehicle/table.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/speed-table-top.svg";
 }
 node[traffic_calming=cushion] {
     icon-image: "presets/vehicle/cushion.svg";
@@ -2004,11 +2095,7 @@ node:righthandtraffic[junction=roundabout] {
 /*****************/
 /* cycleway tags */
 /*****************/
-node[cycleway=lane ], node[cycleway=opposite_lane ],
-node[cycleway=track], node[cycleway=opposite_track],
-node[cycleway=opposite] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
 
 /**************/
 /* piste tags */
@@ -2157,13 +2244,7 @@ way[power=cable] {
     color: power#eeeeee;
     dashes: 9,9;
 }
-node[power=plant],
-node[power=sub_station],
-node[power=line],
-node[power=cable],
-node[power=minor_line] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
 area[power=plant],
 area[power=substation],
 area[power=compensator],
@@ -2262,12 +2343,14 @@ node[generator:source=gasoline] {
 node[generator:source=waste] {
     icon-image: "presets/power/power_source-waste.svg";
 }
-node[power_source] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
+
 /*****************/
 /* man_made tags */
 /*****************/
+
+
 
 area[man_made=beacon],
 area[man_made=bridge],
@@ -2288,9 +2371,6 @@ node[man_made=street_cabinet][street_cabinet!=power] {
 }
 node[man_made=beacon] {
     icon-image: "presets/landmark/beacon.svg";
-}
-node[man_made=bridge] {
-    icon-image: "presets/misc/deprecated.svg";
 }
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
@@ -2347,7 +2427,7 @@ node[man_made=pumping_station] {
     icon-image: "presets/misc/pumping_station.svg";
 }
 node[man_made=mineshaft] {
-    icon-image: "presets/landmark/mine.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/adit-profile.svg";
 }
 area[man_made=crane]:closed {
     fill-color: manmade#d8d8d8;
@@ -2360,7 +2440,7 @@ node[man_made=crane] {
     icon-image: "presets/landmark/crane.svg";
 }
 node[man_made=adit] {
-    icon-image: "presets/landmark/adit.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/adit.svg";
 }
 node[man_made=cairn] {
     icon-image: "presets/landmark/cairn.svg";
@@ -2468,13 +2548,6 @@ node[man_made=pump][substance=steam] {
 node[man_made=pump][substance=~/(^|_)?water$/] {
     icon-image: "presets/landmark/pump_water.svg";
 }
-node[man_made=breakwater],
-node[man_made=groyne],
-node[man_made=embankment],
-node[man_made=pumping_rig],
-node[man_made=pipeline] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[man_made=petroleum_well][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
@@ -2567,9 +2640,6 @@ node[man_made=water_works] {
 way[man_made=cutline] {
     width: 2;
     color: cutline#99ff55;
-}
-node[man_made=cutline] {
-    icon-image: "presets/misc/deprecated.svg";
 }
 node[man_made=telescope] {
     icon-image: "presets/tower/telescope_dish.svg";
@@ -2807,9 +2877,6 @@ node[leisure=bird_hide] {
 node[leisure=nature_reserve] {
     icon-image: "presets/leisure/nature_reserve.svg";
 }
-node[leisure=park] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[leisure=playground] {
     icon-image: "presets/leisure/playground.svg";
 }
@@ -2907,10 +2974,8 @@ node[golf=driving_range] {
 /* advertising tags */
 /********************/
 
-node[advertising=column] {
+*[advertising=column] {
     icon-image: "presets/leisure/advertising_column.svg";
-}
-area[advertising=column] {
     fill-color: advertising#880000;
 }
 node[advertising=billboard] {
@@ -2929,348 +2994,260 @@ way[advertising=totem] {
     color: advertising#880000;
 }
 
+
+
 /*************/
 /* shop tags */
 /*************/
 
-area[shop=supermarket],
-area[shop=convenience],
-area[shop=bakery],
-area[shop=butcher],
-area[shop=bicycle],
-area[shop=doityourself],
-area[shop=dry_cleaning],
-area[shop=laundry],
-area[shop=outdoor],
-area[shop=kiosk],
-area[shop=alcohol],
-area[shop=beverages],
-area[shop=books],
-area[shop=boutique],
-area[shop=car],
-area[shop=car_repair],
-area[shop=tyres],
-area[shop=chemist],
-area[shop=tobacco],
-area[shop=clothes],
-area[shop=computer],
-area[shop=confectionery],
-area[shop=pastry],
-area[shop=copyshop],
-area[shop=curtain],
-area[shop=cycle_repair],
-area[shop=department_store],
-area[shop=deli],
-area[shop=electronics],
-area[shop=erotic],
-area[shop=furniture],
-area[shop=fabric],
-area[shop=florist],
-area[shop=frame],
-area[shop=gas],
-area[shop=gift],
-area[shop=greengrocer],
-area[shop=garden_centre],
-area[shop=hairdresser],
-area[shop=hardware],
-area[shop=hearing_aids],
-area[shop=hifi],
-area[shop=houseware],
-area[shop=jewelry],
-area[shop=kitchen],
-area[shop=mall],
-area[shop=mobile_phone],
-area[shop=motorcycle],
-area[shop=musical_instrument],
-area[shop=newsagent],
-area[shop=optician],
-area[shop=medical_supply],
-area[shop=paint],
-area[shop=pawnbroker],
-area[shop=seafood],
-area[shop=dairy],
-area[shop=cheese],
-area[shop=shoes],
-area[shop=sports],
-area[shop=stationery],
-area[shop=tailor],
-area[shop=travel_agency],
-area[shop=toys],
-area[shop=vacuum_cleaner],
-area[shop=variety_store],
-area[shop=charity],
-area[shop=video],
-area[shop=bookmaker],
-area[shop=lottery],
-area[shop=shopping_centre],
-area[shop=pet],
-area[shop=photo],
-area[shop=ticket],
-area[shop=interior_decoration],
-area[shop=car_parts],
-area[shop=video_games],
-area[shop=bed],
-area[shop=beauty],
-area[shop=cosmetics],
-area[shop=perfumery],
-area[shop=tea],
-area[shop=coffee],
-area[shop=antiques],
-area[shop=music],
-area[shop=funeral_directors],
-area[shop=wine],
-area[shop=farm],
-area[shop=tattoo],
-area[shop=art],
-area[shop=bag] {
+
+
+*[shop] {
     fill-color: shop#33305f;
 }
-node[shop=supermarket] {
+*[shop=supermarket] {
     icon-image: "presets/shop/supermarket.svg";
 }
-node[shop=convenience] {
+*[shop=convenience] {
     icon-image: "presets/shop/convenience.svg";
 }
-node[shop=bakery] {
-    icon-image: "presets/shop/groceries/bakery.svg";
+*[shop=bakery] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bakery.svg";
 }
-node[shop=butcher] {
+*[shop=butcher] {
     icon-image: "presets/shop/groceries/butcher.svg";
 }
-node[shop=bicycle] {
-    icon-image: "presets/shop/bicycle.svg";
+*[shop=bicycle] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-ride.svg";
 }
-node[shop=doityourself] {
+*[shop=doityourself] {
     icon-image: "presets/shop/diy_store.svg";
 }
-node[shop=dry_cleaning],
-node[shop=laundry] {
+*[shop=dry_cleaning],
+*[shop=laundry] {
     icon-image: "presets/shop/laundry.svg";
 }
-node[shop=outdoor] {
+*[shop=outdoor] {
     icon-image: "presets/shop/outdoor.svg";
 }
-node[shop=kiosk] {
+*[shop=kiosk] {
     icon-image: "presets/shop/kiosk.svg";
 }
-node[shop=beverages] {
+*[shop=beverages] {
     icon-image: "presets/shop/beverages.svg";
 }
-node[shop=alcohol] {
+*[shop=alcohol] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/alcohol.svg";
 }
-node[shop=books] {
+*[shop=books] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/book-store.svg";
 }
-node[shop=boutique] {
+*[shop=boutique] {
     icon-image: "presets/shop/boutique.svg";
 }
-node[shop=car] {
+*[shop=car] {
     icon-image: "presets/shop/vehicle.svg";
 }
-node[shop=car_repair] {
-    icon-image: "presets/vehicle/repair_shop.svg";
+*[shop=car_repair] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-repair.svg";
 }
-node[shop=tyres] {
+*[shop=tyres] {
     icon-image: "presets/vehicle/tyres.svg";
 }
-node[shop=chemist] {
+*[shop=chemist] {
     icon-image: "presets/shop/chemist.svg";
 }
-node[shop=tobacco] {
+*[shop=tobacco] {
     icon-image: "presets/shop/tobacco.svg";
 }
-node[shop=e-cigarette] {
+*[shop=e-cigarette] {
     icon-image: "presets/shop/e-cigarette.svg";
 }
-node[shop=clothes],
-area[shop=clothes] {
+*[shop=clothes] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/clothing-store.svg";
 }
-node[shop=computer] {
+*[shop=computer] {
     icon-image: "presets/shop/computer.svg";
 }
-node[shop=confectionery] {
+*[shop=confectionery] {
     icon-image: "presets/shop/groceries/confectionery.svg";
 }
-node[shop=chocolate] {
+*[shop=chocolate] {
     icon-image: "presets/shop/groceries/chocolate.svg";
 }
-node[shop=pastry] {
+*[shop=pastry] {
     icon-image: "presets/shop/groceries/pastry.svg";
 }
-node[shop=copyshop] {
+*[shop=copyshop] {
     icon-image: "presets/shop/copyshop.svg";
 }
-node[shop=craft] {
+*[shop=craft] {
     icon-image: "presets/shop/craft.svg";
 }
-node[shop=curtain] {
+*[shop=curtain] {
     icon-image: "presets/shop/curtain.svg";
 }
-node[shop=cycle_repair] {
-    icon-image: "presets/shop/bicycle.svg";
+*[shop=cycle_repair] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-repair.svg";
 }
-node[shop=department_store] {
+*[shop=department_store] {
     icon-image: "presets/shop/mall.svg";
 }
-node[shop=deli] {
+*[shop=deli] {
     icon-image: "presets/shop/groceries/deli.svg";
 }
-node[shop=doors] {
+*[shop=doors] {
     icon-image: "presets/shop/doors.svg";
 }
-node[shop=electronics] {
+*[shop=electronics] {
     icon-image: "presets/shop/electronics.svg";
 }
-node[shop=erotic] {
+*[shop=erotic] {
     icon-image: "presets/shop/erotic.svg";
 }
-node[shop=furniture] {
+*[shop=furniture] {
     icon-image: "presets/shop/furniture.svg";
 }
-node[shop=fabric],
-area[shop=fabric] {
+*[shop=fabric] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
 }
-node[shop=florist] {
+*[shop=florist] {
     icon-image: "presets/shop/florist.svg";
 }
-node[shop=frame] {
+*[shop=frame] {
     icon-image: "presets/shop/frame.svg";
 }
-node[shop=gas] {
+*[shop=gas] {
     icon-image: "presets/shop/gas.svg";
 }
-node[shop=general] {
+*[shop=general] {
     icon-image: "presets/shop/mall.svg";
 }
-node[shop=gift] {
+*[shop=gift] {
     icon-image: "presets/shop/present.svg";
 }
-node[shop=greengrocer] {
+*[shop=greengrocer] {
     icon-image: "presets/shop/groceries/greengrocer.svg";
 }
-node[shop=garden_centre] {
+*[shop=garden_centre] {
     icon-image: "presets/shop/garden_centre.svg";
 }
 *[shop=hairdresser] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/hairdresser.svg";
 }
-node[shop=hardware] {
+*[shop=hardware] {
     icon-image: "presets/shop/hardware.svg";
 }
-node[shop=hearing_aids] {
+*[shop=hearing_aids] {
     icon-image: "presets/shop/hearing_aids.svg";
 }
-node[shop=hifi] {
+*[shop=hifi] {
     icon-image: "presets/shop/hifi.svg";
 }
-node[shop=houseware] {
+*[shop=houseware] {
     icon-image: "presets/shop/houseware.svg";
 }
-node[shop=pottery] {
+*[shop=pottery] {
     icon-image: "presets/shop/pottery.svg";
 }
-node[shop=jewelry] {
+*[shop=jewelry] {
     icon-image: "presets/shop/jewelry.svg";
 }
-node[shop=kitchen] {
+*[shop=kitchen] {
     icon-image: "presets/shop/kitchen.svg";
 }
-node[shop=mall] {
+*[shop=mall] {
     icon-image: "presets/shop/mall.svg";
 }
-node[shop=massage] {
+*[shop=massage] {
     icon-image: "presets/shop/massage.svg";
 }
-node[shop=mobile_phone] {
+*[shop=mobile_phone] {
     icon-image: "presets/shop/mobile_phone.svg";
 }
-node[shop=watches] {
+*[shop=watches] {
     icon-image: "presets/shop/watches.svg";
 }
-node[shop=motorcycle] {
+*[shop=motorcycle] {
     icon-image: "presets/vehicle/motorbike.svg";
 }
-node[shop=musical_instrument] {
+*[shop=musical_instrument] {
     icon-image: "presets/shop/musical_instrument.svg";
 }
-node[shop=newsagent] {
+*[shop=newsagent] {
     icon-image: "presets/shop/news.svg";
 }
-node[shop=optician] {
+*[shop=optician] {
     icon-image: "presets/shop/optician.svg";
 }
-node[shop=medical_supply] {
+*[shop=medical_supply] {
     icon-image: "presets/shop/medical_supply.svg";
 }
-node[shop=paint] {
+*[shop=paint] {
     icon-image: "presets/shop/paint.svg";
 }
-node[shop=party] {
+*[shop=party] {
     icon-image: "presets/shop/party.svg";
 }
-node[shop=pawnbroker] {
+*[shop=pawnbroker] {
     icon-image: "presets/shop/pawnbroker.svg";
 }
-node[shop=seafood] {
+*[shop=seafood] {
     icon-image: "presets/shop/groceries/seafood.svg";
 }
-node[shop=dairy] {
+*[shop=dairy] {
     icon-image: "presets/shop/groceries/dairy.svg";
 }
-node[shop=cheese] {
+*[shop=cheese] {
     icon-image: "presets/shop/groceries/cheese.svg";
 }
-node[shop=shoes] {
+*[shop=shoes] {
     icon-image: "presets/shop/shoes.svg";
 }
-node[shop=sports] {
+*[shop=sports] {
     icon-image: "presets/sport/multi.svg";
 }
-node[shop=stationery] {
+*[shop=stationery] {
     icon-image: "presets/shop/stationery.svg";
 }
-node[shop=tailor],
-area[shop=tailor] {
+*[shop=tailor] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
 }
-node[shop=travel_agency] {
+*[shop=travel_agency] {
     icon-image: "presets/shop/travel_agency.svg";
 }
-node[shop=scuba_diving] {
+*[shop=scuba_diving] {
     icon-image: "presets/shop/scuba_diving.svg";
 }
-node[shop=fishing] {
+*[shop=fishing] {
     icon-image: "presets/shop/fishing.svg";
 }
-node[shop=toys] {
+*[shop=toys] {
     icon-image: "presets/shop/toys.svg";
 }
-node[shop=vacuum_cleaner] {
+*[shop=vacuum_cleaner] {
     icon-image: "presets/shop/vacuum_cleaner.svg";
 }
-node[shop=variety_store] {
+*[shop=variety_store] {
     icon-image: "presets/shop/variety_store.svg";
 }
-node[shop=charity] {
+*[shop=charity] {
     icon-image: "presets/shop/charity.svg";
 }
-node[shop=second_hand] {
+*[shop=second_hand] {
     icon-image: "presets/shop/second_hand.svg";
 }
-node[shop=video] {
+*[shop=video] {
     icon-image: "presets/shop/video.svg";
 }
-node[shop=bookmaker] {
+*[shop=bookmaker] {
     icon-image: "presets/shop/lottery.svg";
 }
-node[shop=lottery] {
+*[shop=lottery] {
     icon-image: "presets/shop/lottery.svg";
 }
 /* duplicate of shopping_centre? */
-node[shop=shopping_centre] {
+*[shop=shopping_centre] {
     icon-image: "presets/shop/mall.svg";
 }
 *[shop=pet] {
@@ -3279,37 +3256,40 @@ node[shop=shopping_centre] {
 *[shop=pet_grooming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pet-grooming.svg";
 }
-node[shop=photo] {
+*[shop=photo] {
     icon-image: "presets/shop/photo.svg";
 }
-node[shop=ticket] {
+*[shop=ticket] {
     icon-image: "presets/shop/ticket.svg";
 }
-node[shop=carpet] {
+*[shop=carpet] {
     icon-image: "presets/shop/carpet.svg";
 }
-node[shop=interior_decoration] {
+*[shop=interior_decoration] {
     icon-image: "presets/shop/interior_decoration.svg";
 }
-node[shop=car_parts] {
-    icon-image: "presets/vehicle/car_parts.svg";
+*[shop=car_parts] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car.svg";
 }
-node[shop=video_games] {
+*[shop=car] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-dealer.svg";
+}
+*[shop=video_games] {
     icon-image: "presets/shop/video_games.svg";
 }
-node[shop=bed] {
+*[shop=bed] {
     icon-image: "presets/shop/bed.svg";
 }
-node[shop=beauty] {
+*[shop=beauty] {
     icon-image: "presets/shop/beauty.svg";
 }
-node[shop=cosmetics] {
+*[shop=cosmetics] {
     icon-image: "presets/shop/cosmetics.svg";
 }
-node[shop=perfumery] {
+*[shop=perfumery] {
     icon-image: "presets/shop/perfumery.svg";
 }
-node[shop=herbalist] {
+*[shop=herbalist] {
     icon-image: "presets/shop/groceries/herbalist.svg";
 }
 *[shop=tea] {
@@ -3318,245 +3298,158 @@ node[shop=herbalist] {
 *[shop=coffee] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/coffee.svg";
 }
-node[shop=frozen_food] {
+*[shop=frozen_food] {
     icon-image: "presets/shop/groceries/frozen_food.svg";
 }
-node[shop=antiques] {
+*[shop=antiques] {
     icon-image: "presets/shop/antique.svg";
 }
-node[shop=swimming_pool] {
+*[shop=swimming_pool] {
     icon-image: "presets/shop/swimming_pool.svg";
 }
-node[shop=storage_rental] {
+*[shop=storage_rental] {
     icon-image: "presets/shop/storage_rental.svg";
 }
 *[shop=music] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg";
 }
-node[shop=weapons] {
+*[shop=weapons] {
     icon-image: "presets/shop/weapons.svg";
 }
-node[shop=funeral_directors] {
+*[shop=funeral_directors] {
     icon-image: "presets/shop/funeral_directors.svg";
 }
-node[shop=agrarian] {
+*[shop=agrarian] {
     icon-image: "presets/shop/agrarian.svg";
 }
 *[shop=wine] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/alcohol.svg";
 }
-node[shop=farm] {
-    icon-image: "presets/shop/groceries/farm.svg";
+*[shop=farm] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
 }
-node[shop=tattoo] {
+*[shop=tattoo] {
     icon-image: "presets/shop/tattoo.svg";
 }
-node[shop=art] {
+*[shop=art] {
     icon-image: "presets/shop/art.svg";
 }
-node[shop=lighting] {
+*[shop=lighting] {
     icon-image: "presets/shop/lighting.svg";
 }
-node[shop=security] {
+*[shop=security] {
     icon-image: "presets/shop/security.svg";
 }
-node[shop=wholesale] {
+*[shop=wholesale] {
     icon-image: "presets/shop/wholesale.svg";
 }
-node[shop=trade] {
+*[shop=trade] {
     icon-image: "presets/shop/trade.svg";
 }
-node[shop=bag] {
+*[shop=bag] {
     icon-image: "presets/shop/bag.svg";
 }
-
-/*Custom Shops*/
-
-/*Żabka*/
 *[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
-    icon-width: 35;
-    text-offset-y: -15;
 }
-/*Biedronka*/
 *[shop][brand*="Biedronka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
-    icon-width: 50;
 }
-/*Lidl*/
 *[shop][brand*="Lidl"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
-    icon-width: 25;
 }
-/*Aldi*/
 *[shop][brand*="Aldi"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
-    icon-width: 25;
 }
-/*Kaufland*/
 *[shop][brand*="Kaufland"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
-    icon-width: 25;
 }
-/*Netto*/
 *[shop][brand*="Netto"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Netto_2019.svg";
-    icon-width: 50;
 }
-/*Auchan*/
 *[shop][brand*="Auchan"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9e/Auchan_2018.svg";
-    icon-width: 50;
 }
-/*Dino*/
 *[shop][brand*="Dino"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
-    icon-width: 35;
 }
-/*Carrefour*/
 *[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
-    icon-width: 30;
 }
-/*Rossmann*/
 *[shop][brand*="Rossmann"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
-    icon-width: 30;
 }
-/*Hebe*/
 *[shop][brand*="Hebe"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
-    icon-width: 30;
 }
-/*dm*/
 *[shop][brand*="dm"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
-    icon-width: 30;
 }
-/*Dealz*/
 *[shop][brand*="Dealz"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a9/Dealz_2023.svg";
-    icon-width: 35;
 }
-/*TEDi*/
 *[shop][brand*="TEDi"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
-    icon-width: 25;
 }
-/*Pepco*/
 *[shop][brand*="Pepco"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
-    icon-width: 40;
 }
-/*H&M*/
 *[shop][brand*="H&M"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
-    icon-width: 30;
 }
-/*New Yorker*/
 *[shop][brand*="New Yorker"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
-    icon-width: 65;
 }
-/*CCC*/
 *[shop][brand*="CCC"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
-    icon-width: 40;
 }
-/*Cropp*/
 *[shop][brand*="Cropp"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
-    icon-width: 55;
 }
-/*House*/
 *[shop][brand*="House"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
-    icon-width: 55;
 }
-/*Mohito*/
 *[shop][brand*="Mohito"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
-    icon-width: 65;
 }
-/*Reserved*/
 *[shop][brand*="Reserved"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
-    icon-width: 65;
 }
-/*Sinsay*/
 *[shop][brand*="Sinsay"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
-    icon-width: 55;
 }
-/*Zara*/
 *[shop][brand*="Zara"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
-    icon-width: 50;
 }
-/*Zara Home*/
 *[shop][brand*="Zara Home"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
-    icon-width: 65;
 }
-/*Bershka*/
 *[shop][brand*="Bershka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
-    icon-width: 65;
 }
-/*Stradivarius*/
 *[shop][brand*="Stradivarius"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
-    icon-width: 85;
 }
-/*Pull & Bear*/
 *[shop][brand*="Pull & Bear"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
-    icon-width: 65;
 }
-/*HalfPrice*/
 *[shop][brand*="HalfPrice"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
-    icon-width: 65;
 }
-/*TK Maxx*/
 *[shop][brand*="TK Maxx"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
-    icon-width: 65;
 }
-/*Media Markt*/
 *[shop][brand*="Media Markt"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/57/MediaMarkt_2024.svg";
-    icon-width: 65;
 }
-/*Media Expert*/
 *[shop][brand*="Media Expert"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
-    icon-width: 65;
 }
-/*RTV Euro AGD*/
 *[shop][brand*="RTV Euro AGD"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/66/RTV_Euro_AGD.svg";
-    icon-width: 65;
 }
-/*IKEA*/
 *[shop][brand*="IKEA"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/IKEA_2019.svg";
-    icon-width: 50;
-}
-/*McDonald's*/
-*[amenity][brand*="McDonald's"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
-    icon-width: 35;
-}
-/*Burger King*/
-*[amenity][brand*="Burger King"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
-    icon-width: 35;
-}
-/*KFC*/
-*[amenity][brand*="KFC"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
-    icon-width: 50;
 }
 
 
@@ -3614,9 +3507,14 @@ node[emergency=siren] {
     icon-image: "presets/emergency/siren.svg";
 }
 
+
+
 /****************/
 /* police tags */
 /****************/
+
+
+
 node[police=barracks],
 node[police=car_pound],
 node[police=checkpoint],
@@ -3630,16 +3528,25 @@ node[police=yes] {
     icon-image: "presets/service/police_non_public.svg";
 }
 
+
+
 /*******************/
 /* healthcare tags */
 /*******************/
+
+
+
 node[healthcare=laboratory] {
     icon-image: "presets/health/laboratory.svg";
 }
 
+
+
 /****************/
 /* amenity tags */
 /****************/
+
+
 
 area[amenity=pub],
 area[amenity=biergarten],
@@ -3655,41 +3562,41 @@ area[amenity=bar],
 area[amenity=ice_cream] {
     fill-color: amenity#ecba52;
 }
-node[amenity=pub] {
-    icon-image: "presets/food/pub.svg";
+*[amenity=pub] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/beer.svg";
 }
-node[amenity=biergarten] {
+*[amenity=biergarten] {
     icon-image: "presets/food/biergarten.svg";
 }
-node[amenity=nightclub] {
+*[amenity=nightclub] {
     icon-image: "presets/leisure/nightclub.svg";
 }
-node[amenity=gambling] {
+*[amenity=gambling] {
     icon-image: "presets/leisure/gambling.svg";
 }
-node[amenity=stripclub] {
+*[amenity=stripclub] {
     icon-image: "presets/leisure/stripclub.svg";
 }
-node[amenity=casino] {
+*[amenity=casino] {
     icon-image: "presets/leisure/casino.svg";
 }
-node[amenity=brothel] {
+*[amenity=brothel] {
     icon-image: "presets/leisure/brothel.svg";
 }
-node[amenity=cafe] {
+*[amenity=cafe] {
     icon-image: "presets/food/cafe.svg";
 }
-node[amenity=restaurant] {
+*[amenity=restaurant] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/restaurant.svg";
 }
-node[amenity=food_court] {
+*[amenity=food_court] {
     icon-image: "presets/food/food_court.svg";
 }
-node[amenity=fast_food] {
+*[amenity=fast_food] {
     icon-image: "presets/food/fast_food.svg";
 }
-node[amenity=bar] {
-    icon-image: "presets/food/bar.svg";
+*[amenity=bar] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bar.svg";
 }
 *[cuisine=kebab] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kebab.svg";
@@ -3697,26 +3604,26 @@ node[amenity=bar] {
 *[cuisine=bubble_tea] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bubble-tea.svg";
 }
-
-
-node[amenity=ice_cream] {
+*[amenity=ice_cream] {
     icon-image: "presets/food/ice_cream.svg";
 }
-area[amenity=bicycle_parking]:closed {
-    fill-color: amenity_parking#00329b;
+
+
+
+*[amenity][brand*="McDonald's"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
 }
-way[amenity=bicycle_parking] {
-    width: 2;
-    color: amenity_parking#00329b;
+*[amenity][brand*="Burger King"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
 }
-area[amenity=parking_space] {
-    fill-color: parking_space#f7efb8;
+*[amenity][brand*="KFC"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
 }
-area[amenity=trolley_bay] {
-    fill-color: trolley_bay#b8d8f7;
-}
+
+
 area[amenity=parking],
 area[amenity=motorcycle_parking],
+*[amenity=bicycle_parking],
 area[amenity=bicycle_rental],
 area[amenity=bicycle_repair_station],
 area[amenity=car_rental],
@@ -3728,14 +3635,15 @@ area[amenity=prison],
 area[amenity=driver_training]{
     fill-color: amenity_parking#00329b;
 }
-node[amenity=parking_space] {
+*[amenity=parking_space] {
     icon-image: "presets/vehicle/parking/parking_space.svg";
+    fill-color: parking_space#f7efb8;
 }
-node[amenity=trolley_bay] {
+*[amenity=trolley_bay] {
     icon-image: "presets/vehicle/parking/trolley_bay.svg";
+    fill-color: trolley_bay#b8d8f7;
 }
-node[amenity=parking],
-area[amenity=parking] {
+*[amenity=parking] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking.svg";
 }
 node[amenity=parking_entrance] {
@@ -3743,7 +3651,7 @@ node[amenity=parking_entrance] {
 }
 node[amenity=parking_entrance][parking=multi-storey],
 node[amenity=parking][parking=multi-storey] {
-    icon-image: "presets/vehicle/parking/multi-storey.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-structure.svg";
 }
 node[amenity=parking_entrance][parking=underground],
 node[amenity=parking][parking=underground] {
@@ -3752,8 +3660,7 @@ node[amenity=parking][parking=underground] {
 node[amenity=motorcycle_parking] {
     icon-image: "presets/vehicle/parking/motorbike.svg";
 } 
-node[amenity=bicycle_parking],
-area[amenity=bicycle_parking] {
+*[amenity=bicycle_parking] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-parked.svg";
 }
 node[park_ride][park_ride!=no] {
@@ -3762,28 +3669,28 @@ node[park_ride][park_ride!=no] {
 node[amenity=parking_space][wheelchair?] {
     icon-image: "presets/vehicle/parking/handicapped.svg";
 }
-node[amenity=bicycle_rental] {
-    icon-image: "presets/vehicle/bicycle_rental.svg";
+*[amenity=bicycle_rental] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-rental.svg";
 }
-node[amenity=bicycle_repair_station] {
-    icon-image: "presets/vehicle/bicycle_repair_station.svg";
+*[amenity=bicycle_repair_station] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-repair.svg";
 }
-node[amenity=bicycle_wash] {
-    icon-image: "presets/vehicle/bicycle_wash.svg";
+*[amenity=bicycle_wash] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-wash.svg";
 }
-node[amenity=car_rental] {
-    icon-image: "presets/vehicle/car_rental.svg";
+*[amenity=car_rental] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-rental.svg";
 }
-node[amenity=car_pooling] {
-    icon-image: "presets/vehicle/car_pooling.svg";
+*[amenity=car_pooling] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-pool.svg";
 }
-node[amenity=car_sharing] {
-    icon-image: "presets/vehicle/car_sharing.svg";
+*[amenity=car_sharing] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-pool.svg";
 }
-node[amenity=car_wash] {
-    icon-image: "presets/vehicle/car_wash.svg";
+*[amenity=car_wash] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-wash.svg";
 }
-node[amenity=taxi] {
+*[amenity=taxi] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/taxi.svg";
 }
 node[amenity=fuel] {
@@ -3987,25 +3894,16 @@ node[amenity=driver_training] {
     icon-image: "presets/education/driving_school.svg";
 }
 node[amenity=music_school] {
-    icon-image: "presets/education/music_school.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg"; /*to be added*/
 }
-area[amenity=pharmacy],
-area[amenity=hospital],
-area[amenity=clinic],
-area[amenity=nursing_home],
-area[amenity=social_facility],
-area[amenity=baby_hatch],
-area[amenity=doctors],
-area[amenity=dentist],
-area[amenity=animal_shelter],
-area[amenity=veterinary] {
+area[amenity=~/pharmacy|amenity=hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
     fill-color: health#eeeeee;
 }
 node[amenity=pharmacy] {
     icon-image: "presets/health/pharmacy.svg";
 }
-node[amenity=hospital] {
-    icon-image: "presets/health/hospital.svg";
+*[amenity=hospital] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/asterisk.svg";
 }
 node[amenity=clinic] {
     icon-image: "presets/health/clinic.svg";
@@ -4044,25 +3942,8 @@ node[amenity=animal_shelter] {
 *[amenity=veterinary] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/veterinary-care.svg";
 }
-area[amenity=library],
-area[amenity=public_bookcase],
-area[amenity=police],
-area[amenity=ranger_station],
-area[amenity=fire_station],
-area[amenity=bus_station],
-area[amenity=ferry_terminal],
-area[amenity=theatre],
-area[amenity=cinema],
-area[amenity=dive_centre],
-area[amenity=public_bath],
-area[amenity=arts_centre],
-area[amenity=courthouse],
-area[amenity=prison],
-area[amenity=bank],
-area[amenity=bureau_de_change],
-area[amenity=money_transfer],
-area[amenity=bbq],
-area[amenity=watering_place] {
+
+area[amenity=~/library|public_bookcase|police|ranger_station|fire_station|bus_station|ferry_terminal|theatre|cinema|dive_centre|public_bath|arts_centre|courthouse|prison|bank|bureau_de_change|money_transfer|bbq|watering_place/] {
     fill-color: amenity_light#f7efb7;
 }
 node[amenity=library] {
@@ -4129,8 +4010,8 @@ way[amenity=bench] {
 node[amenity=bench] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench.svg";
 }
-node[amenity=bbq] {
-    icon-image: "presets/leisure/bbq.svg";
+*[amenity=bbq] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bbq.svg";
 }
 node[amenity=compressed_air] {
     icon-image: "presets/vehicle/compressed_air.svg";
@@ -4176,26 +4057,23 @@ node[vending=excrement_bags] {
 *[amenity=parcel_locker]{
     icon-image: "presets/service/parcel_locker.svg";
 }
-/*InPost*/
-*[brand*="InPost"]{
+*[brand*="InPost"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
-    icon-width: 35;
 }
-/*DHL*/
-*[brand*="DHL"]{
+*[brand*="DHL"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
-    icon-width: 35;
 }
-/*DPD*/
-*[brand*="DPD"]{
+*[brand*="DPD"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
-    icon-width: 45;
 }
+
 
 
 /**************/
 /* craft tags */
 /**************/
+
+
 
 area[craft=carpenter],
 area[craft=dressmaker],
@@ -4549,12 +4427,12 @@ node[historic=tomb] {
 }
 
 *[heritage] {
-    icon-width: 20;
+    icon-height: 20;
     text-offset-y: -25;
 }
 *[heritage]::heritage {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/heritage.svg";
-    icon-width: 15;
+    icon-height: 15;
     icon-offset-y: 15;
 }
 
@@ -4568,7 +4446,7 @@ area[amenity],
 area[place],
 area[natural],
 area[man_made] {
-    z-index: -2; /* put areas that can have other areas inside (e.g. building) a little lower, see #9606 */
+    z-index: -2; /* put areas that can have other areas inside (e.g. building) a little lower */
 }
 area[landuse=farmland] {
     fill-color: farmland#bee73e;
@@ -4618,8 +4496,11 @@ area[landuse=aquaculture] {
     width: 1;
 }
 area[landuse=grass]{
-    fill-color: grass#77cc77;
+    fill-color: grass#5dca19;
     width: 1;
+}
+area[landuse=grass]::fill{
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
 }
 area[landuse=residential] {
     fill-color: residential#c4bd19;
@@ -4685,13 +4566,14 @@ area[landuse=recreation_ground] {
     fill-color: green#b1e0c2;
     width: 1;
 }
-node[landuse] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /*****************/
 /* military tags */
 /*****************/
+
+
 
 area[military=airfield],
 area[military=bunker],
@@ -4716,9 +4598,13 @@ node[military=range] {
     icon-image: "presets/sport/range.svg";
 }
 
+
+
 /****************/
 /* railway tags */
 /****************/
+
+
 
 area[railway=station] {
     fill-color: railwaypoint#f7efb7;
@@ -4954,14 +4840,6 @@ node[railway=signal] {
 node[railway=milestone] {
     icon-image: "presets/transport/railway/milestone.svg";
 }
-node[railway=rail], node[railway=tram], node[railway=light_rail],
-node[railway=subway], node[railway=preserved],
-node[railway=disused], node[railway=abandoned],
-node[railway=narrow_gauge], node[railway=monorail],
-node[railway=platform], node[railway=funicular],
-node[service=yard], node[service=siding], node[service=spur] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 way[railway=construction][!highway] {
     width: 1;
     color: construction#dddf00;
@@ -5042,11 +4920,6 @@ area[aeroway=apron],
 area[aeroway=hangar] {
     fill-color: aeroway_light#990000;
 }
-node[aeroway=apron],
-node[aeroway=runway],
-node[aeroway=taxiway] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[aeroway=holding_position] {
     icon-image: "presets/transport/airport/holding_position.svg";
 }
@@ -5118,23 +4991,14 @@ node[aerialway=station] {
 node[aerialway=pylon] {
     icon-image: "presets/transport/aerialway/pylon.svg";
 }
-node[aerialway=cable_car],
-node[aerialway=gondola],
-node[aerialway=chair_lift],
-node[aerialway=mixed_lift],
-node[aerialway=drag_lift],
-node[aerialway=t-bar],
-node[aerialway=j-bar],
-node[aerialway=platter],
-node[aerialway=magic_carpet],
-node[aerialway=rope_tow],
-node[aerialway=goods] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /*************************/
 /* public_transport tags */
 /*************************/
+
+
 
 node[highway=bus_stop] {
     icon-image: "presets/transport/bus_small.svg";
@@ -5184,6 +5048,9 @@ way[public_transport=platform]!:closed {
 }
 node[public_transport=platform] {
     icon-image: "presets/transport/platform.svg";
+}
+node[public_transport=platform][bus] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/board-bus.svg";
 }
 area[public_transport=station] {
     fill-color: railwaypoint#808080;
@@ -5374,9 +5241,6 @@ node[sport=ice_skating] {
 node[sport=roller_skating] {
     icon-image: "presets/sport/roller_skating.svg";
 }
-node[sport=skating] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[sport=skateboard] {
     icon-image: "presets/sport/skateboard.svg";
 }
@@ -5469,6 +5333,28 @@ node[sport=rc_car] {
 /* natural tags */
 /****************/
 
+node|z20-[species]::species {
+    font-size: 10;
+    font-style: italic;
+    text-color: white;
+    text: species;  
+    text-anchor-horizontal: center;
+    text-offset-y: -20;
+}
+node|z18-[ref:gid]::ref { 
+    font-size: 10;
+    text-color: white;
+    text: "ref:gid";
+    text-anchor-horizontal: center;
+    text-offset-y: 20;
+}
+node|z19-[natural][ref] { 
+    font-size: 9;
+    text-color: white;
+    text: "ref";
+    text-anchor-horizontal: center;
+    text-offset-y: 45;
+}
 area[natural=spring] {
     fill-color: light_water#3959ff;
 }
@@ -5555,6 +5441,9 @@ area[landuse=forest]::fill {
 area[natural=grassland] {
     fill-color: green#8cD05F;
 }
+area[natural=grassland]::fill{
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
+}
 area[natural=wetland]{
     fill-color: marsh#9bd6a1;
 }
@@ -5569,8 +5458,10 @@ area[natural=water][intermittent=yes] {
     dashes: 15, 5;
 }
 way[natural=coastline] {
-    width: 2;
+    width: 2.5;
     color: coastline#54e262;
+    dashes: 5,3;
+    z-index: 5;
     right-casing-color: coastline#4ee9d6;
     right-casing-width: 8;
     right-casing-opacity: 0.35;
@@ -5579,7 +5470,10 @@ area[natural=mud] {
     fill-color: mud#cba762;
 }
 area[natural=beach] {
-    fill-color: beach#7e7e49;
+    fill-color: beach#f9d09b;
+}
+area[natural=shoal] {
+    fill-color: shoal#e1a965;
 }
 area[natural=sand] {
     fill-color: sand#e4e8b1;
@@ -5648,7 +5542,7 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
-    icon-width: eval(2 * prop(pixel_per_metre,"default"));
+    icon-height: eval(1.5 * prop(pixel_per_metre,"default"));
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -5662,33 +5556,25 @@ node[natural=tree][leaf_type=palm] {
 node[natural=tree][leaf_type=leafless] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
 }
-
-node[natural=glacier],
-node[natural=scree],
-node[natural=shingle],
-node[natural=scrub],
-node[natural=shrubbery],
-node[natural=fell],
-node[natural=heath],
-node[natural=tree_row],
-node[natural=wood],
-node[natural=grassland],
-node[natural=wetland],
-node[natural=water],
-node[natural=coastline],
-node[natural=mud],
-node[natural=beach],
-node[natural=sand],
-node[natural=land],
-node[natural=bare_rock],
-node[natural=arete],
-node[natural=ridge],
-node[natural=valley] {
-    icon-image: "presets/misc/deprecated.svg";
+node|z12-[denotation=natural_monument] {
+    icon-height: 24;
+    z-index: 20; 
 }
+node|z12-[denotation=natural_monument][inside("PL")]::natural_monument {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.png";
+    icon-height: 16;
+    icon-offset-y: 10;
+    icon-offset-x: 10;
+    z-index: 20; 
+}
+
+
+
 /*****************/
 /* waterway tags */
 /*****************/
+
+
 
 way|z15-[waterway=river][!tunnel] {
     width: 7;
@@ -5828,11 +5714,6 @@ area[waterway=boatyard] {
 node[waterway=boatyard] {
     icon-image: "presets/nautical/boatyard.svg";
 }
-node[waterway=water_point],
-node[waterway=waste_disposal],
-node[waterway=mooring] {
-    icon-image: "presets/misc/deprecated.svg";
-}
 node[mooring] {
     icon-image: "presets/nautical/marina.svg";
 }
@@ -5884,36 +5765,28 @@ way[waterway=waterfall] {
 node[waterway=waterfall] {
     icon-image: "presets/nautical/waterfall.svg";
 }
-node[waterway=river], node[waterway=riverbank],
-node[waterway=canal], node[waterway=wadi],
-node[waterway=stream],
-node[waterway=ditch], node[waterway=drain] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /**************/
 /* route tags */
 /**************/
+
+
 
 way[route=ferry] {
     width: 1;
     color: ferry#58a9ed;
     dashes: 9,9;
 }
-node[route=bus],
-node[route=ferry],
-node[route=flight],
-node[route=ncn],
-node[route=subsea],
-node[route=ski],
-node[route=tour],
-node[route=pub_crawl] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /*******************/
 /* properties tags */
 /*******************/
+
+
 
 node[mountain_pass?] {
     icon-image: "presets/landmark/mountain_pass.svg";
@@ -5955,17 +5828,15 @@ node[boundary=marker] {
     icon-image: "presets/landmark/boundary_marker.svg";
 }
 
-node[boundary=national],
-node[boundary=administrative],
-node[boundary=postal_code],
-node[boundary=political],
-node[boundary=national_park] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /******************/
 /* maxspeed nodes */
 /******************/
+
+
+
 node[traffic_sign][maxspeed=none][!is_prop_set(icon-image)] {
     icon-image: "presets/vehicle/restriction/maxspeed_none.svg";
 }
@@ -6174,6 +6045,9 @@ area[building:part][!building:part?!] {
 node[building][!building?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
 }
+*[building=~/barn|farm_auxiliary/] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
+}
 node[building=garage] {
     icon-image: "presets/landuse/garages.svg";
 }
@@ -6200,14 +6074,14 @@ node[entrance=exit] {
 node[entrance=emergency] {
     icon-image: "presets/misc/entrance_emergency.svg";
 }
-node[building=entrance],
-node[building:part] {
-    icon-image: "presets/misc/deprecated.svg";
-}
+
+
 
 /***************************/
 /* "work in progress" tags */
 /***************************/
+
+
 
 node|z16-[fixme]::core_note_fixme,
 node|z-15[fixme][!setting("hide_icons")]::core_note_fixme,
@@ -6256,21 +6130,13 @@ node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
     major-z-index: 4.95; /* put node squares above line text */
 }
 
-node|z17-[setting("shrink_nodes")]               { symbol-size: 4; }
-way > node|z17[setting("shrink_nodes")]         { symbol-size: 3; }
-node|z17[setting("shrink_nodes")]:connection    { symbol-size: 4; }
-
-node|z15-[setting("shrink_nodes")]               { symbol-size: 4; }
-way > node|z15-[setting("shrink_nodes")]         { symbol-size: 4; }
-node|z15-[setting("shrink_nodes")]:connection    { symbol-size: 5; }
-
-node|z19-[setting("shrink_nodes")]              { symbol-size: 4; }
+node|z19-[setting("shrink_nodes")]              { symbol-size: 5; }
 way > node|z19-[setting("shrink_nodes")]        { symbol-size: 4; }
 node|z19-[setting("shrink_nodes")]:connection   { symbol-size: 6; }
 
-node[!setting("shrink_nodes")]                  { symbol-size: 4; }
-way > node[!setting("shrink_nodes")]            { symbol-size: 4; }
-node[!setting("shrink_nodes")]:connection       { symbol-size: 6; }
+node[!setting("shrink_nodes")]                  { symbol-size: 6; }
+way > node[!setting("shrink_nodes")]            { symbol-size: 5; }
+node[!setting("shrink_nodes")]:connection       { symbol-size: 7; }
 
 node|z-16[setting("hide_icons")].icon_z17!.icon_z0,
 relation|z-16[type=restriction][setting("hide_icons")] {
@@ -6322,10 +6188,9 @@ way|z15-[highway=raceway][setting("highway_labels")],
 way|z15-[highway=construction][setting("highway_labels")],
 way|z15-[highway=road][setting("highway_labels")] {
     text: auto;
-    text-color: black;
     font-size: 10;
+    text-color: #000;
     text-position: line;
-    text-halo-opacity: 1;
     text-halo-radius: 1.5;
 }
 way|z15-[highway=motorway][setting("highway_labels")],
@@ -6358,7 +6223,7 @@ way|z15-[highway=pedestrian][!area?][setting("highway_labels")],
 way|z15-[highway=steps][setting("highway_labels")],
 way|z15-[highway=footway][setting("highway_labels")],
 way|z15-[highway=path][setting("highway_labels")] {
-    text-halo-color: foot#00ff00;
+    text-halo-color: foot#8cd05f;
 }
 way|z15-[highway=service][setting("highway_labels")] {
     text-halo-color: service#809bc0;
@@ -6433,5 +6298,56 @@ node:selected {
 
 /*shhh*/
 node["name"="Mikołów"] {
-  icon-image: "https://upload.wikimedia.org/wikipedia/commons/6/64/POL_Mikołów_COA.svg"
+  icon-image: "https://upload.wikimedia.org/wikipedia/commons/6/64/POL_Mikołów_COA.svg";
+}
+
+way[shop]!:closed,
+way[office]!:closed,
+way[amenity][amenity!~/bench|check_in/]!:closed,
+node[restriction],
+node[oneway],
+node[bridge],
+node[tunnel?],
+node[tunnel?!],
+node[cutting?!],
+node[embankment?!],
+
+node[barrier=~/hedge|wall|guard_rail|city_wall|retaining_wall|ditch/],
+
+node[highway=~/motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|road|unsurfaced|track|residential|living_street|service|bridleway|cycleway|footway|path|pedestrian|bus_guideway|platform/],
+
+node[cycleway=~/lane|opposite_lane|track|opposite_track|opposite/],
+
+node[power=~/plant|sub_station|line|cable|minor_line/],
+
+node[power_source],
+
+node[man_made=~/bridge|breakwater|groyne|embankment|pumping_rig|pipeline|cutline/],
+
+node[leisure=park],
+
+node[landuse],
+
+node[railway=~/rail|tram|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/],
+
+node[service=~/yard|siding|spur/],
+
+node[aeroway=~/apron|runway|taxiway/],
+
+node[aerialway=~/cable_car|gondola|chair_lift|mixed_lift|drag_lift|t-bar|j-bar|platter|magic_carpet|rope_tow|goods/],
+
+node[sport=skating],
+
+node[natural=~/glacier|scree|shingle|scrub|shrubbery|fell|heath|tree_row|wood|grassland|wetland|water|coastline|mud|beach|sand|land|bare_rock|arete|ridge|valley/],
+
+node[waterway=~/water_point|waste_disposal|mooring|river|riverbank|canal|wadi|stream|ditch|drain/],
+
+node[route=~/bus|ferry|flight|ncn|subsea|ski|tour|pub_crawl/],
+
+node[boundary=~/national|administrative|postal_code|political|national_park/],
+
+node[building=entrance],
+node[building:part]
+{
+    icon-image: "presets/misc/deprecated.svg";
 }
