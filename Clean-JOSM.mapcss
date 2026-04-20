@@ -23,55 +23,9 @@ canvas {
     text-halo-color: #333;
     set icon_z17;
 }
-node {
-    text-offset-y: -10;
-}
-node[/^disused:/] {
-    text: tr("");
-}
-node:tagged,
-node:selected {
-    symbol-size: 8;
-    symbol-stroke-opacity: 1;
-    symbol-fill-opacity: 1;
-}
-node:tagged {
-    symbol-fill-color: #007bff;
-}
-node|z20- {
-    icon-height: 20;
-}
-node|z21- {
-    icon-height: 25;
-}
-node|z-15 {
-    symbol-fill-opacity: 0;
-}
-node|z10- {
-    symbol-size: 7;
-    symbol-shape: circle;
-    symbol-stroke-color: #ddd;
-    symbol-fill-color: #333;
-}
-way!:closed >[index=-1] node!:connection {
-    symbol-size: 8;
-}
-way > node!:connection {
-    symbol-size: 7;
-}
-way:closed[is_prop_set(icon-image)] {
-    icon-position: inside;
-}
-way:closed {
-    fill-opacity: 0.3;
-}
-way!:closed {
-    icon-position: line;
-}
-area:closed {
-    text-position: center;
-    text-offset-y: -15;
-}
+
+
+
 
 /*most accurate pixel/metre*/
 *|z16  { pixel_per_metre: 0.664; }
@@ -87,11 +41,14 @@ area:closed {
 *|z26- { pixel_per_metre: 680; }
 
 
-way[highway] > node[highway],
+
+way[highway] > node[highway] {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+    icon-height: prop(icon-height, "default") ;
+}
 way[highway] > node[traffic_calming],
-way[highway] > node[public_transport],
 way[highway] > node[noexit],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway=crossing],
+way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
 way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default") ;
@@ -802,199 +759,108 @@ way|z-14[highway=trunk_link][tunnel] {
     casing-width: 1;
     casing-color: #70372f;
 }
-way|z16-[highway=primary][!tunnel] {
-    width: 6;
+way[highway=~/primary|primary_link/][!tunnel] {
     z-index: 0.09;
     color: primary#f99806;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
+}
+way|z16-[highway=primary][!tunnel] {
+    width: 6;
 }
 way|z16-[highway=primary_link][!tunnel] {
     width: 4;
-    z-index: 0.09;
-    color: primary#f99806;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=primary][!tunnel] {
     width: 3.46;
-    z-index: 0.09;
-    color: primary#f99806;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=primary_link][!tunnel] {
     width: 1.73;
-    z-index: 0.09;
-    color: primary#f99806;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=primary][!tunnel] {
     width: 2;
-    z-index: 0.09;
-    color: primary#f99806;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=primary_link][!tunnel] {
     width: 1;
+}
+
+way[highway=~/primary|primary_link/][tunnel] {
     z-index: 0.09;
-    color: primary#f99806;
+    color: primary#724111;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=primary][tunnel] {
     width: 6;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=primary_link][tunnel] {
     width: 4;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=primary][tunnel] {
     width: 3.46;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=primary_link][tunnel] {
     width: 1.73;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=primary][tunnel] {
     width: 2;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=primary_link][tunnel] {
     width: 1;
-    z-index: 0.09;
-    color: primary#724111;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
-
-way|z16-[highway=secondary][!tunnel] {
-    width: 6;
+way[highway=~/secondary|secondary_link/][!tunnel] {
     z-index: 0.07;
     color: secondary#f3f312;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
+}
+way|z16-[highway=secondary][!tunnel] {
+    width: 6;
 }
 way|z16-[highway=secondary_link][!tunnel] {
     width: 4;
-    z-index: 0.07;
-    color: secondary#f3f312;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=secondary][!tunnel] {
     width: 4;
-    z-index: 0.07;
-    color: secondary#f3f312;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=secondary_link][!tunnel] {
     width: 1.73;
-    z-index: 0.07;
-    color: secondary#f3f312;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=secondary][!tunnel] {
     width: 2;
-    z-index: 0.07;
-    color: secondary#f3f312;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=secondary_link][!tunnel] {
     width: 1;
+}
+way[highway=~/secondary|secondary_link/][tunnel] {
     z-index: 0.07;
-    color: secondary#f3f312;
+    color: secondary#715d15;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=secondary][tunnel] {
     width:  6;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=secondary_link][tunnel] {
     width:  4;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=secondary][tunnel] {
     width: 3.46;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=secondary_link][tunnel] {
     width: 1.37;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=secondary][tunnel] {
     width: 2;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=secondary_link][tunnel] {
     width: 1;
-    z-index: 0.07;
-    color: secondary#715d15;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
+
 way|z16-[highway=tertiary][!tunnel] {
     width: 6;
     z-index: 0.05;
@@ -1573,7 +1439,7 @@ way|z-14[highway=service][service=emergency_access][tunnel] {
     casing-width: 0.2;
     casing-color: #393737;
 }
-way[highway=bridleway][!tunnel] {
+way[highway=bridleway]{
     width: 3.3;
     color: horse#e06d5f;
     dashes: 6,6;
@@ -1589,22 +1455,31 @@ way[highway=bridleway][tunnel] {
     casing-color: #808080;
     z-index: 0.009;
 }
-way[highway=cycleway][!tunnel] {
-    width: 3.3;
+way[highway=cycleway] {
+    width: 3;
     color: bicycle#58a9ed;
     dashes: 6,6;
     casing-width: 1;
     casing-color: #ddd;
     z-index: 0.009;
 }
+way[highway=cycleway][cycleway=crossing] {
+    width: 3;
+    color: bicycle#58a9ed;
+    dashes: 6,6;
+    casing-width: 1;
+    casing-color: #ddccaa;
+    z-index: 0.009;
+}
 way[highway=cycleway][tunnel] {
-    width: 3.3;
+    width: 3;
     color: bicycle#748DA2;
     dashes: 6,6;
     casing-width: 1;
     casing-color: #808080;
     z-index: 0.009;
 }
+
 way[highway=footway][area], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
@@ -3354,6 +3229,9 @@ way[advertising=totem] {
 *[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
 }
+*[shop][brand*="Lewiatan"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/Lewiatan_%282011%29_Stacked.svg";
+}
 *[shop][brand*="Biedronka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
 }
@@ -3635,6 +3513,7 @@ area[amenity=taxi],
 area[amenity=fuel],
 area[amenity=prison],
 area[amenity=driver_training]{
+    width: 1;
     fill-color: amenity_parking#00329b;
 }
 *[amenity=parking_space] {
@@ -6136,15 +6015,59 @@ node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
     symbol-size: 2;
     major-z-index: 4.95; /* put node squares above line text */
 }
+node {
+    text-offset-y: -10;
+}
+node[/^disused:/] {
+    text: tr("");
+}
+node|z10- {
+    symbol-size: 5;
+    symbol-shape: circle;
+    symbol-stroke-color: #333;
+    symbol-stroke-width: 0.75;
+    symbol-stroke-opacity: 0.75;
+    symbol-fill-color: #bbb;
+}
+way > node:connection {
+    symbol-size: 6;
+}
+way!:closed >[index=-1] node!:connection {
+    symbol-size: 6;
+    symbol-fill-color: #fff;
+}
+node|z21- {
+    icon-height: 25;
+}
+node|z20- {
+    icon-height: 20;
+}
+node|z-15 {
+    symbol-fill-opacity: 0;
+    symbol-stroke-opacity: 0;
+}
+node:tagged {
+    symbol-size: 7;
+    symbol-fill-color: #007bff;
+}
+node:selected {
+    symbol-size: 8;
+    symbol-fill-color: #ff7300;
+}
 
-node|z19-[setting("shrink_nodes")]              { symbol-size: 5; }
-way > node|z19-[setting("shrink_nodes")]        { symbol-size: 4; }
-node|z19-[setting("shrink_nodes")]:connection   { symbol-size: 6; }
-
-node[!setting("shrink_nodes")]                  { symbol-size: 6; }
-way > node[!setting("shrink_nodes")]            { symbol-size: 5; }
-node[!setting("shrink_nodes")]:connection       { symbol-size: 7; }
-
+way:closed[is_prop_set(icon-image)] {
+    icon-position: inside;
+}
+way:closed {
+    fill-opacity: 0.3;
+}
+way!:closed {
+    icon-position: line;
+}
+area:closed {
+    text-position: center;
+    text-offset-y: -15;
+}
 node|z-16[setting("hide_icons")].icon_z17!.icon_z0,
 relation|z-16[type=restriction][setting("hide_icons")] {
     icon-image: none;
@@ -6161,6 +6084,7 @@ node|z19,area|z19   { font-size: 9; }
 node|z20-,area|z20- { font-size: 11; }
 
 node.place, way.place, area.place { font-size: 11; }
+
 
 
 /*******************/
@@ -6298,10 +6222,6 @@ area[setting("partial_fill")]:closed2::fill {
     fill-extent: 15;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
-node:selected {
-    symbol-size: 9;
-    symbol-fill-color: #ff7300;
-}
 
 /*shhh*/
 node["name"="Mikołów"] {
@@ -6335,7 +6255,7 @@ node[leisure=park],
 
 node[landuse],
 
-node[railway=~/rail|tram|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/],
+node[railway=~/rail|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/],
 
 node[service=~/yard|siding|spur/],
 
