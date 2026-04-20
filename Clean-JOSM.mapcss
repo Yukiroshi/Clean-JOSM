@@ -87,8 +87,9 @@ area:closed {
 *|z26- { pixel_per_metre: 680; }
 
 
-
+way[highway] > node[highway],
 way[highway] > node[traffic_calming],
+way[highway] > node[public_transport],
 way[highway] > node[noexit],
 way[highway=~/footway|pedestrian|cycleway|path/] > node[highway=crossing],
 way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
@@ -475,10 +476,10 @@ node[barrier=kerb][kerb=rolled] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-rolled.svg";
 }
 node[barrier=block] {
-    icon-image: "presets/barrier/block.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/block.svg";
 }
 node[barrier=chain] {
-    icon-image: "presets/barrier/chain.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/chain.svg";
 }
 node[barrier=stile] {
     icon-image: "presets/barrier/stile.svg";
@@ -490,7 +491,7 @@ node[barrier=full-height_turnstile] {
     icon-image: "presets/barrier/full-height_turnstile.svg";
 }
 node[barrier=cycle_barrier] {
-    icon-image: "presets/barrier/cycle_barrier.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cycle-barrier.svg";
 }
 node[barrier=lift_gate] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/lift-gate.svg";
@@ -526,7 +527,7 @@ node[barrier=jersey_barrier] {
     icon-image: "presets/barrier/jersey_barrier.svg";
 }
 node[barrier=log] {
-    icon-image: "presets/barrier/log.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/log.svg";
 }
 node[barrier=kissing_gate] {
     icon-image: "presets/barrier/kissing_gate.svg";
@@ -534,8 +535,9 @@ node[barrier=kissing_gate] {
 node[barrier=bump_gate] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bump-gate.svg";
 }
-node[barrier=bus_trap],
-
+node[barrier=bus_trap] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bus-guided.svg";
+}
 node[barrier=hampshire_gate] {
     icon-image: "presets/misc/no_icon.svg";
 }
@@ -1720,7 +1722,7 @@ node[highway=stop] {
     icon-image: "presets/vehicle/restriction/stop.svg";
 }
 node[highway=give_way] {
-    icon-image: "presets/vehicle/restriction/give_way.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-yield.svg";
 }
 node[cycleway=asl] {
     icon-image: "presets/vehicle/asl.svg";
@@ -5001,7 +5003,7 @@ node[aerialway=pylon] {
 
 
 node[highway=bus_stop] {
-    icon-image: "presets/transport/bus_small.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-bus-stop.svg";
 }
 node[public_transport=stop_position] {
     icon-image: "presets/transport/stop_position.svg";
@@ -5010,7 +5012,7 @@ node[public_transport=stop_position][share_taxi=yes] {
     icon-image: "presets/transport/share_taxi.svg";
 }
 node[public_transport=stop_position][bus=yes] {
-    icon-image: "presets/transport/bus.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-bus-stop.svg";
 }
 node[public_transport=stop_position][train=yes] {
     icon-image: "presets/transport/train.svg";
@@ -5050,7 +5052,7 @@ node[public_transport=platform] {
     icon-image: "presets/transport/platform.svg";
 }
 node[public_transport=platform][bus] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/board-bus.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-bus.svg";
 }
 area[public_transport=station] {
     fill-color: railwaypoint#808080;
@@ -5059,9 +5061,14 @@ node[public_transport=station] {
     icon-image: "presets/transport/station.svg";
 }
 
+
+
 /**************/
 /* sport tags */
 /**************/
+
+
+
 way[roller_coaster=track][!tunnel]{
     width: 2;
     color: #DDDDDD;
