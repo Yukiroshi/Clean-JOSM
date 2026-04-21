@@ -23,7 +23,12 @@ canvas {
     text-halo-color: #333;
     set icon_z17;
 }
-
+node|z21- {
+    icon-height: 25;
+}
+node|z20- {
+    icon-height: 20;
+}
 
 
 
@@ -1629,7 +1634,7 @@ node[highway=street_lamp][lamp_mount=straight_mast] {
 node[highway=street_lamp][lamp_mount=bent_mast] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
 }
-node|z17-[highway="street_lamp"]::Light
+node|z16-[highway="street_lamp"]::Light
 {
     symbol-shape: circle;
     symbol-size: 35;
@@ -1637,9 +1642,9 @@ node|z17-[highway="street_lamp"]::Light
     symbol-fill-opacity: 0.4;
     object-z-index: -1.0;
 }
-node|z17-[highway="street_lamp"][lamp_type=electric]::Light
+node|z16-[highway="street_lamp"][lamp_type=electric]::Light
 {
-    symbol-fill-color: white;
+    symbol-fill-color: #ddd;
 }
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
@@ -5457,6 +5462,7 @@ node[natural=shrub] {
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
     icon-height: eval(1.5 * prop(pixel_per_metre,"default"));
+    icon-opacity: 0.9;
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -5988,7 +5994,18 @@ node[entrance=exit] {
 node[entrance=emergency] {
     icon-image: "presets/misc/entrance_emergency.svg";
 }
-
+area[building][!source:building]::missing, relation[building][!source:building] > way::missing,
+area[building][source="www.geoportal.gov.pl"]::missing, relation[building][source="www.geoportal.gov.pl"] > way::missing
+{
+    color: #FF0055;
+    width: 3;
+    dashes: 6,2;
+    opacity: 1;
+    text-position: line;
+    text-color: #FF0055;
+    font-size: 12;
+    modifier: true;
+}
 
 
 /***************************/
@@ -6064,12 +6081,6 @@ way!:closed >[index=-1] node!:connection {
     symbol-size: 6;
     symbol-fill-color: #333;
 }
-node|z21- {
-    icon-height: 25;
-}
-node|z20- {
-    icon-height: 20;
-}
 node:tagged {
     symbol-size: 7;
     symbol-fill-color: #007bff;
@@ -6086,6 +6097,8 @@ way:closed {
 }
 way!:closed {
     icon-position: line;
+    text-position: line;
+    text-offset-y: -15;
 }
 area:closed {
     text-position: center;
@@ -6116,7 +6129,6 @@ area|z-15[setting("hide_icons")]:closed2 {
 }
 *|z-15[setting("hide_icons")][building] {
     fill-opacity: 0;
-    opacity: 0;
 }
 *|z-17[setting("hide_icons")]!.text_z0 {
     text: none;
