@@ -2110,11 +2110,13 @@ node[power=catenary_mast] {
 node[power=insulator] {
     icon-image: "presets/power/insulator.svg";
 }
-way[power=portal],
-way[power=line],
-way[power=minor_line] {
+way[power=~/portal|line/] {
     width: 1.5;
-    color: power#939393;
+    color: power#e5c200;
+}
+way[power=minor_line] {
+    width: 1;
+    color: power#e5c200;
 }
 way[power=cable] {
     width: 1;
@@ -4151,7 +4153,15 @@ way[tourism=artwork][!highway] {
     color: tourism#e180a2;
 }
 node[tourism=artwork] {
-    icon-image: "presets/sightseeing/arts_centre.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sculpture.svg";
+}
+node[tourism=artwork][artwork_type=statue],
+node[historic=memorial][memorial=statue] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/statue.svg";
+}
+node[tourism=artwork][artwork_type=bust],
+node[historic=memorial][memorial=bust] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bust.svg";
 }
 node[tourism=gallery] {
     icon-image: "presets/sightseeing/gallery.svg";
@@ -4248,11 +4258,14 @@ node[historic=monument] {
 node[historic=memorial] {
     icon-image: "presets/sightseeing/memorial.svg";
 }
+node[historic=memorial][memorial=plaque] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/plaque.svg";
+}
 node[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
 }
 node[historic=ruins] {
-    icon-image: "presets/sightseeing/ruins.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/ruins.svg";
 }
 node[historic=battlefield] {
     icon-image: "presets/sightseeing/battlefield.svg";
