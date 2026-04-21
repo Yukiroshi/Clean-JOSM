@@ -46,6 +46,21 @@ way[highway] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default") ;
 }
+way[oneway != -1] > node[stop_position:direction=forward],
+way[railway][oneway != -1] > node[railway:signal:direction=forward],
+way[highway][oneway != -1] > node[traffic_sign:direction=forward],
+way[highway][oneway != -1] > node[traffic_signals:direction=forward],
+way[oneway != -1] > node[direction=forward] {
+    icon-rotation: parent_way_angle();
+}
+
+way[oneway != -1] > node[stop_position:direction=backward],
+way[railway][oneway != -1] > node[railway:signal:direction=backward],
+way[highway][oneway != -1] > node[traffic_sign:direction=backward],
+way[highway][oneway != -1] > node[traffic_signals:direction=backward],
+way[oneway != -1] > node[direction=backward] {
+    icon-rotation: parent_way_angle() - 180deg;
+}
 way[highway] > node[traffic_calming],
 way[highway] > node[noexit],
 way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
@@ -1682,11 +1697,11 @@ node[highway=crossing]["crossing:markings"="ladder:skewed"] {
 node[highway=crossing]["crossing:markings"="ladder:paired"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder-paired.svg";
 }
-node[highway=crossing][crossing:island=yes]::traffic_island,
-node[highway=crossing][crossing=island]::traffic_island {
+node|z17-[highway=crossing][crossing:island=yes]::traffic_island,
+node|z17-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
 }
-node[highway=crossing][crossing=traffic_signals]::traffic_signals {
+node|z17-[highway=crossing][crossing=traffic_signals]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
 }
 node[highway=motorway_junction] {
@@ -5455,12 +5470,12 @@ node[natural=tree][leaf_type=palm] {
 node[natural=tree][leaf_type=leafless] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
 }
-node|z12-[denotation=natural_monument] {
+node|z17-[denotation=natural_monument] {
     icon-height: 24;
     z-index: 20; 
 }
-node|z12-[denotation=natural_monument][inside("PL")]::natural_monument {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.png";
+node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16;
     icon-offset-y: 10;
     icon-offset-x: 10;
@@ -5934,7 +5949,7 @@ node[place=square] {
 
 area[building][!building?!][building!=y][building!=1] {
     fill-color: building#e06e5f;
-    width: 3;
+    width: 2;
 }
 area[building=roof],
 area[building][!building?!][wall?!],
@@ -6008,8 +6023,8 @@ node|z-15[note][FIXME][!setting("hide_icons")]::core_note_fixme {
 /*
 Summary of different zoom levels:
   (any zoom)    place=* (except locality and square) and a few natural icons with their text is shown
-  |z-14         tagged way nodes are hidden completely
-  |z-15         untagged way nodes are hidden completely
+  |z-15         tagged way nodes are hidden completely
+  |z-16         untagged way nodes are hidden completely
   |z15          place=locality icon
   |z16-         fixme=* and note=* symbols; place=locality text
   |z17-         normal POI icons (without text),
@@ -6047,17 +6062,13 @@ way > node:connection {
 }
 way!:closed >[index=-1] node!:connection {
     symbol-size: 6;
-    symbol-fill-color: #fff;
+    symbol-fill-color: #333;
 }
 node|z21- {
     icon-height: 25;
 }
 node|z20- {
     icon-height: 20;
-}
-node|z-15 {
-    symbol-fill-opacity: 0;
-    symbol-stroke-opacity: 0;
 }
 node:tagged {
     symbol-size: 7;
@@ -6067,7 +6078,6 @@ node:selected {
     symbol-size: 8;
     symbol-fill-color: #ff7300;
 }
-
 way:closed[is_prop_set(icon-image)] {
     icon-position: inside;
 }
@@ -6081,11 +6091,34 @@ area:closed {
     text-position: center;
     text-offset-y: -15;
 }
-node|z-16[setting("hide_icons")].icon_z17!.icon_z0,
-relation|z-16[type=restriction][setting("hide_icons")] {
-    icon-image: none;
+node|z-17!:tagged[setting("hide_icons")] {
+    symbol-fill-opacity: 0;
+    symbol-stroke-opacity: 0;
 }
-node|z-17[setting("hide_icons")]!.text_z0 {
+*|z-15[setting("hide_icons")] {
+    icon-image: none;
+    symbol-fill-opacity: 0;
+    symbol-stroke-opacity: 0;
+    width: 1;
+    dashes: 0;
+    casing-width: 0;
+}
+way|z-15[setting("hide_icons")][highway] {
+    width: 2;
+}
+area|z-15[setting("hide_icons")]:closed2 {
+    icon-image: none;
+    symbol-fill-opacity: 0;
+    symbol-stroke-opacity: 0;
+    width: 1;
+    dashes: 0;
+    casing-width: 0;
+}
+*|z-15[setting("hide_icons")][building] {
+    fill-opacity: 0;
+    opacity: 0;
+}
+*|z-17[setting("hide_icons")]!.text_z0 {
     text: none;
 }
 node|z16-17[setting("hide_icons")][place=locality] {
@@ -6104,36 +6137,10 @@ node.place, way.place, area.place { font-size: 11; }
 /* way text labels */
 /*******************/
 
-way|z15-[highway=motorway][setting("highway_labels")],
-way|z15-[highway=motorway_link][setting("highway_labels")],
-way|z15-[highway=trunk][setting("highway_labels")],
-way|z15-[highway=trunk_link][setting("highway_labels")],
-way|z15-[highway=primary][setting("highway_labels")],
-way|z15-[highway=primary_link][setting("highway_labels")],
-way|z15-[highway=secondary][setting("highway_labels")],
-way|z15-[highway=secondary_link][setting("highway_labels")],
-way|z15-[highway=tertiary][setting("highway_labels")],
-way|z15-[highway=tertiary_link][setting("highway_labels")],
-way|z15-[highway=unclassified][setting("highway_labels")],
-way|z15-[highway=residential][setting("highway_labels")],
-way|z15-[highway=living_street][setting("highway_labels")],
-way|z15-[highway=escape][setting("highway_labels")],
-way|z15-[highway=pedestrian][!area?][setting("highway_labels")],
-way|z15-[highway=steps][setting("highway_labels")],
-way|z15-[highway=footway][setting("highway_labels")],
-way|z15-[highway=path][setting("highway_labels")],
-way|z15-[highway=service][setting("highway_labels")],
-way|z15-[highway=track][setting("highway_labels")],
-way|z15-[highway=cycleway][setting("highway_labels")],
-way|z15-[highway=bridleway][setting("highway_labels")],
-way|z15-[highway=bus_guideway][setting("highway_labels")],
-way|z15-[highway=busway][setting("highway_labels")],
-way|z15-[highway=raceway][setting("highway_labels")],
-way|z15-[highway=construction][setting("highway_labels")],
-way|z15-[highway=road][setting("highway_labels")] {
+way|z15-[highway=~/motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|escape|pedestrian|steps|footway|path|service|track|cycleway|bridleway|bus_guideway|busway|raceway|construction|road/][setting("highway_labels")] {
     text: auto;
     font-size: 10;
-    text-color: #000;
+    text-color: #333;
     text-position: line;
     text-halo-radius: 1.5;
 }
