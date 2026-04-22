@@ -10,6 +10,7 @@ Supports direction tags with numbers, cardinal directions or forward/backward as
 
 <img width="1080" alt="image" src="https://github.com/user-attachments/assets/de46a21e-b3be-44ad-9d92-d4520b1ddecc" />
 
+See the [upgraded icons](https://github.com/Yukiroshi/MakiMaki)
 
 # Installation
 See [installation instructions](https://josm.openstreetmap.de/wiki/Help/Preferences/MapPaintPreference)
