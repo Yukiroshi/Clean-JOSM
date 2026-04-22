@@ -3111,18 +3111,7 @@ node[healthcare=laboratory] {
 
 
 
-area[amenity=pub],
-area[amenity=biergarten],
-area[amenity=nightclub],
-area[amenity=stripclub],
-area[amenity=casino],
-area[amenity=brothel],
-area[amenity=cafe],
-area[amenity=restaurant],
-area[amenity=food_court],
-area[amenity=fast_food],
-area[amenity=bar],
-area[amenity=ice_cream] {
+area[amenity] {
     fill-color: amenity#ecba52;
 }
 *[amenity=pub] {
@@ -3460,7 +3449,7 @@ node[amenity=driver_training] {
 node[amenity=music_school] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg"; /*to be added*/
 }
-area[amenity=~/pharmacy|amenity=hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
+area[amenity=~/pharmacy|hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
     fill-color: health#eeeeee;
 }
 node[amenity=pharmacy] {
@@ -5009,7 +4998,7 @@ area[natural=wetland]{
 area[natural=wetland]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wet.svg";
 }
-area[natural=water](!is_prop_set("fill-color")) {
+area[natural=water][!is_prop_set("fill-color")] {
     fill-color: water#77d3ee;
 }
 area[natural=water][intermittent=yes] {
