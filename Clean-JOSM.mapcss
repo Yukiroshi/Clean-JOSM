@@ -3,7 +3,7 @@ meta {
     description: "Improved and cleaner look for JOSM, similiar to iD. All in one. Made with reference to Better-iD by Maerek (spam46200)";
     icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
     version: "1.1";
-    author: "Yukiroshi";
+    author: "Yukiro";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
 canvas {
@@ -11,16 +11,13 @@ canvas {
 }
 * {
     font-family: "Bahnschrift";
-}
-
-/*Node and line base style*/
-
-* {
     text: auto;
     text-anchor-horizontal: center;
     text-halo-radius: 1.3;
     text-color: #ddd;
     text-halo-color: #333;
+    linecap: none;
+    linejoin: none;
     set icon_z17;
 }
 node|z21- {
@@ -320,25 +317,14 @@ relation[restriction=only_straight_on] {
 
 
 
-way[bridge=yes]::core_bridge,
-way[bridge=viaduct]::core_bridge,
-way[bridge=swing]::core_bridge,
-way[bridge=movable]::core_bridge,
-way[bridge=cantilever]::core_bridge,
-way[bridge=covered]::core_bridge,
-way[bridge=low_water_crossing]::core_bridge,
-way[bridge=trestle]::core_bridge,
-way[bridge=aqueduct]::core_bridge {
+way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]::core_bridge {
     major-z-index: 2;
     object-z-index: -1;
     width: +10;
     color: bridge#333;
     opacity: 0.8;
 }
-way[tunnel=yes]::core_tunnel,
-way[tunnel=culvert]::core_tunnel,
-way[tunnel=building_passage]::core_tunnel,
-way[tunnel=avalanche_protector]::core_tunnel {
+way[tunnel=~/yes|culvert|building_passage|avalanche_protector/]::core_tunnel {
     major-z-index: 2;
     object-z-index: -1;
     width: 2;
@@ -518,13 +504,20 @@ node[barrier=bus_trap] {
 node[barrier=hampshire_gate] {
     icon-image: "presets/misc/no_icon.svg";
 }
-way[barrier=~/yes|fence|block|chain|ditch|gate|jersey_barrier/] {
+way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
+    major-z-index: 4;
+}
+way[barrier][fence_type=railing] {
+    width: 1.5;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    major-z-index: 4;
 }
 way[barrier=bollard] {
-    width: 2;
+    width: 3;
     color: barrier#F0F050;
     dashes: 3,9;
 }
@@ -587,198 +580,110 @@ way[motorroad=yes]::core_motorroad {
     width: +4;
     color: motorroad#3377ff;
 }
-way|z16-[highway=motorway][!tunnel] {
-    width: 6;
+way[highway=~/motorway|motorway_link/][!tunnel] {
     z-index: 0.13; /* #15483 */
     color: motorway#cf2081;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
+}
+way|z16-[highway=motorway][!tunnel] {
+    width: 6;
 }
 way|z16-[highway=motorway_link][!tunnel] {
     width: 4;
-    z-index: 0.13; /* #15483 */
-    color: motorway#cf2081;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=motorway][!tunnel] {
     width: 3.46;
-    z-index: 0.13; /* #15483 */
-    color: motorway#cf2081;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=motorway_link][!tunnel] {
     width: 1.73;
-    z-index: 0.13; /* #15483 */
-    color: motorway#cf2081;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=motorway][!tunnel] {
     width: 2;
-    z-index: 0.13; /* #15483 */
-    color: motorway#cf2081;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=motorway_link][!tunnel] {
     width: 1;
+}
+
+way[highway=~/motorway|motorway_link/][tunnel] {
     z-index: 0.13; /* #15483 */
-    color: motorway#cf2081;
+    color: motorway#661c37;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=motorway][tunnel] {
     width: 6;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=motorway_link][tunnel] {
     width: 4;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=motorway][tunnel] {
     width: 3.46;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=motorway_link][tunnel] {
     width: 1.73;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=motorway][tunnel] {
     width: 2;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=motorway_link][tunnel] {
     width: 1;
-    z-index: 0.13; /* #15483 */
-    color: motorway#661c37;
+}
+
+way[highway=~/trunk|trunk_link/][!tunnel] {
+    z-index: 0.11;
+    color: trunk#dd2522;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=trunk][!tunnel] {
     width: 6;
-    z-index: 0.11;
-    color: trunk#dd2522;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=trunk_link][!tunnel] {
     width: 4;
-    z-index: 0.11;
-    color: trunk#dd2522;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=trunk][!tunnel] {
     width: 3.46;
-    z-index: 0.11;
-    color: trunk#dd2522;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=trunk_link][!tunnel] {
     width: 1.73;
-    z-index: 0.11;
-    color: trunk#dd2522;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=trunk][!tunnel] {
     width: 2;
-    z-index: 0.11;
-    color: trunk#dd2522;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=trunk_link][!tunnel] {
     width: 1;
+}
+
+way[highway=~/trunk|trunk_link/][tunnel] {
     z-index: 0.11;
-    color: trunk#dd2522;
+    color: trunk#6a211a;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=trunk][tunnel] {
     width: 6;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=trunk_link][tunnel] {
     width: 4;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=trunk][tunnel] {
     width: 3.46;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=trunk_link][tunnel] {
     width: 1.73;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=trunk][tunnel] {
     width: 2;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=trunk_link][tunnel] {
     width: 1;
-    z-index: 0.11;
-    color: trunk#6a211a;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
+
 way[highway=~/primary|primary_link/][!tunnel] {
     z-index: 0.09;
     color: primary#f99806;
@@ -855,6 +760,7 @@ way|z-14[highway=secondary][!tunnel] {
 way|z-14[highway=secondary_link][!tunnel] {
     width: 1;
 }
+
 way[highway=~/secondary|secondary_link/][tunnel] {
     z-index: 0.07;
     color: secondary#715d15;
@@ -881,149 +787,91 @@ way|z-14[highway=secondary_link][tunnel] {
     width: 1;
 }
 
-way|z16-[highway=tertiary][!tunnel] {
-    width: 6;
+
+way[highway=~/tertiary|tertiary_link/][!tunnel] {
     z-index: 0.05;
     color: tertiary#ddd9b3;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
+}
+way|z16-[highway=tertiary][!tunnel] {
+    width: 6;
 }
 way|z16-[highway=tertiary_link][!tunnel] {
     width: 4;
-    z-index: 0.05;
-    color: tertiary#ddd9b3;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=tertiary][!tunnel] {
     width: 3.46;
-    z-index: 0.05;
-    color: tertiary#ddd9b3;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=tertiary_link][!tunnel] {
     width: 1.73;
-    z-index: 0.05;
-    color: tertiary#ddd9b3;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=tertiary][!tunnel] {
     width: 2;
-    z-index: 0.05;
-    color: tertiary#ddd9b3;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
  way|z-14[highway=tertiary_link][!tunnel] {
     width: 1;
+}
+
+way[highway=~/tertiary|tertiary_link/][tunnel] {
     z-index: 0.05;
-    color: tertiary#ddd9b3;
+    color: tertiary#745e46;
     opacity: 1;
     casing-width: 1;
     casing-color: #70372f;
 }
 way|z16-[highway=tertiary][tunnel] {
     width: 6;
-    z-index: 0.05;
-    color: tertiary#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z16-[highway=tertiary_link][tunnel] {
     width: 4;
-    z-index: 0.05;
-    color: tertiary#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=tertiary][tunnel] {
     width: 3.46;
-    z-index: 0.05;
-    color: tertiary#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z15[highway=tertiary_link][tunnel] {
     width: 1.73;
-    z-index: 0.05;
-    color: tertiary#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=tertiary][tunnel] {
     width: 2;
-    z-index: 0.05;
-    color: tertiary#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #70372f;
 }
 way|z-14[highway=tertiary_link][tunnel] {
     width: 1;
-    z-index: 0.05;
-    color: tertiary#745e46;
+}
+
+way[highway=unclassified][!tunnel] {
+    z-index: 0.03;
+    color: street#ddccaa;
     opacity: 1;
     casing-width: 1;
-    casing-color: #70372f;
+    casing-color: #444;
 }
 way|z16-[highway=unclassified][!tunnel] {
     width: 6;
-    z-index: 0.03;
-    color: street#ddccaa;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z15[highway=unclassified][!tunnel] {
     width: 3.46;
-    z-index: 0.03;
-    color: street#ddccaa;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z-14[highway=unclassified][!tunnel] {
     width: 2;
+}
+
+way[highway=unclassified][tunnel] {
     z-index: 0.03;
-    color: street#ddccaa;
+    color: street#745e46;
     opacity: 1;
     casing-width: 1;
     casing-color: #444;
 }
 way|z16-[highway=unclassified][tunnel] {
     width: 6;
-    z-index: 0.03;
-    color: street#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z15[highway=unclassified][tunnel] {
     width: 3.46;
-    z-index: 0.03;
-    color: street#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z-14[highway=unclassified][tunnel] {
     width: 2;
-    z-index: 0.03;
-    color: street#745e46;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way[highway=escape] {
     width: 3;
@@ -1047,75 +895,82 @@ way[highway=road][tunnel] {
 way[highway=track][area?], relation[type=multipolygon][highway=track] {
     fill-color: highway_track#6e541c;
 }
-way|z16-[highway=track] {
-    width: 4;
+
+/*TO DO - add tracktypes*/
+
+way[highway=track] {
     color: highway_track#c5b59f;
     casing-dashes: 4,4;
-    casing-color: #ccc;
+    casing-color: #ddd;
     casing-width: 1;
 }
+way|z16-[highway=track] {
+    width: 5;
+}
 way|z15[highway=track] {
-    width: 2.58;
-    color: highway_track#c5b59f;
-    casing-dashes: 4,4;
-    casing-color: #ccc;
+    width: 3;
     casing-width: 0.7;
 }
 way|z-14[highway=track] {
-    width: 1.67;
-    color: highway_track#c5b59f;
-    casing-dashes: 4,4;
-    casing-color: #ccc;
+    width: 2;
     casing-width: 0.3;
+}
+way[highway=track][tracktype=grade6] {
+    casing-dashes: 3,3;
+    casing-color: #ddd;
+}
+way[highway=track][tracktype=grade5] {
+    casing-dashes: 4,4;
+}
+way[highway=track][tracktype=grade4] {
+    casing-dashes: 6,5;
+}
+way[highway=track][tracktype=grade3] {
+    casing-dashes: 8,3;
+}
+way[highway=track][tracktype=grade2] {
+    casing-dashes: 10,3;
+}
+way[highway=track][tracktype=grade1] {
+    casing-dashes: 12,1;
+}
+
+way[highway=residential][!tunnel] {
+    z-index: 0.02;
+    color: street#ddd;
+    opacity: 1;
+    casing-width: 1;
+    casing-color: #444;
 }
 way|z16-[highway=residential][!tunnel] {
     width: 6;
-    z-index: 0.02;
-    color: street#ddd;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z15[highway=residential][!tunnel] {
     width: 3.46;
-    z-index: 0.02;
-    color: street#ddd;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z-14[highway=residential][!tunnel] {
     width: 2;
-    z-index: 0.02;
-    color: street#ddd;
-    opacity: 1;
     casing-width: 0.6;
+}
+
+way[highway=residential][tunnel] {
+    z-index: 0.02;
+    color: street#5b564b;
+    opacity: 1;
+    casing-width: 1;
     casing-color: #444;
 }
 way|z16-[highway=residential][tunnel] {
     width: 6;
-    z-index: 0.02;
-    color: street#5b564b;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z15[highway=residential][tunnel] {
     width: 3.46;
-    z-index: 0.02;
-    color: street#5b564b;
-    opacity: 1;
-    casing-width: 1;
-    casing-color: #444;
 }
 way|z-14[highway=residential][tunnel] {
     width: 2;
-    z-index: 0.02;
-    color: street#5b564b;
-    opacity: 1;
     casing-width: 0.6;
-    casing-color: #444;
 }
+
 way|z16-[highway=living_street][!tunnel] {
     width: 6;
     z-index: 0.01;
@@ -1164,8 +1019,43 @@ way|z-14[highway=living_street][tunnel] {
     casing-width: 1;
     casing-color: #444;
 }
+
 way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
+}
+
+way[highway=service][service][!tunnel] {
+    color: service#ddccaa;
+    casing-color: #444;
+}
+way|z16-[highway=service][service][!tunnel] {
+    width: 4;
+    casing-width: 0.7;
+}
+way|z15[highway=service][service][!tunnel] {
+    width: 1.73;
+    casing-width: 0.5;
+}
+way|z-14[highway=service][service][!tunnel] {
+    width: 1;
+    casing-width: 0.3;
+    z-index: 0.009;
+}
+way[highway=service][service][tunnel] {
+    color: service#676257;
+    casing-color: #2A2A2A;
+}
+way|z16-[highway=service][service][tunnel] {
+    width: 4;
+    casing-width: 0.7;
+}
+way|z15[highway=service][service][tunnel] {
+    width: 1.73;
+    casing-width: 0.5;
+}
+way|z-14[highway=service][service][tunnel] {
+    width: 1;
+    casing-width: 0.3;
 }
 way|z16-[highway=service][!area?][!tunnel],
 way|z16-[highway=service][service=driveway][!tunnel] {
@@ -1209,256 +1099,69 @@ way|z-14[highway=service][service=driveway][tunnel] {
     casing-width: 0.2;
     casing-color: #585858;
 }
-way|z16-[highway=service][service=alley][!tunnel],
-way|z16-[highway=service][service=yard][!tunnel],
-way|z16-[highway=service][service=spur][!tunnel],
-way|z16-[highway=service][service=siding][!tunnel],
-way|z16-[highway=service][service=drive-through][!tunnel],
-way|z16-[highway=service][service=dealer][!tunnel],
-way|z16-[highway=service][service=crossover][!tunnel],
-way|z16-[highway=service][service=utility][!tunnel],
-way|z16-[highway=service][service=irrigation][!tunnel],
-way|z16-[highway=service][service=slipway][!tunnel],
-way|z16-[highway=service][service=resource_extraction][!tunnel],
-way|z16-[highway=service][service=bus][!tunnel],
-way|z16-[highway=service][service=repair][!tunnel],
-way|z16-[highway=service][service=parking][!tunnel],
-way|z16-[highway=service][service=fuel][!tunnel],
-way|z16-[highway=service][service=rest_area][!tunnel],
-way|z16-[highway=service][service=pipestem][!tunnel],
-way|z16-[highway=service][service=water_power][!tunnel],
-way|z16-[highway=service][service=agricultural][!tunnel],
-way|z16-[highway=service][service=laneway][!tunnel],
-way|z16-[highway=service][service=access][!tunnel] {
-    width: 4;
-    color: service#ddccaa;
-    casing-width: 0.7;
-    casing-color: #444;
-}
-way|z15[highway=service][service=alley][!tunnel],
-way|z15[highway=service][service=yard][!tunnel],
-way|z15[highway=service][service=spur][!tunnel],
-way|z15[highway=service][service=siding][!tunnel],
-way|z15[highway=service][service=drive-through][!tunnel],
-way|z15[highway=service][service=dealer][!tunnel],
-way|z15[highway=service][service=crossover][!tunnel],
-way|z15[highway=service][service=utility][!tunnel],
-way|z15[highway=service][service=irrigation][!tunnel],
-way|z15[highway=service][service=slipway][!tunnel],
-way|z15[highway=service][service=resource_extraction][!tunnel],
-way|z15[highway=service][service=bus][!tunnel],
-way|z15[highway=service][service=repair][!tunnel],
-way|z15[highway=service][service=parking][!tunnel],
-way|z15[highway=service][service=fuel][!tunnel],
-way|z15[highway=service][service=rest_area][!tunnel],
-way|z15[highway=service][service=pipestem][!tunnel],
-way|z15[highway=service][service=water_power][!tunnel],
-way|z15[highway=service][service=agricultural][!tunnel],
-way|z15[highway=service][service=laneway][!tunnel],
-way|z15[highway=service][service=access][!tunnel] {
-    width: 1.73;
-    color: service#ddccaa;
-    casing-width: 0.5;
-    casing-color: #444;
-}
-way|z-14[highway=service][service=alley][!tunnel],
-way|z-14[highway=service][service=yard][!tunnel],
-way|z-14[highway=service][service=spur][!tunnel],
-way|z-14[highway=service][service=siding][!tunnel],
-way|z-14[highway=service][service=drive-through][!tunnel],
-way|z-14[highway=service][service=dealer][!tunnel],
-way|z-14[highway=service][service=crossover][!tunnel],
-way|z-14[highway=service][service=utility][!tunnel],
-way|z-14[highway=service][service=irrigation][!tunnel],
-way|z-14[highway=service][service=slipway][!tunnel],
-way|z-14[highway=service][service=resource_extraction][!tunnel],
-way|z-14[highway=service][service=bus][!tunnel],
-way|z-14[highway=service][service=repair][!tunnel],
-way|z-14[highway=service][service=parking][!tunnel],
-way|z-14[highway=service][service=fuel][!tunnel],
-way|z-14[highway=service][service=rest_area][!tunnel],
-way|z-14[highway=service][service=pipestem][!tunnel],
-way|z-14[highway=service][service=water_power][!tunnel],
-way|z-14[highway=service][service=agricultural][!tunnel],
-way|z-14[highway=service][service=laneway][!tunnel],
-way|z-14[highway=service][service=access][!tunnel] {
-    width: 1;
-    color: service#ddccaa;
-    casing-width: 0.3;
-    casing-color: #444;
-    z-index: 0.009;
-}
-way|z16-[highway=service][service=alley][tunnel],
-way|z16-[highway=service][service=yard][tunnel],
-way|z16-[highway=service][service=spur][tunnel],
-way|z16-[highway=service][service=siding][tunnel],
-way|z16-[highway=service][service=drive-through][tunnel],
-way|z16-[highway=service][service=dealer][tunnel],
-way|z16-[highway=service][service=crossover][tunnel],
-way|z16-[highway=service][service=utility][tunnel],
-way|z16-[highway=service][service=irrigation][tunnel],
-way|z16-[highway=service][service=slipway][tunnel],
-way|z16-[highway=service][service=resource_extraction][tunnel],
-way|z16-[highway=service][service=bus][tunnel],
-way|z16-[highway=service][service=repair][tunnel],
-way|z16-[highway=service][service=parking][tunnel],
-way|z16-[highway=service][service=fuel][tunnel],
-way|z16-[highway=service][service=rest_area][tunnel],
-way|z16-[highway=service][service=pipestem][tunnel],
-way|z16-[highway=service][service=water_power][tunnel],
-way|z16-[highway=service][service=agricultural][tunnel],
-way|z16-[highway=service][service=laneway][tunnel],
-way|z16-[highway=service][service=access][tunnel] {
-    width: 4;
-    color: service#676257;
-    casing-width: 0.7;
-    casing-color: #2A2A2A;
-}
-way|z15[highway=service][service=alley][tunnel],
-way|z15[highway=service][service=yard][tunnel],
-way|z15[highway=service][service=spur][tunnel],
-way|z15[highway=service][service=siding][tunnel],
-way|z15[highway=service][service=drive-through][tunnel],
-way|z15[highway=service][service=dealer][tunnel],
-way|z15[highway=service][service=crossover][tunnel],
-way|z15[highway=service][service=utility][tunnel],
-way|z15[highway=service][service=irrigation][tunnel],
-way|z15[highway=service][service=slipway][tunnel],
-way|z15[highway=service][service=resource_extraction][tunnel],
-way|z15[highway=service][service=bus][tunnel],
-way|z15[highway=service][service=repair][tunnel],
-way|z15[highway=service][service=parking][tunnel],
-way|z15[highway=service][service=fuel][tunnel],
-way|z15[highway=service][service=rest_area][tunnel],
-way|z15[highway=service][service=pipestem][tunnel],
-way|z15[highway=service][service=water_power][tunnel],
-way|z15[highway=service][service=agricultural][tunnel],
-way|z15[highway=service][service=laneway][tunnel],
-way|z15[highway=service][service=access][tunnel] {
-    width: 1.73;
-    color: service#676257;
-    casing-width: 0.5;
-    casing-color: #2A2A2A;
-}
-way|z-14[highway=service][service=alley][tunnel],
-way|z-14[highway=service][service=yard][tunnel],
-way|z-14[highway=service][service=spur][tunnel],
-way|z-14[highway=service][service=siding][tunnel]
-way|z-14[highway=service][service=drive-through][tunnel],
-way|z-14[highway=service][service=dealer][tunnel],
-way|z-14[highway=service][service=crossover][tunnel],
-way|z-14[highway=service][service=utility][tunnel],
-way|z-14[highway=service][service=irrigation][tunnel],
-way|z-14[highway=service][service=slipway][tunnel],
-way|z-14[highway=service]way|z-14[highway=service][service=alley][tunnel],
-way|z-14[highway=service][service=yard][tunnel],
-way|z-14[highway=service][service=spur][tunnel],
-way|z-14[highway=service][service=siding][tunnel]
-way|z-14[highway=service][service=drive-through][tunnel],
-way|z-14[highway=service][service=dealer][tunnel],
-way|z-14[highway=service][service=crossover][tunnel],
-way|z-14[highway=service][service=utility][tunnel],
-way|z-14[highway=service][service=irrigation][tunnel],
-way|z-14[highway=service][service=slipway][tunnel],
-way|z-14[highway=service][service=resource_extraction][tunnel],
-way|z-14[highway=service][service=bus][tunnel],
-way|z-14[highway=service][service=repair][tunnel],
-way|z-14[highway=service][service=parking][tunnel],
-way|z-14[highway=service][service=fuel][tunnel],
-way|z-14[highway=service][service=rest_area][tunnel],
-way|z-14[highway=service][service=pipestem][tunnel],
-way|z-14[highway=service][service=water_power][tunnel],
-way|z-14[highway=service][service=agricultural][tunnel],
-way|z-14[highway=service][service=laneway][tunnel],
-way|z-14[highway=service][service=access][tunnel][tunnel],
-way|z-14[highway=service][service=bus][tunnel],
-way|z-14[highway=service][service=repair][tunnel],
-way|z-14[highway=service][service=parking][tunnel],
-way|z-14[highway=service][service=fuel][tunnel],
-way|z-14[highway=service][service=rest_area][tunnel],
-way|z-14[highway=service][service=pipestem][tunnel],
-way|z-14[highway=service][service=water_power][tunnel],
-way|z-14[highway=service][service=agricultural][tunnel],
-way|z-14[highway=service][service=laneway][tunnel],
-way|z-14[highway=service][service=access][tunnel] {
-    width: 1;
-    color: service#676257;
-    casing-width: 0.3;
-    casing-color: #2A2A2A;
-}
 
-way|z16-[highway=service][service=parking_aisle][!tunnel] {
-    width: 4;
+way[highway=service][service=parking_aisle][!tunnel] {
     color: parking_aisle#CCCAC7;
     casing-width: 0.7;
     casing-color: #555;
+}
+way|z16-[highway=service][service=parking_aisle][!tunnel] {
+    width: 4;
 }
 way|z15[highway=service][service=parking_aisle][!tunnel] {
     width: 1.73;
-    color: parking_aisle#CCCAC7;
-    casing-width: 0.7;
-    casing-color: #555;
 }
 way|z-14[highway=service][service=parking_aisle][!tunnel] {
     width: 1;
-    color: parking_aisle#CCCAC7;
+}
+way[highway=service][service=parking_aisle][tunnel] {
+    color: parking_aisle#626160;
     casing-width: 0.7;
-    casing-color: #555;
+    casing-color: #353535;
 }
 way|z16-[highway=service][service=parking_aisle][tunnel] {
     width: 4;
-    color: parking_aisle#626160;
-    casing-width: 0.7;
-    casing-color: #353535;
 }
 way|z15[highway=service][service=parking_aisle][tunnel] {
     width: 1.73;
-    color: parking_aisle#626160;
-    casing-width: 0.7;
-    casing-color: #353535;
 }
 way|z-14[highway=service][service=parking_aisle][tunnel] {
     width: 1;
-    color: parking_aisle#626160;
-    casing-width: 0.7;
-    casing-color: #353535;
+}
+
+way[highway=service][service=emergency_access][!tunnel] {
+    color: emergency_access#DDB2AA;
+    casing-color: #414141;
 }
 way|z16-[highway=service][service=emergency_access][!tunnel] {
     width: 4;
-    color: emergency_access#DDB2AA;
     casing-width: 0.7;
-    casing-color: #414141;
 }
 way|z15[highway=service][service=emergency_access][!tunnel] {
     width: 1.73;
-    color: emergency_access#DDB2AA;
     casing-width: 0.5;
-    casing-color: #414141;
 }
 way|z-14[highway=service][service=emergency_access][!tunnel] {
     width: 1;
-    color: emergency_access#DDB2AA;
     casing-width: 0.2;
-    casing-color: #414141;
+}
+way[highway=service][service=emergency_access][tunnel] {
+    color: emergency_access#6D5A57;
+    casing-color: #393737;
 }
 way|z16-[highway=service][service=emergency_access][tunnel] {
     width: 4;
-    color: emergency_access#6D5A57;
     casing-width: 0.7;
-    casing-color: #393737;
 }
 way|z15[highway=service][service=emergency_access][tunnel] {
     width: 1.73;
-    color: emergency_access#6D5A57;
     casing-width: 0.5;
-    casing-color: #393737;
 }
 way|z-14[highway=service][service=emergency_access][tunnel] {
     width: 1;
-    color: emergency_access#6D5A57;
     casing-width: 0.2;
-    casing-color: #393737;
 }
+
 way[highway=bridleway]{
     width: 3.3;
     color: horse#e06d5f;
@@ -1484,22 +1187,12 @@ way[highway=cycleway] {
     z-index: 0.009;
 }
 way[highway=cycleway][cycleway=crossing] {
-    width: 3;
-    color: bicycle#58a9ed;
-    dashes: 6,6;
-    casing-width: 1;
     casing-color: #ddccaa;
-    z-index: 0.009;
 }
 way[highway=cycleway][tunnel] {
-    width: 3;
     color: bicycle#748DA2;
-    dashes: 6,6;
-    casing-width: 1;
     casing-color: #808080;
-    z-index: 0.009;
 }
-
 way[highway=footway][area], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
@@ -1614,7 +1307,7 @@ node:righthandtraffic[highway=mini_roundabout] {
     icon-image: "presets/vehicle/restriction/mini_roundabout_right.svg";
 }
 node[highway=stop] {
-    icon-image: "presets/vehicle/restriction/stop.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-stop.svg";
 }
 node[highway=give_way] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-yield.svg";
@@ -2144,12 +1837,7 @@ way[power=cable] {
     dashes: 9,9;
 }
 
-area[power=plant],
-area[power=substation],
-area[power=compensator],
-area[power=converter],
-area[power=switchgear],
-area[power=generator],
+area[power=~/plant|substation|compensator|converter|switchgear|generator/],
 area[man_made=street_cabinet][street_cabinet=power] {
     fill-color: power#eeeeee;
 }
@@ -2186,23 +1874,7 @@ node[power=compensator] {
 /* generator:source tags */
 /*************************/
 
-area[generator:source=nuclear],
-area[generator:source=wind],
-area[generator:source=hydro],
-area[generator:source=tidal],
-area[generator:source=wave],
-area[generator:source=osmotic],
-area[generator:source=geothermal],
-area[generator:source=solar],
-area[generator:source=coal],
-area[generator:source=gas],
-area[generator:source=biomass],
-area[generator:source=biofuel],
-area[generator:source=biogas],
-area[generator:source=oil],
-area[generator:source=diesel],
-area[generator:source=gasoline],
-area[generator:source=waste] {
+area[generator:source] {
     fill-color: power#eeeeee;
 }
 node[generator:source=nuclear] {
@@ -2251,18 +1923,7 @@ node[generator:source=waste] {
 
 
 
-area[man_made=beacon],
-area[man_made=bridge],
-area[bridge:support],
-area[man_made=chimney],
-area[man_made=kiln],
-area[man_made=gasometer],
-area[man_made=silo],
-area[man_made=storage_tank],
-area[man_made=bunker_silo],
-area[man_made=lighthouse],
-area[man_made=monitoring_station],
-area[man_made=mineshaft] {
+area[man_made] {
     fill-color: manmade#d8d8d8;
 }
 node[man_made=street_cabinet][street_cabinet!=power] {
@@ -2764,7 +2425,7 @@ area[leisure=playground],
 area[leisure=garden],
 area[leisure=common],
 area[leisure=firepit] {
-    fill-color: leisure#49f567;
+    fill-color: leisure#61e370;
     width: 1;
 }
 node[leisure=fishing] {
@@ -4172,15 +3833,15 @@ way[tourism=artwork][!highway] {
     width: 2;
     color: tourism#e180a2;
 }
-node[tourism=artwork] {
+*[tourism=artwork] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sculpture.svg";
 }
-node[tourism=artwork][artwork_type=statue],
-node[historic=memorial][memorial=statue] {
+*[tourism=artwork][artwork_type=statue],
+*[historic=memorial][memorial=statue] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/statue.svg";
 }
-node[tourism=artwork][artwork_type=bust],
-node[historic=memorial][memorial=bust] {
+*[tourism=artwork][artwork_type=bust],
+*[historic=memorial][memorial=bust] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bust.svg";
 }
 node[tourism=gallery] {
@@ -4361,22 +4022,19 @@ area[place],
 area[natural],
 area[man_made] {
     z-index: -2; /* put areas that can have other areas inside (e.g. building) a little lower */
+    width: 1;
 }
 area[landuse=farmland] {
     fill-color: farmland#bee73e;
-    width: 1;
 }
 area[landuse=farmyard] {
     fill-color: farmyard#d1bb9e;
-    width: 1;
 }
 area[landuse=meadow] {
     fill-color: meadow#adca96;
-    width: 1;
 }
 area[landuse=vineyard] {
     fill-color: green#c3d740;
-    width: 1;
 }
 area[landuse=orchard] {
     fill-color: green#c3d740;
@@ -4384,80 +4042,66 @@ area[landuse=orchard] {
 }
 area[landuse=quarry] {
     fill-color: quarry#888888;
-    width: 1;
 }
 area[landuse=landfill] {
     fill-color: landfill#663300;
-    width: 1;
 }
 area[landuse=basin] {
     fill-color: forest#8bcc5d;
 }
 area[landuse=allotments] {
     fill-color: allotments#5dbf80;
-    width: 1;
 }
 area[landuse=greenhouse_horticulture],
 area[landuse=plant_nursery] {
     fill-color: green#b1e0c2;
-    width: 1;
 }
 area[landuse=salt_pond] {
     fill-color: salt_pond#eeeeee;
 }
 area[landuse=aquaculture] {
     fill-color: aquaculture#189dff;
-    width: 1;
 }
 area[landuse=grass]{
     fill-color: grass#5dca19;
-    width: 1;
 }
 area[landuse=grass]::fill{
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
 }
+area[landuse=flowerbed]{
+    fill-color: flowerbed#ffa4d9;
+}
 area[landuse=residential] {
     fill-color: residential#c4bd19;
-    width: 1;
 }
 area[landuse=garages] {
     fill-color: garages#aaa9a9;
-    width: 1;
 }
 area[landuse=farmyard] {
     fill-color: farmyard#f0f0f0;
-    width: 1;
 }
 area[landuse=retail] {
     fill-color: retail#d4831c;
-    width: 1;
 }
 area[landuse=commercial] {
     fill-color: commercial#ffc4ee;
-    width: 1;
 }
 area[landuse=industrial] {
     fill-color: industrial#e3a3f4;
-    width: 1;
 }
 area[landuse=brownfield] {
     fill-color: brownfield#ecba32;
-    width: 1;
 }
 area[landuse=greenfield] {
     fill-color: greenfield#b1ec5c;
-    width: 1;
 }
 area[landuse=railway] {
     fill-color: railland#888888;
-    width: 1;
 }
 area[landuse=construction] {
     fill-color: construction#dddf00;
-    width: 1;
 }
 way[landuse=construction] {
-    width: 1;
     color: construction#dddf00;
     dashes: 9,9;
 }
@@ -4466,19 +4110,15 @@ area[landuse=military] {
 }
 area[landuse=religious] {
     fill-color: religious#ffd454;
-    width: 1;
 }
 area[landuse=cemetery] {
     fill-color: cemetery#b1efc8;
-    width: 1;
 }
 area[landuse=village_green] {
     fill-color: green#b1e0c2;
-    width: 1;
 }
 area[landuse=recreation_ground] {
     fill-color: green#b1e0c2;
-    width: 1;
 }
 
 
@@ -5369,7 +5009,7 @@ area[natural=wetland]{
 area[natural=wetland]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wet.svg";
 }
-area[natural=water] {
+area[natural=water](!is_prop_set("fill-color")) {
     fill-color: water#77d3ee;
 }
 area[natural=water][intermittent=yes] {
@@ -6077,17 +5717,20 @@ node|z10- {
 way > node:connection {
     symbol-size: 6;
 }
-way!:closed >[index=-1] node!:connection {
+way!:closed >[index=-1] node!:connection,
+way!:closed >[index=1] node!:connection {
     symbol-size: 6;
-    symbol-fill-color: #333;
+    symbol-fill-color: #ddd;
 }
 node:tagged {
     symbol-size: 7;
     symbol-fill-color: #007bff;
+    symbol-stroke-color: #ddd;
 }
 node:selected {
     symbol-size: 8;
     symbol-fill-color: #ff7300;
+    symbol-stroke-color: #ddd;
 }
 way:closed[is_prop_set(icon-image)] {
     icon-position: inside;
@@ -6305,8 +5948,7 @@ node[route=~/bus|ferry|flight|ncn|subsea|ski|tour|pub_crawl/],
 
 node[boundary=~/national|administrative|postal_code|political|national_park/],
 
-node[building=entrance],
-node[building:part]
+node[building=entrance]
 {
     icon-image: "presets/misc/deprecated.svg";
 }
