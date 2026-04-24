@@ -49,7 +49,10 @@ node|z20- {
 
 way[highway] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-    icon-height: prop(icon-height, "default") ;
+}
+way[highway] > node[cycleway] {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+    icon-height: eval(2 * prop(pixel_per_metre, "default"));
 }
 way[oneway != -1] > node[stop_position:direction=forward],
 way[railway][oneway != -1] > node[railway:signal:direction=forward],
@@ -66,13 +69,24 @@ way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
 }
+way[highway] > node[highway=crossing] {
+    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+}
 way[highway] > node[traffic_calming],
 way[highway] > node[noexit],
 way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
 way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-    icon-height: prop(icon-height, "default") ;
 }
+way[highway] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+    icon-height: prop(icon-height, "default");
+}
+way[highway] > node[crossing=traffic_signals]::traffic_signals {
+    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+    icon-height: prop(icon-height, "default");
+}
+
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default");
@@ -1029,7 +1043,7 @@ node[highway=give_way] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-yield.svg";
 }
 node[cycleway=asl] {
-    icon-image: "presets/vehicle/asl.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cycleway-asl.svg";
 }
 node[highway=traffic_signals] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-signals.svg";
@@ -1126,6 +1140,7 @@ node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
     text: eval(cond(has_tag_key(ref), concat(tag(name), " (", tag(ref), ")"), tag(name)));
 }
+/*TO DO*/
 area[highway=services]:closed {
     fill-color: services#ed6464;
 }
@@ -1163,7 +1178,7 @@ way[highway=platform] {
     width: 5;
     color: highway_platform#e5c200;
 }
-
+/*TO DO*/
 node[highway=turning_circle] {
     icon-image: "presets/vehicle/turning_circle.svg";
 }
@@ -1182,6 +1197,8 @@ area[highway=elevator] {
 node[highway=elevator] {
     icon-image: "presets/service/elevator.svg";
 }
+
+/*TO DO*/
 way|z16-[highway=construction][!tunnel][!bridge] {
     width: 6;
     z-index: 0.01;
@@ -1343,15 +1360,19 @@ node[highway=emergency_access_point] {
     icon-image: "presets/service/emergency_access_point.svg";
 }
 
-
 area["area:highway"] {
     fill-color: #888888;
     fill-opacity: 0.6;
 }
 
+
+
 /************************/
 /* traffic_calming tags */
 /************************/
+
+/*TO DO*/
+
 way > node[traffic_calming] {
     icon-image: "presets/vehicle/traffic_calming.svg";
     icon-height: eval(5 * prop(pixel_per_metre, "default"));
@@ -1391,9 +1412,13 @@ node[traffic_calming=mini_bumps] {
     icon-image: "presets/vehicle/mini_bumps.svg";
 }
 
+
+
 /****************/
 /* junction tag */
 /****************/
+
+/*TO DO*/
 
 node[junction=roundabout] {
     icon-image: "presets/vehicle/restriction/roundabout_left.svg";
@@ -1402,14 +1427,19 @@ node:righthandtraffic[junction=roundabout] {
     icon-image: "presets/vehicle/restriction/roundabout_right.svg";
 }
 
+
+
 /*****************/
 /* cycleway tags */
 /*****************/
 
+/*TO DO*/
 
 /**************/
 /* piste tags */
 /**************/
+
+/*TO DO*/
 
 way[route=ski]::core_piste {
     z-index: -1;
@@ -1518,9 +1548,13 @@ node[piste:type=snow_park] {
     icon-image: "presets/sport/skiing.svg";
 }
 
+
+
 /**************/
 /* power tags */
 /**************/
+
+/*TO DO*/
 
 node[power=portal] {
     icon-image: "presets/power/portal.svg";
@@ -1590,9 +1624,12 @@ node[power=compensator] {
 }
 
 
+
 /*************************/
 /* generator:source tags */
 /*************************/
+
+/*TO DO*/
 
 area[generator:source] {
     fill-color: power#eeeeee;
@@ -1641,7 +1678,7 @@ node[generator:source=waste] {
 /* man_made tags */
 /*****************/
 
-
+/*TO DO*/
 
 area[man_made] {
     fill-color: manmade#d8d8d8;
@@ -1949,9 +1986,13 @@ node[man_made=utility_pole][utility~=street_lighting] {
     icon-image: "presets/tower/pole_street_light.svg";
 }
 
+
+
 /****************/
 /* telecom tags */
 /****************/
+
+/*TO DO*/
 
 node[telecom=exchange] {
     icon-image: "presets/telecom/exchange.svg";
@@ -1966,9 +2007,13 @@ node[man_made=street_cabinet][street_cabinet=telecom] {
     icon-image: "presets/telecom/telecom_cabinet.svg";
 }
 
+
+
 /***************/
 /* office tags */
 /***************/
+
+/*TO DO*/
 
 area[office] {
     fill-color: office#de5696;
@@ -2047,16 +2092,25 @@ node[office=government] {
     icon-image: "presets/office/government.svg";
 }
 
+
+
 /*************/
 /* club tags */
 /*************/
+
+/*TO DO*/
+
 node[club] {
     icon-image: "presets/leisure/club.svg";
 }
 
+
+
 /****************/
 /* leisure tags */
 /****************/
+
+/*TO DO*/
 
 area[leisure=bandstand],
 area[leisure=sports_centre],
@@ -2210,9 +2264,14 @@ node[leisure=golf_course] {
     icon-image: "presets/sport/golf/golf.svg";
 }
 
+
+
 /*************/
 /* golf tags */
 /*************/
+
+/*TO DO*/
+
 area[golf=tee] {
     fill-color: golf#c7f1a3;
 }
@@ -2250,9 +2309,13 @@ node[golf=driving_range] {
     icon-image: "presets/sport/golf/driving_range.svg";
 }
 
+
+
 /********************/
 /* advertising tags */
 /********************/
+
+/*TO DO*/
 
 *[advertising=column] {
     icon-image: "presets/leisure/advertising_column.svg";
@@ -2280,7 +2343,7 @@ way[advertising=totem] {
 /* shop tags */
 /*************/
 
-
+/*TO DO*/
 
 *[shop] {
     fill-color: shop#33305f;
@@ -2741,7 +2804,7 @@ way[advertising=totem] {
 /* emergency tags */
 /******************/
 
-
+/*TO DO*/
 
 area[emergency=ambulance_station],
 area[emergency=water_tank] {
@@ -2796,7 +2859,7 @@ node[emergency=siren] {
 /* police tags */
 /****************/
 
-
+/*TO DO*/
 
 node[police=barracks],
 node[police=car_pound],
@@ -2817,7 +2880,7 @@ node[police=yes] {
 /* healthcare tags */
 /*******************/
 
-
+/*TO DO*/
 
 node[healthcare=laboratory] {
     icon-image: "presets/health/laboratory.svg";
@@ -2829,7 +2892,7 @@ node[healthcare=laboratory] {
 /* amenity tags */
 /****************/
 
-
+/*TO DO*/
 
 area[amenity] {
     fill-color: amenity#ecba52;
@@ -3352,34 +3415,9 @@ node[vending=excrement_bags] {
 /* craft tags */
 /**************/
 
+/*TO DO*/
 
-
-area[craft=carpenter],
-area[craft=dressmaker],
-area[craft=shoemaker],
-area[craft=photographer],
-area[craft=metal_construction],
-area[craft=electrician],
-area[craft=electronics_repair],
-area[craft=brewery],
-area[craft=plumber],
-area[craft=sawmill],
-area[craft=gardener],
-area[craft=winery],
-area[craft=hvac],
-area[craft=painter],
-area[craft=stonemason],
-area[craft=handicraft],
-area[craft=pottery],
-area[craft=key_cutter],
-area[craft=caterer],
-area[craft=roofer],
-area[craft=beekeeper],
-area[craft=blacksmith],
-area[craft=locksmith],
-area[craft=window_construction],
-area[craft=upholsterer],
-area[craft=tiler] {
+area[craft] {
     fill-color: craft#999900;
 }
 node[craft=carpenter] {
@@ -3461,9 +3499,13 @@ node[craft=tiler] {
     icon-image: "presets/craft/tiler.svg";
 }
 
+
+
 /****************/
 /* tourism tags */
 /****************/
+
+/*TO DO*/
 
 area[tourism=hotel],
 area[tourism=motel],
@@ -3566,9 +3608,13 @@ node[tourism=museum] {
     icon-image: "presets/sightseeing/museum.svg";
 }
 
+
+
 /********************/
 /* attraction tags */
 /********************/
+
+/*TO DO*/
 
 area[attraction=animal] {
     fill-color: attraction#ffbfd3;
@@ -3587,9 +3633,13 @@ node[attraction=water_slide] {
     icon-image: "presets/attraction/water_slide.svg";
 }
 
+
+
 /********************/
 /* information tags */
 /********************/
+
+/*TO DO*/
 
 *[tourism=information] {
     fill-color: tourism#e180a2;
@@ -3615,31 +3665,15 @@ node[tourism=information][information=board] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-board.svg";
 }
 
+
+
 /*****************/
 /* historic tags */
 /*****************/
 
-area[historic=castle],
-area[historic=fort],
-area[historic=monument],
-area[historic=memorial],
-area[historic=tomb],
-area[historic=archaeological_site],
-area[historic=ruins],
-area[historic=battlefield],
-area[geological=palaeontological_site],
-area[historic=city_gate],
-area[historic=manor],
-area[historic=church],
-area[historic=monastery],
-area[historic=charcoal_pile],
-area[historic=mine],
-area[historic=mine_shaft],
-area[historic=shieling],
-area[historic=wayside_cross],
-area[historic=wayside_shrine],
-area[historic=boundary_stone],
-area[historic=milestone] {
+/*TO DO*/
+
+area[historic] {
     fill-color: historic#663300;
 }
 node[historic=fort] {
@@ -3726,9 +3760,13 @@ node[historic=tomb] {
     icon-offset-y: 15;
 }
 
+
+
 /****************/
 /* landuse tags */
 /****************/
+
+/*TO DO*/
 
 area[landuse],
 area[leisure],
@@ -3839,7 +3877,7 @@ area[landuse=recreation_ground] {
 /* military tags */
 /*****************/
 
-
+/*TO DO*/
 
 area[military=airfield],
 area[military=bunker],
@@ -3870,7 +3908,7 @@ node[military=range] {
 /* railway tags */
 /****************/
 
-
+/*TO DO*/
 
 area[railway=station] {
     fill-color: railwaypoint#f7efb7;
@@ -4132,9 +4170,13 @@ way[railway=construction][construction=tram][!highway] {
     casing-dashes: 9,9;
 }
 
+
+
 /****************/
 /* aeroway tags */
 /****************/
+
+/*TO DO*/
 
 area[aeroway=aerodrome] {
     fill-color: aeroway#660000;
@@ -4247,7 +4289,7 @@ way[aerialway=chair_lift] {
 }
 *[aerialway=station] {
     fill-color: aerialway#a8a8a8;
-    icon-image: "presets/transport/aerialway/station.svg";
+    icon-image: "presets/transport/aerialway/station.svg"; /*TO DO*/
 }
 node[aerialway=pylon] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/aerialway-pole.svg";
@@ -4259,6 +4301,8 @@ node[aerialway=pylon] {
 /*************************/
 /* public_transport tags */
 /*************************/
+
+/*TO DO*/
 
 node[highway=bus_stop] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-bus-stop.svg";
@@ -4325,7 +4369,7 @@ node[public_transport=station] {
 /* sport tags */
 /**************/
 
-
+/*TO DO*/
 
 way[roller_coaster=track][!tunnel]{
     width: 2;
@@ -4594,9 +4638,14 @@ node[sport=rc_car] {
     icon-image: "presets/sport/rc_car.svg";
 }
 
+
+
+
 /****************/
 /* natural tags */
 /****************/
+
+/*TO DO*/
 
 node|z20-[species]::species {
     font-size: 10;
@@ -4837,10 +4886,10 @@ node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
 
 
 /*****************/
-/* waterway tags */
+/* waterway tags */ 
 /*****************/
 
-
+/*TO DO*/
 
 way|z15-[waterway=river][!tunnel] {
     width: 7;
@@ -5055,7 +5104,7 @@ way[route=ferry] {
 
 
 node[mountain_pass?] {
-    icon-image: "presets/landmark/mountain_pass.svg";
+    icon-image: "presets/landmark/mountain_pass.svg"; /*TO DO*/
     set icon_z0;
     set text_z0;
 }
@@ -5091,7 +5140,7 @@ relation[boundary=national_park] > way::core_boundary {
 }
 
 node[boundary=marker] {
-    icon-image: "presets/landmark/boundary_marker.svg";
+    icon-image: "presets/landmark/boundary_marker.svg"; /*TO DO*/
 }
 
 
@@ -5280,17 +5329,17 @@ node|z-14[place=locality][!setting("hide_icons")] {
     text-halo-radius: 1;
 }
 node[place=island] {
-    icon-image: "presets/place/island.svg";
+    icon-image: "presets/place/island.svg"; /*TO DO*/
 }
 node[place=islet] {
-    icon-image: "presets/place/islet.svg";
+    icon-image: "presets/place/islet.svg"; /*TO DO*/
 }
 
 area[place=square] {
     fill-color: place#8de3cb;
 }
 node[place=square] {
-    icon-image: "presets/place/square.svg";
+    icon-image: "presets/place/square.svg"; /*TO DO*/
 }
 
 
@@ -5315,30 +5364,28 @@ node[building][!building?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
 }
 node[building=garage] {
-    icon-image: "presets/landuse/garages.svg";
+    icon-image: "presets/landuse/garages.svg"; /*TO DO*/
 }
 node[building=garages] {
-    icon-image: "presets/landuse/garages.svg";
+    icon-image: "presets/landuse/garages.svg"; /*TO DO*/
 }
 node[building=transformer_tower] {
-    icon-image: "presets/power/transformer_tower.svg";
+    icon-image: "presets/power/transformer_tower.svg"; /*TO DO*/
 }
-node[entrance=yes],
-node[entrance=home],
-node[entrance=staircase] {
-    icon-image: "presets/misc/entrance_yes.svg";
+node[entrance] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance.svg";
 }
 node[entrance=main] {
-    icon-image: "presets/misc/entrance_main.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance-main.svg";
 }
 node[entrance=service] {
-    icon-image: "presets/misc/entrance_service.svg";
+    icon-image: "presets/misc/entrance_service.svg"; /*TO DO*/
 }
 node[entrance=exit] {
-    icon-image: "presets/misc/entrance_exit.svg";
+    icon-image: "presets/misc/entrance_exit.svg"; /*TO DO*/
 }
 node[entrance=emergency] {
-    icon-image: "presets/misc/entrance_emergency.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance-emergency.svg";
 }
 area[building][!source:building]::missing, relation[building][!source:building] > way::missing,
 area[building][source="www.geoportal.gov.pl"]::missing, relation[building][source="www.geoportal.gov.pl"] > way::missing
