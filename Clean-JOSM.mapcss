@@ -30,17 +30,17 @@ node|z20- {
 
 
 /*most accurate pixel/metre*/
-*|z16  { pixel_per_metre: 0.664; }
-*|z17  { pixel_per_metre: 1.328; }
-*|z18  { pixel_per_metre: 2.656; }
-*|z19  { pixel_per_metre: 5.3125; }
-*|z20  { pixel_per_metre: 10.625; }
-*|z21  { pixel_per_metre: 21.25; }
-*|z22  { pixel_per_metre: 42.5; }
-*|z23  { pixel_per_metre: 85; }
-*|z24  { pixel_per_metre: 170; }
-*|z25  { pixel_per_metre: 340; }
-*|z26- { pixel_per_metre: 680; }
+*|z16  { pixel_per_metre: 0.5; }
+*|z17  { pixel_per_metre: 1.075; }
+*|z18  { pixel_per_metre: 2.1563; }
+*|z19  { pixel_per_metre: 4.3123; }
+*|z20  { pixel_per_metre: 8.625; }
+*|z21  { pixel_per_metre: 17.25; }
+*|z22  { pixel_per_metre: 34; }
+*|z23  { pixel_per_metre: 67.1; }
+*|z24  { pixel_per_metre: 133.25; }
+*|z25  { pixel_per_metre: 265.5; }
+*|z26- { pixel_per_metre: 530; }
 
 
 /**********/
@@ -49,7 +49,7 @@ node|z20- {
 
 way[highway] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-}
+}   
 way[highway] > node[cycleway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: eval(2 * prop(pixel_per_metre, "default"));
@@ -507,7 +507,7 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
-    major-z-index: 4;
+    object-z-index: 4;
 }
 way[barrier][fence_type=railing] {
     width: 1.5;
@@ -1371,24 +1371,21 @@ area["area:highway"] {
 /* traffic_calming tags */
 /************************/
 
-/*TO DO*/
-
 way > node[traffic_calming] {
-    icon-image: "presets/vehicle/traffic_calming.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
     icon-height: eval(5 * prop(pixel_per_metre, "default"));
 }
 way[highway][width] > node[traffic_calming] {
-    icon-image: "presets/vehicle/traffic_calming.svg";
     icon-height: eval(concat(parent_tag("width")) * prop(pixel_per_metre,"default"));
 }
 node[traffic_calming=chicane] {
-    icon-image: "presets/vehicle/chicane.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
 }
 node[traffic_calming=choker] {
-    icon-image: "presets/vehicle/choker.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-choker.svg";
 }
 node[traffic_calming=island] {
-    icon-image: "presets/vehicle/island.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-island.svg";
 }
 node[traffic_calming=bump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/speed-bump-top.svg";
@@ -1400,16 +1397,16 @@ node[traffic_calming=table] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/speed-table-top.svg";
 }
 node[traffic_calming=cushion] {
-    icon-image: "presets/vehicle/cushion.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion.svg";
 }
 node[traffic_calming=rumble_strip] {
-    icon-image: "presets/vehicle/rumble_strip.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-rumble-strip.svg";
 }
 node[traffic_calming=dip] {
-    icon-image: "presets/vehicle/dip.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-dip.svg";
 }
 node[traffic_calming=mini_bumps] {
-    icon-image: "presets/vehicle/mini_bumps.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-mini-bumps.svg";
 }
 
 
@@ -4846,7 +4843,7 @@ node[natural=cave_entrance] {
 }
 *[natural=reef] {
     fill-color: reef#80c9ff;
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/reef.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/coral-reef.svg";
 }
 node[natural=cave_entrance] {
     icon-image: "presets/landmark/cave_entrance.svg";
@@ -4870,6 +4867,9 @@ node[natural=tree][leaf_type=palm] {
 }
 node[natural=tree][leaf_type=leafless] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-leafless.svg";
+}
+node[natural=tree_stump] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
 node|z17-[denotation=natural_monument] {
     icon-height: 24;
@@ -5382,7 +5382,7 @@ node[entrance=service] {
     icon-image: "presets/misc/entrance_service.svg"; /*TO DO*/
 }
 node[entrance=exit] {
-    icon-image: "presets/misc/entrance_exit.svg"; /*TO DO*/
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance-exit.svg";
 }
 node[entrance=emergency] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance-emergency.svg";
@@ -5401,11 +5401,10 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 }
 
 
+
 /***************************/
 /* "work in progress" tags */
 /***************************/
-
-
 
 node|z16-[fixme]::core_note_fixme,
 node|z-15[fixme][!setting("hide_icons")]::core_note_fixme,
