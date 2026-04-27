@@ -72,7 +72,7 @@ way[oneway != -1] > node[direction=backward] {
 way[highway] > node[highway=crossing] {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
 }
-way[highway] > node[traffic_calming],
+way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
 way[highway] > node[noexit],
 way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
 way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
@@ -2973,7 +2973,7 @@ area[amenity=driver_training]{
 }
 *[amenity=parking_space] {
     icon-image: "presets/vehicle/parking/parking_space.svg";
-    fill-color: parking_space#f7efb8;
+    fill-color: parking_space#ddd;
 }
 *[amenity=trolley_bay] {
     icon-image: "presets/vehicle/parking/trolley_bay.svg";
