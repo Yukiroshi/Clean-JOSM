@@ -30,17 +30,18 @@ node|z20- {
 
 
 /*most accurate pixel/metre*/
-*|z16  { pixel_per_metre: 0.5; }
-*|z17  { pixel_per_metre: 1.075; }
-*|z18  { pixel_per_metre: 2.1563; }
-*|z19  { pixel_per_metre: 4.3123; }
-*|z20  { pixel_per_metre: 8.625; }
-*|z21  { pixel_per_metre: 17.25; }
-*|z22  { pixel_per_metre: 34; }
-*|z23  { pixel_per_metre: 67.1; }
-*|z24  { pixel_per_metre: 133.25; }
-*|z25  { pixel_per_metre: 265.5; }
-*|z26- { pixel_per_metre: 530; }
+*|z16  { pixel_per_metre: 0.55; }
+*|z17  { pixel_per_metre: 1.1; }
+*|z18  { pixel_per_metre: 2.25; }
+*|z19  { pixel_per_metre: 4.5; }
+*|z20  { pixel_per_metre: 9; }
+*|z21  { pixel_per_metre: 18; }
+*|z22  { pixel_per_metre: 35.9; }
+*|z23  { pixel_per_metre: 71.87; }
+*|z24  { pixel_per_metre: 143.75; }
+*|z25  { pixel_per_metre: 287.5; }
+*|z26- { pixel_per_metre: 575; }
+
 
 
 /**********/
@@ -2689,111 +2690,6 @@ way[advertising=totem] {
 *[shop=bag] {
     icon-image: "presets/shop/bag.svg";
 }
-*[shop][brand*="Żabka"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
-}
-*[shop][brand*="Lewiatan"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/Lewiatan_%282011%29_Stacked.svg";
-}
-*[shop][brand*="Biedronka"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
-}
-*[shop][brand*="Lidl"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
-}
-*[shop][brand*="Aldi"]  {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
-}
-*[shop][brand*="Kaufland"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
-}
-*[shop][brand*="Netto"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Netto_2019.svg";
-}
-*[shop][brand*="Auchan"]  {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9e/Auchan_2018.svg";
-}
-*[shop][brand*="Dino"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
-}
-*[shop][brand*="Carrefour"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
-}
-*[shop][brand*="Rossmann"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
-}
-*[shop][brand*="Hebe"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
-}
-*[shop][brand*="dm"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
-}
-*[shop][brand*="Dealz"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a9/Dealz_2023.svg";
-}
-*[shop][brand*="TEDi"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
-}
-*[shop][brand*="Pepco"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
-}
-*[shop][brand*="H&M"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
-}
-*[shop][brand*="New Yorker"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
-}
-*[shop][brand*="CCC"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
-}
-*[shop][brand*="Cropp"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
-}
-*[shop][brand*="House"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
-}
-*[shop][brand*="Mohito"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
-}
-*[shop][brand*="Reserved"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
-}
-*[shop][brand*="Sinsay"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
-}
-*[shop][brand*="Zara"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
-}
-*[shop][brand*="Zara Home"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
-}
-*[shop][brand*="Bershka"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
-}
-*[shop][brand*="Stradivarius"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
-}
-*[shop][brand*="Pull & Bear"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
-}
-*[shop][brand*="HalfPrice"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
-}
-*[shop][brand*="TK Maxx"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
-}
-*[shop][brand*="Media Markt"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/57/MediaMarkt_2024.svg";
-}
-*[shop][brand*="Media Expert"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
-}
-*[shop][brand*="RTV Euro AGD"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/66/RTV_Euro_AGD.svg";
-}
-*[shop][brand*="IKEA"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/IKEA_2019.svg";
-}
 
 
 
@@ -3198,11 +3094,11 @@ node[amenity=grave_yard] {
 node[amenity=crematorium][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-node[amenity=post_office] {
-    icon-image: "presets/service/post_office.svg";
+*[amenity=post_office] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/post.svg";
 }
-node[amenity=post_box] {
-    icon-image: "presets/service/post_box.svg";
+*[amenity=post_box] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/post-box.svg";
 }
 node[amenity=letter_box] {
     icon-image: "presets/service/letter_box.svg";
@@ -3396,16 +3292,6 @@ node[vending=excrement_bags] {
 *[amenity=parcel_locker]{
     icon-image: "presets/service/parcel_locker.svg";
 }
-*[brand*="InPost"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
-}
-*[brand*="DHL"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
-}
-*[brand*="DPD"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
-}
-
 
 
 /**************/
@@ -5398,6 +5284,126 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     text-color: #FF0055;
     font-size: 12;
     modifier: true;
+}
+
+/* Brands */
+
+*[shop][brand*="Żabka"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
+}
+*[shop][brand*="Lewiatan"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/Lewiatan_%282011%29_Stacked.svg";
+}
+*[shop][brand*="Biedronka"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
+}
+*[shop][brand*="Lidl"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
+}
+*[shop][brand*="Aldi"]  {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
+}
+*[shop][brand*="Kaufland"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
+}
+*[shop][brand*="Netto"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Netto_2019.svg";
+}
+*[shop][brand*="Auchan"]  {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9e/Auchan_2018.svg";
+}
+*[shop][brand*="Dino"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
+}
+*[shop][brand*="Carrefour"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
+}
+*[shop][brand*="Rossmann"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
+}
+*[shop][brand*="Hebe"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
+}
+*[shop][brand*="dm"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
+}
+*[shop][brand*="Dealz"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a9/Dealz_2023.svg";
+}
+*[shop][brand*="TEDi"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
+}
+*[shop][brand*="Pepco"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
+}
+*[shop][brand*="H&M"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
+}
+*[shop][brand*="New Yorker"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
+}
+*[shop][brand*="CCC"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
+}
+*[shop][brand*="Cropp"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
+}
+*[shop][brand*="House"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
+}
+*[shop][brand*="Mohito"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
+}
+*[shop][brand*="Reserved"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
+}
+*[shop][brand*="Sinsay"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
+}
+*[shop][brand*="Zara"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
+}
+*[shop][brand*="Zara Home"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
+}
+*[shop][brand*="Bershka"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
+}
+*[shop][brand*="Stradivarius"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
+}
+*[shop][brand*="Pull & Bear"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
+}
+*[shop][brand*="HalfPrice"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
+}
+*[shop][brand*="TK Maxx"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
+}
+*[shop][brand*="Media Markt"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/57/MediaMarkt_2024.svg";
+}
+*[shop][brand*="Media Expert"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
+}
+*[shop][brand*="RTV Euro AGD"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/66/RTV_Euro_AGD.svg";
+}
+*[shop][brand*="IKEA"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/IKEA_2019.svg";
+}
+*[brand*="InPost"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
+}
+*[brand*="DHL"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
+}
+*[brand*="DPD"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
+}
+*[brand*="Poczta Polska"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/0/02/Poczta_Polska.svg";
 }
 
 
