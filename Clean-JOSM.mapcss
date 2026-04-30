@@ -988,7 +988,7 @@ way[highway=pedestrian][!area?] {
     casing-color: #8cd05f;
     z-index: 0.009;
 }
-way[highway=steps][!tunnel] {
+way[highway=steps] {
     width: 3;
     color: foot#81d25c;
     dashes: 3,3;
@@ -997,12 +997,8 @@ way[highway=steps][!tunnel] {
     z-index: 0.009;
 }
 way[highway=steps][tunnel] {
-    width: 3;
     color: foot#819976;
-    dashes: 3,3;
-    casing-width: 1;
     casing-color: #808080;
-    z-index: 0.009;
 }
 way[highway=bus_guideway] {
     width: 3;
@@ -1020,13 +1016,13 @@ area[junction=yes] {
     fill-color: junction#c0c0c0;
 }
 node[junction=yes] {
-    icon-image: "presets/vehicle/junction.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/junction.svg";
 }
 node[highway=traffic_mirror] {
     icon-image: "presets/vehicle/traffic_mirror.svg";
 }
 node[highway=milestone] {
-    icon-image: "presets/vehicle/milestone.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/milestone.svg";
 }
 node[direction=clockwise] {
     icon-image: "presets/vehicle/restriction/roundabout_left.svg";
@@ -1080,7 +1076,10 @@ node[highway=toll_gantry] {
     icon-image: "presets/vehicle/restriction/toll_gantry.svg";
 }
 node[traffic_sign=city_limit] {
-    icon-image: "presets/vehicle/restriction/city_limit.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city.svg";
+}
+node[traffic_sign=city_limit][city_limit=end] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city-end.svg";
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
