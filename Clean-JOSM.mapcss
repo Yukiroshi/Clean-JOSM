@@ -5673,7 +5673,7 @@ node[embankment?!],
 
 node[barrier=~/hedge|wall|guard_rail|city_wall|retaining_wall|ditch/],
 
-node[highway=~/motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|road|unsurfaced|track|residential|living_street|service|bridleway|cycleway|footway|path|pedestrian|bus_guideway|platform/],
+node[highway=~/motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|road|unsurfaced|track|residential|living_street|service|bridleway|cycleway|footway|path|pedestrian|bus_guideway|platform/][highway!=motorway_junction],
 
 node[cycleway=~/lane|opposite_lane|track|opposite_track|opposite/],
 
