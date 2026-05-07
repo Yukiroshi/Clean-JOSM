@@ -20,11 +20,11 @@ canvas {
     linejoin: none;
     set icon_z17;
 }
-node|z21- {
-    icon-height: 25;
-}
 node|z20- {
     icon-height: 20;
+}
+node|z21- {
+    icon-height: 25;
 }
 
 
@@ -262,6 +262,9 @@ setting::partial_fill {
 /* addresses  */
 /**************/
 
+*["addr:housenumber"] {
+    text-halo-color: #00329b;
+}
 node["addr:housenumber"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/address.svg";
 }
@@ -2840,15 +2843,6 @@ area[amenity] {
 
 
 
-*[amenity][brand*="McDonald's"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
-}
-*[amenity][brand*="Burger King"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
-}
-*[amenity][brand*="KFC"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
-}
 
 
 area[amenity=parking],
@@ -2924,13 +2918,13 @@ node[amenity=parking_space][wheelchair?] {
 *[amenity=taxi] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/taxi.svg";
 }
-node[amenity=fuel] {
+*[amenity=fuel] {
     icon-image: "presets/vehicle/fuel.svg";
 }
-node[amenity=charging_station] {
+*[amenity=charging_station] {
     icon-image: "presets/vehicle/charging_station.svg";
 }
-node[amenity=grit_bin] {
+*[amenity=grit_bin] {
     icon-image: "presets/misc/grit_bin.svg";
 }
 node[amenity=telephone] {
@@ -2939,7 +2933,7 @@ node[amenity=telephone] {
 node[amenity=clock] {
     icon-image: "presets/service/clock.svg";
 }
-node[amenity=photo_booth] {
+*[amenity=photo_booth] {
     icon-image: "presets/service/photo_booth.svg";
 }
 area[amenity=toilets],
@@ -5289,6 +5283,11 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 
 /* Brands */
 
+*[brand] {
+    icon-height: 20;
+    icon-offset-y: -5;
+}
+
 *[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
 }
@@ -5315,6 +5314,9 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 }
 *[shop][brand*="Dino"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
+}
+*[shop][brand*="abc"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
 }
 *[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
@@ -5394,6 +5396,12 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="IKEA"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/IKEA_2019.svg";
 }
+*[shop][brand*="Agata Meble"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c4/AgataMeble.svg";
+}
+*[shop][brand*="Black Red White"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fe/Black_Red_White_%282015%29.svg";
+}
 *[brand*="InPost"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
 }
@@ -5406,9 +5414,49 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[brand*="Poczta Polska"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/0/02/Poczta_Polska.svg";
 }
+*[amenity][brand*="McDonald's"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
+}
+*[amenity][brand*="Burger King"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
+}
+*[amenity][brand*="KFC"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
+}
+*[amenity][brand*="MOL"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/2/20/MOL_logo_2012.svg";
+}
+*[amenity][brand*="Shell"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4a/Shell.svg";
+}
+*[amenity][brand*="Orlen"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/83/Orlen_logo.svg";
+}
+*[amenity][brand*="Circle K"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Circle_K_%282015%29.svg";
+}
+*[amenity][brand*="BP"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4f/BP.svg";
+}
+*[amenity][brand*="PKO BP"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/5e/PKO_Bank_Polski_2011.svg";
+}
+*[amenity][brand*="mBank"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/8c/MBank_individual_%282020%29.svg";
+}
+*[amenity][brand*="Millennium Bank"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Bank_Millenium.svg";
+}
+*[amenity][brand*="Bank Pekao"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
+}
 
 
-
+/* TEMPLATE
+*[brand*=""] {
+    icon-image: "";
+}
+*/
 /***************************/
 /* "work in progress" tags */
 /***************************/
