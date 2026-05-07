@@ -83,7 +83,8 @@ way[highway] > node[crossing:island=yes]::traffic_island {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
     icon-height: prop(icon-height, "default");
 }
-way[highway] > node[crossing=traffic_signals]::traffic_signals {
+way[highway] > node[crossing=traffic_signals]::traffic_signals,
+way[highway] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
     icon-height: prop(icon-height, "default");
 }
@@ -92,7 +93,8 @@ way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::tr
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default");
 }
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals {
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default");
 }
