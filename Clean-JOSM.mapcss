@@ -5440,19 +5440,19 @@ node|z-15[note][FIXME][!setting("hide_icons")]::core_note_fixme {
 
 /* Layers */
 
+way {
+    z-index: 0;
+    object-z-index: ;
+}
 *[layer] {
     z-index: eval(tag(layer));
+    major-z-index: eval(tag(layer));
     object-z-index: eval(tag(layer));
 }
-*[layer=0] {
-    z-index: 0;
-    major-z-index: 3;
-    object-z-index: 0;
-}
-*[layer=0]::bridge {
-    z-index: 0;
-    major-z-index: 1;
-    object-z-index: 0;
+*[layer]::bridge {
+    z-index: eval(tag(layer -1));
+    major-z-index: eval(tag(layer));
+    object-z-index: eval(tag(layer -1));
 }
 
 
