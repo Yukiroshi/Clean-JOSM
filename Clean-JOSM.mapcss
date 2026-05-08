@@ -340,24 +340,7 @@ relation[restriction=only_straight_on] {
 
 
 
-/******************/
-/* bridge, tunnel */
-/******************/
 
-way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]::core_bridge {
-    major-z-index: 2;
-    object-z-index: -1;
-    width: +10;
-    color: bridge#333;
-    opacity: 0.8;
-}
-way[tunnel=~/yes|culvert|building_passage|avalanche_protector/]::core_tunnel {
-    major-z-index: 2;
-    object-z-index: -1;
-    width: 2;
-    color: tunnel#964B00;
-    opacity: 0.5;
-}
 
 
 
@@ -531,7 +514,9 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
+    z-index: 4;
     object-z-index: 4;
+
 }
 way[barrier][fence_type=railing] {
     width: 1.5;
@@ -822,21 +807,21 @@ way|z-14[highway=service][service][tunnel] {
 way|z16-[highway=service][!area?][!tunnel],
 way|z16-[highway=service][service=driveway][!tunnel] {
     width: 4;
-    color: service#ddd;
+    color: service#eee;
     casing-width: 0.7;
     casing-color: #444;
 }
 way|z15[highway=service][!area?][!tunnel],
 way|z15[highway=service][service=driveway][!tunnel] {
     width: 1.73;
-    color: service#ddd;
+    color: service#eee;
     casing-width: 0.5;
     casing-color: #444;
 }
 way|z-14[highway=service][!area?][!tunnel],
 way|z-14[highway=service][service=driveway][!tunnel] {
     width: 1;
-    color: service#ddd;
+    color: service#eee;
     casing-width: 0.2;
     casing-color: #444;
 }
@@ -951,6 +936,7 @@ way[highway=cycleway][tunnel] {
     color: bicycle#748DA2;
     casing-color: #808080;
 }
+
 way[highway=footway][area], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
@@ -959,8 +945,11 @@ way[highway=footway][!area] {
     color: foot#998888;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #ddd;
+    casing-color: #eee;
     z-index: 0.009;
+}
+way[highway=footway][!area][tunnel] {
+    casing-color: #555;
 }
 way[highway=footway][!area?][footway=crossing], 
 way[highway=footway][!area?][footway=parking_aisle] {
@@ -973,10 +962,10 @@ way[highway=footway][!area?][footway=parking_aisle] {
 }
 way[highway=footway][!area?][footway=sidewalk][!tunnel] {
     width: 3.3;
-    color: foot#ddd;
+    color: foot#d4b4b4;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #D4B4B4;
+    casing-color: #eee;
     z-index: 0.009;
 }
 way[highway=footway][!area?][footway=sidewalk][tunnel] {
@@ -984,7 +973,7 @@ way[highway=footway][!area?][footway=sidewalk][tunnel] {
     color: foot#808080;
     dashes: 6,6;
     casing-width: 1;
-    casing-color: #9A9090;
+    casing-color: #555;
     z-index: 0.009;
 }
 way[highway=path] {
@@ -995,17 +984,20 @@ way[highway=path] {
     casing-color: #ddccaa;
     z-index: 0.009;
 }
-way[highway=path][tunnel] {
-    color: path#6F6655;
-    casing-color: #7C7064;
+way[highway=path][foot=designated][bicycle=designated],
+way[highway=cycleway][foot=designated] {
+    color: path#b458ed;
+    casing-color: #eee;
 }
-
+way[highway=path][tunnel] {
+    casing-color: #555;
+}
 way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] {
     fill-color: pedestrian#adadad;
 }
 way[highway=pedestrian][!area?] {
     width: 3.3;
-    color: foot#ddd;
+    color: foot#eee;
     dashes: 5,5;
     casing-width: 1;
     casing-color: #8cd05f;
@@ -1016,7 +1008,7 @@ way[highway=steps] {
     color: foot#81d25c;
     dashes: 3,3;
     casing-width: 1;
-    casing-color: #ddd;
+    casing-color: #eee;
     z-index: 0.009;
 }
 way[highway=steps][tunnel] {
@@ -1193,11 +1185,13 @@ node[hazard] {
     icon-image: "presets/transport/hazard.svg";
 }
 area[highway=platform]:closed {
-    fill-color: highway_platform#e5c200;
+    fill-color: highway_platform#ddccaa;
 }
 way[highway=platform] {
     width: 5;
-    color: highway_platform#e5c200;
+    color: highway_platform#ddccaa;
+    casing-color: #333;
+    casing-width: 1;
 }
 /*TO DO*/
 node[highway=turning_circle] {
@@ -1516,42 +1510,14 @@ way[piste:difficulty=novice]::core_piste {
     width: 6;
     color: piste_novice#00ff00;
 }
-way[piste:type=downhill][!tunnel],
-way[piste:type=nordic][!tunnel],
-way[piste:type=skitour][!tunnel],
-way[piste:type=sled][!tunnel],
-way[piste:type=hike][!tunnel],
-way[piste:type=sled][!tunnel],
-way[piste:type=ice_skate][!tunnel],
-way[piste:type=ski_jumpe][!tunnel],
-way[piste:type=connection][!tunnel],
-way[piste:type=ski_jump_landing][!tunnel],
-way[piste:type=playground][!tunnel],
-way[piste:type=snowshoe][!tunnel],
-way[piste:type=yes][!tunnel],
-way[piste:type=fatbike][!tunnel]{
+way[piste:type=~/downhill|nordic|skitour|sled|hike|ice_skate|ski_jumpe|connection|ski_jump_landing|playground|snowshoe|yes|fatbike/] {
     width: 4;
     color: piste#aa99dd;
     casing-width: 0.7;
     casing-color: #4c4b51;
 }
-way[piste:type=downhill][tunnel],
-way[piste:type=nordic][tunnel],
-way[piste:type=skitour][tunnel],
-way[piste:type=sled][tunnel],
-way[piste:type=hike][tunnel],
-way[piste:type=sled][tunnel],
-way[piste:type=ice_skate][tunnel],
-way[piste:type=ski_jumpe][tunnel],
-way[piste:type=connection][tunnel],
-way[piste:type=ski_jump_landing][tunnel],
-way[piste:type=playground][tunnel],
-way[piste:type=snowshoe][tunnel],
-way[piste:type=yes][tunnel],
-way[piste:type=fatbike][tunnel]{
-    width: 4;
+way[piste:type=~/downhill|nordic|skitour|sled|hike|ice_skate|ski_jumpe|connection|ski_jump_landing|playground|snowshoe|yes|fatbike/][tunnel] {
     color: piste#4b465b;
-    casing-width: 0.7;
     casing-color: #222222;
 }
 node[piste:type=downhill],
@@ -1703,9 +1669,6 @@ node[man_made=street_cabinet][street_cabinet!=power] {
 }
 node[man_made=beacon] {
     icon-image: "presets/landmark/beacon.svg";
-}
-node[bridge:support] {
-    icon-image: "presets/transport/bridge/bridge_support.svg";
 }
 node[man_made=chimney] {
     icon-image: "presets/landmark/chimney.svg";
@@ -3824,7 +3787,7 @@ node[railway=crossing] {
 node[railway=level_crossing] {
     icon-image: "presets/transport/railway/level_crossing.svg";
 }
-way[railway=rail][!tunnel] {
+way[railway=rail] {
     width: 2;
     color: rail#ddd;
     dashes: 12,12;
@@ -3832,17 +3795,14 @@ way[railway=rail][!tunnel] {
     casing-width: 2;
 }
 way[railway=rail][tunnel] {
-    width: 2;
     color: rail#656565;
-    dashes: 12,12;
     dashes-background-color:#2A2A2A;
-    casing-width: 2;
 }
 
 /* draw tram on top of other way (highway=*) or
    as a standalone style */
 way[highway][railway=tram]::core_railway,
-way[!highway][railway=tram][!tunnel] {
+way[!highway][railway=tram] {
     object-z-index: 1;
     modifier: false; /* don't draw default way if there is no line on default layer */
     width: 2;
@@ -3852,15 +3812,10 @@ way[!highway][railway=tram][!tunnel] {
     casing-width: 2;
 }
 way[!highway][railway=tram][tunnel] {
-    object-z-index: 1;
-    modifier: false; /* don't draw default way if there is no line on default layer */
-    width: 2;
     color: rail##B9B7B5;
-    dashes: 12,12;
     dashes-background-color: raildashed#A3A19E;
-    casing-width: 2;
 }
-way[railway=light_rail][!tunnel] {
+way[railway=light_rail] {
     width: 2;
     color: rail#ddd;
     dashes: 12,12;
@@ -3868,13 +3823,10 @@ way[railway=light_rail][!tunnel] {
     casing-width: 2;
 }
  way[railway=light_rail][tunnel]{
-    width: 2;
     color: rail#656565;
-    dashes: 12,12;
     dashes-background-color: raildashed#2a2a2a;
-    casing-width: 2;
 }
-way[railway=subway][!tunnel] {
+way[railway=subway] {
     width: 2;
     color: rail#ddd;
     dashes: 12,12;
@@ -3882,14 +3834,11 @@ way[railway=subway][!tunnel] {
     casing-width: 2;
 }
 way[railway=subway][tunnel] {
-    width: 2;
     color: rail#444;
-    dashes: 12,12;
     dashes-background-color: raildashed#111111;
-    casing-width: 2;
 }
 
-way[railway=preserved][!tunnel] {
+way[railway=preserved] {
     width: 2;
     color: oldrail#ddd;
     dashes: 9,9;
@@ -3897,67 +3846,27 @@ way[railway=preserved][!tunnel] {
     casing-width: 2;
 }
 way[railway=preserved][tunnel] {
-    width: 2;
     color: oldrail#C2C2C2;
-    dashes: 9,9;
     dashes-background-color: raildashed#404040;
-    casing-width: 2;
 }
-way[railway=rail][service=crossover][!tunnel],
-way[railway=rail][service=siding][!tunnel],
-way[railway=rail][service=yard][!tunnel],
-way[railway=rail][service=spur][!tunnel],
-way[!highway][railway=tram][service=crossover][!tunnel],
-way[!highway][railway=tram][service=siding][!tunnel],
-way[!highway][railway=tram][service=yard][!tunnel],
-way[!highway][railway=tram][service=spur][!tunnel],
-way[railway=light_rail][service=crossover][!tunnel],
-way[railway=light_rail][service=siding][!tunnel],
-way[railway=light_rail][service=yard][!tunnel],
-way[railway=light_rail][service=spur][!tunnel],
-way[railway=subway][service=crossover][!tunnel],
-way[railway=subway][service=siding][!tunnel],
-way[railway=subway][service=yard][!tunnel],
-way[railway=subway][service=spur][!tunnel],
-way[railway=preserved][service=crossover][!tunnel],
-way[railway=preserved][service=siding][!tunnel],
-way[railway=preserved][service=yard][!tunnel],
-way[railway=preserved][service=spur][!tunnel] {
+way[railway=rail][service=~/crossover|siding|yard|spur/],
+way[!highway][railway=tram][service=~/crossover|siding|yard|spur/],
+way[railway=light_rail][service=~/crossover|siding|yard|spur/],
+way[railway=subway][service=~/crossover|siding|yard|spur/],
+way[railway=preserved][service=~/crossover|siding|yard|spur/] {
     width: 2;
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#ddccaa;
     opacity: 2;
 }
-way[railway=rail][service=crossover][tunnel],
-way[railway=rail][service=siding][tunnel],
-way[railway=rail][service=yard][tunnel],
-way[railway=rail][service=spur][tunnel],
-way[!highway][railway=tram][service=crossover][tunnel],
-way[!highway][railway=tram][service=siding][tunnel],
-way[!highway][railway=tram][service=yard][tunnel],
-way[!highway][railway=tram][service=spur][tunnel],
-way[railway=subway][service=crossover][tunnel],
-way[railway=subway][service=siding][tunnel],
-way[railway=subway][service=yard][tunnel],
-way[railway=subway][service=spur][tunnel],
-way[railway=light_rail][service=crossover][tunnel],
-way[railway=light_rail][service=siding][tunnel],
-way[railway=light_rail][service=yard][tunnel],
-way[railway=light_rail][service=spur][tunnel],
-way[railway=subway][service=crossover][tunnel],
-way[railway=subway][service=siding][tunnel],
-way[railway=subway][service=yard][tunnel],
-way[railway=subway][service=spur][tunnel],
-way[railway=preserved][service=crossover],
-way[railway=preserved][service=siding][tunnel],
-way[railway=preserved][service=yard][tunnel],
-way[railway=preserved][service=spur][tunnel] {
-    width: 2;
+way[railway=rail][service=~/crossover|siding|yard|spur/][tunnel],
+way[!highway][railway=tram][service=~/crossover|siding|yard|spur/][tunnel],
+way[railway=subway][service=~/crossover|siding|yard|spur/][tunnel],
+way[railway=light_rail][service=~/crossover|siding|yard|spur/][tunnel],
+way[railway=preserved][service=~/crossover|siding|yard|spur/][tunnel] {
     color: rail#333;
-    dashes: 12,12;
     dashes-background-color: raildashed#676257;
-    opacity: 2;
 }
 
 /* disused often appears together with highway=xy */
@@ -3965,7 +3874,7 @@ way[railway=preserved][service=spur][tunnel] {
 /* modifier: false; to suppress default line when used alone. */
 /* use default layer when used without highway=* to display bridge correctly */
 way[railway=disused][highway]::core_railway,
-way[railway=disused][!highway][!tunnel] {
+way[railway=disused][!highway] {
     width: 2;
     color: rail#eeeeee;
     dashes: 12,12;
@@ -3973,11 +3882,8 @@ way[railway=disused][!highway][!tunnel] {
     casing-width: 2;
 }
 way[railway=disused][!highway][tunnel] {
-    width: 2;
     color: rail#747474;
-    dashes: 12,12;
     dashes-background-color:#404040;
-    casing-width: 2;
 }
 
 way[railway=abandoned][highway]::core_railway,
@@ -4152,17 +4058,15 @@ node[aeroway=windsock] {
 /* aerialway tags */
 /******************/
 
-way[aerialway][!tunnel] {
+way[aerialway] {
     width: 4;
     color: aerialway#cc5555;
     casing-width: 1;
     casing-color: #444;
 }
 way[aerialway][tunnel] {
-    width: 4;
     color: aerialway#563131;
-    casing-width: 1;
-    casing-color: #222121;
+    casing-color: #222;
 }
 *[aerialway] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/aerialway.svg";
@@ -4264,7 +4168,7 @@ node[public_transport=station] {
 
 /*TO DO*/
 
-way[roller_coaster=track][!tunnel]{
+way[roller_coaster=track]{
     width: 2;
     color: #DDDDDD;
     dashes: 4,1;
@@ -4272,11 +4176,7 @@ way[roller_coaster=track][!tunnel]{
     cassing-color: ##565656;
 }
 way[roller_coaster=track][tunnel]{
-    width: 2;
     color: #696969;
-    dashes: 4,1;
-    casing-width: 1;
-    cassing-color: #383838;
 }
 way[roller_coaster=support]{
     width: 3;
@@ -4531,6 +4431,47 @@ node[sport=rc_car] {
     icon-image: "presets/sport/rc_car.svg";
 }
 
+
+
+/******************/
+/* bridge, tunnel */
+/******************/
+
+area[man_made=bridge] {
+    width: 2;
+    color: #777;
+    fill-color: #888;
+    z-index: 0;
+    major-z-index: 3;
+}
+
+node[bridge:support] {
+    icon-image: "presets/transport/bridge/bridge_support.svg";
+}
+
+way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]::bridge {
+    casing-width: +12;
+    casing-color: bridge#222;
+    casing-opacity: 0.8;
+    z-index: 0;
+    major-z-index: 4;
+}
+way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]{
+    casing-opacity: 0;
+    z-index: 1;
+    major-z-index: 4;
+}
+
+way[tunnel=~/yes|culvert|building_passage|avalanche_protector/]::tunnel {
+    casing-width: +6;
+    casing-color: tunnel#444;
+    casing-opacity: 0.7;
+    major-z-index: -1;
+}
+way[tunnel=~/yes|culvert|building_passage|avalanche_protector/] {
+    casing-opacity: 0;
+    major-z-index: -1;
+}
 
 
 
@@ -4997,8 +4938,6 @@ way[route=ferry] {
 /* properties tags */
 /*******************/
 
-
-
 node[mountain_pass?] {
     icon-image: "presets/landmark/mountain_pass.svg"; /*TO DO*/
     set icon_z0;
@@ -5111,6 +5050,8 @@ node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnodefg {
     text: none;
     symbol-shape: none;
 }
+
+
 
 /**************/
 /* place tags */
@@ -5495,6 +5436,27 @@ node|z-15[note][FIXME][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_fixme_annotation.svg";
 }
 
+
+
+/* Layers */
+
+*[layer] {
+    z-index: eval(tag(layer));
+    object-z-index: eval(tag(layer));
+}
+*[layer=0] {
+    z-index: 0;
+    major-z-index: 3;
+    object-z-index: 0;
+}
+*[layer=0]::bridge {
+    z-index: 0;
+    major-z-index: 1;
+    object-z-index: 0;
+}
+
+
+
 /****************************************/
 /* zoom levels and general node display */
 /****************************************/
@@ -5515,7 +5477,6 @@ Summary of different zoom levels:
  * maxspeed icons should not be distinguishable from POIs with "icon-image" property
 
 */
-
 node|z-16[setting("hide_icons")],
 node|z17-[!is_prop_set("icon-image")][setting("hide_icons")]!.maxspeedclass,
 node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
@@ -5524,6 +5485,9 @@ node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
 }
 node {
     text-offset-y: -10;
+    z-index: 99;
+    major-z-index: 99;
+    object-z-index: 99;
 }
 node[/^disused:/] {
     text: tr("");
@@ -5554,20 +5518,18 @@ node:selected {
     symbol-fill-color: #ff7300;
     symbol-stroke-color: #ddd;
 }
-way:closed[is_prop_set(icon-image)] {
-    icon-position: inside;
-}
-way:closed {
-    fill-opacity: 0.3;
-}
-way!:closed {
+way {
     icon-position: line;
     text-position: line;
-    text-offset-y: -15;
+    text-offset-y: -15;   
 }
 area:closed {
     text-position: center;
     text-offset-y: -15;
+    fill-opacity: 0.3;
+}
+area:closed[is_prop_set(icon-image)] {
+    icon-position: inside;
 }
 node|z-17!:tagged[setting("hide_icons")] {
     symbol-fill-opacity: 0;
@@ -5697,7 +5659,7 @@ way|z20-[highway][setting("highway_labels")] {
 
 /* small extent for unclosed area (see below for closed) */
 area[setting("partial_fill")] {
-    fill-extent: 10;
+    fill-extent: 15;
 }
 
 /* Turn partial fill off and use plain fill, when the partial fill covers about
@@ -5712,11 +5674,11 @@ area|z-13[setting("partial_fill")] {
    Turn partial fill off, when it covers more than about 50% of the area. This avoids
    areas with small unfilled patches in the center. */
 area[setting("partial_fill")]:closed2 {
-    fill-extent: 15;
+    fill-extent: 25;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
 area[setting("partial_fill")]:closed2::fill {
-    fill-extent: 15;
+    fill-extent: 25;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
 
