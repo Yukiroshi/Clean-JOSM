@@ -4450,7 +4450,7 @@ node[bridge:support] {
 }
 
 way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]::bridge {
-    casing-width: +12;
+    casing-width: eval(prop(width, "default") *1.1);
     casing-color: bridge#222;
     casing-opacity: 0.8;
     z-index: 0;
@@ -4463,7 +4463,7 @@ way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|tre
 }
 
 way[tunnel=~/yes|culvert|building_passage|avalanche_protector/]::tunnel {
-    casing-width: +6;
+    casing-width: eval(prop(width, "default") *1.1);
     casing-color: tunnel#444;
     casing-opacity: 0.7;
     major-z-index: -1;
