@@ -1199,7 +1199,7 @@ way[highway=platform] {
 }
 /*TO DO*/
 node[highway=turning_circle] {
-    icon-image: "presets/vehicle/turning_circle.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-circle.svg";
 }
 node[highway=turning_loop] {
     icon-image: "presets/vehicle/turning_loop.svg";
@@ -2337,7 +2337,7 @@ way[advertising=totem] {
     icon-image: "presets/shop/supermarket.svg";
 }
 *[shop=convenience] {
-    icon-image: "presets/shop/convenience.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/convenience.svg";
 }
 *[shop=bakery] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bakery.svg";
@@ -2712,7 +2712,7 @@ node[emergency=phone] {
     icon-image: "presets/vehicle/emergency_phone.svg";
 }
 node[emergency=defibrillator] {
-    icon-image: "presets/emergency/aed.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/defibrillator.svg";
 }
 node[emergency=fire_hydrant] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/fire-hydrant.svg";
@@ -2929,7 +2929,7 @@ area[amenity=sanitary_dump_station] {
     fill-color: amenity_light#f7efb7;
 }
 node[amenity=toilets] {
-    icon-image: "presets/service/toilets.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/toilets.svg";
 }
 node[amenity=shower] { 
     icon-image: "presets/service/shower.svg";
