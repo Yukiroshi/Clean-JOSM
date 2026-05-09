@@ -20,26 +20,25 @@ canvas {
     linejoin: none;
     set icon_z17;
 }
-node|z20- {
+node|z18- {
     icon-height: 20;
 }
-node|z21- {
-    icon-height: 25;
-}
+
 
 
 
 /*most accurate pixel/metre*/
-*|z16  { pixel_per_metre: 0.55; }
-*|z17  { pixel_per_metre: 1.1; }
-*|z18  { pixel_per_metre: 2.25; }
-*|z19  { pixel_per_metre: 4.5; }
-*|z20  { pixel_per_metre: 9; }
-*|z21  { pixel_per_metre: 18; }
-*|z22  { pixel_per_metre: 35.9; }
-*|z23  { pixel_per_metre: 71.87; }
-*|z24  { pixel_per_metre: 143.75; }
-*|z25  { pixel_per_metre: 287.5; }
+*|z15-  { pixel_per_metre: 0.27; }
+*|z16-  { pixel_per_metre: 0.55; }
+*|z17-  { pixel_per_metre: 1.1; }
+*|z18-  { pixel_per_metre: 2.25; }
+*|z19-  { pixel_per_metre: 4.5; }
+*|z20-  { pixel_per_metre: 9; }
+*|z21-  { pixel_per_metre: 18; }
+*|z22-  { pixel_per_metre: 35.9; }
+*|z23-  { pixel_per_metre: 71.87; }
+*|z24-  { pixel_per_metre: 143.75; }
+*|z25-  { pixel_per_metre: 287.5; }
 *|z26- { pixel_per_metre: 575; }
 
 
@@ -48,12 +47,13 @@ node|z21- {
 /* Rotate */
 /**********/
 
+/* Nodes on ways direction */
+
 way[highway] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
 }   
 way[highway] > node[cycleway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-    icon-height: eval(2 * prop(pixel_per_metre, "default"));
 }
 way[oneway != -1] > node[stop_position:direction=forward],
 way[railway][oneway != -1] > node[railway:signal:direction=forward],
@@ -61,6 +61,7 @@ way[highway][oneway != -1] > node[traffic_sign:direction=forward],
 way[highway][oneway != -1] > node[traffic_signals:direction=forward],
 way[oneway != -1] > node[direction=forward] {
     icon-rotation: parent_way_angle();
+    icon-offset-x: 15;
 }
 
 way[oneway != -1] > node[stop_position:direction=backward],
@@ -69,6 +70,7 @@ way[highway][oneway != -1] > node[traffic_sign:direction=backward],
 way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
+    icon-offset-x: -15;
 }
 way[highway] > node[highway=crossing] {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
@@ -201,7 +203,9 @@ way[highway][oneway != -1] > node[traffic_signals:direction=forward]::direction_
 way[oneway != -1] > node[direction=forward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle() - 180deg;
+    icon-offset-x: -15;
 }
+
 
 way[oneway != -1] > node[stop_position:direction=backward]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=backward]::direction_cone,
@@ -210,7 +214,9 @@ way[highway][oneway != -1] > node[traffic_signals:direction=backward]::direction
 way[oneway != -1] > node[direction=backward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
+    icon-offset-x: -15;
 }
+
 way[oneway != -1] > node[stop_position:direction=both]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone,
 way[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone,
@@ -219,26 +225,24 @@ way[oneway != -1] > node[direction=both]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
 }
-way[oneway != -1] > node[stop_position:direction=both]::direction_cone_back,
-way[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone_back,
-way[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone_back,
-way[highway][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
-way[oneway != -1] > node[direction=both]::direction_cone_back {
+way|z18-[oneway != -1] > node[stop_position:direction=both]::direction_cone_back,
+way|z18-[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone_back,
+way|z18-[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone_back,
+way|z18-[highway][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
+way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
     icon-rotation: parent_way_angle() + 180deg;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 20;
+    icon-height: 25;
     icon-offset-y: -8;
     z-index: -1;
 }
 /* Render the cone icon for all previously matched nodes */
-
-node|z17-.has_cone::direction_cone {
+node|z18-.has_cone::direction_cone {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 20;
+    icon-height: 25;
     icon-offset-y: -8;
     z-index: -1;
 }
-
 
 /*************************/
 /* create style settings */
@@ -1069,7 +1073,7 @@ node[highway=street_lamp][lamp_mount=straight_mast] {
 node[highway=street_lamp][lamp_mount=bent_mast] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
 }
-node|z16-[highway="street_lamp"]::Light
+node|z17-[highway="street_lamp"]::Light
 {
     symbol-shape: circle;
     symbol-size: 35;
@@ -1077,7 +1081,7 @@ node|z16-[highway="street_lamp"]::Light
     symbol-fill-opacity: 0.4;
     object-z-index: -1.0;
 }
-node|z16-[highway="street_lamp"][lamp_type=electric]::Light
+node|z17-[highway="street_lamp"][lamp_type=electric]::Light
 {
     symbol-fill-color: #ddd;
 }
@@ -1098,7 +1102,7 @@ node[traffic_sign=city_limit][city_limit=end] {
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
-    icon-height: eval(2 * prop(pixel_per_metre, "default"));
+    icon-height: 25;
 }
 node[highway=crossing][crossing=unmarked],
 node[highway=crossing][crossing=informal] {
@@ -1141,15 +1145,15 @@ node[highway=crossing]["crossing:markings"="ladder:skewed"] {
 node[highway=crossing]["crossing:markings"="ladder:paired"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder-paired.svg";
 }
-node|z17-[highway=crossing][crossing:island=yes]::traffic_island,
-node|z17-[highway=crossing][crossing=island]::traffic_island {
+node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
+node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
-    icon-height: eval(3 * prop(pixel_per_metre, "default"));
+    icon-height: 35;
 }
-node|z17-[highway=crossing][crossing=traffic_signals]::traffic_signals,
-node|z17-[highway=crossing][crossing:signals=yes]::traffic_signals {
+node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
+node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
-    icon-height: eval(3 * prop(pixel_per_metre, "default"));
+    icon-height: 35;
 }
 node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
@@ -1388,7 +1392,7 @@ area["area:highway"] {
 
 node[traffic_calming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
-    icon-height: 50;
+    icon-height: 35;
 }
 node[traffic_calming=chicane] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
@@ -1410,6 +1414,9 @@ node[traffic_calming=table] {
 }
 node[traffic_calming=cushion] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion.svg";
+}
+node[traffic_calming=cushion][direction][direction!=both] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion-single.svg";
 }
 node[traffic_calming=rumble_strip] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-rumble-strip.svg";
@@ -4690,7 +4697,6 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
-    icon-height: eval(1.5 * prop(pixel_per_metre,"default"));
     icon-opacity: 0.9;
 }
 node[natural=tree][leaf_type=needleleaved] {
@@ -5237,13 +5243,18 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     modifier: true;
 }
 
+
+
 /* Brands */
 
-*[brand] {
+*|z18-[brand] {
+    icon-height: 15;
+    icon-offset-y: -5;
+}
+*|z20-[brand] {
     icon-height: 20;
     icon-offset-y: -5;
 }
-
 *[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
 }
