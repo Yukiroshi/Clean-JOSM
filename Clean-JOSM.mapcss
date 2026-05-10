@@ -70,7 +70,10 @@ way[highway][oneway != -1] > node[traffic_sign:direction=backward],
 way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
-    icon-offset-x: -15;
+    icon-offset-x: 15;
+}
+way[oneway=yes] > node {
+    icon-offset-x: 0;
 }
 way[highway] > node[highway=crossing] {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
@@ -216,7 +219,9 @@ way[oneway != -1] > node[direction=backward]::direction_cone {
     icon-rotation: parent_way_angle();
     icon-offset-x: -15;
 }
-
+way[oneway=yes] > node::direction_cone {
+    icon-offset-x: 0;
+}
 way[oneway != -1] > node[stop_position:direction=both]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone,
 way[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone,
@@ -240,7 +245,7 @@ way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
 node|z18-.has_cone::direction_cone {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
     icon-height: 25;
-    icon-offset-y: -8;
+    icon-offset-y: -7;
     z-index: -1;
 }
 
@@ -248,6 +253,17 @@ node|z18-.has_cone::direction_cone {
 /* create style settings */
 /*************************/
 
+setting::high_contrast {
+  type: boolean;
+  label: tr("Make everything a bit more prominent");
+  default: false;
+}
+
+setting::round_symbols {
+  type: boolean;
+  label: tr("Make symbols round like circles");
+  default: true;
+}
 setting::hide_icons {
   type: boolean;
   label: tr("Hide icons at low zoom");
@@ -5248,13 +5264,20 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 /* Brands */
 
 *|z18-[brand] {
-    icon-height: 15;
-    icon-offset-y: -5;
+    major-z-index: 100;
+
 }
-*|z20-[brand] {
-    icon-height: 20;
-    icon-offset-y: -5;
+
+/* Vertical logos */
+
+*[shop][brand*="Aldi"]  {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
 }
+*[shop][brand*="abc"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
+}
+
+
 *[shop][brand*="Żabka"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
 }
@@ -5267,9 +5290,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="Lidl"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
 }
-*[shop][brand*="Aldi"]  {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
-}
+
 *[shop][brand*="Kaufland"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
 }
@@ -5282,9 +5303,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="Dino"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
 }
-*[shop][brand*="abc"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
-}
+
 *[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
 }
@@ -5309,46 +5328,62 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="H&M"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
 }
+
+
 *[shop][brand*="New Yorker"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
 }
 *[shop][brand*="CCC"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7f/CCC_orange.svg";
 }
 *[shop][brand*="Cropp"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/87/CroppColor2.svg";
 }
 *[shop][brand*="House"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f2/House_2022.svg";
 }
 *[shop][brand*="Mohito"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4d/Mohito_Logo.svg";
 }
 *[shop][brand*="Reserved"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/Reserved.svg";
 }
 *[shop][brand*="Sinsay"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/61/Sinsay_logo.svg";
 }
 *[shop][brand*="Zara"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f6/Zara_2019.svg";
 }
 *[shop][brand*="Zara Home"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/20/Zara_Home_2023.svg";
 }
 *[shop][brand*="Bershka"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f3/Bershka_2023.svg";
 }
 *[shop][brand*="Stradivarius"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/24/Stradivarius_2022.svg";
 }
 *[shop][brand*="Pull & Bear"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/Pull%26Bear_2023.svg";
 }
 *[shop][brand*="HalfPrice"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/9a/HalfPrice.svg";
 }
 *[shop][brand*="TK Maxx"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/de/T.K._Maxx.svg";
 }
 *[shop][brand*="Media Markt"] {
@@ -5358,6 +5393,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
 }
 *[shop][brand*="RTV Euro AGD"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/6/66/RTV_Euro_AGD.svg";
 }
 *[shop][brand*="IKEA"] {
@@ -5373,12 +5409,14 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
 }
 *[brand*="DHL"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
 }
 *[brand*="DPD"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
 }
 *[brand*="Poczta Polska"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/0/02/Poczta_Polska.svg";
 }
 *[amenity][brand*="McDonald's"] {
@@ -5400,6 +5438,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/83/Orlen_logo.svg";
 }
 *[amenity][brand*="Circle K"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Circle_K_%282015%29.svg";
 }
 *[amenity][brand*="BP"] {
@@ -5409,15 +5448,21 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/5e/PKO_Bank_Polski_2011.svg";
 }
 *[amenity][brand*="mBank"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/8c/MBank_individual_%282020%29.svg";
 }
 *[amenity][brand*="Millennium Bank"] {
+    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Bank_Millenium.svg";
 }
 *[amenity][brand*="Bank Pekao"] {
+    icon-height: 10;
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
 }
 
+*[brand] {
+    text: none;
+}
 
 /* TEMPLATE
 *[brand*=""] {
@@ -5429,21 +5474,19 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 /***************************/
 
 node|z16-[fixme]::core_note_fixme,
-node|z-15[fixme][!setting("hide_icons")]::core_note_fixme,
-node|z16-[FIXME]::core_note_fixme,
-node|z-15[FIXME][!setting("hide_icons")]::core_note_fixme {
-    object-z-index: 10;
+node|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
+    major-z-index: 100;
     icon-image: "presets/misc/fixme_annotation.svg";
 }
 node|z16-[note]::core_note_fixme,
 node|z-15[note][!setting("hide_icons")]::core_note_fixme {
-    object-z-index: 10;
+    major-z-index: 100;
     icon-image: "presets/misc/note_annotation.svg";
 }
 node|z16-[note][fixme]::core_note_fixme,
-node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme,
-node|z16-[note][FIXME]::core_note_fixme,
-node|z-15[note][FIXME][!setting("hide_icons")]::core_note_fixme {
+node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
+    object-z-index: 99;
+    major-zindex: 99;
     icon-image: "presets/misc/note_fixme_annotation.svg";
 }
 
@@ -5503,36 +5546,56 @@ node {
 node[/^disused:/] {
     text: tr("");
 }
+node!:tagged {
+    major-z-index: 101;
+}
 node|z10- {
-    symbol-size: 5;
     symbol-shape: circle;
-    symbol-stroke-color: #333;
-    symbol-stroke-width: 0.75;
+}
+node|z10-[!setting("round_symbols")] {
+    symbol-shape: square;
+}
+node|z10- {
+    symbol-size: 6;
+    symbol-stroke-color: #333333;
+    symbol-stroke-width: 1;
     symbol-stroke-opacity: 0.75;
-    symbol-fill-color: #bbb;
+    symbol-fill-color: #ddd;
+}
+node|z10-[setting("high_contrast")] {
+    symbol-size: 6;
+    symbol-stroke-color: #ff7300;
+    symbol-stroke-width: 1;
+    symbol-stroke-opacity: 0.75;
+    symbol-fill-color: #333;
 }
 way > node:connection {
-    symbol-size: 6;
+    symbol-size: 7;
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
-    symbol-size: 6;
-    symbol-fill-color: #ddd;
+    symbol-size: 8;
+    symbol-fill-color: #fff;
 }
 node:tagged {
-    symbol-size: 7;
+    symbol-size: 8;
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
 }
 node:selected {
-    symbol-size: 8;
+    symbol-size: 9;
     symbol-fill-color: #ff7300;
     symbol-stroke-color: #ddd;
+}
+node:selected[setting("high_contrast")] {
+    symbol-size: 9;
+    symbol-fill-color: #ff7300;
+    symbol-stroke-color: #333;
 }
 way {
     icon-position: line;
     text-position: line;
-    text-offset-y: -15;   
+    text-offset-y: eval(prop(width) -15);
 }
 area:closed {
     text-position: center;
@@ -5542,6 +5605,7 @@ area:closed {
 area:closed[is_prop_set(icon-image)] {
     icon-position: inside;
 }
+
 node|z-17!:tagged[setting("hide_icons")] {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
@@ -5574,7 +5638,9 @@ area|z-15[setting("hide_icons")]:closed2 {
 node|z16-17[setting("hide_icons")][place=locality] {
     text: auto;
 }
-
+*[setting("high_contrast")] {
+    width: eval(prop(width) + 1);
+}
 node|z-18,area|z-18 { font-size: 8; }
 node|z19,area|z19   { font-size: 9; }
 node|z20-,area|z20- { font-size: 11; }
