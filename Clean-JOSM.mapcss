@@ -26,7 +26,6 @@ node|z18- {
 
 
 
-
 /*most accurate pixel/metre*/
 *|z15-  { pixel_per_metre: 0.27; }
 *|z16-  { pixel_per_metre: 0.55; }
@@ -528,8 +527,6 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
-    z-index: 4;
-    object-z-index: 4;
 
 }
 way[barrier][fence_type=railing] {
@@ -3710,7 +3707,7 @@ area[landuse=flowerbed]{
     fill-color: flowerbed#ffa4d9;
 }
 area[landuse=residential] {
-    fill-color: residential#c4bd19;
+    fill-color: residential#dbd75a;
 }
 area[landuse=garages] {
     fill-color: garages#aaa9a9;
@@ -5580,10 +5577,11 @@ way {
     text-position: line;
     text-offset-y: eval(prop(width) -15);
 }
-area:closed {
+area:closed[!layer] {
     text-position: center;
     text-offset-y: -15;
     fill-opacity: 0.3;
+    major-z-index: 1;
 }
 area:closed[is_prop_set(icon-image)] {
     icon-position: inside;
