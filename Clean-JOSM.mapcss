@@ -5248,7 +5248,6 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 
 *|z18-[brand] {
     major-z-index: 100;
-
 }
 
 /* Vertical logos */
@@ -5262,7 +5261,11 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 
 
 *[shop][brand*="Żabka"] {
+    icon-height: 15;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
+}
+*[shop][brand*="Żabka"][name*="Nano"] {
+    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/44/Zabka_Nano.svg";
 }
 *[shop][brand*="Lewiatan"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/Lewiatan_%282011%29_Stacked.svg";
@@ -5408,6 +5411,9 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[amenity][brand*="KFC"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
 }
+*[amenity][brand*="McDonald's"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/0/05/McDonald%27s_square_2020.svg";
+}
 *[amenity][brand*="MOL"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/2/20/MOL_logo_2012.svg";
 }
@@ -5416,6 +5422,9 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 }
 *[amenity][brand*="Orlen"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/83/Orlen_logo.svg";
+}
+*[amenity][brand*="Orlen Paczka"] {
+    icon-image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Orlen_paczka_logo.svg";
 }
 *[amenity][brand*="Circle K"] {
     icon-height: 10;
