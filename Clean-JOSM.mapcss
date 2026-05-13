@@ -61,7 +61,6 @@ way[highway][oneway != -1] > node[traffic_sign:direction=forward],
 way[highway][oneway != -1] > node[traffic_signals:direction=forward],
 way[oneway != -1] > node[direction=forward] {
     icon-rotation: parent_way_angle();
-    icon-offset-x: 15;
 }
 
 way[oneway != -1] > node[stop_position:direction=backward],
@@ -70,11 +69,8 @@ way[highway][oneway != -1] > node[traffic_sign:direction=backward],
 way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
-    icon-offset-x: 15;
 }
-way[oneway=yes] > node {
-    icon-offset-x: 0;
-}
+
 way[highway] > node[highway=crossing] {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
 }
@@ -206,7 +202,6 @@ way[highway][oneway != -1] > node[traffic_signals:direction=forward]::direction_
 way[oneway != -1] > node[direction=forward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle() - 180deg;
-    icon-offset-x: -15;
 }
 
 
@@ -217,7 +212,6 @@ way[highway][oneway != -1] > node[traffic_signals:direction=backward]::direction
 way[oneway != -1] > node[direction=backward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
-    icon-offset-x: -15;
 }
 way[oneway=yes] > node::direction_cone {
     icon-offset-x: 0;
@@ -1118,6 +1112,8 @@ node[traffic_sign=city_limit][city_limit=end] {
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
+}
+node|z19-[highway=crossing][crossing!=no] {
     icon-height: 25;
 }
 node[highway=crossing][crossing=unmarked],
@@ -1164,11 +1160,20 @@ node[highway=crossing]["crossing:markings"="ladder:paired"] {
 node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
 node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
-    icon-height: 35;
+    icon-height: 30;
 }
 node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
 node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
+    icon-height: 30;
+}
+node|z19-[highway=crossing][crossing=traffic_signals]::traffic_signals,
+node|z19-[highway=crossing][crossing:signals=yes]::traffic_signals {
+    icon-height: 35;
+}
+
+node|z19-[highway=crossing][crossing:island=yes]::traffic_island,
+node|z19-[highway=crossing][crossing=island]::traffic_island {
     icon-height: 35;
 }
 node[highway=motorway_junction] {
@@ -1408,7 +1413,9 @@ area["area:highway"] {
 
 node[traffic_calming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
-    icon-height: 35;
+}
+node|z19-[traffic_calming] {
+    icon-height: 30;
 }
 node[traffic_calming=chicane] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
@@ -1433,6 +1440,7 @@ node[traffic_calming=cushion] {
 }
 node[traffic_calming=cushion][direction][direction!=both] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion-single.svg";
+    icon-height: 50;
 }
 node[traffic_calming=rumble_strip] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-rumble-strip.svg";
@@ -1828,7 +1836,7 @@ node[pipeline=valve] {
     icon-image: "presets/misc/valve.svg";
 }
 node[man_made=manhole] {
-    icon-image: "presets/misc/manhole.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/manhole.svg";
 }
 node[man_made=petroleum_well] {
     icon-image: "presets/landmark/petroleum_well.svg";
@@ -2862,8 +2870,11 @@ area[amenity=driver_training]{
     fill-color: amenity_parking#00329b;
 }
 *[amenity=parking_space] {
-    icon-image: "presets/vehicle/parking/parking_space.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space.svg";
     fill-color: parking_space#ddd;
+}
+*[amenity=parking_space][wheelchair?] {
+    icon-image: "presets/vehicle/parking/handicapped.svg";
 }
 *[amenity=trolley_bay] {
     icon-image: "presets/vehicle/parking/trolley_bay.svg";
@@ -2892,9 +2903,7 @@ node[amenity=motorcycle_parking] {
 node[park_ride][park_ride!=no] {
     icon-image: "presets/vehicle/parking/park_ride.svg";
 }
-node[amenity=parking_space][wheelchair?] {
-    icon-image: "presets/vehicle/parking/handicapped.svg";
-}
+
 *[amenity=bicycle_rental] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-rental.svg";
 }
@@ -5002,54 +5011,39 @@ node[boundary=marker] {
 
 
 
-
 /******************/
 /* maxspeed nodes */
 /******************/
 
-
-
-node[traffic_sign][maxspeed=none][!is_prop_set(icon-image)] {
-    icon-image: "presets/vehicle/restriction/maxspeed_none.svg";
+node[traffic_sign=maxspeed][!maxspeed] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed-alt.svg";
 }
-node[traffic_sign][maxspeed=~/^[0-9]+$/][!is_prop_set(icon-image)] {
+node[traffic_sign=maxspeed][maxspeed=~/^[0-9]+$/][!is_prop_set(icon-image)] {
     maxspeedprop: tag(maxspeed);
     set maxspeedclass;
 }
-node[traffic_sign][maxspeed=signals][!is_prop_set(icon-image)] {
+node[traffic_sign=maxspeed][maxspeed=signals][!is_prop_set(icon-image)] {
     maxspeedprop: " ?";
     set maxspeedclass;
 }
-node[traffic_sign][maxspeed=~/^[0-9]+ mph/][!is_prop_set(icon-image)] {
+node[traffic_sign=maxspeed][maxspeed=~/^[0-9]+ mph/][!is_prop_set(icon-image)] {
     maxspeedprop: get(split(" mph",tag(maxspeed)),0);
     set maxspeedclass;
 }
-node[traffic_sign][maxspeed=~/[0-9]+ km\/h/][!is_prop_set(icon-image)] {
+node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ km\/h/][!is_prop_set(icon-image)] {
     maxspeedprop: get(split(" km/h",tag(maxspeed)),0);
     set maxspeedclass;
 }
-node[traffic_sign][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)] {
+node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)] {
     maxspeedprop: get(split(" knots",tag(maxspeed)),0);
     set maxspeedclass;
 }
-node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::core_maxnodebg {
-    /* background (white) */
-    symbol-shape: circle;
-    symbol-size: 17;
-    symbol-fill-color: white;
-    major-z-index: 4.2;
+node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::core_maxnode {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
+    icon-height: 20;
+    major-z-index: 101;
 }
-node[traffic_sign][maxspeed]["maxspeed:variable"]["maxspeed:variable"!="no"]::core_maxnodebg,
-node[traffic_sign][maxspeed=signals]::core_maxnodebg {
-    /* background (black) */
-    symbol-fill-color: black;
-}
-node[prop(maxspeedclass, default)]::core_maxnodefg {
-    /* foreground (black text and red circle) */
-    symbol-shape: circle;
-    symbol-size: 15;
-    symbol-stroke-color: crimson;
-    symbol-stroke-width: 2;
+node[prop(maxspeedclass, default)]::core_maxnode {
     text: prop(maxspeedprop, default);
     font-size: 8;
     font-weight: bold;
@@ -5058,17 +5052,9 @@ node[prop(maxspeedclass, default)]::core_maxnodefg {
     text-anchor-vertical: center;
     text-offset-x: 0;
     text-offset-y: -1;
-    major-z-index: 4.2;
+    major-z-index: 101;
 }
-node[traffic_sign][maxspeed]["maxspeed:variable"]["maxspeed:variable"!="no"]::core_maxnodefg,
-node[traffic_sign][maxspeed=signals]::core_maxnodefg {
-    /* foreground (white text) */
-    text-color: white;
-}
-node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnodebg {
-    symbol-shape: none;
-}
-node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnodefg {
+node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
     text: none;
     symbol-shape: none;
 }
@@ -5418,9 +5404,6 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[brand*="Poczta Polska"] {
     icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/0/02/Poczta_Polska.svg";
-}
-*[amenity][brand*="McDonald's"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/McDonald%27s_%281%29.svg";
 }
 *[amenity][brand*="Burger King"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
