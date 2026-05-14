@@ -6,6 +6,60 @@ meta {
     author: "Yukiro";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
+
+
+
+/*************************/
+/* create style settings */
+/*************************/
+
+setting::high_contrast {
+  type: boolean;
+  label: tr("Make everything a bit more prominent");
+  default: false;
+}
+
+setting::round_symbols {
+  type: boolean;
+  label: tr("Make symbols round like circles");
+  default: true;
+}
+setting::hide_icons {
+  type: boolean;
+  label: tr("Hide icons at low zoom");
+  default: true;
+}
+
+setting::hide_tagged_waynodes {
+  type: boolean;
+  label: tr("Hide tagged waynodes at low zoom");
+  default: true;
+}
+
+setting::highway_labels {
+  type: boolean;
+  label: tr("Display street labels (at high zoom)");
+  default: true;
+}
+
+setting::place_fill_colour {
+  type: boolean;
+  label: tr("Display fill colour of areas with place=*");
+  default: false;
+}
+
+setting::partial_fill {
+  type: boolean;
+  label: tr("Areas are drawn with fill only around their inner edges");
+  default: true;
+}
+
+setting::incline_zoom {
+    type: double;
+    label: tr("Incline arrows zoom level");
+    default: 19;
+}
+
 canvas {
     fill-color: #5b5b5b;
 }
@@ -44,9 +98,6 @@ canvas {
 node {
     icon-height: eval(20 * prop(zoom));
 }
-
-
-
 
 
 
@@ -248,49 +299,60 @@ node|z18-.has_cone::direction_cone {
     z-index: -1;
 }
 
-/*************************/
-/* create style settings */
-/*************************/
 
-setting::high_contrast {
-  type: boolean;
-  label: tr("Make everything a bit more prominent");
-  default: false;
+
+/* Incline by Klumbumbus*/
+
+way[highway][incline][incline =~ /^(up|([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=-1] node::incline_down,
+way[highway][incline][incline =~ /^(down|-([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline_down {
+    set incline_down;
 }
 
-setting::round_symbols {
-  type: boolean;
-  label: tr("Make symbols round like circles");
-  default: true;
-}
-setting::hide_icons {
-  type: boolean;
-  label: tr("Hide icons at low zoom");
-  default: true;
+way[highway][incline][incline =~ /^(up|([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline_up,
+way[highway][incline][incline =~ /^(down|-([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=-1] node::incline_up {
+    set incline_up;
 }
 
-setting::hide_tagged_waynodes {
-  type: boolean;
-  label: tr("Hide tagged waynodes at low zoom");
-  default: true;
+way[highway][incline][incline =~ /^((0(\.0+)?)[%°])$/] >[index=-1] node::incline_zero,
+way[highway][incline][incline =~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline_zero {
+    set incline_zero;
 }
 
-setting::highway_labels {
-  type: boolean;
-  label: tr("Display street labels (at high zoom)");
-  default: true;
+/* display the arrow signs */
+way > node|z19-.incline_down::incline_down {
+    text: eval("↧"); /* U+21A7 (8615) DOWNWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
+    text-color: incline_down#00ff00;
+    font-size: eval(20 * prop(zoom));
+    text-offset-x: eval(20 * prop(zoom));
+    text-offset-y: eval(30 * prop(zoom));
+    text-anchor-horizontal: center;
+    text-anchor-vertical: center;
+    text-rotation: parent_way_angle() - 180deg;
+    major-z-index: 101;
 }
 
-setting::place_fill_colour {
-  type: boolean;
-  label: tr("Display fill colour of areas with place=*");
-  default: false;
+way > node|z19-.incline_up::incline_up {
+    text: eval("↥"); /* U+21A5 (8613) UPWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
+    text-color: incline_up#ff0000;
+    font-size: eval(20 * prop(zoom));
+    text-offset-x: eval(-5 * prop(zoom));
+    text-offset-y: eval(0 * prop(zoom));
+    text-anchor-horizontal: center;
+    text-anchor-vertical: center;
+    text-rotation: parent_way_angle() - 180deg;
+    major-z-index: 101;
 }
 
-setting::partial_fill {
-  type: boolean;
-  label: tr("Areas are drawn with fill only around their inner edges");
-  default: true;
+way > node|z19-.incline_zero::incline_zero {
+    text: eval("← →"); /* U+2190 (8592) LEFTWARDS ARROW and U+2192 (8594) RIGHTWARDS ARROW from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
+    text-color: incline_zero#ffff00;
+    font-size: eval(20 * prop(zoom));
+    text-offset-x: eval(40 * prop(zoom));
+    text-offset-y: eval(13 * prop(zoom));
+    text-anchor-horizontal: center;
+    text-anchor-vertical: center;
+    text-rotation: parent_way_angle() - 180deg;
+    major-z-index: 101;
 }
 
 
@@ -356,10 +418,6 @@ relation[restriction=only_straight_on] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-only-straight-on.svg";
     text: auto;
 }
-
-
-
-
 
 
 
@@ -698,7 +756,7 @@ way[highway=track] {
 }
 way[highway=track] {
     width: eval(5 * prop(zoom));
-    casing-width: eval(prop(zoom));;
+    casing-width: eval(prop(zoom));
 }
 way[highway=track][tracktype=grade6] {
     casing-dashes: 3,3;
@@ -748,7 +806,7 @@ way[highway=living_street][tunnel] {
 way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
-way[highway=service] {
+way[highway=service][!area?] {
     width: eval(4 * prop(zoom));
     color: service#ddccaa;
     casing-width: eval(0.7 * prop(zoom));
@@ -4172,26 +4230,24 @@ node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
 
-way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]::bridge {
+way[bridge]::bridge {
     casing-width: eval(prop(width, "default") *1.1);
     casing-color: bridge#222;
     casing-opacity: 0.8;
     z-index: 0;
-    major-z-index: 4;
 }
-way[bridge=~/yes|viaduct|swing|movable|cantilever|covered|low_water_crossing|trestle|aqueduct/]{
+way[bridge]{
     casing-opacity: 0;
     z-index: 1;
-    major-z-index: 4;
 }
 
-way[tunnel=~/yes|culvert|building_passage|avalanche_protector/]::tunnel {
+way[tunnel]::tunnel {
     casing-width: eval(prop(width, "default") *1.1);
     casing-color: tunnel#444;
     casing-opacity: 0.7;
     major-z-index: -1;
 }
-way[tunnel=~/yes|culvert|building_passage|avalanche_protector/] {
+way[tunnel] {
     casing-opacity: 0;
     major-z-index: -1;
 }
@@ -5059,12 +5115,10 @@ way {
 }
 *[layer] {
     z-index: eval(tag(layer));
-    major-z-index: eval(tag(layer));
     object-z-index: eval(tag(layer));
 }
 *[layer]::bridge {
     z-index: eval(tag(layer -1));
-    major-z-index: eval(tag(layer));
     object-z-index: eval(tag(layer -1));
 }
 
