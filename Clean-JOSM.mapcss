@@ -83,8 +83,7 @@ way[highway] > node[highway=crossing] {
 }
 way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
 way[highway] > node[noexit],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
-way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=traffic_signals] {
+way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
 }
 way[highway] > node[crossing:island=yes]::traffic_island {
@@ -106,7 +105,6 @@ way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::t
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
     icon-height: prop(icon-height, "default");
 }
-
 
 /* Numeric and cardinal directions */
 
