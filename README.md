@@ -1,7 +1,7 @@
 # <img width="32" alt="Icon" src="https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg" /> Clean-JOSM
 !Style is still being developed, not all icons are nice! All-in-one style for JOSM. Improved and cleaner looks, covers all common objects. 
 
-<img width="1080" alt="Basic showcase" src="https://github.com/user-attachments/assets/1b68aeec-1640-4d23-a75f-99ae54076628" />
+<img width="1080" alt="Basic showcase" src="https://github.com/user-attachments/assets/6045c6a0-50af-4470-a662-4db36fdb9847" />
 
 Renders crossings dynamically depending on tags
 
