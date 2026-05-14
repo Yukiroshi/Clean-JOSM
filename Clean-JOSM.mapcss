@@ -20,14 +20,14 @@ canvas {
     linejoin: none;
     set icon_z17;
 }
-node|z18- {
-    icon-height: 20;
+node {
+    icon-height: eval(20 * zoom);
 }
 
 
 
-/*most accurate pixel/metre*/
-*|z15-  { pixel_per_metre: 0.27; }
+/* Most accurate pixel/metre */
+*|z-15  { pixel_per_metre: 0.27; }
 *|z16-  { pixel_per_metre: 0.55; }
 *|z17-  { pixel_per_metre: 1.1; }
 *|z18-  { pixel_per_metre: 2.25; }
@@ -40,6 +40,13 @@ node|z18- {
 *|z25-  { pixel_per_metre: 287.5; }
 *|z26- { pixel_per_metre: 575; }
 
+/* Zoom level scaling */
+*|z-14  { zoom: 0.5; }
+*|z15-  { zoom: 0.55; }
+*|z16-  { zoom: 0.75; }
+*|z17-  { zoom: 0.9; }
+*|z18-  { zoom: 1; }
+*|z19-  { zoom: 1.25; }
 
 
 /**********/
@@ -237,7 +244,7 @@ way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
 /* Render the cone icon for all previously matched nodes */
 node|z18-.has_cone::direction_cone {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25;
+    icon-height: eval(25 * zoom);
     icon-offset-y: -7;
     z-index: -1;
 }
@@ -606,24 +613,12 @@ way[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
     casing-color: #70372f;
 }
 
-way|z16-[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
-    width: 6;
-}
-way|z15[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
-    width: 3.46;
-}
-way|z-14[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
-    width: 2;
+way[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
+    width: eval(6 * zoom);
 }
 
-way|z16-[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
-    width: 4;
-}
-way|z15[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
-    width: 1.73;
-}
-way|z-14[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
-    width: 1;
+way[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
+    width: eval(4 * zoom);
 }
 way[highway=~/motorway|motorway_link/] {
     z-index: 0.13;
@@ -702,16 +697,9 @@ way[highway=track] {
     casing-color: #ddd;
     casing-width: 1;
 }
-way|z16-[highway=track] {
-    width: 5;
-}
-way|z15[highway=track] {
-    width: 3;
-    casing-width: 0.7;
-}
-way|z-14[highway=track] {
-    width: 2;
-    casing-width: 0.3;
+way[highway=track] {
+    width: eval(5 * zoom);
+    casing-width: eval(zoom);;
 }
 way[highway=track][tracktype=grade6] {
     casing-dashes: 3,3;
@@ -733,45 +721,25 @@ way[highway=track][tracktype=grade1] {
 }
 
 way[highway=residential] {
+    width: eval(6 * zoom);
     z-index: 0.02;
     color: street#ddd;
     opacity: 1;
-    casing-width: 1;
+    casing-width: eval(zoom);
     casing-color: #444;
 }
-way|z16-[highway=residential] {
-    width: 6;
-}
-way|z15[highway=residential] {
-    width: 3.46;
-}
-way|z-14[highway=residential] {
-    width: 2;
-    casing-width: 0.6;
-}
-
 way[highway=residential][tunnel] {
     color: street#5b564b;
     casing-color: #444;
 }
 
 way[highway=living_street] {
+    width: eval(6 * zoom);
     z-index: 0.01;
     color: street#c0c0c0;
     opacity: 1;
+    casing-width: eval(2 * zoom);
     casing-color: #ddd;
-}
-way|z16-[highway=living_street] {
-    width: 6;
-    casing-width: 2;
-}
-way|z15[highway=living_street] {
-    width: 3.46;
-    casing-width: 1.16;
-}
-way|z-14[highway=living_street] {
-    width: 2;
-    casing-width: 1;
 }
 way[highway=living_street][tunnel] {
     color: street#656565;
@@ -781,150 +749,47 @@ way[highway=living_street][tunnel] {
 way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
-
-way[highway=service][service][!tunnel] {
+way[highway=service] {
+    width: eval(4 * zoom);
     color: service#ddccaa;
+    casing-width: eval(0.7 * zoom);
     casing-color: #444;
-}
-way|z16-[highway=service][service][!tunnel] {
-    width: 4;
-    casing-width: 0.7;
-}
-way|z15[highway=service][service][!tunnel] {
-    width: 1.73;
-    casing-width: 0.5;
-}
-way|z-14[highway=service][service][!tunnel] {
-    width: 1;
-    casing-width: 0.3;
-    z-index: 0.009;
 }
 way[highway=service][service][tunnel] {
     color: service#676257;
     casing-color: #2A2A2A;
 }
-way|z16-[highway=service][service][tunnel] {
-    width: 4;
-    casing-width: 0.7;
-}
-way|z15[highway=service][service][tunnel] {
-    width: 1.73;
-    casing-width: 0.5;
-}
-way|z-14[highway=service][service][tunnel] {
-    width: 1;
-    casing-width: 0.3;
-}
-way|z16-[highway=service][!area?][!tunnel],
-way|z16-[highway=service][service=driveway][!tunnel] {
-    width: 4;
+way[highway=service][!area?],
+way[highway=service][service=driveway] {
     color: service#eee;
-    casing-width: 0.7;
     casing-color: #444;
 }
-way|z15[highway=service][!area?][!tunnel],
-way|z15[highway=service][service=driveway][!tunnel] {
-    width: 1.73;
-    color: service#eee;
-    casing-width: 0.5;
-    casing-color: #444;
-}
-way|z-14[highway=service][!area?][!tunnel],
-way|z-14[highway=service][service=driveway][!tunnel] {
-    width: 1;
-    color: service#eee;
-    casing-width: 0.2;
-    casing-color: #444;
-}
-way|z16-[highway=service][!area?][tunnel],
-way|z16-[highway=service][service=driveway][tunnel] {
-    width: 4;
+way[highway=service][!area?][tunnel],
+way[highway=service][service=driveway][tunnel] {
     color: service#717171;
-    casing-width: 0.7;
-    casing-color: #585858;
+    casing-color: #333;
 }
-way|z15[highway=service][!area?][tunnel],
-way|z15[highway=service][service=driveway][tunnel] {
-    width: 1.73;
-    color: service#717171;
-    casing-width: 0.5;
-    casing-color: #585858;
-}
-way|z-14[highway=service][!area?][tunnel],
-way|z-14[highway=service][service=driveway][tunnel] {
-    width: 1;
-    color: service#717171;
-    casing-width: 0.2;
-    casing-color: #585858;
-}
-
-way[highway=service][service=parking_aisle][!tunnel] {
+way[highway=service][service=parking_aisle] {
     color: parking_aisle#CCCAC7;
-    casing-width: 0.7;
     casing-color: #555;
-}
-way|z16-[highway=service][service=parking_aisle][!tunnel] {
-    width: 4;
-}
-way|z15[highway=service][service=parking_aisle][!tunnel] {
-    width: 1.73;
-}
-way|z-14[highway=service][service=parking_aisle][!tunnel] {
-    width: 1;
 }
 way[highway=service][service=parking_aisle][tunnel] {
     color: parking_aisle#626160;
-    casing-width: 0.7;
-    casing-color: #353535;
+    casing-color: #333;
 }
-way|z16-[highway=service][service=parking_aisle][tunnel] {
-    width: 4;
-}
-way|z15[highway=service][service=parking_aisle][tunnel] {
-    width: 1.73;
-}
-way|z-14[highway=service][service=parking_aisle][tunnel] {
-    width: 1;
-}
-
-way[highway=service][service=emergency_access][!tunnel] {
+way[highway=service][service=emergency_access] {
     color: emergency_access#DDB2AA;
-    casing-color: #414141;
-}
-way|z16-[highway=service][service=emergency_access][!tunnel] {
-    width: 4;
-    casing-width: 0.7;
-}
-way|z15[highway=service][service=emergency_access][!tunnel] {
-    width: 1.73;
-    casing-width: 0.5;
-}
-way|z-14[highway=service][service=emergency_access][!tunnel] {
-    width: 1;
-    casing-width: 0.2;
+    casing-color: #444;
 }
 way[highway=service][service=emergency_access][tunnel] {
     color: emergency_access#6D5A57;
-    casing-color: #393737;
+    casing-color: #333;
 }
-way|z16-[highway=service][service=emergency_access][tunnel] {
-    width: 4;
-    casing-width: 0.7;
-}
-way|z15[highway=service][service=emergency_access][tunnel] {
-    width: 1.73;
-    casing-width: 0.5;
-}
-way|z-14[highway=service][service=emergency_access][tunnel] {
-    width: 1;
-    casing-width: 0.2;
-}
-
 way[highway=bridleway]{
-    width: 3.3;
+    width: eval(3.3 * zoom);
     color: horse#e06d5f;
     dashes: 6,6;
-    casing-width: 1;
+    casing-width: eval(1 * zoom);
     casing-color: #ddd;
     z-index: 0.009;
 }
@@ -933,10 +798,10 @@ way[highway=bridleway][tunnel] {
     casing-color: #808080;
 }
 way[highway=cycleway] {
-    width: 3;
+    width: eval(3 * zoom);
     color: bicycle#58a9ed;
     dashes: 6,6;
-    casing-width: 1;
+    casing-width: eval(1 * zoom);
     casing-color: #ddd;
     z-index: 0.009;
 }
@@ -952,10 +817,10 @@ way[highway=footway][area], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
 way[highway=footway][!area] {
-    width: 3.3;
+    width: eval(3.3 * zoom);
     color: foot#998888;
     dashes: 6,6;
-    casing-width: 1;
+    casing-width: eval(1 * zoom);
     casing-color: #eee;
     z-index: 0.009;
 }
@@ -964,34 +829,22 @@ way[highway=footway][!area][tunnel] {
 }
 way[highway=footway][!area?][footway=crossing], 
 way[highway=footway][!area?][footway=parking_aisle] {
-    width: 3.3;
     color: foot#998888;
-    dashes: 6,6;
-    casing-width: 1;
     casing-color: #ddccaa;
-    z-index: 0.009;
 }
 way[highway=footway][!area?][footway=sidewalk] {
-    width: 3.3;
     color: foot#d9a1a1;
-    dashes: 6,6;
-    casing-width: 1;
     casing-color: #eee;
-    z-index: 0.009;
 }
 way[highway=footway][!area?][footway=sidewalk][tunnel] {
-    width: 3.3;
     color: foot#808080;
-    dashes: 6,6;
-    casing-width: 1;
     casing-color: #555;
-    z-index: 0.009;
 }
 way[highway=path] {
-    width: 3.3;
+    width: eval(3 * zoom);
     color: path#998888;
     dashes: 6,6;
-    casing-width: 1;
+    casing-width: eval(0.9 * zoom);
     casing-color: #ddccaa;
     z-index: 0.009;
 }
@@ -1007,18 +860,18 @@ way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] 
     fill-color: pedestrian#adadad;
 }
 way[highway=pedestrian][!area?] {
-    width: 3.3;
+    width: eval(4 * zoom);
     color: foot#eee;
     dashes: 5,5;
-    casing-width: 1;
+    casing-width: eval(1 * zoom);
     casing-color: #8cd05f;
     z-index: 0.009;
 }
 way[highway=steps] {
-    width: 3;
+    width: eval(3 * zoom);
     color: foot#81d25c;
     dashes: 3,3;
-    casing-width: 1;
+    casing-width: eval(1 * zoom);
     casing-color: #eee;
     z-index: 0.009;
 }
@@ -1027,12 +880,12 @@ way[highway=steps][tunnel] {
     casing-color: #808080;
 }
 way[highway=bus_guideway] {
-    width: 3;
+    width: eval(3 * zoom);
     color: rail#404040;
     dashes: 9,9;
 }
 way[highway=raceway] {
-    width: 3;
+    width: eval(3 * zoom);
     color: raceway#ff80ff;
 }
 way[highway=raceway][area?], relation[type=multipolygon][highway=raceway] {
@@ -1109,9 +962,7 @@ node[traffic_sign=city_limit][city_limit=end] {
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
-}
-node|z19-[highway=crossing][crossing!=no] {
-    icon-height: 25;
+    icon-height: eval(25 * zoom);
 }
 node[highway=crossing][crossing=unmarked],
 node[highway=crossing][crossing=informal] {
@@ -1157,21 +1008,12 @@ node[highway=crossing]["crossing:markings"="ladder:paired"] {
 node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
 node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
-    icon-height: 30;
+    icon-height: eval(30 * zoom);
 }
 node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
 node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
-    icon-height: 30;
-}
-node|z19-[highway=crossing][crossing=traffic_signals]::traffic_signals,
-node|z19-[highway=crossing][crossing:signals=yes]::traffic_signals {
-    icon-height: 35;
-}
-
-node|z19-[highway=crossing][crossing:island=yes]::traffic_island,
-node|z19-[highway=crossing][crossing=island]::traffic_island {
-    icon-height: 35;
+    icon-height: eval(30 * zoom);
 }
 node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
@@ -1235,9 +1077,8 @@ node[highway=elevator] {
     icon-image: "presets/service/elevator.svg";
 }
 
-/*TO DO*/
-way|z16-[highway=construction][!tunnel][!bridge] {
-    width: 6;
+way[highway=construction][!tunnel][!bridge] {
+    width: eval(6 * zoom);
     z-index: 0.01;
     dashes: 9,9;
     dashes-background-color: constructdashed#ddd;
@@ -1246,26 +1087,14 @@ way|z16-[highway=construction][!tunnel][!bridge] {
     casing-color: #C0C0C0;
 }
 way|z15[highway=construction][!tunnel][!bridge] {
-    width: 3.46;
-    z-index: 0.01;
     dashes: 6,6;
-    dashes-background-color: constructdashed#ddd;
-    color: street#FC6C14;
-    casing-width: 1;
-    casing-color: #C0C0C0;
-
 }
 way|z-14[highway=construction][!tunnel][!bridge] {
-    width: 2;
-    z-index: 0.01;
     dashes: 3,3;
-    dashes-background-color: constructdashed#ddd;
-    color: street#FC6C14;
-    casing-width: 1;
-    casing-color: #C0C0C0;
 }
-way|z16-[highway=construction][tunnel] {
-    width: 6;
+
+way[highway=construction][tunnel] {
+    width: eval(6 * zoom);
     z-index: 0.01;
     dashes: 9,9;
     dashes-background-color: constructdashed#808080;
@@ -1275,27 +1104,14 @@ way|z16-[highway=construction][tunnel] {
     opacity: 1;
 }
 way|z15[highway=construction][tunnel] {
-    width: 3.46;
-    z-index: 0.01;
     dashes: 6,6;
-    dashes-background-color: constructdashed#808080;
-    color: street#A67A60;
-    casing-width: 1;
-    casing-color: #4A4A4A;
-    opacity: 1;
 }
 way|z-14[highway=construction][tunnel] {
-    width: 2;
-    z-index: 0.01;
     dashes: 3,3;
-    dashes-background-color: constructdashed#808080;
-    color: street#A67A60;
-    casing-width: 1;
-    casing-color: #4A4A4A;
-    opacity: 1;
 }
-way|z16-[highway=construction][bridge] {
-    width: 6;
+
+way[highway=construction][bridge] {
+    width: eval(6 * zoom);
     z-index: 0.01;
     dashes: 9,9;
     dashes-background-color: constructdashed#ddd;
@@ -1304,25 +1120,14 @@ way|z16-[highway=construction][bridge] {
     casing-color: #504F4D;
 }
 way|z15[highway=construction][bridge] {
-    width: 3.46;
-    z-index: 0.01;
     dashes: 6,6;
-    dashes-background-color: constructdashed#ddd;
-    color: street#FC6C14;
-    casing-width: 1;
-    casing-color: #504F4D;
 }
 way|z-14[highway=construction][bridge] {
-    width: 2;
-    z-index: 0.01;
     dashes: 3,3;
-    dashes-background-color: constructdashed#ddd;
-    color: street#FC6C14;
-    casing-width: 1;
-    casing-color: #504F4D;
 }
-way|z16-[highway=proposed][!tunnel] {
-    width: 6;
+
+way[highway=proposed] {
+    width: eval(6 * zoom);
     z-index: 0.01;
     dashes: 9,3;
     color: street#ccc;
@@ -1332,61 +1137,15 @@ way|z16-[highway=proposed][!tunnel] {
     dashes: 7,3;
     casing-dashes: 7,3;
 }
-way|z15[highway=proposed][!tunnel] {
-    width: 3.46;
-    z-index: 0.01;
-    dashes: 6,2;
-    color: street#ccc;
-    casing-width: 1;
-    casing-color: #888888;
-    opacity: 1;
-    dashes: 7,3;
-    casing-dashes: 7,3;
-}
-way|z-14[highway=proposed][!tunnel] {
-    width: 2;
-    z-index: 0.01;
-    dashes: 3,1;
-    color: street#ccc;
-    casing-width: 1;
-    casing-color: #888888;
-    opacity: 1;
-    dashes: 7,3;
-    casing-dashes: 7,3;
-}
-way|z16-[highway=proposed][tunnel] {
-    width: 6;
-    z-index: 0.01;
-    dashes: 9,3;
-    color: street#565656;
-    casing-width: 1;
-    casing-color: #1f1f1f;
-    opacity: 1;
-    dashes: 7,3;
-    casing-dashes: 7,3;
-}
-way|z15[highway=proposed][tunnel] {
-    width: 3.46;
-    z-index: 0.01;
+way[highway=proposed][tunnel] {
     dashes: 6,2;
     color: street#565656;
-    casing-width: 1;
     casing-color: #1f1f1f;
-    opacity: 1;
-    dashes: 7,3;
-    casing-dashes: 7,3;
 }
 way|z-14[highway=proposed][tunnel] {
-    width: 2;
-    z-index: 0.01;
     dashes: 3,1;
-    color: street#565656;
-    casing-width: 1;
-    casing-color: #1f1f1f;
-    opacity: 1;
-    dashes: 7,3;
-    casing-dashes: 7,3;
 }
+
 node[highway=construction] {
     icon-image: "presets/misc/construction.svg";
 }
@@ -1410,9 +1169,7 @@ area["area:highway"] {
 
 node[traffic_calming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
-}
-node|z19-[traffic_calming] {
-    icon-height: 30;
+    icon-height: eval(30 * zoom);
 }
 node[traffic_calming=chicane] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
@@ -1437,7 +1194,7 @@ node[traffic_calming=cushion] {
 }
 node[traffic_calming=cushion][direction][direction!=both] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion-single.svg";
-    icon-height: 50;
+    icon-height: eval(50 * zoom);
 }
 node[traffic_calming=rumble_strip] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-rumble-strip.svg";
@@ -1786,31 +1543,17 @@ way[man_made=embankment][!highway][!railway][!waterway] {
     color: embankment#c14d00;
 }
 
-way|z16-[embankment?][highway],
-way|z16-[embankment?][railway],
-way|z16-[embankment?][waterway] {
-    casing-width: 6;
+way[embankment?][highway],
+way[embankment?][railway],
+way[embankment?][waterway] {
+    casing-width: eval(6 * zoom);
     casing-color: #ffa485;
     casing-dashes: 2,4;
 }
-way|z-16[embankment?][highway],
-way|z-16[embankment?][railway],
-way|z-16[embankment?][waterway] {
-    casing-width: 2;
-    casing-color: #ffa485;
-    casing-dashes: 2,4;
-}
-way|z16-[cutting?][highway],
-way|z16-[cutting?][railway],
-way|z16-[cutting?][waterway] {
-    casing-width: 6;
-    casing-color: #B7FF07;
-    casing-dashes: 2,4;
-}
-way|z-16[cutting?][highway],
-way|z-16[cutting?][railway],
-way|z-16[cutting?][waterway] {
-    casing-width: 2;
+way[cutting?][highway],
+way[cutting?][railway],
+way[cutting?][waterway] {
+    casing-width: eval(6 * zoom);
     casing-color: #B7FF07;
     casing-dashes: 2,4;
 }
@@ -2205,7 +1948,7 @@ area[leisure=playground],
 area[leisure=garden],
 area[leisure=common],
 area[leisure=firepit] {
-    fill-color: leisure#61e370;
+    fill-color: leisure#86ee92;
     width: 1;
 }
 node[leisure=fishing] {
@@ -3641,7 +3384,7 @@ node[historic=tomb] {
 }
 *[heritage]::heritage {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/heritage.svg";
-    icon-height: 15;
+    icon-height: eval(15 * zoom);
     icon-offset-y: 15;
 }
 
@@ -4102,7 +3845,6 @@ way[aerialway][tunnel] {
 }
 way[aerialway] {
     icon-offset-y: 20;
-    icon-height: 20;
 }
 way[aerialway=cable_car] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/aerialway-car.svg";
@@ -4195,8 +3937,6 @@ node[public_transport=station] {
 /* sport tags */
 /**************/
 
-/*TO DO*/
-
 way[roller_coaster=track]{
     width: 2;
     color: #DDDDDD;
@@ -4211,15 +3951,7 @@ way[roller_coaster=support]{
     width: 3;
     color: support#707070;
 }
-area[sport="9pin"],
-area[sport="10pin"],
-area[sport=soccer],
-area[sport=australian_football],
-area[sport=american_football],
-area[sport=canadian_football],
-area[sport=gaelic_games],
-area[sport=rugby_league],
-area[sport=rugby_union] {
+area[sport=~/9pin|10pin|soccer|australian_football|american_football|canadian_football|gaelic_games|rugby_league|rugby_union/] {
     fill-color: sport#bde3cb;
 }
 node[sport="9pin"] {
@@ -4232,22 +3964,11 @@ node[sport=soccer],
 node[sport=gaelic_games] {
     icon-image: "presets/sport/soccer.svg";
 }
-node[sport=australian_football],
-node[sport=american_football],
-node[sport=canadian_football],
-node[sport=rugby_league],
-node[sport=rugby_union] {
+node[sport=~/australian_football|american_football|canadian_football|rugby_league|rugby_union/] {
     icon-image: "presets/sport/football.svg";
 }
-area[sport=baseball],
-area[sport=basketball],
-area[sport=boules],
-area[sport=bowls],
-area[sport=canoe],
-area[sport=chess],
-area[sport=climbing]:closed,
-area[sport=cricket],
-area[sport=croquet] {
+area[sport=~/baseball|basketball|boules|bowls|canoe|chess|cricket|croquet/],
+area[sport=climbing]:closed {
     fill-color: sport#bde3cb;
 }
 node[sport=baseball] {
@@ -4283,20 +4004,9 @@ node[sport=cricket] {
 node[sport=croquet] {
     icon-image: "presets/sport/croquet.svg";
 }
-area[sport=cycling],
-area[sport=dog_racing],
-area[sport=equestrian],
-area[sport=golf],
-area[sport=gymnastics],
-area[sport=field_hockey],
-area[sport=ice_hockey],
-area[sport=horse_racing],
-area[sport=karting][highway!=raceway],
-area[sport=karting][highway=raceway][area=yes],
-area[sport=motocross][highway!=raceway],
-area[sport=motocross][highway=raceway][area=yes],
-area[sport=motor][highway!=raceway],
-area[sport=motor][highway=raceway][area=yes] {
+area[sport=~/cycling|dog_racing|equestrian|golf|gymnastics|field_hockey|ice_hockey|horse_racing/],
+area[sport=~/karting|motocross|motor/][highway!=raceway],
+area[sport=~/karting|motocross|motor/][highway=raceway][area=yes] {
     fill-color: sport#bde3cb;
 }
 node[sport=cycling] {
@@ -4353,11 +4063,7 @@ area[sport=multi] {
 node[sport=multi] {
     icon-image: "presets/sport/multi.svg";
 }
-area[sport=pelota],
-area[sport=racquet],
-area[sport=ice_skating],
-area[sport=roller_skating],
-area[sport=skateboard] {
+area[sport=~/pelota|racquet|ice_skating|roller_skating|skateboard/] {
     fill-color: sport#bde3cb;
 }
 node[sport=pelota] {
@@ -4381,9 +4087,7 @@ area[sport=swimming] {
 node[sport=swimming] {
     icon-image: "presets/sport/swimming.svg";
 }
-area[sport=table_tennis],
-area[sport=tennis],
-area[sport=paintball] {
+area[sport=~/table_tennis|tennis|paintball/] {
     fill-color: sport#bde3cb;
 }
 node[sport=table_tennis] {
@@ -4395,17 +4099,7 @@ node[sport=tennis] {
 node[sport=paintball][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-area[sport=squash],
-area[sport=shooting],
-area[sport=volleyball],
-area[sport=beachvolleyball],
-area[sport=billiards],
-area[sport=bowling],
-area[sport=handball],
-area[sport=rowing],
-area[sport=sailing],
-area[sport=scuba_diving],
-area[sport=badminton] {
+area[sport=~/squash|shooting|volleyball|beachvolleyball|billiards|bowling|handball|rowing|sailing|scuba_diving|badminton/] {
     fill-color: sport#bde3cb;
 }
 node[sport=squash][!is_prop_set(icon-image)] {
@@ -4441,10 +4135,7 @@ node[sport=scuba_diving] {
 node[sport=badminton][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-area[sport=archery],
-area[sport=fishing],
-area[sport=model_aerodrome],
-area[sport=rc_car] {
+area[sport=~/archery|fishing|model_aerodrome|rc_car/] {
     fill-color: sport#bde3cb;
 }
 node[sport=archery] {
@@ -4463,7 +4154,7 @@ node[sport=rc_car] {
 
 
 /******************/
-/* bridge, tunnel */
+/* Bridge, tunnel */
 /******************/
 
 area[man_made=bridge] {
@@ -4514,18 +4205,18 @@ node|z20-[species]::species {
     font-size: 10;
     font-style: italic;
     text-color: white;
-    text: species;  
+    text: "species";  
     text-anchor-horizontal: center;
     text-offset-y: -20;
 }
-node|z18-[ref:gid]::ref { 
+node|z19-[ref:gid]::ref { 
     font-size: 10;
     text-color: white;
     text: "ref:gid";
     text-anchor-horizontal: center;
     text-offset-y: 20;
 }
-node|z19-[natural][ref] { 
+node|z18-[natural][ref] { 
     font-size: 9;
     text-color: white;
     text: "ref";
@@ -4720,6 +4411,7 @@ node[natural=shrub] {
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
     icon-opacity: 0.9;
+    icon-height: eval(25 * zoom);
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -4737,12 +4429,12 @@ node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
 node|z17-[denotation=natural_monument] {
-    icon-height: 24;
+    icon-height: eval(24 * zoom);
     z-index: 20; 
 }
 node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
-    icon-height: 16;
+    icon-height: eval(16 * zoom);
     icon-offset-y: 10;
     icon-offset-x: 10;
     z-index: 20; 
@@ -4754,129 +4446,53 @@ node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
 /* waterway tags */ 
 /*****************/
 
-/*TO DO*/
-
-way|z15-[waterway=river][!tunnel] {
-    width: 7;
+way[waterway=river] {
+    width: eval(7 * zoom);
     color: river#77d3de;
     casing-width: 1;
     casing-color: #3d6c71;
 }
-way|z-14[waterway=river][!tunnel] {
-    width: 4;
-    color: river#77d3de;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z15-[waterway=river][tunnel] {
-    width: 7;
+way[waterway=river][tunnel] {
     color: river#618787;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z-14[waterway=river][tunnel] {
-    width: 4;
-    color: river#618787;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 area[waterway=riverbank] {
     fill-color: riverbanak#3330cf;
-    width: 1;
     color: riverbank#3330cf;
 }
-way|z15-[waterway=pressurised],
-way|z15-[waterway=canal] {
-    width: 7;
+way[waterway=~/pressurised|canal/] {
+    width: eval(7 * zoom);
     color: #77d3de;
     casing-width: 1;
     casing-color: #3d6c71;
 }
-way|z-14[waterway=pressurised],
-way|z-14[waterway=canal] {
-    width: 4;
-    color: #77d3de;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z16-[waterway=pressurised] {
-    width: 4;
-    color: #77d3de;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z-14[waterway=pressurised] {
-    width: -2;
-    color: #77d3de;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z15-[waterway=stream][!tunnel] {
-    width: 4;
+way[waterway=stream] {
+    width: eval(4 * zoom);
     color: stream#77d3de;
     casing-width: 1;
     casing-color: #3d6c71;
 }
-way|z-14[waterway=stream][!tunnel] {
-    width: 2;
-    color: stream#77d3de;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z15-[waterway=stream][tunnel] {
-    width: 4;
+way[waterway=stream][tunnel] {
     color: stream#618787;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
-way|z-14[waterway=stream][tunnel] {
-    width: 2;
-    color: stream#618787;
-    casing-width: 1;
-    casing-color: #3d6c71;
-}
-way|z15-[waterway=ditch][!tunnel],
-way|z15-[waterway=drain][!tunnel] {
-    width: 4;
+way[waterway=~/ditch|drain/] {
+    width: eval(4 * zoom);
     color: water#8dabf3;
     casing-width: 1;
     casing-color: #3d6c71;
 }
-way|z-14[waterway=ditch][!tunnel],
-way|z-14[waterway=drain][!tunnel] {
-    width: 2;
-    color: water#8dabf3;
-    casing-width: 1;
-    casing-color: 414f70;
-}
-way|z15-[waterway=ditch][tunnel],
-way|z15-[waterway=drain][tunnel] {
-    width: 4;
+way[waterway=~/ditch|drain/][tunnel] {
     color: water#566894;
-    casing-width: 1;
     casing-color: #414f70;
 }
-way|z-14[waterway=ditch][tunnel],
-way|z-14[waterway=drain][tunnel] {
-    width: 2;
-    color: water#566894;
-    casing-width: 1;
-    casing-color: #414f70;
-}
-way[waterway=river][intermittent=yes],
-area[waterway=riverbank][intermittent=yes],
-way[waterway=canal][intermittent=yes],
-way[waterway=stream][intermittent=yes],
-way[waterway=ditch][intermittent=yes],
-way[waterway=drain][intermittent=yes] {
+way[waterway][intermittent=yes] {
     dashes: 7,3;
     casing-dashes: 7,3;
 }
-area[waterway=dock] {
-    fill-color: dock#3330cf;
-}
-node[waterway=dock] {
+*[waterway=dock] {
     icon-image: "presets/nautical/boatyard.svg";
+    fill-color: dock#3330cf;
 }
 way[waterway=lock_gate] {
     width: 3;
@@ -4888,25 +4504,21 @@ node[waterway=lock_gate] {
 node[waterway=turning_point] {
     icon-image: "presets/nautical/turning.svg";
 }
-area[waterway=boatyard] {
-    fill-color: manmade#d8d8d8;
-}
-node[waterway=boatyard] {
+*[waterway=boatyard] {
     icon-image: "presets/nautical/boatyard.svg";
+    fill-color: manmade#d8d8d8;
 }
 node[mooring] {
     icon-image: "presets/nautical/marina.svg";
 }
-area[waterway=fuel] {
-    fill-color: amenity_traffic#f7efb7;
-}
-node[waterway=fuel] {
+*[waterway=fuel] {
     icon-image: "presets/nautical/marine_fuel.svg";
+    fill-color: amenity_traffic#f7efb7;
 }
 way[waterway=weir] {
     width: 4;
-    color: weir#77DDDD;
-    right-casing-color: weir#77DEDE;
+    color: weir#77dddd;
+    right-casing-color: weir#77dede;
     right-casing-width: 8;
     right-casing-opacity: 0.35;
 }
@@ -4914,30 +4526,28 @@ node[waterway=weir] {
     icon-image: "presets/nautical/weir.svg";
 }
 area[waterway=dam] {
-    fill-color: manmade#A8A8A8;
+    fill-color: manmade#a8a8a8;
 }
 way[waterway=dam][!area] {
     width: 4;
-    color: manmade#AAAAAA;
+    color: manmade#aaa;
     casing-color: #626262;
     casing-width: 2;
 }
-way[waterway=fish_pass][!tunnel] {
+way[waterway=fish_pass] {
     width: 4;
     color: river#77d3de;
     casing-color: #626262;
     casing-width: 2;
 }
 way[waterway=fish_pass][tunnel] {
-    width: 4;
     color: stream#618787;
     casing-width: 1;
-    casing-color: 3d6c71;
+    casing-color: #3d6c71;
 }
 node[waterway=dam] {
     icon-image: "presets/nautical/dam.svg";
 }
-/* it's not possible to have both line and area, line seems more likely */
 way[waterway=waterfall] {
     width: 2;
     color: manmade#d8d8d8;
@@ -4951,8 +4561,6 @@ node[waterway=waterfall] {
 /**************/
 /* route tags */
 /**************/
-
-
 
 way[route=ferry] {
     width: 1;
@@ -4971,6 +4579,8 @@ node[mountain_pass?] {
     set icon_z0;
     set text_z0;
 }
+
+
 
 /*****************/
 /* boundary tags */
@@ -5037,7 +4647,7 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)] 
 }
 node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::core_maxnode {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
-    icon-height: 20;
+    icon-height: eval(25 * zoom);
     major-z-index: 101;
 }
 node[prop(maxspeedclass, default)]::core_maxnode {
@@ -5062,45 +4672,12 @@ node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
 /* place tags */
 /**************/
 
-area[setting("place_fill_colour")][place=continent],
-area[setting("place_fill_colour")][place=country],
-area[setting("place_fill_colour")][place=state],
-area[setting("place_fill_colour")][place=region],
-area[setting("place_fill_colour")][place=county],
-area[setting("place_fill_colour")][place=city],
-area[setting("place_fill_colour")][place=town],
-area[setting("place_fill_colour")][place=village],
-area[setting("place_fill_colour")][place=hamlet],
-area[setting("place_fill_colour")][place=municipality],
-area[setting("place_fill_colour")][place=farm],
-area[setting("place_fill_colour")][place=isolated_dwelling],
-area[setting("place_fill_colour")][place=neighbourhood],
-area[setting("place_fill_colour")][place=suburb],
-area[setting("place_fill_colour")][place=locality],
-area[setting("place_fill_colour")][place=city_block],
-area[place=island],
-area[place=islet] {
+area[setting("place_fill_colour")][place]
+area[place=~/island|islet/] {
     fill-color: place#8de3cb;
     set place;
 }
-node[place=continent],
-node[place=country],
-node[place=state],
-node[place=region],
-node[place=county],
-node[place=city],
-node[place=town],
-node[place=suburb],
-node[place=village],
-node[place=quarter],
-node[place=neighbourhood],
-node[place=hamlet],
-node[place=municipality],
-node[place=isolated_dwelling],
-node[place=farm],
-node[place=city_block],
-node[place=island],
-node[place=islet] {
+node[place] {
     set icon_z0;
     set text_z0;
     font-weight: bold;
@@ -5110,11 +4687,7 @@ node[place=islet] {
     set place;
 }
 
-node[place=continent],
-node[place=country],
-node[place=state],
-node[place=region],
-node[place=county] {
+node[place=~/continent|country|state|region|county/] {
     icon-image: "presets/place/capital.svg";
     z-index: 2.9;
 }
@@ -5250,16 +4823,12 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     major-z-index: 100;
 }
 
-/* Vertical logos */
-
 *[shop][brand*="Aldi"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
 }
 *[shop][brand*="abc"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
 }
-
-
 *[shop][brand*="Żabka"] {
     icon-height: 15;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
@@ -5276,7 +4845,6 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="Lidl"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
 }
-
 *[shop][brand*="Kaufland"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
 }
@@ -5289,7 +4857,6 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="Dino"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7c/Dino_logo.svg";
 }
-
 *[shop][brand*="Carrefour"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
 }
@@ -5314,8 +4881,6 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="H&M"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
 }
-
-
 *[shop][brand*="New Yorker"] {
     icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d8/New_Yorker.svg";
@@ -5391,6 +4956,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[shop][brand*="Black Red White"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fe/Black_Red_White_%282015%29.svg";
 }
+
 *[brand*="InPost"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
 }
@@ -5405,6 +4971,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/0/02/Poczta_Polska.svg";
 }
+
 *[amenity][brand*="Burger King"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/cc/Burger_King_2020.svg";
 }
@@ -5414,6 +4981,7 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 *[amenity][brand*="McDonald's"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/0/05/McDonald%27s_square_2020.svg";
 }
+
 *[amenity][brand*="MOL"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/2/20/MOL_logo_2012.svg";
 }
@@ -5449,15 +5017,14 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
 }
 
-*[brand] {
-    text: none;
-}
-
 /* TEMPLATE
 *[brand*=""] {
     icon-image: "";
 }
 */
+
+
+
 /***************************/
 /* "work in progress" tags */
 /***************************/
@@ -5504,27 +5071,11 @@ way {
 /* zoom levels and general node display */
 /****************************************/
 
-/*
-Summary of different zoom levels:
-  (any zoom)    place=* (except locality and square) and a few natural icons with their text is shown
-  |z-15         tagged way nodes are hidden completely
-  |z-16         untagged way nodes are hidden completely
-  |z15          place=locality icon
-  |z16-         fixme=* and note=* symbols; place=locality text
-  |z17-         normal POI icons (without text),
-                street name along highway=* ways
-  |z15-         text for normal POI icons is shown
-  
- * text size and node size is adapted according to zoom level (see style source below), place labels (except locality and square) don't get smaller
- * all these zoom features are modifiable via style settings
- * maxspeed icons should not be distinguishable from POIs with "icon-image" property
-
-*/
 node|z-16[setting("hide_icons")],
 node|z17-[!is_prop_set("icon-image")][setting("hide_icons")]!.maxspeedclass,
 node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
     symbol-size: 2;
-    major-z-index: 4.95; /* put node squares above line text */
+    major-z-index: 99; /* put above line text */
 }
 node {
     text-offset-y: -10;
@@ -5546,16 +5097,16 @@ node|z10-[!setting("round_symbols")] {
 }
 node|z10- {
     symbol-size: 6;
-    symbol-stroke-color: #333333;
+    symbol-stroke-color: #333;
     symbol-stroke-width: 1;
     symbol-stroke-opacity: 0.75;
     symbol-fill-color: #ddd;
 }
 node|z10-[setting("high_contrast")] {
     symbol-size: 6;
-    symbol-stroke-color: #ff7300;
+    symbol-stroke-color: #eee;
     symbol-stroke-width: 1;
-    symbol-stroke-opacity: 0.75;
+    symbol-stroke-opacity: 1;
     symbol-fill-color: #333;
 }
 way > node:connection {
@@ -5579,20 +5130,20 @@ node:selected {
 node:selected[setting("high_contrast")] {
     symbol-size: 9;
     symbol-fill-color: #ff7300;
-    symbol-stroke-color: #333;
+    symbol-stroke-color: #222;
 }
 way {
     icon-position: line;
     text-position: line;
     text-offset-y: eval(prop(width) -15);
 }
-area:closed[!layer] {
+area:closed:area-style[!layer] {
     text-position: center;
     text-offset-y: -15;
     fill-opacity: 0.3;
     major-z-index: 1;
 }
-area:closed[is_prop_set(icon-image)] {
+area:closed:area-style[is_prop_set(icon-image)] {
     icon-position: inside;
 }
 
@@ -5611,7 +5162,7 @@ node|z-17!:tagged[setting("hide_icons")] {
 way|z-15[setting("hide_icons")][highway] {
     width: 2;
 }
-area|z-15[setting("hide_icons")]:closed2 {
+area|z-15[setting("hide_icons")]:closed2:area-style {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
@@ -5630,14 +5181,17 @@ node|z16-17[setting("hide_icons")][place=locality] {
 }
 *[setting("high_contrast")] {
     width: eval(prop(width) + 1);
+    casing-width: eval(prop(casing-width) + 1);
 }
 node|z-18,area|z-18 { font-size: 8; }
 node|z19,area|z19   { font-size: 9; }
 node|z20-,area|z20- { font-size: 11; }
 
-node.place, way.place, area.place { font-size: 11; }
+*.place { font-size: 11; }
 
-
+way ⧉ way {
+  throwOther: tr("Overlapping ways");
+}
 
 /*******************/
 /* way text labels */
