@@ -3423,7 +3423,7 @@ node[tourism=information][information=board] {
 
 /*TO DO*/
 
-area[historic] {
+area[historic][!is_prop_set(fill-color)] {
     fill-color: historic#663300;
 }
 node[historic=fort] {
@@ -5326,6 +5326,9 @@ area|z15-:closed:area-style {
     text-offset-y: 0;
     text-halo-color: prop(fill-color);
     text-halo-radius: 1.5;
+}
+area:closed:area-style[is_prop_set(icon-image)] {
+    text-offset-y: -20 * prop(zoom);
 }
 way|z15-[highway] {
     text-position: line;
