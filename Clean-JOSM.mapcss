@@ -18,10 +18,9 @@ setting::high_contrast {
   label: tr("Make everything a bit more prominent");
   default: false;
 }
-
 setting::round_symbols {
   type: boolean;
-  label: tr("Make symbols round like circles");
+  label: tr("Make symbols round");
   default: true;
 }
 setting::hide_icons {
@@ -29,19 +28,11 @@ setting::hide_icons {
   label: tr("Hide icons at low zoom");
   default: true;
 }
-
-setting::hide_tagged_waynodes {
-  type: boolean;
-  label: tr("Hide tagged waynodes at low zoom");
-  default: true;
-}
-
 setting::highway_labels {
   type: boolean;
   label: tr("Display street labels (at high zoom)");
   default: true;
 }
-
 setting::place_fill_colour {
   type: boolean;
   label: tr("Display fill colour of areas with place=*");
@@ -87,12 +78,15 @@ canvas {
 *|z23-  { pixel_per_metre: 71.87; }
 *|z24-  { pixel_per_metre: 143.75; }
 *|z25-  { pixel_per_metre: 287.5; }
-*|z26- { pixel_per_metre: 575; }
+*|z26-  { pixel_per_metre: 575; }
 
 /* Zoom level scaling */
 *|z-14  { zoom: 0.5; }
-*|z15-  { zoom: 0.75; }
-*|z17-  { zoom: 0.9; }
+*|z15-  { zoom: 0.55; }
+*|z17-  { zoom: 0.65; }
+*|z18-  { zoom: 0.75; }
+*|z19-  { zoom: 0.85; }
+*|z20-  { zoom: 0.95; }
 *|z21-  { zoom: 1; }
 
 node {
@@ -290,7 +284,7 @@ node|z18-.has_cone::direction_cone {
 
 
 
-/* Incline by Klumbumbus*/
+/* Incline by Klumbumbus */
 
 way[highway][incline][incline =~ /^(up|([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=-1] node::incline_down,
 way[highway][incline][incline =~ /^(down|-([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline_down {
@@ -312,11 +306,10 @@ way > node|z19-.incline_down::incline_down {
     text: eval("↧"); /* U+21A7 (8615) DOWNWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_down#00ff00;
     font-size: eval(20 * prop(zoom));
-    text-offset-x: eval(20 * prop(zoom));
-    text-offset-y: eval(30 * prop(zoom));
+    text-offset-x: eval(0 * prop(zoom));
+    text-offset-y: eval(15 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-rotation: parent_way_angle() - 180deg;
     major-z-index: 101;
 }
 
@@ -324,11 +317,10 @@ way > node|z19-.incline_up::incline_up {
     text: eval("↥"); /* U+21A5 (8613) UPWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_up#ff0000;
     font-size: eval(20 * prop(zoom));
-    text-offset-x: eval(-5 * prop(zoom));
-    text-offset-y: eval(0 * prop(zoom));
+    text-offset-x: eval(0 * prop(zoom));
+    text-offset-y: eval(-15 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-rotation: parent_way_angle() - 180deg;
     major-z-index: 101;
 }
 
@@ -336,11 +328,8 @@ way > node|z19-.incline_zero::incline_zero {
     text: eval("← →"); /* U+2190 (8592) LEFTWARDS ARROW and U+2192 (8594) RIGHTWARDS ARROW from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_zero#ffff00;
     font-size: eval(20 * prop(zoom));
-    text-offset-x: eval(40 * prop(zoom));
-    text-offset-y: eval(13 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-rotation: parent_way_angle() - 180deg;
     major-z-index: 101;
 }
 
@@ -737,33 +726,63 @@ way[highway=track][area?], relation[type=multipolygon][highway=track] {
     fill-color: highway_track#6e541c;
 }
 
-way[highway=track] {
-    color: highway_track#c5b59f;
-    casing-dashes: 4,4;
+way[surface]::surface {
+    casing-width: prop(casing-width, default) * 4;
     casing-color: #ddd;
-    casing-width: 1;
 }
+way[surface=paved]::surface {
+    casing-dashes: 9,3;
+    casing-color: #555;
+}
+way[surface=asphalt]::surface {
+    casing-color: #333;
+}
+way[surface=concrete]::surface {
+    casing-color: #777;
+}
+way[surface=paving_stones]::surface {
+    casing-color: #888;
+}
+way[surface=compacted]::surface {
+    casing-color: #918a7f;
+}
+way[surface=ground]::surface {
+    casing-color: #c19d6b;
+}
+way[surface=gravel]::surface {
+    casing-color: #aba08f;
+}
+way[surface=dirt]::surface {
+    casing-color: #8e7f69;
+}
+way[surface=grass]::surface {
+    casing-color: #33aa33;
+}
+
 way[highway=track] {
     width: eval(5 * prop(zoom));
     casing-width: eval(prop(zoom));
-}
-way[highway=track][tracktype=grade6] {
-    casing-dashes: 3,3;
-}
-way[highway=track][tracktype=grade5] {
+    color: highway_track#c5b59f;
     casing-dashes: 4,4;
-}
-way[highway=track][tracktype=grade4] {
-    casing-dashes: 6,5;
-}
-way[highway=track][tracktype=grade3] {
-    casing-dashes: 8,3;
-}
-way[highway=track][tracktype=grade2] {
-    casing-dashes: 10,3;
+    casing-color: #ddd;
 }
 way[highway=track][tracktype=grade1] {
-    casing-dashes: 12,1;
+    dashes: 8,1;
+}
+way[highway=track][tracktype=grade2] {
+    dashes: 6,2;
+}
+way[highway=track][tracktype=grade3] {
+    dashes: 4,3;
+}
+way[highway=track][tracktype=grade4] {
+    dashes: 4,5;
+}
+way[highway=track][tracktype=grade5] {
+    dashes: 4,7;
+}
+way[highway=track][tracktype=grade6] {
+    casing-dashes: 3,7;
 }
 
 way[highway=residential] {
@@ -836,7 +855,7 @@ way[highway=bridleway]{
     color: horse#e06d5f;
     dashes: 6,6;
     casing-width: eval(1 * prop(zoom));
-    casing-color: #ddd;
+    casing-color: #eee;
     z-index: 0.009;
 }
 way[highway=bridleway][tunnel] {
@@ -844,11 +863,11 @@ way[highway=bridleway][tunnel] {
     casing-color: #808080;
 }
 way[highway=cycleway] {
-    width: eval(3 * prop(zoom));
+    width: eval(3.3 * prop(zoom));
     color: bicycle#58a9ed;
     dashes: 6,6;
     casing-width: eval(1 * prop(zoom));
-    casing-color: #ddd;
+    casing-color: #eee;
     z-index: 0.009;
 }
 way[highway=cycleway][cycleway=crossing] {
@@ -907,7 +926,7 @@ way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] 
 }
 way[highway=pedestrian][!area?] {
     width: eval(4 * prop(zoom));
-    color: foot#eee;
+    color: pedestrian#eee;
     dashes: 5,5;
     casing-width: eval(1 * prop(zoom));
     casing-color: #8cd05f;
@@ -915,16 +934,17 @@ way[highway=pedestrian][!area?] {
 }
 way[highway=steps] {
     width: eval(3 * prop(zoom));
-    color: foot#81d25c;
+    color: steps#81d25c;
     dashes: 3,3;
     casing-width: eval(1 * prop(zoom));
     casing-color: #eee;
     z-index: 0.009;
 }
 way[highway=steps][tunnel] {
-    color: foot#819976;
+    color: steps#819976;
     casing-color: #808080;
 }
+
 way[highway=bus_guideway] {
     width: eval(3 * prop(zoom));
     color: rail#404040;
@@ -1207,11 +1227,60 @@ node[highway=emergency_access_point] {
 }
 
 area["area:highway"] {
-    fill-color: #888888;
-    fill-opacity: 0.6;
+    fill-color: #888;
 }
-
-
+area["area:highway"][junction?]::fill,
+area["area:highway"=emergency]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/stripe_texture.svg";
+}
+area["area:highway"=traffic_island] {
+    fill-color: #555;
+}
+area["area:highway"=emergency] {
+    fill-color: #fff;
+}
+area["area:highway"=motorway] {
+    fill-color: motorway#cf2081;
+}
+area["area:highway"=trunk] {
+    fill-color: trunk#dd2522;
+}
+area["area:highway"=primary] {
+    fill-color: primary#f99806;
+}
+area["area:highway"=secondary] {
+    fill-color: secondary#f3f312;
+}
+area["area:highway"=tertiary] {
+    fill-color: tertiary#ddd9b3;
+}
+area["area:highway"=unclassified] {
+    fill-color: street#ddccaa;
+}
+area["area:highway"=residential] {
+    fill-color: residential#ddd;
+}
+area["area:highway"=escape] {
+    fill-color: street#c0c0c0;
+}
+area["area:highway"=road] {
+    fill-color: highway_road#9e9e9e;
+}
+area["area:highway"=track] {
+    fill-color: highway_track#c5b59f;
+}
+area["area:highway"=path] {
+    fill-color: path#dacbb5;
+}
+area["area:highway"=footway] {
+    fill-color: footway#999;
+}
+area["area:highway"=steps] {
+    fill-color: steps#81d25c;
+}
+area["area:highway"=pedestrian] {
+    fill-color: pedestrian#8cd05f;
+}
 
 /************************/
 /* traffic_calming tags */
@@ -1593,23 +1662,23 @@ way[man_made=embankment][!highway][!railway][!waterway] {
     color: embankment#c14d00;
 }
 
-way[embankment?][highway],
-way[embankment?][railway],
-way[embankment?][waterway] {
-    casing-width: eval(6 * prop(zoom));
-    casing-color: #ffa485;
-    casing-dashes: 2,4;
+way[embankment?][highway]::embankment,
+way[embankment?][railway]::embankment,
+way[embankment?][waterway]::embankment {
+    casing-width: eval(3 * prop(zoom, default) * prop(width, default));
+    casing-color: #9a5943;
+    casing-dashes: 2,7;
 }
-way[cutting?][highway],
-way[cutting?][railway],
-way[cutting?][waterway] {
-    casing-width: eval(6 * prop(zoom));
+way[cutting?][highway]::cutting,
+way[cutting?][railway]::cutting,
+way[cutting?][waterway]::cutting {
+    casing-width: eval(3 * prop(zoom, default) * prop(width, default));
     casing-color: #B7FF07;
     casing-dashes: 2,4;
 }
-way[man_made=embankment][highway],
-way[man_made=embankment][railway],
-way[man_made=embankment][waterway] {
+way[man_made=embankment][highway]::embankment,
+way[man_made=embankment][railway]::embankment,
+way[man_made=embankment][waterway]::embankment {
     repeat-image: "presets/misc/embankment-pattern-centered.svg";
 }
 way[man_made=pipeline][!waterway] {
@@ -3036,6 +3105,9 @@ way[amenity=bench] {
 node[amenity=bench] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench.svg";
 }
+node[amenity=bench][backrest?] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench-backrest.svg";
+}
 node[amenity=bench][backrest?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench-flat.svg";
 }
@@ -3528,6 +3600,7 @@ area[landuse=railway] {
 }
 area[landuse=construction] {
     fill-color: construction#dddf00;
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/stripe_texture.svg";
 }
 way[landuse=construction] {
     color: construction#dddf00;
@@ -5098,17 +5171,9 @@ node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
 
 /* Layers */
 
-way {
-    z-index: 0;
-    object-z-index: ;
-}
 *[layer] {
     z-index: eval(tag(layer));
     object-z-index: eval(tag(layer));
-}
-*[layer]::bridge {
-    z-index: eval(tag(layer -1));
-    object-z-index: eval(tag(layer -1));
 }
 
 
@@ -5157,6 +5222,11 @@ node|z10-[setting("high_contrast")] {
 }
 way > node:connection {
     symbol-size: 7;
+    symbol-fill-color: #ccc;
+}
+way > node:connection[setting("high_contrast")] {
+    symbol-stroke-color: #eee;
+    symbol-fill-color: #222;
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
@@ -5167,16 +5237,6 @@ node:tagged {
     symbol-size: 8;
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
-}
-node:selected {
-    symbol-size: 9;
-    symbol-fill-color: #ff7300;
-    symbol-stroke-color: #ddd;
-}
-node:selected[setting("high_contrast")] {
-    symbol-size: 9;
-    symbol-fill-color: #ff7300;
-    symbol-stroke-color: #222;
 }
 way {
     icon-position: line;
@@ -5228,34 +5288,68 @@ node|z16-17[setting("hide_icons")][place=locality] {
     width: eval(prop(width) + 1);
     casing-width: eval(prop(casing-width) + 1);
 }
+node:selected {
+    symbol-size: 9;
+    symbol-fill-color: #ff7300;
+    symbol-stroke-color: #ddd;
+    symbol-fill-opacity: 1;
+    symbol-stroke-opacity: 1;
+}
+node:selected[setting("high_contrast")] {
+    symbol-size: 9;
+    symbol-fill-color: #ff7300;
+    symbol-stroke-color: #222;
+    symbol-fill-opacity: 1;
+    symbol-stroke-opacity: 1;
+}
 node|z-18,area|z-18 { font-size: 8; }
 node|z19,area|z19   { font-size: 9; }
 node|z20-,area|z20- { font-size: 11; }
 
 *.place { font-size: 11; }
 
-way ⧉ way {
-  throwOther: tr("Overlapping ways");
-}
-
 /*******************/
 /* way text labels */
 /*******************/
-
-way|z15-[highway][setting("highway_labels")] {
+way|z15- {
     text: auto;
-    font-size: 10;
+    font-size: 10 * prop(zoom);
     text-color: #111;
-    text-position: line;
     text-offset-y: 0;
     text-halo-color: prop(color);
     text-halo-radius: 1.5;
+}
+area|z15-:closed:area-style {
+    text: auto;
+    font-size: 12 * prop(zoom);
+    text-color: #111;
+    text-offset-y: 0;
+    text-halo-color: prop(fill-color);
+    text-halo-radius: 1.5;
+}
+way|z15-[highway] {
+    text-position: line;
 }
 way|z19[highway][setting("highway_labels")] {
     font-size: 11;
 }
 way|z20-[highway][setting("highway_labels")] {
     font-size: 12;
+}
+way[highway][!setting("highway_labels")] {
+    text: none;
+}
+way[highway][!layer] ⧉ way[highway][!layer] {
+  text: tr("Overlapping ways!");
+  text-color: white;
+  text-halo-color: black;
+  text-halo-radius: 1.5;
+  font-size: 15;
+  font-weight: bold;
+  color: #FF0000;
+  width: 1;
+  text-position: center;
+  set .building_crossing_building;
 }
 
 
@@ -5265,15 +5359,20 @@ way|z20-[highway][setting("highway_labels")] {
 /*************/
 
 /* small extent for unclosed area (see below for closed) */
-area[setting("partial_fill")] {
+area[setting("partial_fill")]  {
     fill-extent: 15;
 }
-
+area[setting("partial_fill")]::fill  {
+    fill-extent: 15;
+}
 /* Turn partial fill off and use plain fill, when the partial fill covers about
    100% of the area. This reduces artifacts (typically for incomplete multipolygons).
    Switching between full and partial fill while drawing an area might be irritating,
    so only do this at low zoom. */
 area|z-13[setting("partial_fill")] {
+    fill-extent-threshold: 1.0;
+}
+area|z-13[setting("partial_fill")]::fill {
     fill-extent-threshold: 1.0;
 }
 
@@ -5287,8 +5386,8 @@ area[setting("partial_fill")]:closed2 {
 area[setting("partial_fill")]:closed2::fill {
     fill-extent: 25;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
+    fill-opacity: 0.25;
 }
-
 /*shhh*/
 node["name"="Mikołów"] {
   icon-image: "https://upload.wikimedia.org/wikipedia/commons/6/64/POL_Mikołów_COA.svg";
