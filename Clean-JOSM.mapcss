@@ -163,7 +163,6 @@ node[direction>=0][direction<360]::direction_cone {
     set has_cone;
     icon-rotation: degree_to_radians(tag(direction));
 }
-
 node[direction=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
     set has_cone;
     icon-rotation: cardinal_to_radians(tag(direction));
@@ -175,17 +174,14 @@ node["camera:direction">=0]["camera:direction"<360]::direction_cone {
     set has_cone;
     icon-rotation: degree_to_radians(tag("camera:direction"));
 }
-
 node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
     set has_cone;
     icon-rotation: cardinal_to_radians(tag("camera:direction"));
 }
-
 node["light:direction">=0]["light:direction"<360]::direction_cone {
     set has_cone;
     icon-rotation: degree_to_radians(tag("light:direction"));
 }
-
 node["light:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
     set has_cone;
     icon-rotation: cardinal_to_radians(tag("light:direction"));
@@ -199,49 +195,42 @@ node[direction=NNE]::direction_cone {
     set has_cone;
     icon-rotation: 22.5deg;
 }
-
 node[camera:direction=ENE]::direction_cone,
 node[light:direction=ENE]::direction_cone,
 node[direction=ENE]::direction_cone {
     set has_cone;
     icon-rotation: 67.5deg;
 }
-
 node[camera:direction=ESE]::direction_cone,
 node[light:direction=ESE]::direction_cone,
 node[direction=ESE]::direction_cone {
     set has_cone;
     icon-rotation: 112.5deg;
 }
-
 node[camera:direction=SSE]::direction_cone,
 node[light:direction=SSE]::direction_cone,
 node[direction=SSE]::direction_cone {
     set has_cone;
     icon-rotation: 157.5deg;
 }
-
 node[camera:direction=SSW]::direction_cone,
 node[camera:direction=SSW]::direction_cone,
 node[direction=SSW]::direction_cone {
     set has_cone;
     icon-rotation: 202.5deg;
 }
-
 node[camera:direction=WSW]::direction_cone,
 node[light:direction=WSW]::direction_cone,
 node[direction=WSW]::direction_cone {
     set has_cone;
     icon-rotation: 247.5deg;
 }
-
 node[camera:direction=WNW]::direction_cone,
 node[light:direction=WNW]::direction_cone,
 node[direction=WNW]::direction_cone {
     set has_cone;
     icon-rotation: 292.5deg;
 }
-
 node[camera:direction=NNW]::direction_cone,
 node[light:direction=NNW]::direction_cone,
 node[direction=NNW]::direction_cone {
@@ -254,17 +243,15 @@ node[direction=NNW]::direction_cone {
 way[oneway != -1] > node[stop_position:direction=forward]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=forward]::direction_cone,
 way[highway][oneway != -1] > node[traffic_sign:direction=forward]::direction_cone,
-way[highway][oneway != -1] > node[traffic_signals:direction=forward]::direction_cone,
+way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=forward]::direction_cone,
 way[oneway != -1] > node[direction=forward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle() - 180deg;
 }
-
-
 way[oneway != -1] > node[stop_position:direction=backward]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=backward]::direction_cone,
 way[highway][oneway != -1] > node[traffic_sign:direction=backward]::direction_cone,
-way[highway][oneway != -1] > node[traffic_signals:direction=backward]::direction_cone,
+way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=backward]::direction_cone,
 way[oneway != -1] > node[direction=backward]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
@@ -275,7 +262,7 @@ way[oneway=yes] > node::direction_cone {
 way[oneway != -1] > node[stop_position:direction=both]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone,
 way[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone,
-way[highway][oneway != -1] > node[traffic_signals:direction=both]::direction_cone,
+way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=both]::direction_cone,
 way[oneway != -1] > node[direction=both]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
@@ -283,7 +270,7 @@ way[oneway != -1] > node[direction=both]::direction_cone {
 way|z18-[oneway != -1] > node[stop_position:direction=both]::direction_cone_back,
 way|z18-[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone_back,
 way|z18-[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone_back,
-way|z18-[highway][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
+way|z18-[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
 way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
     icon-rotation: parent_way_angle() + 180deg;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
@@ -291,7 +278,9 @@ way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
     icon-offset-y: -8;
     z-index: -1;
 }
+
 /* Render the cone icon for all previously matched nodes */
+
 node|z18-.has_cone::direction_cone {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
     icon-height: eval(25 * prop(zoom));
@@ -981,42 +970,6 @@ node[cycleway=asl] {
 node[highway=traffic_signals] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-signals.svg";
 }
-node[highway=street_lamp] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp.svg";
-}
-node[highway=street_lamp][lamp_mount=straight_mast] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-straight.svg";
-}
-node[highway=street_lamp][lamp_mount=bent_mast] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
-}
-node|z17-[highway="street_lamp"]::Light
-{
-    symbol-shape: circle;
-    symbol-size: eval(30 * prop(zoom));
-    symbol-fill-color: #ffee55;
-    symbol-fill-opacity: 0.4;
-    object-z-index: -1.0;
-}
-node|z17-[highway="street_lamp"][lamp_type=electric]::Light
-{
-    symbol-fill-color: #ddd;
-}
-node[highway=speed_camera] {
-    icon-image: "presets/vehicle/restriction/speed_camera.svg";
-}
-relation[type=enforcement] > node[role="device"] {
-    icon-image: "presets/vehicle/restriction/speed_camera.svg";
-}
-node[highway=toll_gantry] {
-    icon-image: "presets/vehicle/restriction/toll_gantry.svg";
-}
-node[traffic_sign=city_limit] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city.svg";
-}
-node[traffic_sign=city_limit][city_limit=end] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city-end.svg";
-}
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
     icon-height: eval(25 * prop(zoom));
@@ -1071,6 +1024,42 @@ node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
 node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
     icon-height: eval(30 * prop(zoom));
+}
+node[highway=street_lamp] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp.svg";
+}
+node[highway=street_lamp][lamp_mount=straight_mast] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-straight.svg";
+}
+node[highway=street_lamp][lamp_mount=bent_mast] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
+}
+node|z17-[highway="street_lamp"]::Light
+{
+    symbol-shape: circle;
+    symbol-size: eval(30 * prop(zoom));
+    symbol-fill-color: #ffee55;
+    symbol-fill-opacity: 0.4;
+    object-z-index: -1.0;
+}
+node|z17-[highway="street_lamp"][lamp_type=electric]::Light
+{
+    symbol-fill-color: #ddd;
+}
+node[highway=speed_camera] {
+    icon-image: "presets/vehicle/restriction/speed_camera.svg";
+}
+relation[type=enforcement] > node[role="device"] {
+    icon-image: "presets/vehicle/restriction/speed_camera.svg";
+}
+node[highway=toll_gantry] {
+    icon-image: "presets/vehicle/restriction/toll_gantry.svg";
+}
+node[traffic_sign=city_limit] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city.svg";
+}
+node[traffic_sign=city_limit][city_limit=end] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-city-end.svg";
 }
 node[highway=motorway_junction] {
     icon-image: "presets/vehicle/motorway_junction.svg";
