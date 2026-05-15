@@ -725,40 +725,6 @@ way[highway=road][tunnel] {
 way[highway=track][area?], relation[type=multipolygon][highway=track] {
     fill-color: highway_track#6e541c;
 }
-
-way[surface]::surface {
-    casing-width: prop(casing-width, default) * 4;
-    casing-color: #ddd;
-}
-way[surface=paved]::surface {
-    casing-dashes: 9,3;
-    casing-color: #555;
-}
-way[surface=asphalt]::surface {
-    casing-color: #333;
-}
-way[surface=concrete]::surface {
-    casing-color: #777;
-}
-way[surface=paving_stones]::surface {
-    casing-color: #888;
-}
-way[surface=compacted]::surface {
-    casing-color: #918a7f;
-}
-way[surface=ground]::surface {
-    casing-color: #c19d6b;
-}
-way[surface=gravel]::surface {
-    casing-color: #aba08f;
-}
-way[surface=dirt]::surface {
-    casing-color: #8e7f69;
-}
-way[surface=grass]::surface {
-    casing-color: #33aa33;
-}
-
 way[highway=track] {
     width: eval(5 * prop(zoom));
     casing-width: eval(prop(zoom));
@@ -956,6 +922,42 @@ way[highway=raceway] {
 }
 way[highway=raceway][area?], relation[type=multipolygon][highway=raceway] {
     fill-color: raceway#ff80ff;
+}
+way[surface]::surface {
+    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.25;
+    casing-color: #ddd;
+}
+way[highway=~/path|footway|cycleway|bridleway|pedestrian/][surface]::surface {
+    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.75;
+    casing-color: #ddd;
+}
+way[surface=paved]::surface {
+    casing-dashes: 9,3;
+    casing-color: #555;
+}
+way[surface=asphalt]::surface {
+    casing-color: #333;
+}
+way[surface=concrete]::surface {
+    casing-color: #777;
+}
+way[surface=paving_stones]::surface {
+    casing-color: #888;
+}
+way[surface=compacted]::surface {
+    casing-color: #918a7f;
+}
+way[surface=ground]::surface {
+    casing-color: #c19d6b;
+}
+way[surface=gravel]::surface {
+    casing-color: #aba08f;
+}
+way[surface=dirt]::surface {
+    casing-color: #8e7f69;
+}
+way[surface=grass]::surface {
+    casing-color: #7eda45;
 }
 area[junction=yes] {
     fill-color: junction#c0c0c0;
@@ -5308,21 +5310,24 @@ node|z20-,area|z20- { font-size: 11; }
 
 *.place { font-size: 11; }
 
+
+
 /*******************/
 /* way text labels */
 /*******************/
 way|z15- {
     text: auto;
     font-size: 10 * prop(zoom);
-    text-color: #111;
+    text-color: #555;
     text-offset-y: 0;
     text-halo-color: prop(color);
     text-halo-radius: 1.5;
 }
+
 area|z15-:closed:area-style {
     text: auto;
     font-size: 12 * prop(zoom);
-    text-color: #111;
+    text-color: #555;
     text-offset-y: 0;
     text-halo-color: prop(fill-color);
     text-halo-radius: 1.5;
