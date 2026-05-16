@@ -5312,27 +5312,21 @@ way|z15- {
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
     text-offset-y: 0;
     text-halo-color: prop(color);
-    text-halo-radius: 1.5;
+    text-halo-radius: 1.5 * prop(zoom);
 }
 area|z15-:closed:area-style {
     text: auto;
     font-size: 12 * prop(zoom);
     text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? #333 : #eee );
-    text-offset-y: 0;
     text-halo-color: prop(fill-color);
-    text-halo-radius: 1.5;
+    text-halo-radius: 1.5 * prop(zoom);
 }
 area:closed:area-style[is_prop_set(icon-image)] {
     text-offset-y: -20 * prop(zoom);
 }
-way|z15-[highway] {
+way|z15-[highway][setting("highway_labels")] {
     text-position: line;
-}
-way|z19[highway][setting("highway_labels")] {
-    font-size: 11;
-}
-way|z20-[highway][setting("highway_labels")] {
-    font-size: 12;
+    font-size: 12 * prop(zoom);
 }
 way[highway][!setting("highway_labels")] {
     text: none;
@@ -5341,13 +5335,12 @@ way[highway][!layer] ⧉ way[highway][!layer] {
   text: tr("Overlapping ways!");
   text-color: white;
   text-halo-color: black;
-  text-halo-radius: 1.5;
-  font-size: 15;
+  text-halo-radius: 1.5 * prop(zoom);
+  font-size: 15 * prop(zoom);
   font-weight: bold;
   color: #FF0000;
-  width: 1;
+  width: 5 * prop(zoom);
   text-position: center;
-  set .building_crossing_building;
 }
 
 
