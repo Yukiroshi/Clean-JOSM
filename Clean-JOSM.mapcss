@@ -44,11 +44,10 @@ setting::partial_fill {
   label: tr("Areas are drawn with fill only around their inner edges");
   default: true;
 }
-
-setting::incline_zoom {
-    type: double;
-    label: tr("Incline arrows zoom level");
-    default: 19;
+setting::highlight_buildings {
+    type: boolean;
+    label: tr("Highlight buildings which might need changes");
+    default: true;
 }
 
 canvas {
@@ -310,7 +309,6 @@ way > node|z19-.incline_down::incline_down {
     text-offset-y: eval(15 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    major-z-index: 101;
 }
 
 way > node|z19-.incline_up::incline_up {
@@ -321,7 +319,6 @@ way > node|z19-.incline_up::incline_up {
     text-offset-y: eval(-15 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    major-z-index: 101;
 }
 
 way > node|z19-.incline_zero::incline_zero {
@@ -330,7 +327,6 @@ way > node|z19-.incline_zero::incline_zero {
     font-size: eval(20 * prop(zoom));
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    major-z-index: 101;
 }
 
 
@@ -924,12 +920,12 @@ way[highway=raceway][area?], relation[type=multipolygon][highway=raceway] {
     fill-color: raceway#ff80ff;
 }
 way[surface]::surface {
-    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.25;
+    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.25 * prop(zoom, default);
     casing-color: #ddd;
     major-z-index: 1;
 }
 way[highway=~/path|footway|cycleway|bridleway|pedestrian/][surface]::surface {
-    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.75;
+    casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.75 * prop(zoom, default);
     casing-color: #ddd;
 }
 way[surface=paved]::surface {
@@ -1108,7 +1104,6 @@ node[ford] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/ford.svg";
 }
 way[ford]::core_ford {
-    major-z-index: prop(major-z-index, default);
     z-index: 1;
     width: 2;
     color: water#3330ff;
@@ -1127,13 +1122,8 @@ way[highway=platform] {
     casing-color: #333;
     casing-width: 1;
 }
-node|z16-[highway=turning_circle]::circle {
-    symbol-shape: circle;
-    symbol-size: eval(20 * prop(zoom));
-    symbol-stroke-color: #ddd;
-    symbol-stroke-width: 1;
-    symbol-stroke-opacity: 0.75;
-    symbol-fill-color: #eee;
+node[highway=turning_circle] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-circle.svg";
 
 }
 /*TO DO*/
@@ -3689,11 +3679,11 @@ node[railway=level_crossing] {
     icon-image: "presets/transport/railway/level_crossing.svg";
 }
 way[railway=rail] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[railway=rail][tunnel] {
     color: rail#656565;
@@ -3706,33 +3696,33 @@ way[highway][railway=tram]::core_railway,
 way[!highway][railway=tram] {
     object-z-index: 1;
     modifier: false; /* don't draw default way if there is no line on default layer */
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[!highway][railway=tram][tunnel] {
     color: rail##B9B7B5;
     dashes-background-color: raildashed#A3A19E;
 }
 way[railway=light_rail] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
  way[railway=light_rail][tunnel]{
     color: rail#656565;
     dashes-background-color: raildashed#2a2a2a;
 }
 way[railway=subway] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#333;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[railway=subway][tunnel] {
     color: rail#444;
@@ -3740,11 +3730,11 @@ way[railway=subway][tunnel] {
 }
 
 way[railway=preserved] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: oldrail#ddd;
     dashes: 9,9;
     dashes-background-color: raildashed#555555;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[railway=preserved][tunnel] {
     color: oldrail#C2C2C2;
@@ -3755,7 +3745,7 @@ way[!highway][railway=tram][service=~/crossover|siding|yard|spur/],
 way[railway=light_rail][service=~/crossover|siding|yard|spur/],
 way[railway=subway][service=~/crossover|siding|yard|spur/],
 way[railway=preserved][service=~/crossover|siding|yard|spur/] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#ddccaa;
@@ -3776,11 +3766,11 @@ way[railway=preserved][service=~/crossover|siding|yard|spur/][tunnel] {
 /* use default layer when used without highway=* to display bridge correctly */
 way[railway=disused][highway]::core_railway,
 way[railway=disused][!highway] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#eeeeee;
     dashes: 12,12;
     dashes-background-color: raildashed#808080;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[railway=disused][!highway][tunnel] {
     color: rail#747474;
@@ -3789,7 +3779,7 @@ way[railway=disused][!highway][tunnel] {
 
 way[railway=abandoned][highway]::core_railway,
 way[railway=abandoned][!highway] {
-    width: 1;
+    width: 1 * prop(zoom);
     modifier: false;
     z-index: 1;
     color: oldrail#404040;
@@ -3797,7 +3787,7 @@ way[railway=abandoned][!highway] {
 }
 way[railway=narrow_gauge],
 way[railway=monorail] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: rail#404040;
     dashes: 9,9;
 }
@@ -3824,11 +3814,11 @@ area[railway=platform]:closed {
     fill-color: rail#404040;
 }
 way[railway=platform] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#404040;
 }
 way[railway=funicular] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: rail#404040;
     dashes: 9,9;
 }
@@ -3845,26 +3835,26 @@ node[railway=milestone] {
     icon-image: "presets/transport/railway/milestone.svg";
 }
 way[railway=construction][!highway] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: construction#dddf00;
     dashes: 9,9;
 }
 way[railway=construction][construction=rail] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: rail#404040;
     dashes: 9,9;
     dashes-background-color: construction#dddf00;
 }
 way[railway=construction][construction=light_rail] {
-    width: 2;
+    width: 2 * prop(zoom);
 }
 way[railway=construction][construction=tram][highway]::core_railway,
 way[railway=construction][construction=tram][!highway] {
     z-index: 1;
-    width: 1;
+    width: 1 * prop(zoom);
     color: railover#202020;
     dashes: 9,9;
-    casing-width: 1;
+    casing-width: 1 * prop(zoom);
     casing-color: construction#dddf00;
     casing-linecap: round;
     casing-dashes: 9,9;
@@ -3880,7 +3870,7 @@ way[railway=construction][construction=tram][!highway] {
 
 area[aeroway=aerodrome] {
     fill-color: aeroway#660000;
-    width: 2;
+    width: 2 * prop(zoom);
     dashes: 9,9;
 }
 node[aeroway=aerodrome][military!=airfield] {
@@ -3904,21 +3894,21 @@ area[aeroway=runway]:closed {
 way[aeroway=runway] {
     z-index: 2;
     modifier: false;
-    width: 3;
+    width: 3 * prop(zoom);
     color: runway#ddd;
     casing-color: #330000;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
     dashes: 20,20;
 }
 area[aeroway=taxiway]:closed {
     fill-color: aeroway#660000;
 }
 way[aeroway=taxiway] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: aeroway#dddF00;
 }
 way[aeroway=parking_position] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: aeroway#660000;
 }
 node[aeroway=parking_position] {
@@ -3960,9 +3950,9 @@ node[aeroway=windsock] {
 /******************/
 
 way[aerialway] {
-    width: 4;
+    width: 4 * prop(zoom);
     color: aerialway#cc5555;
-    casing-width: 1;
+    casing-width: 1 * prop(zoom);
     casing-color: #444;
 }
 way[aerialway][tunnel] {
@@ -4044,7 +4034,7 @@ area[public_transport=platform]:closed {
     fill-color: service#808080;
 }
 way[public_transport=platform]!:closed {
-    width: 3;
+    width: 3 * prop(zoom);
     color: service#ddccaa;
 }
 node[public_transport=platform] {
@@ -4067,17 +4057,17 @@ node[public_transport=station] {
 /**************/
 
 way[roller_coaster=track]{
-    width: 2;
+    width: 2 * prop(zoom);
     color: #DDDDDD;
     dashes: 4,1;
-    casing-width: 1;
+    casing-width: 1 * prop(zoom);
     cassing-color: ##565656;
 }
 way[roller_coaster=track][tunnel]{
     color: #696969;
 }
 way[roller_coaster=support]{
-    width: 3;
+    width: 3 * prop(zoom);
     color: support#707070;
 }
 area[sport=~/9pin|10pin|soccer|australian_football|american_football|canadian_football|gaelic_games|rugby_league|rugby_union/] {
@@ -4287,11 +4277,11 @@ node[sport=rc_car] {
 /******************/
 
 area[man_made=bridge] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: #777;
     fill-color: #888;
     z-index: 0;
-    major-z-index: 3;
+    major-z-index: 3.1;
 }
 
 node[bridge:support] {
@@ -4299,25 +4289,31 @@ node[bridge:support] {
 }
 
 way[bridge]::bridge {
-    casing-width: eval(prop(width, "default") *1.1);
+    casing-width: prop(width, "default") * 1.1 * prop(zoom);
     casing-color: bridge#222;
     casing-opacity: 0.8;
-    z-index: 0;
+    z-index: +1;
+    major-z-index: 3.1;
+    object-z-index: +1;
 }
 way[bridge]{
     casing-opacity: 0;
-    z-index: 1;
+    z-index: +1;
+    major-z-index: 3.1;
+    object-z-index: +1;
 }
 
 way[tunnel]::tunnel {
-    casing-width: eval(prop(width, "default") *1.1);
+    casing-width: prop(width, "default") * 1.1 * prop(zoom);
     casing-color: tunnel#444;
     casing-opacity: 0.7;
-    major-z-index: -1;
+    z-index: -1;
+    object-z-index: -1;
 }
 way[tunnel] {
     casing-opacity: 0;
-    major-z-index: -1;
+    z-index: -1;
+    object-z-index: -1;
 }
 
 
@@ -4329,7 +4325,7 @@ way[tunnel] {
 /*TO DO*/
 
 node|z20-[species]::species {
-    font-size: 10;
+    font-size: 10 * prop(zoom);
     font-style: italic;
     text-color: white;
     text: "species";  
@@ -4337,14 +4333,14 @@ node|z20-[species]::species {
     text-offset-y: -20;
 }
 node|z19-[ref:gid]::ref { 
-    font-size: 10;
+    font-size: 10 * prop(zoom);
     text-color: white;
     text: "ref:gid";
     text-anchor-horizontal: center;
     text-offset-y: 20;
 }
 node|z18-[natural][ref] { 
-    font-size: 9;
+    font-size: 9 * prop(zoom);
     text-color: white;
     text: "ref";
     text-anchor-horizontal: center;
@@ -4385,18 +4381,18 @@ area[natural=cliff]:closed {
 way[natural=cliff] {
     repeat-image: "presets/misc/cliff_pattern.svg";
     repeat-image-align: top;
-    width: 1;
+    width: 1 * prop(zoom);
     color: #b2b2b2;
 }
 node[natural=cliff] {
     icon-image: "presets/misc/cliff.svg";
 }
 way[natural=ridge] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: natural#8CD05F;
 }
 way[natural=valley] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: natural#8CD05F;
 }
 area[natural=scree] {
@@ -4407,7 +4403,7 @@ area[natural=shingle] {
 }
 area[natural=scrub] {
     fill-color: scrub#51a10a;
-    width: 2;
+    width: 2 * prop(zoom);
     fill-opacity: 0.15;
 }
 area[natural=scrub]::fill {
@@ -4420,13 +4416,13 @@ area[natural=heath] {
     fill-color: heath#dddfc0;
 }
 way[natural=tree_row] {
-    width: 4;
+    width: 4 * prop(zoom);
     color: wood#077e07;
 }
 area[natural=wood],
 area[landuse=forest] {
     fill-color: wood#077e07;
-    width: 2;
+    width: 2 * prop(zoom);
     fill-opacity: 0.15;
 }
 area[natural=wood]::fill,
@@ -4449,16 +4445,16 @@ area[natural=water][!is_prop_set("fill-color")] {
     fill-color: water#77d3ee;
 }
 area[natural=water][intermittent=yes] {
-    width: 2;
+    width: 2 * prop(zoom);
     dashes: 15, 5;
 }
 way[natural=coastline] {
-    width: 2.5;
+    width: 2.5 * prop(zoom);
     color: coastline#54e262;
     dashes: 5,3;
     z-index: 5;
     right-casing-color: coastline#4ee9d6;
-    right-casing-width: 8;
+    right-casing-width: 8 * prop(zoom);
     right-casing-opacity: 0.35;
 }
 area[natural=mud] {
@@ -4538,7 +4534,7 @@ node[natural=shrub] {
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
     icon-opacity: 0.75;
-    icon-height: eval(25 * prop(zoom));
+    icon-height: 25 * prop(zoom);
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -4556,12 +4552,12 @@ node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
 node|z17-[denotation=natural_monument] {
-    icon-height: eval(24 * prop(zoom));
+    icon-height: 24 * prop(zoom);
     z-index: 20; 
 }
 node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
-    icon-height: eval(16 * prop(zoom));
+    icon-height: 16 * prop(zoom);
     icon-offset-y: 10;
     icon-offset-x: 10;
     z-index: 20; 
@@ -4573,10 +4569,13 @@ node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
 /* waterway tags */ 
 /*****************/
 
+way[waterway] {
+    casing-width: 1 * prop(zoom);
+}
+
 way[waterway=river] {
-    width: eval(7 * prop(zoom));
+    width: 7 * prop(zoom);
     color: river#77d3de;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 way[waterway=river][tunnel] {
@@ -4588,15 +4587,13 @@ area[waterway=riverbank] {
     color: riverbank#3330cf;
 }
 way[waterway=~/pressurised|canal/] {
-    width: eval(7 * prop(zoom));
+    width: 7 * prop(zoom);
     color: #77d3de;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 way[waterway=stream] {
-    width: eval(4 * prop(zoom));
+    width: 4 * prop(zoom);
     color: stream#77d3de;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 way[waterway=stream][tunnel] {
@@ -4604,9 +4601,8 @@ way[waterway=stream][tunnel] {
     casing-color: #3d6c71;
 }
 way[waterway=~/ditch|drain/] {
-    width: eval(4 * prop(zoom));
+    width: 4 * prop(zoom);
     color: water#8dabf3;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 way[waterway=~/ditch|drain/][tunnel] {
@@ -4622,7 +4618,7 @@ way[waterway][intermittent=yes] {
     fill-color: dock#3330cf;
 }
 way[waterway=lock_gate] {
-    width: 3;
+    width: 3 * prop(zoom);
     color: lock_gate#303030;
 }
 node[waterway=lock_gate] {
@@ -4643,10 +4639,10 @@ node[mooring] {
     fill-color: amenity_traffic#f7efb7;
 }
 way[waterway=weir] {
-    width: 4;
+    width: 4 * prop(zoom);
     color: weir#77dddd;
     right-casing-color: weir#77dede;
-    right-casing-width: 8;
+    right-casing-width: 8 * prop(zoom);
     right-casing-opacity: 0.35;
 }
 node[waterway=weir] {
@@ -4656,27 +4652,26 @@ area[waterway=dam] {
     fill-color: manmade#a8a8a8;
 }
 way[waterway=dam][!area] {
-    width: 4;
+    width: 4 * prop(zoom);
     color: manmade#aaa;
     casing-color: #626262;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[waterway=fish_pass] {
-    width: 4;
+    width: 4 * prop(zoom);
     color: river#77d3de;
     casing-color: #626262;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
 }
 way[waterway=fish_pass][tunnel] {
     color: stream#618787;
-    casing-width: 1;
     casing-color: #3d6c71;
 }
 node[waterway=dam] {
     icon-image: "presets/nautical/dam.svg";
 }
 way[waterway=waterfall] {
-    width: 2;
+    width: 2 * prop(zoom);
     color: manmade#d8d8d8;
 }
 node[waterway=waterfall] {
@@ -4690,7 +4685,7 @@ node[waterway=waterfall] {
 /**************/
 
 way[route=ferry] {
-    width: 1;
+    width: 1 * prop(zoom);
     color: ferry#58a9ed;
     dashes: 9,9;
 }
@@ -4720,10 +4715,10 @@ way[boundary=political]::core_boundary,
 way[boundary=maritime]::core_boundary {
     z-index: 2;
     modifier: false;
-    width: 2;
+    width: 2 * prop(zoom);
     color: boundary#ddd;
     casing-color: #82B5FE;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
     dashes: 16,4,4,4;
 }
 way[boundary=protected_area]::core_boundary,
@@ -4732,10 +4727,10 @@ way[boundary=national_park]::core_boundary,
 relation[boundary=national_park] > way::core_boundary {
     z-index: 2;
     modifier: false;
-    width: 2;
+    width: 2 * prop(zoom);
     color: boundary#ddd;
     casing-color: #b0e298;
-    casing-width: 2;
+    casing-width: 2 * prop(zoom);
     dashes: 16,4,4,4;
 }
 
@@ -4778,23 +4773,22 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)] 
 }
 node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::core_maxnode {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
-    icon-height: eval(25 * prop(zoom));
-    major-z-index: 101;
+    icon-height: 25 * prop(zoom, default);
 }
 node[prop(maxspeedclass, default)]::core_maxnode {
     text: prop(maxspeedprop, default);
-    font-size: 8;
+    font-size: 11 * prop(zoom, default);
     font-weight: bold;
     text-color: black;
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-offset-x: 0;
+    text-offset-x: 0.5 * prop(zoom, default);
     text-offset-y: -1;
-    major-z-index: 101;
 }
-node|z-16[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
+node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
     text: none;
     symbol-shape: none;
+    icon-image: none;
 }
 
 
@@ -4814,7 +4808,7 @@ node[place] {
     font-weight: bold;
     text-color:black;
     text-halo-color: white;
-    text-halo-radius: 1;
+    text-halo-radius: 1 * prop(zoom);
     set place;
 }
 
@@ -4872,7 +4866,7 @@ node|z-14[place=locality][!setting("hide_icons")] {
     font-weight: bold;
     text-color: black;
     text-halo-color: white;
-    text-halo-radius: 1;
+    text-halo-radius: 1 * prop(zoom);
 }
 node[place=island] {
     icon-image: "presets/place/island.svg"; /*TO DO*/
@@ -4896,12 +4890,12 @@ node[place=square] {
 
 area[building][!building?!][building!=y][building!=1] {
     fill-color: building#e06e5f;
-    width: 2;
+    width: 2 * prop(zoom);
 }
 area[building=roof],
 area[building][!building?!][wall?!],
 area[building:part][!building:part?!] {
-    fill-color: buildingpart#dcbbbb;
+    fill-color: buildingpart#b59494;
 }
 node[building][!building?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
@@ -4933,26 +4927,20 @@ node[entrance=exit] {
 node[entrance=emergency] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance-emergency.svg";
 }
-area[building][!source:building]::missing, relation[building][!source:building] > way::missing,
-area[building][source="www.geoportal.gov.pl"]::missing, relation[building][source="www.geoportal.gov.pl"] > way::missing
-{
+area[building][!source:building][setting(highlight_buildings)]::highlight, relation[building][!source:building] > way[setting(highlight_buildings)]::highlight,
+area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::highlight, relation[building][source="www.geoportal.gov.pl"] > way[setting(highlight_buildings)]::highlight {
     color: #FF0055;
-    width: 3;
+    width: 3 * prop(zoom);
     dashes: 6,2;
     opacity: 1;
-    text-position: line;
     text-color: #FF0055;
-    font-size: 12;
-    modifier: true;
+    font-size: 12 * prop(zoom);
+    major-z-index: 3.1;
 }
 
 
 
 /* Brands */
-
-*|z18-[brand] {
-    major-z-index: 100;
-}
 
 *[shop][brand*="Aldi"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
@@ -5162,18 +5150,14 @@ area[building][source="www.geoportal.gov.pl"]::missing, relation[building][sourc
 
 node|z16-[fixme]::core_note_fixme,
 node|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
-    major-z-index: 100;
     icon-image: "presets/misc/fixme_annotation.svg";
 }
 node|z16-[note]::core_note_fixme,
 node|z-15[note][!setting("hide_icons")]::core_note_fixme {
-    major-z-index: 100;
     icon-image: "presets/misc/note_annotation.svg";
 }
 node|z16-[note][fixme]::core_note_fixme,
 node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
-    object-z-index: 99;
-    major-zindex: 99;
     icon-image: "presets/misc/note_fixme_annotation.svg";
 }
 
@@ -5195,20 +5179,13 @@ node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
 node|z-16[setting("hide_icons")],
 node|z17-[!is_prop_set("icon-image")][setting("hide_icons")]!.maxspeedclass,
 node[!is_prop_set("icon-image")][!setting("hide_icons")]!.maxspeedclass {
-    symbol-size: 2;
-    major-z-index: 99; /* put above line text */
+    symbol-size: 2 * prop(zoom, default);
 }
 node {
-    text-offset-y: -10;
-    z-index: 99;
-    major-z-index: 99;
-    object-z-index: 99;
+    text-offset-y: -10 * prop(zoom, default);
 }
 node[/^disused:/] {
     text: tr("");
-}
-node!:tagged {
-    major-z-index: 101;
 }
 node|z10- {
     symbol-shape: circle;
@@ -5217,21 +5194,21 @@ node|z10-[!setting("round_symbols")] {
     symbol-shape: square;
 }
 node|z10- {
-    symbol-size: 6;
+    symbol-size: 6 * prop(zoom, default);
     symbol-stroke-color: #333;
-    symbol-stroke-width: 1;
+    symbol-stroke-width: 1 * prop(zoom, default);
     symbol-stroke-opacity: 0.75;
     symbol-fill-color: #ddd;
 }
 node|z10-[setting("high_contrast")] {
-    symbol-size: 6;
+    symbol-size: 6 * prop(zoom, default);
     symbol-stroke-color: #eee;
-    symbol-stroke-width: 1;
+    symbol-stroke-width: 1 * prop(zoom, default);
     symbol-stroke-opacity: 1;
     symbol-fill-color: #333;
 }
 way > node:connection {
-    symbol-size: 7;
+    symbol-size: 7 * prop(zoom, default);
     symbol-fill-color: #ccc;
 }
 way > node:connection[setting("high_contrast")] {
@@ -5240,22 +5217,22 @@ way > node:connection[setting("high_contrast")] {
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
-    symbol-size: 8;
+    symbol-size: 8 * prop(zoom, default);
     symbol-fill-color: #fff;
 }
 node:tagged {
-    symbol-size: 8;
+    symbol-size: 8 * prop(zoom, default);
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
 }
 way {
     icon-position: line;
     text-position: line;
-    text-offset-y: eval(prop(width) -15);
+    text-offset-y: prop(width) -15 * prop(zoom, default);
 }
 area:closed:area-style {
     text-position: center;
-    text-offset-y: -15;
+    text-offset-y: -15 * prop(zoom, default);
     fill-opacity: 0.3;
 }
 area:closed:area-style[is_prop_set(icon-image)] {
@@ -5270,7 +5247,7 @@ node|z-17!:tagged[setting("hide_icons")] {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
-    width: 1;
+    width: 1 * prop(zoom, default);
     dashes: 0;
     casing-width: 0;
 }
@@ -5288,7 +5265,7 @@ area|z-15[setting("hide_icons")]:closed2:area-style {
 *|z-15[setting("hide_icons")][building] {
     fill-opacity: 0;
 }
-*|z-17[setting("hide_icons")]!.text_z0 {
+*|z-18[setting("hide_icons")]!.text_z0 {
     text: none;
 }
 node|z16-17[setting("hide_icons")][place=locality] {
