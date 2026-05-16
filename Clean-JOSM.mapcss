@@ -231,7 +231,7 @@ node[direction=NNW]::direction_cone {
     icon-rotation: 337.5deg;
 }
 
-/* Forward/backward direction along the parent way angle */
+/* Forward/backward direction */
 
 way[oneway != -1] > node[stop_position:direction=forward]::direction_cone,
 way[railway][oneway != -1] > node[railway:signal:direction=forward]::direction_cone,
@@ -272,12 +272,12 @@ way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
     z-index: -1;
 }
 
-/* Render the cone icon for all previously matched nodes */
+/* Render cone for matched nodes */
 
 node|z18-.has_cone::direction_cone {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: eval(25 * prop(zoom));
-    icon-offset-y: -7;
+    icon-height: 25 * prop(zoom, default);
+    icon-offset-y: -12 * prop(zoom, default);
     z-index: -1;
 }
 
@@ -965,6 +965,9 @@ area[junction=yes] {
 node[junction=yes] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/junction.svg";
 }
+node[highway] {
+    icon-height: 25 * prop(zoom);
+}
 node[highway=traffic_mirror] {
     icon-image: "presets/vehicle/traffic_mirror.svg";
 }
@@ -994,7 +997,6 @@ node[highway=traffic_signals] {
 }
 node[highway=crossing][crossing!=no] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing.svg";
-    icon-height: eval(25 * prop(zoom));
 }
 node[highway=crossing][crossing=unmarked],
 node[highway=crossing][crossing=informal] {
@@ -1124,17 +1126,21 @@ way[highway=platform] {
 }
 node[highway=turning_circle] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-circle.svg";
-
 }
-/*TO DO*/
 node[highway=turning_loop] {
-    icon-image: "presets/vehicle/turning_loop.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-loop.svg";
 }
 node[highway=passing_place] {
-    icon-image: "presets/vehicle/passing_place.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/passing-place.svg";
+}
+node[highway=passing_place][direction=both] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/passing-place-double.svg";
 }
 node[highway=emergency_bay] {
-    icon-image: "presets/vehicle/emergency_bay.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/emergency-bay.svg";
+}
+node[highway=emergency_bay][direction=both] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/emergency-bay-double.svg";
 }
 area[highway=elevator] {
     fill-color: elevator#a6bace;
