@@ -926,6 +926,7 @@ way[highway=raceway][area?], relation[type=multipolygon][highway=raceway] {
 way[surface]::surface {
     casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.25;
     casing-color: #ddd;
+    major-z-index: 1;
 }
 way[highway=~/path|footway|cycleway|bridleway|pedestrian/][surface]::surface {
     casing-width: (prop(casing-width, default) + (prop(width, default) / 2)) * 1.75;
@@ -955,6 +956,9 @@ way[surface=gravel]::surface {
 }
 way[surface=dirt]::surface {
     casing-color: #8e7f69;
+}
+way[surface=sand]::surface {
+    casing-color: #eebd4a;
 }
 way[surface=grass]::surface {
     casing-color: #7eda45;
@@ -4402,7 +4406,7 @@ area[natural=shingle] {
     fill-color: shingle#c3c3c3;
 }
 area[natural=scrub] {
-    fill-color: scrub#207000;
+    fill-color: scrub#51a10a;
     width: 2;
     fill-opacity: 0.15;
 }
@@ -4738,8 +4742,12 @@ relation[boundary=national_park] > way::core_boundary {
 node[boundary=marker] {
     icon-image: "presets/landmark/boundary_marker.svg"; /*TO DO*/
 }
-
-
+node[boundary=marker][marker=borderpole] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/borderpole.svg";
+}
+node[boundary=country_border] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/border-crossing.svg";
+}
 
 /******************/
 /* maxspeed nodes */
