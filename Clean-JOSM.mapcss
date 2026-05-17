@@ -4833,7 +4833,9 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
 
 
 /* Brands */
-
+*[brand] {
+    icon-height: 35 * prop(zoom);
+}
 *[shop][brand*="Aldi"]  {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
 }
@@ -4841,8 +4843,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
 }
 *[shop][brand*="Żabka"] {
-    icon-height: 15;
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Zabka_logo_2020.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Zabka.svg";
 }
 *[shop][brand*="Żabka"][name*="Nano"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/44/Zabka_Nano.svg";
@@ -4872,7 +4873,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/9/92/Carrefour_2022.svg";
 }
 *[shop][brand*="Rossmann"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/43/Rossmann_logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Rossmann.svg";
 }
 *[shop][brand*="Hebe"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
@@ -4969,7 +4970,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
 }
 
 *[brand*="InPost"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/c/c5/InPost_logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/InPost.svg";
 }
 *[brand*="DHL"] {
     icon-height: 10;
@@ -5006,7 +5007,6 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://www.orlenpaczka.pl/wp-content/themes/orlenpaczka/img/logo.svg";
 }
 *[amenity][brand*="Circle K"] {
-    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Circle_K_%282015%29.svg";
 }
 *[amenity][brand*="BP"] {
@@ -5016,18 +5016,17 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/5e/PKO_Bank_Polski_2011.svg";
 }
 *[amenity][brand*="mBank"] {
-    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/8c/MBank_individual_%282020%29.svg";
 }
 *[amenity][brand*="Millennium Bank"] {
-    icon-height: 10;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Bank_Millenium.svg";
 }
 *[amenity][brand*="Bank Pekao"] {
-    icon-height: 10;
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
 }
-
+*[amenity][brand*="Euronet"] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Euronet.svg";
+}
 /* TEMPLATE
 *[brand*=""] {
     icon-image: "";
