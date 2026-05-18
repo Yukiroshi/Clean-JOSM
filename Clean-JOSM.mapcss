@@ -298,32 +298,35 @@ way[highway][incline][incline =~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline
 }
 
 /* display the arrow signs */
-way > node|z19-.incline_down::incline_down {
+way[highway][incline] > node|z19-.incline_down::incline_down {
     text: eval("↧"); /* U+21A7 (8615) DOWNWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_down#00ff00;
-    font-size: eval(20 * prop(zoom));
-    text-offset-x: eval(0 * prop(zoom));
-    text-offset-y: eval(15 * prop(zoom));
+    font-size: 20 * prop(zoom);
+    text-offset-x: 0 * prop(zoom);
+    text-offset-y: 15 * prop(zoom);
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
+    text-rotation: parent_way_angle() - 180deg;
 }
 
-way > node|z19-.incline_up::incline_up {
+way[highway][incline] > node|z19-.incline_up::incline_up {
     text: eval("↥"); /* U+21A5 (8613) UPWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_up#ff0000;
-    font-size: eval(20 * prop(zoom));
-    text-offset-x: eval(0 * prop(zoom));
-    text-offset-y: eval(-15 * prop(zoom));
+    font-size: 20 * prop(zoom);
+    text-offset-x: 0 * prop(zoom);
+    text-offset-y: -15 * prop(zoom);
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
+    text-rotation: parent_way_angle() - 180deg;
 }
 
-way > node|z19-.incline_zero::incline_zero {
+way[highway][incline] > node|z19-.incline_zero::incline_zero {
     text: eval("← →"); /* U+2190 (8592) LEFTWARDS ARROW and U+2192 (8594) RIGHTWARDS ARROW from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
     text-color: incline_zero#ffff00;
-    font-size: eval(20 * prop(zoom));
-    text-anchor-horizontal: center;
-    text-anchor-vertical: center;
+    font-size: 20 * prop(zoom);
+    text-offset-x: 2 * prop(zoom);
+    text-offset-y: -16.5 * prop(zoom);
+    text-rotation: parent_way_angle() - 180deg;
 }
 
 
@@ -628,46 +631,53 @@ way[barrier=jersey_barrier] {
 /* Highway tags */
 /****************/
 
-way[highway] {
-    width: 1;
-    opacity: 0;
-}
-
 way[highway=~/motorway|motorway_link/] {
-    color: motorway#cf2081;
+    motorway: #cf2081;
+    color: prop(motorway);
 }
 way[highway=~/motorway|motorway_link/][tunnel] {
-    color: motorway_tunnel#661c37;
+    motorway_tunnel: #661c37;
+    color: prop(motorway_tunnel);
 }
 way[highway=~/trunk|trunk_link/] {
-    color: trunk#dd2522;
+    trunk: #dd2522;
+    color: prop(trunk);
 }
 way[highway=~/trunk|trunk_link/][tunnel] {
-    color: trunk_tunnel#6a211a;
+    trunk_tunnel: #6a211a;
+    color: prop(trunk_tunnel);
 }
 way[highway=~/primary|primary_link/] {
-    color: primary#f99806;
+    primary: #f99806;
+    color: prop(primary);
 }
 way[highway=~/primary|primary_link/][tunnel] {
-    color: primary_tunnel#724111;
+    primary_tunnel: #724111;
+    color: prop(primary_tunnel);
 }
 way[highway=~/secondary|secondary_link/] {
-    color: secondary#f3f312;
+    secondary: #f4f458;
+    color: prop(secondary);
 }
 way[highway=~/secondary|secondary_link/][tunnel] {
-    color: secondary_tunnel#715d15;
+    secondary_tunnel: #715d15;
+    color: prop(secondary_tunnel);
 }
 way[highway=~/tertiary|tertiary_link/] {
-    color: tertiary#ddd9b3;
+    tertiary: #ddd9b3;
+    color: prop(tertiary);
 }
 way[highway=~/tertiary|tertiary_link/][tunnel] {
-    color: tertiary_tunnel#745e46;
+    tertiary_tunnel: #745e46;
+    color: prop(tertiary_tunnel);
 }
 way[highway=unclassified] {
-    color: unclassified#ddccaa;
+    unclassified: #ddccaa;
+    color: prop(unclassified);
 }
 way[highway=unclassified][tunnel] {
-    color: unclassified_tunnel#745e46;
+    unclassified_tunnel: #745e46;
+    color: prop(unclassified_tunnel);
 }
 
 way[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
@@ -679,13 +689,13 @@ way[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
 }
 
 way[highway=escape] {
-    width: 3 * prop(zoom, default);
+    width: 3 * prop(zoom);
     color: street#c0c0c0;
     dashes: 3,3;
 }
 
 way[highway=road] {
-    width: 2 * prop(zoom, default);
+    width: 2 * prop(zoom);
     color: highway_road#9E9E9E;
     casing-color: #555;
 }
@@ -693,11 +703,12 @@ way[highway=road][tunnel] {
     color: highway_road#535353;
 }
 way[highway=track][area?], relation[type=multipolygon][highway=track] {
-    fill-color: highway_track#6e541c;
+    fill-color: track#6e541c;
 }
 way[highway=track] {
     width: 5 * prop(zoom);
-    color: highway_track#c5b59f;
+    track: #c5b59f;
+    color: prop(track);
     casing-dashes: 4,4;
     casing-color: #ddccaa;
 }
@@ -721,28 +732,26 @@ way[highway=track][tracktype=grade6] {
 }
 
 way[highway=residential] {
-    width: eval(6 * prop(zoom));
-    z-index: 0.02;
-    color: street#ddd;
-    opacity: 1;
-    casing-width: eval(prop(zoom));
+    width: 5 * prop(zoom);
+    residential: #ddd;
+    color: prop(residential);
     casing-color: #444;
 }
 way[highway=residential][tunnel] {
-    color: street#5b564b;
+    residential_tunnel: #5b564b;
+    color: prop(residential_tunnel);
     casing-color: #444;
 }
 
 way[highway=living_street] {
-    width: eval(6 * prop(zoom));
-    z-index: 0.01;
-    color: street#c0c0c0;
-    opacity: 1;
-    casing-width: eval(2 * prop(zoom));
+    width: 5.5 * prop(zoom);
+    living_street: #c0c0c0;
+    color: prop(living_street);
     casing-color: #ddd;
 }
 way[highway=living_street][tunnel] {
-    color: street#656565;
+    living_street_tunnel: #656565;
+    color: prop(living_street_tunnel);
     casing-color: #444;
 }
 
@@ -750,9 +759,8 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
 way[highway=service][!area?] {
-    width: eval(4 * prop(zoom));
+    width: 4 * prop(zoom);
     color: service#ddccaa;
-    casing-width: eval(0.7 * prop(zoom));
     casing-color: #444;
 }
 way[highway=service][service][tunnel] {
@@ -761,12 +769,12 @@ way[highway=service][service][tunnel] {
 }
 way[highway=service][!area?],
 way[highway=service][service=driveway] {
-    color: service#eee;
+    color: service_driveway#eee;
     casing-color: #444;
 }
 way[highway=service][!area?][tunnel],
 way[highway=service][service=driveway][tunnel] {
-    color: service#717171;
+    color: service_driveway_tunnel#717171;
     casing-color: #333;
 }
 way[highway=service][service=parking_aisle] {
@@ -774,7 +782,7 @@ way[highway=service][service=parking_aisle] {
     casing-color: #555;
 }
 way[highway=service][service=parking_aisle][tunnel] {
-    color: parking_aisle#626160;
+    color: parking_aisle_tunnel#626160;
     casing-color: #333;
 }
 way[highway=service][service=emergency_access] {
@@ -782,12 +790,9 @@ way[highway=service][service=emergency_access] {
     casing-color: #444;
 }
 way[highway=service][service=emergency_access][tunnel] {
-    color: emergency_access#6D5A57;
+    color: emergency_access_tunnel#6D5A57;
     casing-color: #333;
 }
-
-/* Dashed lines require a different approach to work with layers*/
-
 way[highway=bridleway]{
     width: 3.3 * prop(zoom);
     color: horse#e06d5f;
@@ -802,7 +807,7 @@ way[highway=bridleway][tunnel] {
 }
 way[highway=cycleway] {
     width: 3.3 * prop(zoom);
-    color: bicycle#58a9ed;
+    color: cyccleway#58a9ed;
     dashes: 6,6;
     casing-color: #eee;
 }
@@ -887,7 +892,6 @@ way|z-14[highway=construction] {
 }
 way[highway=proposed] {
     width: 6 * prop(zoom);
-    z-index: 0.01;
     dashes: 9,3;
     color: street#ccc;
     casing-color: #888888;
@@ -903,15 +907,14 @@ way|z-14[highway=proposed][tunnel] {
     dashes: 3,1;
 }
 
-way[highway][!area]::main_line {
+way[highway][!area] {
     width: prop(width, default) * prop(zoom, default);
     color: prop(color, default);
     dashes: prop(dashes, default);
     z-index: tag(layer) + 0.09;
-    major-z-index: 3;
 }
 way[highway][!area]::outer_line {
-    width: prop(width, main_line) + 3;
+    width: prop(width, default) + 3;
     color: prop(casing-color, default);
     dashes: prop(casing-dashes, default);
     z-index: tag(layer) + 0.08;
@@ -1166,20 +1169,20 @@ area["area:highway"=traffic_island] {
 area["area:highway"=emergency] {
     fill-color: #fff;
 }
-area["area:highway"=motorway] {
-    fill-color: motorway#cf2081;
+area["area:highway"=~/motorway|motorway_link/] {
+    fill-color: prop(motorway);
 }
-area["area:highway"=trunk] {
-    fill-color: trunk#dd2522;
+area["area:highway"=~/trunk|trunk_link/] {
+    fill-color: prop(trunk);
 }
-area["area:highway"=primary] {
-    fill-color: primary#f99806;
+area["area:highway"=~/primary|primary_link/] {
+    fill-color: prop(primary);
 }
-area["area:highway"=secondary] {
-    fill-color: secondary#f3f312;
+area["area:highway"=~/secondary|secondary_link/] {
+    fill-color: prop(secondary);
 }
-area["area:highway"=tertiary] {
-    fill-color: tertiary#ddd9b3;
+area["area:highway"=~/tertiary|tertiary_link/] {
+    fill-color: prop(tertiary);
 }
 area["area:highway"=unclassified] {
     fill-color: street#ddccaa;
