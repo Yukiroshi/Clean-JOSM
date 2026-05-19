@@ -907,56 +907,7 @@ way|z-14[highway=proposed][tunnel] {
     dashes: 3,1;
 }
 
-way[highway][!area] {
-    width: prop(width, default) * prop(zoom, default);
-    color: prop(color, default);
-    dashes: prop(dashes, default);
-    z-index: tag(layer) + 0.09;
-}
-way[highway][!area]::outer_line {
-    width: prop(width, default) + 3;
-    color: prop(casing-color, default);
-    dashes: prop(casing-dashes, default);
-    z-index: tag(layer) + 0.08;
-    major-z-index: 3;
-}
-way[setting(surface)][surface]!:closed!:area-style::surface {
-    width: (prop(width, outer_line)) + 3;
-    color: #aaa;
-    z-index: tag(layer) + 0.07;
-    opacity: 0.5;
-}
-way[surface=paved]::surface {
-    dashes: 9,3;
-    color: #555;
-}
-way[surface=asphalt]::surface {
-    color: #333;
-}
-way[surface=concrete]::surface {
-    color: #777;
-}
-way[surface=paving_stones]::surface {
-    color: #888;
-}
-way[surface=compacted]::surface {
-    color: #918a7f;
-}
-way[surface=ground]::surface {
-    color: #c19d6b;
-}
-way[surface=gravel]::surface {
-    color: #aba08f;
-}
-way[surface=dirt]::surface {
-    color: #8e7f69;
-}
-way[surface=sand]::surface {
-    color: #b69c60;
-}
-way[surface=grass]::surface {
-    color: #7eda45;
-}
+
 area[junction=yes] {
     fill-color: junction#c0c0c0;
 }
@@ -1115,12 +1066,6 @@ node[hazard] {
 }
 area[highway=platform]:closed {
     fill-color: highway_platform#ddccaa;
-}
-way[highway=platform] {
-    width: 5;
-    color: highway_platform#ddccaa;
-    casing-color: #333;
-    casing-width: 1;
 }
 node[highway=turning_circle] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-circle.svg";
@@ -3631,9 +3576,8 @@ way[railway=rail][tunnel] {
    as a standalone style */
 way[highway][railway=tram]::core_railway,
 way[!highway][railway=tram] {
-    object-z-index: 1;
     modifier: false; /* don't draw default way if there is no line on default layer */
-    width: 2 * prop(zoom);
+    width: 2 * prop(zoom, default);
     color: rail#ddd;
     dashes: 12,12;
     dashes-background-color: raildashed#555555;
@@ -3749,10 +3693,6 @@ node[railway=buffer_stop] {
 }
 area[railway=platform]:closed {
     fill-color: rail#404040;
-}
-way[railway=platform] {
-    width: 2 * prop(zoom);
-    color: rail#404040;
 }
 way[railway=funicular] {
     width: 1 * prop(zoom);
@@ -3968,11 +3908,15 @@ node[public_transport=stop_position][ferry=yes] {
     icon-image: "presets/nautical/ferry.svg";
 }
 area[public_transport=platform]:closed {
-    fill-color: service#808080;
+    fill-color: platform_area#808080;
 }
-way[public_transport=platform]!:closed {
-    width: 3 * prop(zoom);
-    color: service#ddccaa;
+way[public_transport=platform]!:closed,
+way[railway=platform]!:closed,
+way[highway=platform]!:closed {
+    width: 5;
+    color: highway_platform#ddccaa;
+    casing-color: #333;
+    casing-width: 1;
 }
 node[public_transport=platform] {
     icon-image: "presets/transport/platform.svg";
@@ -4426,6 +4370,9 @@ node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
     icon-opacity: 0.75;
     icon-height: 25 * prop(zoom);
+}
+node|z21-[natural=tree] {
+    icon-height: 2 * prop(pixel_per_metre);
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -5004,10 +4951,10 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4a/Shell.svg";
 }
 *[brand*="Orlen"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/83/Orlen_logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen.svg";
 }
-*[amenity][brand*="Orlen Paczka"] {
-    icon-image: "https://www.orlenpaczka.pl/wp-content/themes/orlenpaczka/img/logo.svg";
+*[brand*="Orlen Paczka"] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen-paczka.svg";
 }
 *[amenity][brand*="Circle K"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Circle_K_%282015%29.svg";
@@ -5055,7 +5002,62 @@ node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_fixme_annotation.svg";
 }
 
+way[highway][!area]!:area-style,
+way[railway][!area]!:area-style {
+    width: prop(width, default) * prop(zoom, default);
+    color: prop(color, default);
+    dashes: prop(dashes, default);
+    dashes-background-color: prop(dashes-background-color, default);
+    z-index: tag(layer) + 0.09;
+    opacity: 1;
+}
 
+way[highway][!area]!:area-style::outer_line,
+way[railway][!area]!:area-style::outer_line {
+    width: prop(width, default) + 3;
+    color: prop(casing-color, default);
+    dashes: prop(casing-dashes, default);
+    z-index: tag(layer) + 0.08;
+    major-z-index: 3;
+    opacity: 1;
+}
+way[setting(surface)][surface]!:closed!:area-style::surface {
+    width: (prop(width, outer_line)) + 3;
+    color: #aaa;
+    z-index: tag(layer) + 0.07;
+    opacity: 0.5;
+}
+way[surface=paved]::surface {
+    dashes: 9,3;
+    color: #555;
+}
+way[surface=asphalt]::surface {
+    color: #333;
+}
+way[surface=concrete]::surface {
+    color: #777;
+}
+way[surface=paving_stones]::surface {
+    color: #888;
+}
+way[surface=compacted]::surface {
+    color: #918a7f;
+}
+way[surface=ground]::surface {
+    color: #c19d6b;
+}
+way[surface=gravel]::surface {
+    color: #aba08f;
+}
+way[surface=dirt]::surface {
+    color: #8e7f69;
+}
+way[surface=sand]::surface {
+    color: #b69c60;
+}
+way[surface=grass]::surface {
+    color: #7eda45;
+}
 
 /******************/
 /* Bridge, tunnel */
@@ -5218,6 +5220,7 @@ node|z20-,area|z20- { font-size: 11; }
 /*******************/
 /* way text labels */
 /*******************/
+
 way|z15- {
     text: auto;
     font-size: 10 * prop(zoom);
@@ -5329,7 +5332,7 @@ node[leisure=park],
 
 node[landuse],
 
-node[railway=~/rail|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/][railway!=subway_entrance],
+node[railway=~/rail|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/][railway!~/subway_entrance|railway_crossing/],
 
 node[service=~/yard|siding|spur/],
 
