@@ -1105,7 +1105,7 @@ area["area:highway"] {
 }
 area["area:highway"][junction?]::fill,
 area["area:highway"=emergency]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/stripe_texture.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
 }
 area["area:highway"=traffic_island] {
     fill-color: #555;
@@ -3482,7 +3482,7 @@ area[landuse=construction] {
     fill-color: construction#dddf00;
 }
 area[landuse=construction]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/stripe_texture.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
 }
 way[landuse=construction] {
     color: construction#dddf00;
