@@ -300,42 +300,26 @@ way[highway][incline][incline =~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline
     set incline_zero;
 }
 
-/* display the arrow signs */
+/* Render arrows */
 way[highway][incline] > node|z19-.incline_down::incline_down {
-    text: eval("↧"); /* U+21A7 (8615) DOWNWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
-    text-color: incline_down#00ff00;
-    font-size: 20 * prop(zoom);
-    text-offset-x: 0 * prop(zoom);
-    text-offset-y: 15 * prop(zoom);
-    text-anchor-horizontal: center;
-    text-anchor-vertical: center;
-    text-rotation: parent_way_angle() - 180deg;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/arrow-up.svg";
+    icon-height: 20 * prop(zoom);
+    icon-anchor-horizontal: center;
+    icon-anchor-vertical: center;
+    icon-rotation: 180deg;
 }
-
 way[highway][incline] > node|z19-.incline_up::incline_up {
-    text: eval("↥"); /* U+21A5 (8613) UPWARDS ARROW FROM BAR from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
-    text-color: incline_up#ff0000;
-    font-size: 20 * prop(zoom);
-    text-offset-x: 0 * prop(zoom);
-    text-offset-y: -15 * prop(zoom);
-    text-anchor-horizontal: center;
-    text-anchor-vertical: center;
-    text-rotation: parent_way_angle() - 180deg;
-}
-
-way[highway][incline] > node|z19-.incline_zero::incline_zero {
-    text: eval("← →"); /* U+2190 (8592) LEFTWARDS ARROW and U+2192 (8594) RIGHTWARDS ARROW from https://de.wikipedia.org/wiki/Unicodeblock_Pfeile */
-    text-color: incline_zero#ffff00;
-    font-size: 20 * prop(zoom);
-    text-offset-x: 2 * prop(zoom);
-    text-offset-y: -16.5 * prop(zoom);
-    text-rotation: parent_way_angle() - 180deg;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/arrow-down.svg";
+    icon-height: 20 * prop(zoom);
+    icon-anchor-horizontal: center;
+    icon-anchor-vertical: center;
+    icon-rotation: 180deg;
 }
 
 
 
 /**************/
-/* addresses  */
+/* Addresses  */
 /**************/
 
 *["addr:housenumber"] {
@@ -1939,7 +1923,6 @@ area[leisure=bird_hide],
 area[leisure=nature_reserve],
 area[leisure=park],
 area[leisure=playground],
-area[leisure=garden],
 area[leisure=common],
 area[leisure=firepit] {
     fill-color: leisure#86ee92;
@@ -1959,6 +1942,12 @@ node[leisure=playground] {
 }
 node[leisure=garden] {
     icon-image: "presets/leisure/garden.svg";
+}
+area[leisure=garden] {
+    fill-color: garden#5ce340;
+}
+area[leisure=garden]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
 }
 node[leisure=common] {
     icon-image: "presets/leisure/common.svg";
@@ -3408,6 +3397,9 @@ area[man_made] {
 area[landuse=farmland] {
     fill-color: farmland#bee73e;
 }
+area[landuse=farmland]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
+}
 area[landuse=farmyard] {
     fill-color: farmyard#d1bb9e;
 }
@@ -3419,7 +3411,6 @@ area[landuse=vineyard] {
 }
 area[landuse=orchard] {
     fill-color: green#c3d740;
-    width: 1;
 }
 area[landuse=quarry] {
     fill-color: quarry#888888;
@@ -5084,16 +5075,16 @@ way[surface=grass]::surface {
 /******************/
 
 area[man_made=bridge] {
-    width: 2 * prop(zoom);
-    color: #777;
-    fill-color: #888;
+    width: 3 * prop(zoom);
+    color: #333;
+    fill-color: #555;
     z-index: 0.06;
     major-z-index: 3;
 }
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
-way[bridge]::bridge {
+way[bridge]![man_made=bridge]::bridge {
     width: (prop(width, outer_line) + 5) * 1.1;
     color: bridge#111;
     opacity: 0.75;
@@ -5293,7 +5284,7 @@ area["area:highway"] {
 area[landuse],
 area[place],
 area[natural],
-area[leisure=park] {
+area[leisure] {
     set bold_area;
 }
 
