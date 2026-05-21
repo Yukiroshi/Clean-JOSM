@@ -124,7 +124,10 @@ way[highway] > node[highway=crossing] {
 }
 way[highway] >[index=-1] node[noexit],
 way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
+way[highway=cycleway] > node[highway] {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+}
+way[highway=~/footway|pedestrian|path/] > node[highway] {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
 }
 way[highway] > node[crossing:island=yes]::traffic_island {
@@ -1982,7 +1985,7 @@ area[leisure=ice_rink],
 area[leisure=sauna] {
     fill-color: leisure#c7f1a3;
 }
-node[leisure=fitness_station] {
+*[leisure=fitness_station] {
     icon-image: "presets/leisure/fitness_station.svg";
 }
 node[leisure=miniature_golf] {
@@ -2684,7 +2687,8 @@ area[amenity=recycling],
 area[amenity=sanitary_dump_station] {
     fill-color: amenity_light#f7efb7;
 }
-node[amenity=toilets] {
+*[amenity=toilets],
+area[building=toilets] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/toilets.svg";
 }
 node[amenity=shower] { 
@@ -5022,7 +5026,7 @@ way[railway][!area]!:area-style {
 
 way[highway][!area]!:area-style::outer_line,
 way[railway][!area]!:area-style::outer_line {
-    width: prop(width, default) + 3;
+    width: prop(width, default) * 1.5;
     color: prop(casing-color, default);
     dashes: prop(casing-dashes, default);
     z-index: tag(layer) + 0.08;
@@ -5030,8 +5034,8 @@ way[railway][!area]!:area-style::outer_line {
     opacity: 1;
     set other;
 }
-way[setting(surface)][surface]!:closed!:area-style::surface {
-    width: (prop(width, outer_line)) + 3;
+way[setting(surface)][surface]!:area-style::surface {
+    width: (prop(width, outer_line)) * 1.5;
     color: #aaa;
     z-index: tag(layer) + 0.07;
     opacity: 0.5;
@@ -5050,14 +5054,20 @@ way[surface=concrete]::surface {
 way[surface=paving_stones]::surface {
     color: #888;
 }
+way[surface=sett]::surface {
+    dashes: 6,3;
+    color: #888;
+}
 way[surface=compacted]::surface {
-    color: #918a7f;
+    color: #b1a083;
 }
 way[surface=ground]::surface {
     color: #c19d6b;
 }
 way[surface=gravel]::surface {
-    color: #aba08f;
+    dashes: 6,6;
+    dashes-background-color: #999;
+    color: #7a766e;
 }
 way[surface=dirt]::surface {
     color: #8e7f69;
@@ -5282,7 +5292,8 @@ area["area:highway"] {
 }
 area[landuse],
 area[place],
-area[natural] {
+area[natural],
+area[leisure=park] {
     set bold_area;
 }
 
