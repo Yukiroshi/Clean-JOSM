@@ -1,8 +1,8 @@
 meta {
-    title: "Clean JOSM";
+    title: "Better JOSM";
     description: "Improved and cleaner look for JOSM, similiar to iD. All in one. Made with reference to Better-iD by Maerek (spam46200)";
     icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
-    version: "1.1";
+    version: "1.2";
     author: "Yukiro";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
@@ -5093,7 +5093,7 @@ area[man_made=bridge] {
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
-way[bridge]![man_made=bridge]::bridge {
+way[bridge][man_made!=bridge]::bridge {
     width: (prop(width, outer_line) + 5) * 1.1;
     color: bridge#111;
     opacity: 0.75;
