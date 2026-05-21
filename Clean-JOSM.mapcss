@@ -4272,8 +4272,17 @@ area[natural=grassland]::fill{
 area[natural=wetland]{
     fill-color: marsh#9bd6a1;
 }
-area[natural=wetland]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wet.svg";
+area[natural=wetland][wetland=bog]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-bog.svg";
+}
+area[natural=wetland][wetland=marsh]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-marsh.svg";
+}
+area[natural=wetland][wetland=reedbed]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-reedbed.svg";
+}
+area[natural=wetland][wetland=swamp]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-swamp.svg";
 }
 area[natural=water][!is_prop_set("fill-color")] {
     fill-color: water#77d3ee;
