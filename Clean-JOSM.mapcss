@@ -4795,22 +4795,22 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-height: 35 * prop(zoom);
 }
 *[shop][brand*="Aldi"]  {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/d/d3/Aldi_Nord_2015_Logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Aldi-Nord.svg";
 }
 *[shop][brand*="abc"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/c/c8/Abc_sklep_logo_2020.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/abc.svg";
 }
 *[shop][brand*="Żabka"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Zabka.svg";
 }
 *[shop][brand*="Żabka"][name*="Nano"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/44/Zabka_Nano.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Zabka-Nano.svg";
 }
 *[shop][brand*="Lewiatan"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/a/a4/Lewiatan_%282011%29_Stacked.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Lewiatan.svg";
 }
 *[shop][brand*="Biedronka"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/41/Biedronka_2012.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Biedronka.svg";
 }
 *[shop][brand*="Lidl"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
