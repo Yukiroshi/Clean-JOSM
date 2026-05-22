@@ -1850,7 +1850,7 @@ area[leisure=water_park],
 area[leisure=outdoor_seating] {
     fill-color: leisure#c7f1a3;
 }
-node[leisure=bandstand] {
+*[leisure=bandstand] {
     icon-image: "presets/leisure/bandstand.svg";
 }
 node[leisure=bleachers] {
@@ -2930,7 +2930,7 @@ node[amenity=bus_station] {
 node[amenity=ferry_terminal] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/board-ferry.svg";
 }
-node[amenity=theatre] {
+*[amenity=theatre] {
     icon-image: "presets/leisure/theater.svg";
 }
 node[amenity=cinema] {
@@ -3464,7 +3464,7 @@ area[landuse=industrial] {
     fill-color: industrial#e3a3f4;
 }
 area[landuse=brownfield] {
-    fill-color: brownfield#ecba32;
+    fill-color: brownfield#785800;
 }
 area[landuse=greenfield] {
     fill-color: greenfield#b1ec5c;
@@ -4742,20 +4742,21 @@ area[building][!building?!][wall?!],
 area[building:part][!building:part?!] {
     fill-color: buildingpart#b59494;
 }
-node[building][!building?!] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
-}
-*[building=~/barn|farm_auxiliary/] {
+
+*[building=~/barn|farm_auxiliary/][!is_prop_set(icon-image)] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
 }
-node[building=garage] {
+*[building=garage][!is_prop_set(icon-image)] {
     icon-image: "presets/landuse/garages.svg"; /*TO DO*/
 }
-node[building=garages] {
+*[building=garages][!is_prop_set(icon-image)] {
     icon-image: "presets/landuse/garages.svg"; /*TO DO*/
 }
-node[building=transformer_tower] {
+*[building=transformer_tower][!is_prop_set(icon-image)] {
     icon-image: "presets/power/transformer_tower.svg"; /*TO DO*/
+}
+*[building][!building?!][!is_prop_set(icon-image)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building.svg";
 }
 node[entrance] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/entrance.svg";
