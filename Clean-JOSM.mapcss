@@ -2910,7 +2910,7 @@ area[amenity=~/police|ranger_station|fire_station/] {
     fill-color: amenity_duties#4e7aff;
 }
 node[amenity=library] {
-    icon-image: "presets/education/library.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/book-library.svg";
 }
 node[amenity=public_bookcase] {
     icon-image: "presets/education/public_bookcase.svg";
