@@ -1851,7 +1851,7 @@ area[leisure=outdoor_seating] {
     fill-color: leisure#c7f1a3;
 }
 *[leisure=bandstand] {
-    icon-image: "presets/leisure/bandstand.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg";
 }
 node[leisure=bleachers] {
     icon-image: "presets/leisure/bleachers.svg";
