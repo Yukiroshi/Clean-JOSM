@@ -2546,7 +2546,7 @@ area[amenity] {
     icon-image: "presets/leisure/brothel.svg";
 }
 *[amenity=cafe] {
-    icon-image: "presets/food/cafe.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cafe.svg";
 }
 *[amenity=restaurant] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/restaurant.svg";
@@ -3234,8 +3234,8 @@ node[tourism=museum] {
 /*TO DO*/
 
 area[attraction=animal] {
-    fill-color: attraction#ffbfd3;
-    color: attraction#ffbfd3; /* color explizitly needed here to overwrite the color already set by (a lot of wrongly tagged) tourism=attraction */
+    fill-color: attraction_animal#ffbfd3;
+    color: attraction_animal#ffbfd3; /* color explizitly needed here to overwrite the color already set by (a lot of wrongly tagged) tourism=attraction */
 }
 node[attraction=animal] {
     icon-image: "presets/attraction/animal.svg";
@@ -3269,14 +3269,13 @@ node[tourism=information][information=route_marker] {
     icon-image: "presets/misc/information/route_marker.svg";
 }
 node[tourism=information][information=audioguide] {
-    icon-image: "presets/misc/information/audioguide.svg";
-}
+    icon-image: "presets/misc/information/audioguide.svg"; }
 *[tourism=information][information=office] {
     fill-color: tourism#e180a2;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-info.svg";
 }
 node[tourism=information][information=map] {
-    icon-image: "presets/misc/information/map.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-map.svg";
 }
 node[tourism=information][information=board] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-board.svg";
