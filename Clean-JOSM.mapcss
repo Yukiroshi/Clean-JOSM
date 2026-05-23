@@ -93,7 +93,9 @@ canvas {
     icon-height: 20;
 }
 
-
+relation[type=multipolygon] > way {
+    set area;
+}
 
 /**********/
 /* Rotate */
@@ -306,14 +308,24 @@ way[highway][incline] > node|z19-.incline_down::incline_down {
     icon-height: 20 * prop(zoom);
     icon-anchor-horizontal: center;
     icon-anchor-vertical: center;
-    icon-rotation: 180deg;
+}
+way[highway][incline] >[index=1] node|z19-.incline_down::incline_down {
+    icon-rotation: parent_way_angle();
+}
+way[highway][incline] >[index=-1] node|z19-.incline_down::incline_down {
+    icon-rotation: parent_way_angle() + 180deg;
 }
 way[highway][incline] > node|z19-.incline_up::incline_up {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/arrow-down.svg";
     icon-height: 20 * prop(zoom);
     icon-anchor-horizontal: center;
     icon-anchor-vertical: center;
-    icon-rotation: 180deg;
+}
+way[highway][incline] >[index=1] node|z19-.incline_up::incline_up {
+    icon-rotation: parent_way_angle() + 180deg;
+}
+way[highway][incline] >[index=-1] node|z19-.incline_up::incline_up {
+    icon-rotation: parent_way_angle();
 }
 
 
@@ -4166,21 +4178,21 @@ node|z20-[species]::species {
     text-color: white;
     text: "species";  
     text-anchor-horizontal: center;
-    text-offset-y: -20;
+    text-offset-y: -20 * prop(zoom);
 }
 node|z19-[ref:gid]::ref { 
     font-size: 10 * prop(zoom);
     text-color: white;
     text: "ref:gid";
     text-anchor-horizontal: center;
-    text-offset-y: 20;
+    text-offset-y: 20 * prop(zoom);
 }
 node|z18-[natural][ref] { 
     font-size: 9 * prop(zoom);
     text-color: white;
     text: "ref";
     text-anchor-horizontal: center;
-    text-offset-y: 45;
+    text-offset-y: 45 * prop(zoom);
 }
 area[natural=spring] {
     fill-color: light_water#3959ff;
@@ -4412,15 +4424,12 @@ node[natural=tree][leaf_type=leafless] {
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
-node|z17-[denotation=natural_monument] {
-    icon-height: 24 * prop(zoom);
-    z-index: 1; 
-}
+
 node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16 * prop(zoom);
-    icon-offset-y: 10;
-    icon-offset-x: 10;
+    icon-offset-y: 10 * prop(zoom);
+    icon-offset-x: 10 * prop(zoom);
     z-index: 1; 
 }
 
@@ -5242,6 +5251,7 @@ node|z16-17[setting("hide_icons")][place=locality] {
 node:selected {
     symbol-size: 9;
     symbol-fill-color: red;
+    symbol-stroke-color: #fff;
     symbol-fill-opacity: 1;
     symbol-stroke-opacity: 1;
 }
@@ -5302,6 +5312,7 @@ way[highway][!setting("highway_labels")] {
 /*************/
 /* Area fill */
 /*************/
+
 area[indoor],
 area["area:highway"] {
     set thin_area;
