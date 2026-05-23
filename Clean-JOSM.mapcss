@@ -3397,7 +3397,7 @@ area[landuse=farmland] {
     fill-color: farmland#bee73e;
 }
 area[landuse=farmland]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-farmland.svg";
 }
 area[landuse=farmyard] {
     fill-color: farmyard#d1bb9e;
@@ -3476,7 +3476,7 @@ area[landuse=construction] {
     fill-color: construction#dddf00;
 }
 area[landuse=construction]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-construction.svg";
 }
 way[landuse=construction] {
     color: construction#dddf00;
@@ -3490,6 +3490,9 @@ area[landuse=religious] {
 }
 area[landuse=cemetery] {
     fill-color: cemetery#b1efc8;
+}
+area[landuse=cemetery] {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-cemetery.svg";
 }
 area[landuse=village_green] {
     fill-color: green#b1e0c2;
@@ -4273,13 +4276,13 @@ area[landuse=forest][leaf_type=leafless]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood-leafless.svg";
 }
 area[natural=grassland] {
-    fill-color: green#8cD05F;
+    fill-color: grassland#8cD05F;
 }
 area[natural=grassland]::fill{
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
 }
 area[natural=wetland]{
-    fill-color: marsh#9bd6a1;
+    fill-color: wetland#9bd6a1;
 }
 area[natural=wetland][wetland=bog]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-bog.svg";
@@ -4295,6 +4298,9 @@ area[natural=wetland][wetland=swamp]::fill {
 }
 area[natural=water][!is_prop_set("fill-color")] {
     fill-color: water#77d3ee;
+}
+area[natural=water] {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-waves.svg";
 }
 area[natural=water][intermittent=yes] {
     width: 2 * prop(zoom);
@@ -4319,7 +4325,7 @@ area[natural=shoal] {
     fill-color: shoal#e1a965;
 }
 area[natural=sand] {
-    fill-color: sand#e4e8b1;
+    fill-color: sand#e7e79c;
 }
 area[natural=bare_rock] {
     fill-color: bare_rock#9d9d9d;
