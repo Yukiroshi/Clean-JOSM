@@ -4236,11 +4236,10 @@ area[natural=shingle] {
 }
 area[natural=scrub] {
     fill-color: scrub#51a10a;
-    width: 2 * prop(zoom);
-    fill-opacity: 0.15;
+    width: 1.5 * prop(zoom);
 }
 area[natural=scrub]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wood.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-scrub.svg";
 }
 area[natural=fell] {
     fill-color: natural#002f00;
@@ -4256,11 +4255,22 @@ area[natural=wood],
 area[landuse=forest] {
     fill-color: wood#077e07;
     width: 2 * prop(zoom);
-    fill-opacity: 0.15;
 }
 area[natural=wood]::fill,
 area[landuse=forest]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/wood.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood.svg";
+}
+area[natural=wood][leaf_type=broadleaved]::fill,
+area[landuse=forest][leaf_type=broadleaved]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood-broadleaved.svg";
+}
+area[natural=wood][leaf_type=needleleaved]::fill,
+area[landuse=forest][leaf_type=needleleaved]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood-needleleaved.svg";
+}
+area[natural=wood][leaf_type=leafless]::fill,
+area[landuse=forest][leaf_type=leafless]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood-leafless.svg";
 }
 area[natural=grassland] {
     fill-color: green#8cD05F;
@@ -4813,7 +4823,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Biedronka.svg";
 }
 *[shop][brand*="Lidl"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Lidl-Logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Lidl.svg";
 }
 *[shop][brand*="Kaufland"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Kaufland_2017_Logo.svg";
@@ -5333,7 +5343,7 @@ area[setting("partial_fill")]:closed2.bold_area {
 area[setting("partial_fill")]:closed2::fill {
     fill-extent: 25;
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
-    fill-opacity: 0.25;
+    fill-opacity: 0.35;
 }
 /*shhh*/
 node["name"="Mikołów"] {
