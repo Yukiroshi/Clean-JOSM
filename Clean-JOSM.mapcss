@@ -4960,7 +4960,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
 }
 *[brand*="DPD"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/a/ab/DPD_logo_%282015%29.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/DPD.svg";
 }
 *[brand*="Poczta Polska"] {
     icon-height: 10;
@@ -5002,7 +5002,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/8c/MBank_individual_%282020%29.svg";
 }
 *[amenity][brand*="Millennium Bank"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/4/4c/Bank_Millenium.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Millenium-Bank.svg";
 }
 *[amenity][brand*="Bank Pekao"] {
     icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
