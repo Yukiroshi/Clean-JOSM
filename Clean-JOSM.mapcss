@@ -4862,7 +4862,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Rossmann.svg";
 }
 *[shop][brand*="Hebe"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/2/27/HebeLogo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Hebe.svg";
 }
 *[shop][brand*="dm"] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/84/DM_logo.svg";
