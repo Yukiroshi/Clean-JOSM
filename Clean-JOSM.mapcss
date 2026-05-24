@@ -3030,14 +3030,16 @@ node[amenity=marketplace] {
     icon-image: "presets/shop/marketplace.svg";
 }
 node[amenity=vending_machine] {
-    icon-image: "presets/transport/ticket-machine.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-machine.svg";
 }
 node[amenity=vending_machine][vending=parking_tickets] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-parking.svg";
 }
-
+node[amenity=vending_machine][vending=public_transport_tickets] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-tickets.svg";
+}
 *[amenity=parcel_locker]{
-    icon-image: "presets/service/parcel_locker.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parcel-locker.svg";
 }
 
 
