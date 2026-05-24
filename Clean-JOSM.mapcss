@@ -4874,10 +4874,10 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/f8/TEDi_Logo.svg";
 }
 *[shop][brand*="Pepco"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/b/b0/Pepco.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Pepco.svg";
 }
 *[shop][brand*="H&M"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/52/H%26M_logo.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/HM.svg";
 }
 *[shop][brand*="New Yorker"] {
     icon-height: 10;
@@ -4977,7 +4977,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/7/7e/KFC_%282018%29.svg";
 }
 *[amenity][brand*="McDonald's"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/0/05/McDonald%27s_square_2020.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/McDonalds.svg";
 }
 
 *[amenity][brand*="MOL"] {
@@ -5012,6 +5012,9 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
 }
 *[amenity][brand*="Euronet"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Euronet.svg";
+}
+*[amenity][brand*="BNP Paribas"] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/BNP-Paribas.svg";
 }
 /* TEMPLATE
 *[brand*=""] {
