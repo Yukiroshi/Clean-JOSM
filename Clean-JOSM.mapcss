@@ -2589,20 +2589,21 @@ area[amenity] {
 
 
 
-area[amenity=parking],
-area[amenity=motorcycle_parking],
+*[amenity=parking],
+*[amenity=motorcycle_parking],
 *[amenity=bicycle_parking],
-area[amenity=bicycle_rental],
-area[amenity=bicycle_repair_station],
-area[amenity=car_rental],
-area[amenity=car_sharing],
-area[amenity=car_wash],
-area[amenity=taxi],
-area[amenity=fuel],
-area[amenity=prison],
-area[amenity=driver_training]{
+*[amenity=bicycle_rental],
+*[amenity=bicycle_repair_station],
+*[amenity=car_rental],
+*[amenity=car_sharing],
+*[amenity=car_wash],
+*[amenity=taxi],
+*[amenity=fuel],
+*[amenity=prison],
+*[amenity=driver_training]{
     width: 1;
     fill-color: amenity_parking#00329b;
+    color: amenity_parking#00329b;
 }
 *[amenity=parking_space] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space.svg";
