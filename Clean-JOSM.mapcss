@@ -568,8 +568,7 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
-    major-z-index: 3;
-
+    z-index: 0.15;
 }
 way[barrier][fence_type=railing] {
     width: 1.5;
@@ -1165,7 +1164,7 @@ area["area:highway"=pedestrian] {
 
 node[traffic_calming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
-    icon-height: eval(30 * prop(zoom));
+    icon-height: 30 * prop(zoom);
 }
 node[traffic_calming=chicane] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
@@ -1190,7 +1189,7 @@ node[traffic_calming=cushion] {
 }
 node[traffic_calming=cushion][direction][direction!=both] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-cushion-single.svg";
-    icon-height: eval(50 * prop(zoom));
+    icon-height: 60 * prop(zoom);
 }
 node[traffic_calming=rumble_strip] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-rumble-strip.svg";
@@ -1216,12 +1215,6 @@ node:righthandtraffic[junction=roundabout] {
 }
 
 
-
-/*****************/
-/* cycleway tags */
-/*****************/
-
-/*TO DO*/
 
 /**************/
 /* piste tags */
@@ -1963,7 +1956,7 @@ area[leisure=garden] {
     fill-color: garden#5ce340;
 }
 area[leisure=garden]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.svg";
 }
 node[leisure=common] {
     icon-image: "presets/leisure/common.svg";
@@ -3412,89 +3405,112 @@ area[man_made] {
     z-index: -2; /* put areas that can have other areas inside (e.g. building) a little lower */
     width: 1 * prop(zoom);
 }
-area[landuse=farmland] {
+area[landuse=farmland],
+relation[landuse=farmland] >[role=outer] way {
     fill-color: farmland#bee73e;
 }
 area[landuse=farmland]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-farmland.svg";
 }
-area[landuse=farmyard] {
+area[landuse=farmyard],
+relation[landuse=farmyard] >[role=outer] way {
     fill-color: farmyard#d1bb9e;
+    color: farmyard#d1bb9e;
 }
-area[landuse=meadow] {
-    fill-color: meadow#a9dc7f;
+area[landuse=meadow],
+relation[landuse=meadow] >[role=outer] way {
+    fill-color: meadow#92d859;
 }
 area[landuse=meadow]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
 }
-area[landuse=vineyard] {
+area[landuse=vineyard],
+relation[landuse=vineyard] >[role=outer] way {
     fill-color: green#c3d740;
 }
-area[landuse=orchard] {
-    fill-color: green#c3d740;
+area[landuse=orchard],
+relation[landuse=orchard] >[role=outer] way {
+    fill-color: orchard#00d53c;
 }
-area[landuse=quarry] {
+area[landuse=orchard]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.svg";
+}
+area[landuse=quarry],
+relation[landuse=quarry] >[role=outer] way {
     fill-color: quarry#888888;
 }
-area[landuse=landfill] {
+area[landuse=landfill],
+relation[landuse=landfill] >[role=outer] way {
     fill-color: landfill#663300;
 }
-area[landuse=basin] {
+area[landuse=basin],
+relation[landuse=basin] >[role=outer] way {
     fill-color: forest#8bcc5d;
 }
-area[landuse=allotments] {
+area[landuse=allotments],
+relation[landuse=allotments] >[role=outer] way {
     fill-color: allotments#5dbf80;
 }
 area[landuse=greenhouse_horticulture],
 area[landuse=plant_nursery] {
     fill-color: green#b1e0c2;
 }
-area[landuse=salt_pond] {
+area[landuse=salt_pond],
+relation[landuse=salt_pond] >[role=outer] way {
     fill-color: salt_pond#eeeeee;
 }
-area[landuse=aquaculture] {
+area[landuse=aquaculture],
+relation[landuse=aquaculture] >[role=outer] way {
     fill-color: aquaculture#189dff;
 }
-area[landuse=grass] {
+area[landuse=grass],
+relation[landuse=grass] >[role=outer] way {
     fill-color: grass#7eda45;
 }
 area[landuse=grass]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.png";
 }
-area[landuse=flowerbed]{
+area[landuse=flowerbed],
+relation[landuse=flowerbed] >[role=outer] way {
     fill-color: flowerbedc#e6e872;
 }
 area[landuse=flowerbed]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-flower.svg";
 }
-area[landuse=residential] {
+area[landuse=residential],
+relation[landuse=residential] >[role=outer] way {
     fill-color: residential#dbd75a;
 }
-area[landuse=garages] {
+area[landuse=garages],
+relation[landuse=garages] >[role=outer] way {
     fill-color: garages#aaa9a9;
 }
-area[landuse=farmyard] {
-    fill-color: farmyard#f0f0f0;
-}
-area[landuse=retail] {
+area[landuse=retail],
+relation[landuse=retail] >[role=outer] way {
     fill-color: retail#d4831c;
 }
-area[landuse=commercial] {
+area[landuse=commercial],
+relation[landuse=commercial] >[role=outer] way {
     fill-color: commercial#ffc4ee;
 }
-area[landuse=industrial] {
+area[landuse=industrial],
+relation[landuse=industrial] >[role=outer] way {
     fill-color: industrial#e3a3f4;
 }
-area[landuse=brownfield] {
+area[landuse=brownfield],
+relation[landuse=brownfield] >[role=outer] way {
     fill-color: brownfield#785800;
 }
-area[landuse=greenfield] {
+area[landuse=greenfield],
+relation[landuse=greenfield] >[role=outer] way {
     fill-color: greenfield#b1ec5c;
 }
-area[landuse=railway] {
+area[landuse=railway],
+relation[landuse=railway] >[role=outer] way {
     fill-color: railland#888888;
 }
-area[landuse=construction] {
+area[landuse=construction],
+relation[landuse=construction] >[role=outer] way {
     fill-color: construction#dddf00;
 }
 area[landuse=construction]::fill {
@@ -3504,22 +3520,30 @@ way[landuse=construction] {
     color: construction#dddf00;
     dashes: 9,9;
 }
-area[landuse=military] {
+area[landuse=military],
+relation[landuse=military] >[role=outer] way {
     fill-color: military#b62c2c;
 }
-area[landuse=religious] {
+area[landuse=religious],
+relation[landuse=religious] >[role=outer] way {
     fill-color: religious#ffd454;
 }
-area[landuse=cemetery] {
+area[landuse=religious]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-christian.svg";
+}
+area[landuse=cemetery],
+relation[landuse=cemetery] >[role=outer] way {
     fill-color: cemetery#b1efc8;
 }
 area[landuse=cemetery] {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-cemetery.svg";
 }
-area[landuse=village_green] {
+area[landuse=village_green],
+relation[landuse=village_green] >[role=outer] way {
     fill-color: green#b1e0c2;
 }
-area[landuse=recreation_ground] {
+area[landuse=recreation_ground],
+relation[landuse=recreation_ground] >[role=outer] way {
     fill-color: green#b1e0c2;
 }
 
@@ -4251,23 +4275,28 @@ way[natural=valley] {
     width: 1 * prop(zoom);
     color: natural#8CD05F;
 }
-area[natural=scree] {
+area[natural=scree],
+relation[natural=scree] >[role=outer] way {
     fill-color: scree#c3c3c3;
 }
-area[natural=shingle] {
+area[natural=shingle],
+relation[natural=shingle] >[role=outer] way {
     fill-color: shingle#c3c3c3;
 }
-area[natural=scrub] {
+area[natural=scrub],
+relation[natural=scrub] >[role=outer] way  {
     fill-color: scrub#51a10a;
     width: 1.5 * prop(zoom);
 }
 area[natural=scrub]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-scrub.svg";
 }
-area[natural=fell] {
+area[natural=fell],
+relation[natural=scfellrub] >[role=outer] way {
     fill-color: natural#002f00;
 }
-area[natural=heath] {
+area[natural=heath],
+relation[natural=heath] >[role=outer] way {
     fill-color: heath#dddfc0;
 }
 way[natural=tree_row] {
@@ -4275,7 +4304,9 @@ way[natural=tree_row] {
     color: wood#077e07;
 }
 area[natural=wood],
-area[landuse=forest] {
+relation[natural=wood] >[role=outer] way,
+area[landuse=forest],
+relation[landuse=forest] >[role=outer] way {
     fill-color: wood#077e07;
     width: 2 * prop(zoom);
 }
@@ -4295,13 +4326,15 @@ area[natural=wood][leaf_type=leafless]::fill,
 area[landuse=forest][leaf_type=leafless]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wood-leafless.svg";
 }
-area[natural=grassland] {
+area[natural=grassland],
+relation[natural=grassland] >[role=outer] way {
     fill-color: grassland#8cD05F;
 }
 area[natural=grassland]::fill{
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
 }
-area[natural=wetland]{
+area[natural=wetland],
+relation[natural=wetland] >[role=outer] way {
     fill-color: wetland#9bd6a1;
 }
 area[natural=wetland]::fill {
@@ -4319,7 +4352,8 @@ area[natural=wetland][wetland=reedbed]::fill {
 area[natural=wetland][wetland=swamp]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-swamp.svg";
 }
-area[natural=water][!is_prop_set("fill-color")] {
+area[natural=water][!is_prop_set("fill-color")],
+relation[natural=water][!is_prop_set("fill-color")] >[role=outer] way[!is_prop_set("fill-color")] {
     fill-color: water#77d3ee;
 }
 area[natural=water]::fill {
@@ -4338,38 +4372,48 @@ way[natural=coastline] {
     right-casing-width: 8 * prop(zoom);
     right-casing-opacity: 0.35;
 }
-area[natural=mud] {
+area[natural=mud],
+relation[natural=mud] >[role=outer] way {
     fill-color: mud#cba762;
 }
-area[natural=beach] {
+area[natural=beach],
+relation[natural=beach] >[role=outer] way {
     fill-color: beach#f9d09b;
 }
-area[natural=shoal] {
+area[natural=shoal],
+relation[natural=shoal] >[role=outer] way {
     fill-color: shoal#e1a965;
 }
-area[natural=sand] {
+area[natural=sand],
+relation[natural=sand] >[role=outer] way {
     fill-color: sand#e7e79c;
 }
-area[natural=bare_rock] {
+area[natural=bare_rock],
+relation[natural=bare_rock] >[role=outer] way {
     fill-color: bare_rock#9d9d9d;
 }
-area[natural=rock] {
+area[natural=rock],
+relation[natural=rock] >[role=outer] way {
     fill-color: stone#9d9d9d;
 }
 node[natural=rock] {
     icon-image: "presets/misc/rock.svg";
 }
-area[natural=stone] {
+area[natural=stone],
+relation[natural=stone] >[role=outer] way {
     fill-color: stone#f8f8c7;
 }
 node[natural=stone] {
     icon-image: "presets/misc/stone.svg";
 }
-area[natural=bay] {
+area[natural=bay],
+relation[natural=bay] >[role=outer] way {
     fill-color: natural#77D3DE;
 }
 area[natural=cape],
-area[natural=cave_entrance] {
+relation[natural=cape] >[role=outer] way,
+area[natural=cave_entrance],
+relation[natural=cave_entrance] >[role=outer] way {
     fill-color: natural#7F7F7F;
 }
 node[natural=bay] {
@@ -4463,7 +4507,8 @@ way[waterway=river][tunnel] {
     color: river#618787;
     casing-color: #3d6c71;
 }
-area[waterway=riverbank] {
+area[waterway=riverbank],
+relation[waterway=riverbank] >[role=outer] way {
     fill-color: riverbanak#3330cf;
     color: riverbank#3330cf;
 }
