@@ -3424,6 +3424,9 @@ area[landuse=farmyard] {
 area[landuse=meadow] {
     fill-color: meadow#a9dc7f;
 }
+area[landuse=meadow]::fill {
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
+}
 area[landuse=vineyard] {
     fill-color: green#c3d740;
 }
@@ -4664,7 +4667,7 @@ node[prop(maxspeedclass, default)]::core_maxnode {
     text-offset-y: -1;
 }
 node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
-    text: none;
+    text: false;
     symbol-shape: none;
     icon-image: none;
 }
@@ -5259,7 +5262,7 @@ area|z-15[setting("hide_icons")][building] {
     fill-opacity: 0;
 }
 *|z-18[setting("hide_icons")]!.text_z0 {
-    text: none;
+    text: false;
 }
 *[setting("high_contrast")] {
     width: eval(prop(width) + 1);
@@ -5283,7 +5286,7 @@ node:selected {
 /*      Text       */
 /*******************/
 
-node|z14- {
+node|z16- {
     text: auto;
     font-size: 12 * prop(zoom);
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
@@ -5321,7 +5324,7 @@ way|z15-[highway][setting("highway_labels")] {
     font-size: 12 * prop(zoom);
 }
 way[highway][!setting("highway_labels")] {
-    text: none;
+    text: false;
 }
 
 
@@ -5379,6 +5382,11 @@ area[setting("partial_fill")]:closed2::fill {
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
     fill-opacity: 0.35;
 }
+
+*::fill {
+    text: false;
+}
+
 /*shhh*/
 node["name"="Mikołów"] {
   icon-image: "https://upload.wikimedia.org/wikipedia/commons/6/64/POL_Mikołów_COA.svg";
