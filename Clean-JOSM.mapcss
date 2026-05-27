@@ -1433,7 +1433,7 @@ node[generator:source=waste] {
 
 /*TO DO*/
 
-area[man_made] {
+area[man_made]:closed {
     fill-color: manmade#d8d8d8;
 }
 node[man_made=street_cabinet][street_cabinet!=power] {
@@ -4725,7 +4725,7 @@ node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
 
 area[setting("place_fill_colour")][place]
 area[place=~/island|islet/] {
-    fill-color: place#8de3cb;
+    fill-color: island#8de3cb;
     set place;
 }
 node[place] {
@@ -4804,7 +4804,7 @@ node|z-14[place=locality][!setting("hide_icons")] {
 node[place=island] {
     icon-image: "presets/place/island.svg"; /*TO DO*/
 }
-node[place=islet] {
+*[place=islet] {
     icon-image: "presets/place/islet.svg"; /*TO DO*/
 }
 
