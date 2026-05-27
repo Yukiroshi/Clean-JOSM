@@ -1956,7 +1956,7 @@ area[leisure=garden] {
     fill-color: garden#5ce340;
 }
 area[leisure=garden]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.png";
 }
 node[leisure=common] {
     icon-image: "presets/leisure/common.svg";
@@ -3422,7 +3422,7 @@ relation[landuse=meadow] >[role=outer] way {
     fill-color: meadow#92d859;
 }
 area[landuse=meadow]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.png";
 }
 area[landuse=vineyard],
 relation[landuse=vineyard] >[role=outer] way {
@@ -3433,7 +3433,7 @@ relation[landuse=orchard] >[role=outer] way {
     fill-color: orchard#00d53c;
 }
 area[landuse=orchard]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-dots.png";
 }
 area[landuse=quarry],
 relation[landuse=quarry] >[role=outer] way {
@@ -4331,14 +4331,14 @@ relation[natural=grassland] >[role=outer] way {
     fill-color: grassland#8cD05F;
 }
 area[natural=grassland]::fill{
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/grassland.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.png";
 }
 area[natural=wetland],
 relation[natural=wetland] >[role=outer] way {
     fill-color: wetland#9bd6a1;
 }
 area[natural=wetland]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland.png";
 }
 area[natural=wetland][wetland=bog]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-bog.svg";
@@ -4725,7 +4725,7 @@ node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
 
 area[setting("place_fill_colour")][place]
 area[place=~/island|islet/] {
-    fill-color: island#8de3cb;
+    fill-color: island#8de3cb
     set place;
 }
 node[place] {
