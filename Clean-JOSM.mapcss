@@ -598,6 +598,11 @@ way[barrier=wall] {
     color: barrier#ddd;
     dashes: 12,3,6,3;
 }
+area[barrier=wall][area=yes]:closed {
+    width: 2;
+    fill-color: barrier#ddd;
+    dashes: 12,3,6,3;
+}
 way[barrier=city_wall] {
     width: 2;
     color: barrier#ddd;
@@ -1155,7 +1160,7 @@ area["area:highway"=steps] {
     fill-color: steps#89a17e;
 }
 area["area:highway"=pedestrian] {
-    fill-color: pedestrian#8cd05f;
+    fill-color: pedestrian#aeaeae;
 }
 
 /************************/
@@ -3514,7 +3519,7 @@ relation[landuse=construction] >[role=outer] way {
     fill-color: construction#dddf00;
 }
 area[landuse=construction]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-construction.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-construction.png";
 }
 way[landuse=construction] {
     color: construction#dddf00;
@@ -4357,7 +4362,7 @@ relation[natural=water][!is_prop_set("fill-color")] >[role=outer] way[!is_prop_s
     fill-color: water#77d3ee;
 }
 area[natural=water]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-waves.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-waves.png";
 }
 area[natural=water][intermittent=yes] {
     width: 2 * prop(zoom);
@@ -4725,7 +4730,7 @@ node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
 
 area[setting("place_fill_colour")][place]
 area[place=~/island|islet/] {
-    fill-color: island#8de3cb
+    fill-color: island#8de3cb;
     set place;
 }
 node[place] {
@@ -5048,6 +5053,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
 }
 *[brand*="Orlen"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen.svg";
+    icon-height: 25;
 }
 *[brand*="Orlen Paczka"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen-paczka.svg";
