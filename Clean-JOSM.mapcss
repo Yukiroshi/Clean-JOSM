@@ -606,12 +606,12 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
 way[highway=service][!area?] {
-    width: 5;
+    width: 4.5;
     color: service#ddccaa;
     casing-color: #444;
 }
 way[highway=service][service=~/driveway|parking_aisle/][!area?] {
-    width: 3;
+    width: 3.5;
 }
 way[highway=service][service][tunnel] {
     color: service#676257;
