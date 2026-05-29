@@ -470,167 +470,7 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
 
 
 
-/****************/
-/* barrier tags */
-/****************/
 
-node[barrier] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barrier.svg";
-}
-node[barrier=bollard] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
-}
-node[barrier=gate] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/gate.svg";
-}
-node[barrier=kerb] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-unspecified.svg";
-}
-node[barrier=kerb][kerb=lowered] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-lowered.svg";
-}
-node[barrier=kerb][kerb=raised] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-raised.svg";
-}
-node[barrier=kerb][kerb=flush] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-flush.svg";
-}
-node[barrier=kerb][kerb=rolled] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-rolled.svg";
-}
-node[barrier=block] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/block.svg";
-}
-node[barrier=chain] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/chain.svg";
-}
-node[barrier=stile] {
-    icon-image: "presets/barrier/stile.svg";
-}
-node[barrier=turnstile] {
-    icon-image: "presets/barrier/turnstile.svg";
-}
-node[barrier=full-height_turnstile] {
-    icon-image: "presets/barrier/full-height_turnstile.svg";
-}
-node[barrier=cycle_barrier] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cycle-barrier.svg";
-}
-node[barrier=lift_gate] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/lift-gate.svg";
-}
-node[barrier=swing_gate] {
-    icon-image: "presets/barrier/swing_gate.svg";
-}
-node[barrier=wicket_gate] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wicket-gate.svg";
-}
-area[barrier=toll_booth]:closed {
-    fill-color: barrier#F0F050;
-}
-node[barrier=toll_booth] {
-    icon-image: "presets/barrier/toll_station.svg";
-}
-node[barrier=entrance] {
-    icon-image: "presets/barrier/entrance.svg";
-}
-node[barrier=cattle_grid] {
-    icon-image: "presets/barrier/cattle_grid.svg";
-}
-node[barrier=border_control] {
-    icon-image: "presets/barrier/douane.svg";
-}
-node[barrier=sally_port] {
-    icon-image: "presets/barrier/sally_port.svg";
-}
-node[barrier=spikes] {
-    icon-image: "presets/barrier/spikes.svg";
-}
-node[barrier=jersey_barrier] {
-    icon-image: "presets/barrier/jersey_barrier.svg";
-}
-node[barrier=log] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/log.svg";
-}
-node[barrier=kissing_gate] {
-    icon-image: "presets/barrier/kissing_gate.svg";
-}
-node[barrier=bump_gate] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bump-gate.svg";
-}
-node[barrier=bus_trap] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bus-guided.svg";
-}
-node[barrier=hampshire_gate] {
-    icon-image: "presets/misc/no_icon.svg";
-}
-way[barrier] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    z-index: 0.15;
-}
-way[barrier][fence_type=railing] {
-    width: 1.5;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-}
-way[barrier=bollard] {
-    width: 3;
-    color: barrier#F0F050;
-    dashes: 3,9;
-}
-way[barrier=hedge] {
-    width: 2;
-    color: wood#8cd05f;
-    dashes: 12,2,2,2;
-}
-way[barrier=kerb] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    right-casing-color: coastline#dade72;
-    right-casing-width: 2;
-    right-casing-opacity: 0.35;
-}
-way[barrier=wall] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,3,6,3;
-}
-area[barrier=wall][area=yes]:closed {
-    width: 2;
-    fill-color: barrier#ddd;
-    dashes: 12,3,6,3;
-}
-way[barrier=city_wall] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,3,6,3;
-    right-casing-color: coastline#ddd;
-    right-casing-width: 2;
-    right-casing-opacity: 0.35;
-}
-way[barrier=guard_rail] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    right-casing-color: #ddd;
-    right-casing-width: 4;
-    right-casing-opacity: 0.35;
-}
-way[barrier=retaining_wall] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,3,6,3;
-    right-casing-color: coastline#996644;
-    right-casing-width: 8;
-    right-casing-opacity: 0.35;
-}
-way[barrier=jersey_barrier] {
-    repeat-image: "presets/barrier/kerb_pattern.svg";
-    repeat-image-align: top;
-}
 
 
 
@@ -4884,7 +4724,167 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     major-z-index: 3.1;
 }
 
+/****************/
+/* barrier tags */
+/****************/
 
+node[barrier] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barrier.svg";
+}
+node[barrier=bollard] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
+}
+node[barrier=gate] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/gate.svg";
+}
+node[barrier=kerb] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-unspecified.svg";
+}
+node[barrier=kerb][kerb=lowered] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-lowered.svg";
+}
+node[barrier=kerb][kerb=raised] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-raised.svg";
+}
+node[barrier=kerb][kerb=flush] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-flush.svg";
+}
+node[barrier=kerb][kerb=rolled] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/kerb-rolled.svg";
+}
+node[barrier=block] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/block.svg";
+}
+node[barrier=chain] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/chain.svg";
+}
+node[barrier=stile] {
+    icon-image: "presets/barrier/stile.svg";
+}
+node[barrier=turnstile] {
+    icon-image: "presets/barrier/turnstile.svg";
+}
+node[barrier=full-height_turnstile] {
+    icon-image: "presets/barrier/full-height_turnstile.svg";
+}
+node[barrier=cycle_barrier] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cycle-barrier.svg";
+}
+node[barrier=lift_gate] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/lift-gate.svg";
+}
+node[barrier=swing_gate] {
+    icon-image: "presets/barrier/swing_gate.svg";
+}
+node[barrier=wicket_gate] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/wicket-gate.svg";
+}
+area[barrier=toll_booth]:closed {
+    fill-color: barrier#F0F050;
+}
+node[barrier=toll_booth] {
+    icon-image: "presets/barrier/toll_station.svg";
+}
+node[barrier=entrance] {
+    icon-image: "presets/barrier/entrance.svg";
+}
+node[barrier=cattle_grid] {
+    icon-image: "presets/barrier/cattle_grid.svg";
+}
+node[barrier=border_control] {
+    icon-image: "presets/barrier/douane.svg";
+}
+node[barrier=sally_port] {
+    icon-image: "presets/barrier/sally_port.svg";
+}
+node[barrier=spikes] {
+    icon-image: "presets/barrier/spikes.svg";
+}
+node[barrier=jersey_barrier] {
+    icon-image: "presets/barrier/jersey_barrier.svg";
+}
+node[barrier=log] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/log.svg";
+}
+node[barrier=kissing_gate] {
+    icon-image: "presets/barrier/kissing_gate.svg";
+}
+node[barrier=bump_gate] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bump-gate.svg";
+}
+node[barrier=bus_trap] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bus-guided.svg";
+}
+node[barrier=hampshire_gate] {
+    icon-image: "presets/misc/no_icon.svg";
+}
+way[barrier] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    z-index: 0.15;
+}
+way[barrier][fence_type=railing] {
+    width: 1.5;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+}
+way[barrier=bollard] {
+    width: 3;
+    color: barrier#F0F050;
+    dashes: 3,9;
+}
+way[barrier=hedge] {
+    width: 2;
+    color: wood#8cd05f;
+    dashes: 12,2,2,2;
+}
+way[barrier=kerb] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    right-casing-color: coastline#dade72;
+    right-casing-width: 2;
+    right-casing-opacity: 0.35;
+}
+way[barrier=wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+}
+area[barrier=wall][area=yes]:closed {
+    width: 2;
+    fill-color: barrier#ddd;
+    dashes: 12,3,6,3;
+}
+way[barrier=city_wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+    right-casing-color: coastline#ddd;
+    right-casing-width: 2;
+    right-casing-opacity: 0.35;
+}
+way[barrier=guard_rail] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,2,2,2;
+    right-casing-color: #ddd;
+    right-casing-width: 4;
+    right-casing-opacity: 0.35;
+}
+way[barrier=retaining_wall] {
+    width: 2;
+    color: barrier#ddd;
+    dashes: 12,3,6,3;
+    right-casing-color: coastline#996644;
+    right-casing-width: 8;
+    right-casing-opacity: 0.35;
+}
+way[barrier=jersey_barrier] {
+    repeat-image: "presets/barrier/kerb_pattern.svg";
+    repeat-image-align: top;
+}
 
 /* Brands */
 *[brand] {
@@ -5329,7 +5329,7 @@ area|z-15[setting("hide_icons")][building] {
 }
 node:selected {
     symbol-size: 9;
-    symbol-fill-color: red;
+    symbol-fill-color: #ff0055;
     symbol-stroke-color: #fff;
     symbol-fill-opacity: 1;
     symbol-stroke-opacity: 1;
