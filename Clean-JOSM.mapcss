@@ -766,9 +766,12 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
 way[highway=service][!area?] {
-    width: 4;
+    width: 5;
     color: service#ddccaa;
     casing-color: #444;
+}
+way[highway=service][service=~/driveway|parking_aisle/][!area?] {
+    width: 3;
 }
 way[highway=service][service][tunnel] {
     color: service#676257;
@@ -5190,8 +5193,13 @@ area[man_made=bridge] {
     width: 3 * prop(zoom);
     color: #333;
     fill-color: #555;
-    z-index: 0.06;
+    z-index: 0.06 + tag(layer);
     major-z-index: 3;
+}
+area[bridge:support] {
+    width: 2 * prop(zoom);
+    color: #555;
+    fill-color: #555;
 }
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
