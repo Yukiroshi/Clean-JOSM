@@ -70,33 +70,33 @@ node {
     color: #333;
 }
 /* Most accurate pixel/metre */
-*|z-15  { pixel_per_metre: 0.27; }
-*|z16-  { pixel_per_metre: 0.55; }
-*|z17-  { pixel_per_metre: 1.1; }
-*|z18-  { pixel_per_metre: 2.25; }
-*|z19-  { pixel_per_metre: 4.5; }
-*|z20-  { pixel_per_metre: 9; }
-*|z21-  { pixel_per_metre: 18; }
-*|z22-  { pixel_per_metre: 35.9; }
-*|z23-  { pixel_per_metre: 71.87; }
-*|z24-  { pixel_per_metre: 143.75; }
-*|z25-  { pixel_per_metre: 287.5; }
-*|z26-  { pixel_per_metre: 575; }
+*|z-15 { pixel_per_metre: 0.27; }
+*|z16  { pixel_per_metre: 0.55; }
+*|z17  { pixel_per_metre: 1.1; }
+*|z18  { pixel_per_metre: 2.25; }
+*|z19  { pixel_per_metre: 4.5; }
+*|z20  { pixel_per_metre: 9; }
+*|z21  { pixel_per_metre: 18; }
+*|z22  { pixel_per_metre: 35.9; }
+*|z23  { pixel_per_metre: 71.87; }
+*|z24  { pixel_per_metre: 143.75; }
+*|z25  { pixel_per_metre: 287.5; }
+*|z26- { pixel_per_metre: 575; }
 
 /* Zoom level scaling */
-*|z-13  { zoom: 0.6; }
-*|z14-  { zoom: 0.65; }
-*|z15-  { zoom: 0.7; }
-*|z16-  { zoom: 0.75; }
-*|z17-  { zoom: 0.8; }
-*|z18-  { zoom: 0.85; }
-*|z19-  { zoom: 0.9; }
-*|z20-  { zoom: 0.95; }
-*|z21-  { zoom: 1; }
-*|z22-  { zoom: 1.1; }
-*|z23-  { zoom: 1.2; }
-*|z24-  { zoom: 1.3; }
-*|z25-  { zoom: 1.4; }
+*|z-13 { zoom: 0.6; }
+*|z14  { zoom: 0.65; }
+*|z15  { zoom: 0.7; }
+*|z16  { zoom: 0.75; }
+*|z17  { zoom: 0.8; }
+*|z18  { zoom: 0.85; }
+*|z19  { zoom: 0.9; }
+*|z20  { zoom: 0.95; }
+*|z21  { zoom: 1; }
+*|z22  { zoom: 1.1; }
+*|z23  { zoom: 1.2; }
+*|z24  { zoom: 1.3; }
+*|z25- { zoom: 1.4; }
 
 * {
     icon-height: 20;
@@ -961,7 +961,6 @@ node[highway=emergency_access_point] {
 area["area:highway"] {
     fill-color: #888;
 }
-area["area:highway"][junction?]::fill,
 area["area:highway"=emergency]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
 }
@@ -5113,7 +5112,14 @@ node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
     width: prop(width) * prop(zoom);
     icon-height: prop(icon-height) * prop(zoom);
 }
-
+way[highway][access=~/no|private/][!area]!:area-style::access {
+    width: prop(width, default) * 0.25;
+    color: #555;
+    z-index: tag(layer)  + 0.1;
+    major-z-index: 3;
+    opacity: 0.75;
+    set other;
+}
 way[highway][!area]!:area-style,
 way[railway][!area]!:area-style,
 way[waterway][!area]!:area-style {
@@ -5206,13 +5212,18 @@ way[bridge][man_made!=bridge]::bridge {
     z-index: 0.06 + tag(layer);
     major-z-index: 3;
 }
+way[tunnel] {
+    z-index: -0.01 + tag(layer);
+}
+way[tunnel]::outer_line {
+    z-index: -0.02 + tag(layer);
+}
 
 way[tunnel]::tunnel {
     width: (prop(width, outer_line) + 5) * 1.1;
     color: tunnel#333;
     opacity: 0.75;
-    z-index: 0.05 + tag(layer);
-    major-z-index: 3;
+    z-index: -0.03 + tag(layer);
 }
 
 
