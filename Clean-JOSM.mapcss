@@ -481,7 +481,8 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
 /* Highway tags */
 /****************/
 
-way[highway=~/motorway|motorway_link/] {
+way[highway=~/motorway|motorway_link/],
+area["area:highway"=~/motorway|motorway_link/] {
     motorway: #cf2081;
     color: prop(motorway);
 }
@@ -489,7 +490,8 @@ way[highway=~/motorway|motorway_link/][tunnel] {
     motorway_tunnel: #661c37;
     color: prop(motorway_tunnel);
 }
-way[highway=~/trunk|trunk_link/] {
+way[highway=~/trunk|trunk_link/],
+area["area:highway"=~/trunk|trunk_link/] {
     trunk: #dd2522;
     color: prop(trunk);
 }
@@ -497,7 +499,8 @@ way[highway=~/trunk|trunk_link/][tunnel] {
     trunk_tunnel: #6a211a;
     color: prop(trunk_tunnel);
 }
-way[highway=~/primary|primary_link/] {
+way[highway=~/primary|primary_link/],
+area["area:highway"=~/primary|primary_link/] {
     primary: #f99806;
     color: prop(primary);
 }
@@ -505,7 +508,8 @@ way[highway=~/primary|primary_link/][tunnel] {
     primary_tunnel: #724111;
     color: prop(primary_tunnel);
 }
-way[highway=~/secondary|secondary_link/] {
+way[highway=~/secondary|secondary_link/],
+area["area:highway"=~/secondary|secondary_link/] {
     secondary: #f4f458;
     color: prop(secondary);
 }
@@ -513,7 +517,8 @@ way[highway=~/secondary|secondary_link/][tunnel] {
     secondary_tunnel: #715d15;
     color: prop(secondary_tunnel);
 }
-way[highway=~/tertiary|tertiary_link/] {
+way[highway=~/tertiary|tertiary_link/],
+area["area:highway"=~/tertiary|tertiary_link/] {
     tertiary: #ddd9b3;
     color: prop(tertiary);
 }
@@ -5134,7 +5139,7 @@ way[setting(surface)][surface]!:area-style::surface {
     width: (prop(width, outer_line)) * 1.5;
     color: #aaa;
     z-index: tag(layer) + 0.07;
-    opacity: 0.5;
+    opacity: 0.75;
     set other;
 }
 way[surface=paved]::surface {
