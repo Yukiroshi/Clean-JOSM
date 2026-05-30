@@ -47,6 +47,11 @@ setting::surface {
     label: tr("Add surface indicator around ways");
     default: true;
 }
+setting::scaling {
+    type: boolean;
+    label: tr("Bigger icons");
+    default: false;
+}
 canvas {
     fill-color: #5b5b5b;
 }
@@ -97,9 +102,7 @@ node {
     icon-height: 20;
 }
 
-relation[type=multipolygon] > way {
-    set area;
-}
+
 
 /**********/
 /* Rotate */
@@ -1696,33 +1699,26 @@ node[club] {
 
 /*TO DO*/
 
-area[leisure=bandstand],
-area[leisure=sports_centre],
-area[leisure=fitness_centre],
-area[leisure=stadium],
-area[leisure=horse_riding],
-area[leisure=resort],
-area[leisure=beach_resort],
-area[leisure=water_park],
-area[leisure=outdoor_seating] {
+area[leisure=~/bandstand|sports_centre|leisure=fitness_centre|leisure=stadium|horse_riding|resort|beach_resort|water_park|outdoor_seating/],
+relation[leisure=~/bandstand|sports_centre|leisure=fitness_centre|leisure=stadium|horse_riding|resort|beach_resort|water_park|outdoor_seating/] >[role=outer] way {
     fill-color: leisure#c7f1a3;
 }
 *[leisure=bandstand] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg";
 }
-node[leisure=bleachers] {
+*[leisure=bleachers] {
     icon-image: "presets/leisure/bleachers.svg";
 }
-node[leisure=sports_centre] {
+*[leisure=sports_centre] {
     icon-image: "presets/sport/sports_centre.svg";
 }
-node[leisure=fitness_centre] {
+*[leisure=fitness_centre] {
     icon-image: "presets/sport/fitness_centre.svg";
 }
-node[leisure=stadium] {
+*[leisure=stadium] {
     icon-image: "presets/sport/stadium.svg";
 }
-node[leisure=horse_riding] {
+*[leisure=horse_riding] {
     icon-image: "presets/leisure/horse_riding.svg";
 }
 node[leisure=amusement_arcade] {
@@ -1731,19 +1727,19 @@ node[leisure=amusement_arcade] {
 node[leisure=adult_gaming_centre] {
     icon-image: "presets/leisure/adult_gaming_centre.svg";
 }
-node[leisure=hackerspace] {
+*[leisure=hackerspace] {
     icon-image: "presets/leisure/hackerspace.svg";
 }
 *[leisure=outdoor_seating] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/outdoor-seating.svg";
 }
-node[leisure=resort] {
+*[leisure=resort] {
     icon-image: "presets/leisure/resort.svg";
 }
-node[leisure=beach_resort] {
+*[leisure=beach_resort] {
     icon-image: "presets/leisure/beach_resort.svg";
 }
-node[leisure=water_park] {
+*[leisure=water_park] {
     icon-image: "presets/leisure/water_park.svg";
 }
 area[leisure=track][!area?!]:closed {
@@ -1759,7 +1755,7 @@ node[leisure=track] {
 area[leisure=pitch] {
     fill-color: pitch#baee8d;
 }
-node[leisure=pitch] {
+*[leisure=pitch] {
     icon-image: "presets/sport/pitch.svg";
 }
 area[leisure=marina] {
@@ -1775,15 +1771,9 @@ way[leisure=slipway] {
 node[leisure=slipway] {
     icon-image: "presets/nautical/slipway.svg";
 }
-area[leisure=fishing],
-area[leisure=bird_hide],
-area[leisure=nature_reserve],
-area[leisure=park],
-area[leisure=playground],
-area[leisure=common],
-area[leisure=firepit] {
+area[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/],
+relation[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/] >[role=outer] way {
     fill-color: leisure#86ee92;
-    width: 1;
 }
 node[leisure=fishing] {
     icon-image: "presets/sport/fishing.svg";
@@ -1794,10 +1784,10 @@ node[leisure=bird_hide] {
 node[leisure=nature_reserve] {
     icon-image: "presets/leisure/nature_reserve.svg";
 }
-node[leisure=playground] {
+*[leisure=playground] {
     icon-image: "presets/leisure/playground.svg";
 }
-node[leisure=garden] {
+*[leisure=garden] {
     icon-image: "presets/leisure/garden.svg";
 }
 area[leisure=garden] {
@@ -5307,7 +5297,6 @@ node|z-17!:tagged[setting("hide_icons")] {
     casing-width: 0;
 }
 
-
 area|z-15[setting("hide_icons")]:closed2:area-style {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
@@ -5324,8 +5313,11 @@ area|z-15[setting("hide_icons")][building] {
     text: false;
 }
 *[setting("high_contrast")] {
-    width: eval(prop(width) + 1);
-    casing-width: eval(prop(casing-width) + 1);
+    width: prop(width) * 1.05;
+    casing-width: prop(casing-width) * 1.05;
+}
+*[setting("scaling")] {
+    icon-height: prop(icon-height) * 1.5;
 }
 node:selected {
     symbol-size: 9;
