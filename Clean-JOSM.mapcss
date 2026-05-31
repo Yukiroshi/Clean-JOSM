@@ -70,18 +70,18 @@ node {
     color: #333;
 }
 /* Most accurate pixel/metre */
-*|z-15 { pixel_per_metre: 0.27; }
-*|z16  { pixel_per_metre: 0.55; }
-*|z17  { pixel_per_metre: 1.1; }
-*|z18  { pixel_per_metre: 2.25; }
-*|z19  { pixel_per_metre: 4.5; }
-*|z20  { pixel_per_metre: 9; }
-*|z21  { pixel_per_metre: 18; }
-*|z22  { pixel_per_metre: 35.9; }
-*|z23  { pixel_per_metre: 71.87; }
-*|z24  { pixel_per_metre: 143.75; }
-*|z25  { pixel_per_metre: 287.5; }
-*|z26- { pixel_per_metre: 575; }
+*|z-15 { pixel_per_metre: 0.22; }
+*|z16  { pixel_per_metre: 0.44; }
+*|z17  { pixel_per_metre: 0.88; }
+*|z18  { pixel_per_metre: 1.76; }
+*|z19  { pixel_per_metre: 3.52; }
+*|z20  { pixel_per_metre: 7.03; }
+*|z21  { pixel_per_metre: 14.06; }
+*|z22  { pixel_per_metre: 28.13; }
+*|z23  { pixel_per_metre: 56.25; }
+*|z24  { pixel_per_metre: 112.5; }
+*|z25  { pixel_per_metre: 225; }
+*|z26- { pixel_per_metre: 450; }
 
 /* Zoom level scaling */
 *|z-13 { zoom: 0.6; }
@@ -4303,9 +4303,6 @@ node[natural=tree] {
     icon-opacity: 0.75;
     icon-height: 25 * prop(zoom);
 }
-node|z21-[natural=tree] {
-    icon-height: 2 * prop(pixel_per_metre);
-}
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
 }
@@ -5071,7 +5068,7 @@ way[barrier=jersey_barrier] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Millenium-Bank.svg";
 }
 *[amenity][brand*="Bank Pekao"] {
-    icon-image: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Bank_Pekao_SA_Logo_%282017%29.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Bank-Pekao.svg";
 }
 *[amenity][brand*="Euronet"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Euronet.svg";
@@ -5163,7 +5160,8 @@ way[surface=paving_stones]::surface {
 }
 way[surface=sett]::surface {
     dashes: 6,3;
-    color: #888;
+    dashes-background-color: #999;
+    color: #777;
 }
 way[surface=compacted]::surface {
     color: #b1a083;
