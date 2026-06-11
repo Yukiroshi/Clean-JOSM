@@ -4891,7 +4891,7 @@ way[barrier=jersey_barrier] {
 
 /* Brands */
 *[brand] {
-    icon-height: 35 * prop(zoom);
+    icon-height: 50 * prop(zoom);
 }
 *[shop][brand*="Aldi"]  {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Aldi-Nord.svg";
@@ -5010,7 +5010,8 @@ way[barrier=jersey_barrier] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/57/MediaMarkt_2024.svg";
 }
 *[shop][brand*="Media Expert"] {
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/54/Media_Expert.svg";
+    icon-height: 50;
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Media-Expert.svg";
 }
 *[shop][brand*="RTV Euro AGD"] {
     icon-height: 10;
@@ -5114,20 +5115,33 @@ way[barrier=jersey_barrier] {
 }
 
 
-
-/* Way renderer */
-
 * {
     width: prop(width) * prop(zoom);
     icon-height: prop(icon-height) * prop(zoom);
 }
-way[highway][access=~/no|private/][!area]!:area-style::access {
-    width: prop(width, default) * 0.25;
+
+/* Way renderer */
+way[highway][access][access!=yes][!area]!:area-style::access {
+    width: prop(casing-width, default) * 1.25;
     color: #555;
     z-index: tag(layer)  + 0.1;
     major-z-index: 3;
-    opacity: 0.75;
+    opacity: 0.9;
     set other;
+}
+way[highway][access=private][!area]!:area-style::access {
+    color: #555;
+    casing-color: #555;
+    casing-width: prop(casing-width, default) * 0.75;
+    casing-dashes: 7,7;
+    casing-opacity: 0.75;
+}
+way[highway][access=no][!area]!:area-style::access {
+    color: #000;
+    casing-color: #dd0000;
+    casing-width: prop(casing-width, default) * 0.75;
+    casing-dashes: 10,7;
+    casing-opacity: 0.75;
 }
 way[highway][!area]!:area-style,
 way[railway][!area]!:area-style,
