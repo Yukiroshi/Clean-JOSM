@@ -1777,7 +1777,11 @@ node[leisure=slipway] {
 }
 area[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/],
 relation[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/] >[role=outer] way {
-    fill-color: leisure#86ee92;
+    fill-color: leisure#7bed88;
+}
+area[leisure=~/playground|fitness_station/],
+relation[leisure=~/playground|fitness_station/] >[role=outer] way {
+    fill-color: leisure_playground#b2ffbb;
 }
 node[leisure=fishing] {
     icon-image: "presets/sport/fishing.svg";
@@ -1818,7 +1822,6 @@ node[leisure=swimming_pool] {
 node[playground] {
     icon-image: "presets/leisure/playground_device.svg";
 }
-area[leisure=fitness_station],
 area[leisure=miniature_golf],
 area[leisure=dog_park],
 area[leisure=ice_rink],
@@ -4300,8 +4303,8 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
-    icon-opacity: 0.75;
-    icon-height: 25 * prop(zoom);
+    icon-opacity: 0.85;
+    icon-height: 25;
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -5088,16 +5091,16 @@ way[barrier=jersey_barrier] {
 /* "work in progress" tags */
 /***************************/
 
-node|z16-[fixme]::core_note_fixme,
-node|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
+*|z16-[fixme]::core_note_fixme,
+*|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
     icon-image: "presets/misc/fixme_annotation.svg";
 }
-node|z16-[note]::core_note_fixme,
-node|z-15[note][!setting("hide_icons")]::core_note_fixme {
+*|z16-[note]::core_note_fixme,
+*|z-15[note][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_annotation.svg";
 }
-node|z16-[note][fixme]::core_note_fixme,
-node|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
+*|z16-[note][fixme]::core_note_fixme,
+*|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_fixme_annotation.svg";
 }
 
