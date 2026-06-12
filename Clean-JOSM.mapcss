@@ -2834,6 +2834,9 @@ node[amenity=bench][backrest?] {
 node[amenity=bench][backrest?!] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bench-flat.svg";
 }
+node[amenity=lounger] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/lounger.svg";
+}
 *[amenity=bbq] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bbq.svg";
 }
@@ -4844,10 +4847,10 @@ way[barrier=hedge] {
 }
 way[barrier=kerb] {
     width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    right-casing-color: coastline#dade72;
-    right-casing-width: 2;
+    color: kerb#aaa;
+    dashes: 12,2;
+    right-casing-color: kerb#dade72;
+    right-casing-width: 3;
     right-casing-opacity: 0.35;
 }
 way[barrier=wall] {
@@ -5105,14 +5108,17 @@ way[barrier=jersey_barrier] {
 *|z16-[fixme]::core_note_fixme,
 *|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
     icon-image: "presets/misc/fixme_annotation.svg";
+    z-index: 0.99;
 }
 *|z16-[note]::core_note_fixme,
 *|z-15[note][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_annotation.svg";
+    z-index: 0.99;
 }
 *|z16-[note][fixme]::core_note_fixme,
 *|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_fixme_annotation.svg";
+    z-index: 0.99;
 }
 
 
