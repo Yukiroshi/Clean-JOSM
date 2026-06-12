@@ -961,7 +961,7 @@ node[highway=emergency_access_point] {
 area["area:highway"] {
     fill-color: #888;
 }
-area["area:highway"=emergency]::fill {
+area["area:highway"=~/emergency|prohibited/]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
 }
 area["area:highway"=traffic_island] {
@@ -4833,9 +4833,9 @@ way[barrier=fence][fence_type=wood] {
     dashes: 12,2,2,2;
 }
 way[barrier=bollard] {
-    width: 3;
-    color: barrier#F0F050;
-    dashes: 3,9;
+    width: 6;
+    dashes: 1,10;
+    linecap: round;
 }
 way[barrier=hedge] {
     width: 2;
@@ -4912,6 +4912,7 @@ way[barrier=jersey_barrier] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Biedronka.svg";
 }
 *[shop][brand*="Lidl"] {
+    icon-height: 30;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Lidl.svg";
 }
 *[shop][brand*="Kaufland"] {
