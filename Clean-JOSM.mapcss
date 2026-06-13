@@ -5104,21 +5104,26 @@ way[barrier=jersey_barrier] {
 /***************************/
 /* "work in progress" tags */
 /***************************/
-
-*|z16-[fixme]::core_note_fixme,
+*|z16-[fixme]::note_fixme,
 *|z-15[fixme][!setting("hide_icons")]::core_note_fixme{
     icon-image: "presets/misc/fixme_annotation.svg";
     z-index: 0.99;
+    set note_fixme;
 }
-*|z16-[note]::core_note_fixme,
+*|z16-[note]::note_fixme,
 *|z-15[note][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_annotation.svg";
     z-index: 0.99;
+    set note_fixme;
 }
-*|z16-[note][fixme]::core_note_fixme,
+*|z16-[note][fixme]::note_fixme,
 *|z-15[note][fixme][!setting("hide_icons")]::core_note_fixme {
     icon-image: "presets/misc/note_fixme_annotation.svg";
     z-index: 0.99;
+    set note_fixme;
+}
+way.note_fixme::note_fixme {
+    icon-position: line;
 }
 
 
@@ -5139,16 +5144,18 @@ way[highway][access][access!=yes][!area]!:area-style::access {
 way[highway][access=private][!area]!:area-style::access {
     color: #555;
     casing-color: #555;
-    casing-width: prop(casing-width, default) * 0.75;
+    casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
     casing-dashes: 7,7;
     casing-opacity: 0.75;
+    set other;
 }
 way[highway][access=no][!area]!:area-style::access {
     color: #000;
     casing-color: #dd0000;
-    casing-width: prop(casing-width, default) * 0.75;
+    casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
     casing-dashes: 10,7;
     casing-opacity: 0.75;
+    set other;
 }
 way[highway][!area]!:area-style,
 way[railway][!area]!:area-style,
@@ -5174,7 +5181,7 @@ way[waterway][!area]!:area-style::outer_line {
 way[setting(surface)][surface]!:area-style::surface {
     width: (prop(width, outer_line)) * 1.5;
     color: #aaa;
-    z-index: tag(layer) + 0.07;
+    z-index: 0.07 + tag(layer);
     opacity: 0.75;
     set other;
 }
@@ -5244,17 +5251,13 @@ way[bridge][man_made!=bridge]::bridge {
     major-z-index: 3;
 }
 way[tunnel] {
-    z-index: -0.01 + tag(layer);
+    z-index: prop(z-index) -0.01 + tag(layer);
 }
 way[tunnel]::outer_line {
-    z-index: -0.02 + tag(layer);
+    z-index: prop(z-index, outer_line) -0.02 + tag(layer);
 }
-
-way[tunnel]::tunnel {
-    width: (prop(width, outer_line) + 5) * 1.1;
-    color: tunnel#333;
-    opacity: 0.75;
-    z-index: -0.03 + tag(layer);
+way[tunnel]::surface {
+    z-index: prop(z-index, surface) -0.03 + tag(layer);
 }
 
 
@@ -5406,6 +5409,7 @@ area:closed:area-style {
     text-halo-color: prop(fill-color);
     text-halo-radius: 1.5 * prop(zoom);
 }
+
 node[place] {
     text: auto;
     font-size: prop(font-size);
