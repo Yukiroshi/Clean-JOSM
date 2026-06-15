@@ -4672,6 +4672,14 @@ node[place=square] {
 /* building/entrance */
 /*****************************/
 
+relation[building][!building?!][building!=y][building!=1] >[role=outer] way {
+    color: building#e06e5f;
+    width: 2 * prop(zoom);
+}
+relation[building][!building?!][building!=y][building!=1] >[role=inner] way {
+    color: building#e06e5f;
+    width: 1.5 * prop(zoom);
+}
 area[building][!building?!][building!=y][building!=1] {
     fill-color: building#e06e5f;
     width: 2 * prop(zoom);
@@ -5489,14 +5497,25 @@ area[setting("partial_fill")]:closed2::fill {
     text: false;
 }
 
+
+
 /*shhh*/
 node["name"="Mikołów"] {
   icon-image: "https://upload.wikimedia.org/wikipedia/commons/6/64/POL_Mikołów_COA.svg";
 }
 
+
+
+/* Errors etc*/
+
+/*Unclosed areas*/
+
 way[shop]!:closed,
 way[office]!:closed,
 way[amenity][amenity!~/bench|check_in/]!:closed,
+way[landuse]!:closed,
+
+
 node[restriction],
 node[oneway],
 node[bridge],
@@ -5531,7 +5550,9 @@ node[aerialway=~/cable_car|gondola|chair_lift|mixed_lift|drag_lift|t-bar|j-bar|p
 
 node[sport=skating],
 
-node[natural=~/glacier|scree|shingle|scrub|shrubbery|fell|heath|tree_row|wood|grassland|wetland|water|coastline|mud|beach|sand|land|bare_rock|arete|ridge|valley/],
+node[natural=~/glacier|scree|shingle|scrub|shrubbery|fell|heath|tree_row|grassland|wetland|water|coastline|mud|beach|sand|land|bare_rock|arete|ridge|valley/],
+*[leaf_type][!natural][landuse!=forest],
+way[leaf_type][!barrier=hedge],
 
 node[waterway=~/water_point|waste_disposal|mooring|river|riverbank|canal|wadi|stream|ditch|drain/],
 
@@ -5542,4 +5563,80 @@ node[boundary=~/national|administrative|postal_code|political|national_park/],
 node[building=entrance]
 {
     icon-image: "presets/misc/deprecated.svg";
+}
+
+
+
+*::notice 
+{
+    major-z-index: 6;
+    font-size: 15;
+    font-weight: bold;
+    text-color: #eee;
+    text-halo-color: #333;
+    text-halo-radius: 2;
+}
+
+way[highway]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][!bridge]::notice
+{
+    text: Layer without bridge;
+}
+way[highway]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/][!tunnel]::notice
+{
+    text: Layer without tunnel;
+}
+
+*::warning 
+{
+    major-z-index: 6;
+    font-size: 15;
+    font-weight: bold;
+    text-color: red;
+    text-halo-color: yellow;
+    text-halo-radius: 1.5;
+}
+area:closed::warning 
+{
+    text-position: center;
+}
+*[website][website!~/https?:\/\/.*/]::warning, *["contact:website"]["contact:website"!~/https?:\/\//]::warning 
+{
+    text: Websites should start with http:// or https://;
+}
+*[website][website!~/\./]::warning, *["contact:website"]["contact:website"!~/\./]::warning 
+{
+    text: Websites should have a domain;
+}
+
+*[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|leafless/]::warning 
+{
+    text: Nonexistent value for leaf_type;
+}
+*[leaf_cycle][leaf_cycle!~/evergreen|deciduous|semi_evergreen|semi_deciduous|mixed/]::warning 
+{
+    text: Nonexistent value for leaf_cycle;
+}
+
+
+
+way[bridge][!layer]::warning,
+way[tunnel][!layer]::warning
+{
+    color: yellow;
+    dashes-background-color: red;
+    dashes: 6,24;
+    opacity: 1;
+    width: prop(width, default) * 3 * prop(zoom);
+    text: Missing layer;
+    
+}
+way[bridge]["layer"=~/-/]::warning,
+way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]::warning
+{
+    color: yellow;
+    dashes-background-color: red;
+    dashes: 6,24;
+    opacity: 1;
+    width: prop(width, default) * 3 * prop(zoom);
+    text: Wrong layer value;
 }
