@@ -272,21 +272,29 @@ way[oneway != -1] > node[direction=both]::direction_cone {
     set has_cone;
     icon-rotation: parent_way_angle();
 }
+
 way|z18-[oneway != -1] > node[stop_position:direction=both]::direction_cone_back,
 way|z18-[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone_back,
 way|z18-[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone_back,
 way|z18-[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
-way|z18-[oneway != -1] > node[direction=both]::direction_cone_back {
+way|z18-[oneway != -1] > node[direction=both]::direction_cone_back 
+{
+    set has_cone_back;
     icon-rotation: parent_way_angle() + 180deg;
+}
+node|z18-.has_cone_back::direction_cone_back  /* Render cone for matched nodes */
+{
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25;
-    icon-offset-y: -8;
+    icon-height: 25 * prop(zoom, default);
+    icon-offset-y: -13 * prop(zoom, default);
     z-index: -1;
 }
 
-/* Render cone for matched nodes */
 
-node|z18-.has_cone::direction_cone {
+
+
+node|z18-.has_cone::direction_cone 
+{
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
     icon-height: 25 * prop(zoom, default);
     icon-offset-y: -12 * prop(zoom, default);
@@ -5413,7 +5421,7 @@ node:selected {
 /*      Text       */
 /*******************/
 
-node|z16- {
+node|z18- {
     text: auto;
     font-size: 12 * prop(zoom);
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
@@ -5439,9 +5447,9 @@ area:closed:area-style {
 node[place] {
     text: auto;
     font-size: prop(font-size);
-    text-halo-radius: 1.5;
+    text-halo-radius: 1.5 * prop(zoom0);
 }
-*[ref] {
+*|z18-[ref] {
 text: eval(cond(has_tag_key(ref), concat(tag(name), " (", tag(ref), ")"), tag(name)));
 }
 area:closed:area-style[is_prop_set(icon-image)] {
@@ -6031,12 +6039,12 @@ node[railway=switch]!:connection:in-downloaded-area {
 }
 
 
-*[website][website!~/https?:\/\/.*/]::warning, *["contact:website"]["contact:website"!~/https?:\/\//] 
+*[website][website!~/https?:\/\/.*/], *["contact:website"]["contact:website"!~/https?:\/\//] 
 {
     text: Websites should start with http:// or https://;
     set notice;
 }
-*[website][website!~/\./]::warning, *["contact:website"]["contact:website"!~/\./] 
+*[website][website!~/\./], *["contact:website"]["contact:website"!~/\./] 
 {
     text: Websites should have a domain;
     set notice;
@@ -6053,17 +6061,23 @@ node[railway=switch]!:connection:in-downloaded-area {
     set warning;
 }
 
-area[building][building!~/no|entrance/] ⧉ area[building][building!~/no|entrance/]
+relation[building][building!~/no|entrance/] > way,
+way[building][building!~/no|entrance/]:closed
 {
-    text: Building crossing building!;
-    width: prop(width, default) * 3 * prop(zoom);
+    set building;
+}
+
+area[building][building!~/no|entrance/]:closed ⧉ *.building
+{
+    text: Building crossing building;
+    width: 3 * prop(zoom);
     color: red;
     set warning;
 }
-area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")] ⊆ area[building][building!~/no|entrance/]
+area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")]:closed ∈ way[building][building!~/no|entrance/]:closed
 {
-    text: Building inside building!;
-    width: prop(width, default) * 3 * prop(zoom);
+    text: Building inside building;
+    width: 3 * prop(zoom);
     color: red;
     set warning;
 }
@@ -6084,11 +6098,14 @@ way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]
     set warning;
 }
 
-
+node!:tagged {
+    major-z-index: 6;
+}
 
 *.notice 
 {
-    major-z-index: 6;
+    major-z-index: 5;
+    z-index: 99;
     opacity: 1;
     font-size: 14;
     font-weight: bold;
@@ -6105,7 +6122,8 @@ area:closed.notice
 }
 *.warning 
 {
-    major-z-index: 6;
+    major-z-index: 5;
+    z-index: 99;
     opacity: 1;
     font-size: 15;
     font-weight: bold;
