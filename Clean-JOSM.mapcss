@@ -66,6 +66,9 @@ canvas {
     linejoin: none;
     set icon_z17;
 }
+way!:tagged {
+    color: #fff;
+}
 node {
     color: #333;
 }
@@ -3914,7 +3917,7 @@ area[natural=cliff]:closed {
 way[natural=cliff] {
     repeat-image: "presets/misc/cliff_pattern.svg";
     repeat-image-align: top;
-    width: 1 * prop(zoom);
+    width: 2 * prop(zoom);
     color: #b2b2b2;
 }
 node[natural=cliff] {
@@ -4495,8 +4498,21 @@ way[boundary=maritime] {
     width: 1.5 * prop(zoom);
     color: boundary#ddd;
     casing-color: #82B5FE;
-    casing-width: 2 * prop(zoom);
+    casing-width: prop(width) * 1.5 * prop(zoom);
     dashes: 16,4,4,4;
+    dashes-background-color: prop(casing-color);
+}
+way[boundary=religious_administration],
+relation[boundary=religious_administration] > way {
+    z-index: 2;
+    modifier: false;
+    width: 1.25 * prop(zoom);
+    color: boundary#ddd;
+    casing-color: #ffd454;
+    casing-background-color: prop(color);
+    casing-width: prop(width) * 1.5 * prop(zoom);
+    dashes: 16,4,4,4;
+    dashes-background-color: prop(casing-color);
 }
 way[boundary=protected_area],
 relation[boundary=protected_area] > way,
@@ -4902,7 +4918,7 @@ way[barrier=jersey_barrier] {
 
 /* Brands */
 *[brand] {
-    icon-height: 50 * prop(zoom);
+    icon-height: 35 * prop(zoom);
 }
 *[shop][brand*="Aldi"]  {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Aldi-Nord.svg";
@@ -5040,6 +5056,7 @@ way[barrier=jersey_barrier] {
 }
 
 *[brand*="InPost"] {
+    icon-height: 50;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/InPost.svg";
 }
 *[brand*="DHL"] {
@@ -5096,6 +5113,7 @@ way[barrier=jersey_barrier] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Bank-Pekao.svg";
 }
 *[amenity][brand*="Euronet"] {
+    icon-height: 50;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Euronet.svg";
 }
 *[amenity][brand*="BNP Paribas"] {
@@ -5565,78 +5583,539 @@ node[building=entrance]
     icon-image: "presets/misc/deprecated.svg";
 }
 
+/* {0} on a node, should be a way */
+node[area=no],
+node[oneway],
+node[bridge],
+node[sidewalk],
+node[footway][footway!=crossing], /* footway=crossing has own warning in highway.mapcss */
+node[man_made=embankment],
+node[man_made=groyne],
+node[man_made=cutline],
+node[power=line],
+node[cutline],
+node[aerialway=cable_car],
+node[aerialway=gondola],
+node[aerialway=chair_lift],
+node[aerialway=mixed_lift],
+node[aerialway=drag_lift],
+node[aerialway=t-bar],
+node[aerialway=j-bar],
+node[aerialway=platter],
+node[aerialway=magic_carpet],
+node[aerialway=rope_tow],
+node[aerialway=goods],
+node[aeroway=taxiway],
+node[aeroway=runway],
+node[railway=rail],
+node[railway=narrow_gauge],
+node[railway=monorail],
+node[railway=preserved],
+node[railway=light_rail],
+node[railway=subway],
+node[railway=tram],
+node[railway=disused],
+node[railway=abandoned],
+node[waterway=river],
+node[waterway=canal],
+node[waterway=stream],
+node[waterway=ditch],
+node[waterway=drain],
+node[natural=coastline],
+node[natural=ridge],
+node[natural=valley],
+node[natural=tree_row] {
+    text: tr("{0} on a node. Should be used on a way.", "{0.tag}");
+    set notice;
+}
+
+/* {0} on a node, should be a way or relation */
+node[boundary=administrative] {
+    text: tr("{0} on a node. Should be used on a way or relation.", "{0.tag}");
+    set notice;
+}
+
+/* {0} on a node, should be an area; #10679 #16528 #16792 #12502 #17402*/
+node[golf=green],
+node[golf=bunker],
+node[golf=fairway],
+node[area=yes],
+node[area:highway],
+node[landuse],
+node[natural=bare_rock],
+node[natural=beach],
+node[natural=fell],
+node[natural=glacier],
+node[natural=grassland],
+node[natural=heath],
+node[natural=mud],
+node[natural=sand],
+node[natural=scree],
+node[natural=scrub],
+node[natural=shrubbery],
+node[natural=water],
+node[natural=wetland],
+node[natural=wood],
+node[leisure=park][natural!=tree], /* For nodes with both tags another warning is created in combinations.mapcss */
+node[leisure=nature_reserve],
+node[waterway=riverbank],
+node[man_made=bridge],
+node[man_made=breakwater],
+node[aeroway=apron],
+node[power=plant],
+node[power=switchgear],
+node[building:part],
+node[source:outline] {
+    text: tr("{0} on a node. Should be drawn as an area.", "{0.tag}");
+    set notice;
+}
+
+/* {0} on a node, should be a relation; Error level; #10252, #10769, #14288 */
+node[type=multipolygon],
+node[interval],
+node[route],
+node[restriction],
+node[power=circuit],
+node[power=line_section] {
+    throwError: tr("{0} on a node. Should be used in a relation", "{0.tag}"); 
+    set warning;
+}
+
+/* {0} on a way, should be a node (0.tag) */
+way[emergency=fire_hydrant],
+way[emergency=defibrillator],
+way[railway=subway_entrance],
+way[man_made=survey_point],
+way[power=transformer],
+way[power=pole],
+way[power=catenary_mast],
+way[power=connection],
+way[power=terminal],
+way[power=tower]!:closed,
+way[amenity=vending_machine],
+way[natural=peak],
+way[natural=saddle],
+way[natural=volcano],
+way[natural=tree],
+way[highway=give_way],
+way[highway=milestone],
+way[highway=mini_roundabout],
+way[highway=stop],
+way[highway=street_lamp],
+way[highway=traffic_signals],
+way[highway=turning_loop],
+way[highway=turning_circle],
+way[highway=motorway_junction] {
+    text: tr("{0} on a way. Should be used on a node.", "{0.tag}"); 
+    set notice;
+}
+
+/* {0} on a way, should be a node (0.key) */
+way[voltage:primary],
+way[voltage:secondary],
+way[voltage:tertiary],
+way[transformer],
+way[line_arrangement],
+way[line_attachment],
+way[line_management],
+way[entrance],
+way[door] {
+    text: tr("{0} on a way. Should be used on a node.", "{0.key}"); 
+    set notice;
+}
+
+/* {0} on a way, should be a relation; #15642, #10252, #14288 */
+way[restriction][restriction =~ /^(no_right_turn|no_left_turn|no_u_turn|no_straight_on|only_right_turn|only_left_turn|only_straight_on|no_entry|no_exit)$/],
+way[type=multipolygon],
+way[interval][route!=ferry],
+way[route=bus],
+way[power=circuit],
+way[power=line_section] {
+    text: tr("{0} on a way. Should be used in a relation", "{0.tag}"); 
+    set warning;
+}
+
+/* {0} on a closed way, should be a unclosed way; #19981 */
+way:closed[power=line],
+way:closed[power=cable],
+way:closed[power=minor_line] {
+    text: tr("{0} on a closed way. Should be used on an unclosed way.", "{1.tag}"); 
+    set notice;
+}
+
+/* #20902 */
+relation[area?] {
+    text: tr("{0} on a relation", "area");
+    set notice;
+}
+
+/* #14395, #17025, #19506 */
+way[highway][area!=yes][!tunnel][!covered] > node {
+    set node_in_highway;
+}
+way[highway][area!=yes][!tunnel][!covered]:closed > node {
+    set node_in_closed_highway;
+}
+way[highway][area!=yes][!tunnel][!covered] >[index=1] node,
+way[highway][area!=yes][!tunnel][!covered] >[index=-1] node {
+    set first_last_highway_node;
+}
+way[building][building!=no] > node[!entrance].node_in_closed_highway {
+    set node_connects_highway_and_building; /* avoids duplicate warnings with following rule */
+    text: tr("node connects highway and building");
+    set notice;
+}
+way[building][building!=no] > node[!entrance].node_in_highway!.first_last_highway_node!.node_connects_highway_and_building {
+    text: tr("node connects highway and building");
+    set notice;
+}
+
+/* #15035, must not warn for node 3815077900*/
+node[man_made!=monitoring_station][at(0.0,0.0)] {
+    text: tr("Object at Position 0.00E 0.00N. There is nothing at this position except an already mapped weather buoy.");
+    set warning;
+}
+
+/* #10125 */
+node[source:geometry] {
+    text: tr("{0} on a node", "source:geometry");
+    set notice;
+}
+
+/* Overlapping areas (spatial test) */
+area[natural =~ /^(water|wetland)$/],
+area[natural=coastline]:clockwise,
+area[waterway=riverbank],
+area[landuse=reservoir] {
+    set water_area;
+}
+
+/* area:closed.water_area ⧉ area:closed.water_area -- does not work for now -- see ticket#10215 */
+area:closed[natural =~ /^(water|wetland|coastline)$/] ⧉ area:closed.water_area,
+area:closed[waterway=riverbank]                       ⧉ area:closed.water_area,
+area:closed[landuse=reservoir]                        ⧉ area:closed.water_area {
+    text: tr("Overlapping Water Areas");
+    set notice;
+}
+
+/* Water area inside water area (spatial test) */
+area:closed[natural=water]                           ⊆  area:closed.water_area,
+area:closed[natural=coastline]:clockwise             ⊆  area:closed.water_area,
+area:closed[waterway=riverbank]                      ⊆  area:closed.water_area,
+area:closed[landuse=reservoir]                       ⊆  area:closed.water_area,
+area:closed[natural=water]                           ⊇  area:closed.water_area,
+area:closed[natural=coastline]:clockwise             ⊇  area:closed.water_area,
+area:closed[waterway=riverbank]                      ⊇  area:closed.water_area,
+area:closed[landuse=reservoir]                       ⊇  area:closed.water_area {
+    text: tr("Water area inside water area");
+    set notice;
+}
+
+/* #9311 */
+node[amenity=parking]["capacity:disabled" !~ /^(yes|[0-9]+)$/] ∈ area[amenity=parking] {
+    text: tr("{0} inside {1}", "amenity=parking", "amenity=parking");
+    set notice;
+}
+
+/* #9556, #20570 */
+area:closed:areaStyle[tag("natural") = parent_tag("natural")] ⧉ area:closed:areaStyle[natural][natural !~ /^(water|wetland|coastline)$/] {
+    text: tr("Overlapping Identical Natural Areas");
+    set notice;
+}
+
+area:closed[tag("landuse") = parent_tag("landuse")] ⧉ area:closed[landuse] {
+    text: tr("Overlapping Identical Landuses");
+    set notice;
+}
+
+/* #9522 */
+node[tag("amenity") = parent_tag("amenity")] ∈ area[amenity][amenity != parking] {
+    text: tr("{0} inside {1}", concat("amenity=", tag("amenity")), concat("amenity=", tag("amenity")));
+    set notice;
+}
+node[tag("leisure") = parent_tag("leisure")] ∈ area[leisure] {
+    text: tr("{0} inside {1}", concat("leisure=", tag("leisure")), concat("leisure=", tag("leisure")));
+    set notice;
+}
+node[tag("tourism") = parent_tag("tourism")] ∈ area[tourism] {
+    text: tr("{0} inside {1}", concat("tourism=", tag("tourism")), concat("tourism=", tag("tourism")));
+    set notice;
+}
+node[tag("shop") = parent_tag("shop")] ∈ area[shop] {
+    text: tr("{0} inside {1}", concat("shop=", tag("shop")), concat("shop=", tag("shop")));
+    set notice;
+}
+node[tag("power") = parent_tag("power")] ∈ area[power] {
+    text: tr("{0} inside {1}", concat("power=", tag("power")), concat("power=", tag("power")));
+    set notice;
+}
+
+/* isolated nodes which should be part of a way; #10825, #15478, #21688 */
+node:unconnected:in-downloaded-area[entrance],
+node:unconnected:in-downloaded-area[traffic_calming],
+node:unconnected:in-downloaded-area[highway=passing_place],
+node:unconnected:in-downloaded-area[highway=mini_roundabout],
+node:unconnected:in-downloaded-area[highway=motorway_junction],
+node:unconnected:in-downloaded-area[highway=turning_loop],
+node:unconnected:in-downloaded-area[highway=turning_circle],
+node:unconnected:in-downloaded-area[highway=stop],
+node:unconnected:in-downloaded-area[highway=give_way],
+node:unconnected:in-downloaded-area[highway=traffic_signals],
+node:unconnected:in-downloaded-area[highway=crossing],
+node:unconnected:in-downloaded-area[crossing],
+node:unconnected:in-downloaded-area[railway=buffer_stop],
+node:unconnected:in-downloaded-area[railway=crossing],
+node:unconnected:in-downloaded-area[railway=level_crossing],
+node:unconnected:in-downloaded-area[railway=milestone],
+node:unconnected:in-downloaded-area[public_transport=stop_position],
+node:unconnected:in-downloaded-area[aeroway=holding_position],
+node:unconnected:in-downloaded-area[noexit],
+node:unconnected:in-downloaded-area[waterway=dam],
+node:unconnected:in-downloaded-area[waterway=weir],
+node:unconnected:in-downloaded-area[waterway=waterfall],
+node:unconnected:in-downloaded-area[amenity=ferry_terminal],
+node:unconnected:in-downloaded-area[leisure=slipway],
+node:unconnected:in-downloaded-area[mountain_pass=yes],
+node:unconnected:in-downloaded-area[barrier=gate],
+node:unconnected:in-downloaded-area[barrier=lift_gate],
+node:unconnected:in-downloaded-area[barrier=swing_gate],
+node:unconnected:in-downloaded-area[barrier=toll_booth],
+node:unconnected:in-downloaded-area[barrier=turnstile],
+node:unconnected:in-downloaded-area[barrier=full-height_turnstile],
+node:unconnected:in-downloaded-area[barrier=motorcycle_barrier],
+node:unconnected:in-downloaded-area[barrier=rope],
+node:unconnected:in-downloaded-area[barrier=sally_port],
+node:unconnected:in-downloaded-area[barrier=spikes],
+node:unconnected:in-downloaded-area[barrier=stile],
+node:unconnected:in-downloaded-area[barrier=sump_buster],
+node:unconnected:in-downloaded-area[barrier=kerb],
+node:unconnected:in-downloaded-area[barrier=border_control],
+node:unconnected:in-downloaded-area[barrier=bump_gate],
+node:unconnected:in-downloaded-area[barrier=bus_trap],
+node:unconnected:in-downloaded-area[barrier=cattle_grid],
+node:unconnected:in-downloaded-area[barrier=chain],
+node:unconnected:in-downloaded-area[barrier=cycle_barrier],
+node:unconnected:in-downloaded-area[barrier=hampshire_gate],
+node:unconnected:in-downloaded-area[barrier=height_restrictor],
+node:unconnected:in-downloaded-area[barrier=debris] {
+    text: tr("Node must be connected to a way");
+    set notice;
+}
+
+/* #11127 */
+way[railway][bridge] > node,
+way[highway][bridge] > node {
+    set node_in_bridge;
+}
+way[waterway] > node.node_in_bridge {
+    text: tr("node connects waterway and bridge");
+    set notice;
+}
+
+/* #11128, #14812, #15032 */
+way[highway] > node[tourism=information][information=guidepost] {
+    set guidepost;
+    text: tr("{0} node connected to a highway", "{1}");
+    set notice;
+}
+way >[index=1] node,
+way >[index=-1] node {
+    set first_last_node;
+}
+way[highway] > node[amenity][!entrance][amenity!~/^(parking|parking_space|parking_entrance|motorcycle_parking|bicycle_parking|bus_station|car_wash|ferry_terminal|weighbridge|taxi|toilets|ticket_validator)$/],
+way[highway] > node[building][!entrance],
+way[highway] > node[leisure][!entrance][leisure!=slipway][leisure!=fitness_station],
+way[highway] > node[office][!entrance],
+way[highway][highway!=corridor] > node[shop][!entrance],
+way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost.first_last_node:connection,
+way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost!.first_last_node {
+    text: tr("{0} node connected to a highway", "{0}");
+    set notice;
+}
+
+/* #18817 */
+way[man_made=pipeline][location=underground] > node[marker],
+way[power=cable      ][location=underground] > node[marker] {
+    text: tr("{0} node connected to an underground object", "{0}");
+    set notice;
+}
+
+way[junction=roundabout]:righthandtraffic:clockwise,
+way[junction=roundabout]!:righthandtraffic:anticlockwise {
+    text: tr("suspicious roundabout direction");
+    set notice;
+}
+
+/* #12496 */
+area:closed[place=islet][eval(areasize()) > 1500000] {
+    text: tr("{0} on a large area", "{1.tag}");
+    set notice;
+}
+
+area:closed[place=island][eval(areasize()) < 500000] {
+    text: tr("{0} on a small area", "{1.tag}");
+    set notice;
+}
+
+/* #12561 - building larger than Lada car factory (906280 m^2 in OSM) way id 47121317 at N53.56, E49.25, https://en.wikipedia.org/wiki/List_of_largest_buildings#Largest_footprint*/
+area:closed[building][building!=no][eval(areasize()) > 920000]::warning {
+    text: tr("Too large building");
+    set warning;
+}
+
+/* #12646, #12992, #16334 */
+way[waterway=~/^(stream|river|drain)$/]!:closed >[index=-1] node[natural!=sinkhole][natural!=cave_entrance][waterway!=stream_end]!:connection:in-downloaded-area { 
+    text: tr("Waterway ends without a connection to another waterway or the direction of the waterway is wrong.");
+    set notice;
+}
+
+/* #10717, #14535 */
+way:closed[natural=coastline] ∈ area[natural=water],
+way:closed[natural=coastline] ∈ area[waterway=riverbank] {
+    text: tr("Coastline inside {1}", "{0.tag}");
+    set notice;
+}
+
+/* #10471 */
+way[waterway] > node[ford?] { set ford_on_waterway; }
+way[highway] > node[ford?] { set ford_on_highway; }
+node[ford?]:in-downloaded-area!.ford_on_waterway, node[ford?]:in-downloaded-area!.ford_on_highway {
+    text: tr("{0} should be on the node where {1} and {2} intersect", "ford", "highway", "waterway");
+    set notice;
+}
+
+/* #13877 */
+area:closed[waterway = canal][area!=no],
+area:closed[waterway = drain][area!=no],
+area:closed[waterway = ditch][area!=no],
+area:closed[waterway = stream][area!=no],
+area:closed[waterway = river][area!=no] {
+    text: tr("{0} is the tag for the linear waterway. To tag the water area use {1} + {2} instead.", "{1.tag}", "natural=water", "water=*");
+    set notice;
+}
+
+/* #15097 */
+way[highway][area!=yes] > node,
+way[man_made=pier] > node: {
+    set node_in_highway_pier;
+}
+way[route=ferry][tunnel=yes] > node,
+way[route=ferry][bridge=yes] > node {
+     set node_in_ferry_bridge_tunnel;
+}
+way[route=ferry]!:closed >[index= 1] node!.node_in_highway_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area,
+way[route=ferry]!:closed >[index=-1] node!.node_in_highway_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area { 
+    text: tr("Ferry route is not connected to the road network or branches.");
+    set notice;
+}
+way[amenity=ferry_terminal] > node,
+way[man_made=pier] > node {
+    set node_in_terminal_pier;
+}
+way[route=ferry]!:closed >[index= 1] node[amenity!=ferry_terminal][man_made!=pier]!.node_in_terminal_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area,
+way[route=ferry]!:closed >[index=-1] node[amenity!=ferry_terminal][man_made!=pier]!.node_in_terminal_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area { 
+    text: tr("Ferry route is not connected to a ferry terminal or branches.");
+    set notice;
+}
+
+/* #21801 */
+way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] > node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) > 2]:connection,
+way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] >[index!=1][index!=-1] node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) == 2]:connection {
+    text: tr("Railways connection node without {0} or {1}", "railway=switch", "railway=railway_crossing");
+    set notice;
+}
+node[railway=railway_crossing]!:connection:in-downloaded-area,
+node[railway=switch]!:connection:in-downloaded-area {
+    text: tr("Node should be connected to two or more ways");
+    set notice;
+}
 
 
-*::notice 
+*[website][website!~/https?:\/\/.*/]::warning, *["contact:website"]["contact:website"!~/https?:\/\//] 
+{
+    text: Websites should start with http:// or https://;
+    set notice;
+}
+*[website][website!~/\./]::warning, *["contact:website"]["contact:website"!~/\./] 
+{
+    text: Websites should have a domain;
+    set notice;
+}
+
+*[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|leafless/] 
+{
+    text: Nonexistent value for leaf_type;
+    set warning;
+}
+*[leaf_cycle][leaf_cycle!~/evergreen|deciduous|semi_evergreen|semi_deciduous|mixed/] 
+{
+    text: Nonexistent value for leaf_cycle;
+    set warning;
+}
+
+area[building][building!~/no|entrance/] ⧉ area[building][building!~/no|entrance/]
+{
+    text: Building crossing building!;
+    width: prop(width, default) * 3 * prop(zoom);
+    color: red;
+    set warning;
+}
+area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")] ⊆ area[building][building!~/no|entrance/]
+{
+    text: Building inside building!;
+    width: prop(width, default) * 3 * prop(zoom);
+    color: red;
+    set warning;
+}
+way[bridge][!layer],
+way[tunnel][tunnel!=building_passage][!layer]
+{
+    dashes-background-color: yellow;
+    dashes: 24,6;
+    text: Missing layer or building_passage;
+    set warning;
+}   
+way[bridge]["layer"=~/-/],
+way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]
+{
+    dashes-background-color: yellow;
+    dashes: 24,6;
+    text: Wrong layer value;
+    set warning;
+}
+
+
+
+*.notice 
 {
     major-z-index: 6;
-    font-size: 15;
+    opacity: 1;
+    font-size: 14;
     font-weight: bold;
     text-color: #eee;
     text-halo-color: #333;
     text-halo-radius: 2;
+    width: prop(width, default) * 1.25;
+    color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
+    color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
 }
-
-way[highway]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][!bridge]::notice
+area:closed.notice 
 {
-    text: Layer without bridge;
+    text-position: center;
 }
-way[highway]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/][!tunnel]::notice
-{
-    text: Layer without tunnel;
-}
-
-*::warning 
+*.warning 
 {
     major-z-index: 6;
+    opacity: 1;
     font-size: 15;
     font-weight: bold;
     text-color: red;
     text-halo-color: yellow;
     text-halo-radius: 1.5;
+    width: prop(width, default) * 3;
+    color: red;
 }
-area:closed::warning 
+area:closed.warning 
 {
     text-position: center;
-}
-*[website][website!~/https?:\/\/.*/]::warning, *["contact:website"]["contact:website"!~/https?:\/\//]::warning 
-{
-    text: Websites should start with http:// or https://;
-}
-*[website][website!~/\./]::warning, *["contact:website"]["contact:website"!~/\./]::warning 
-{
-    text: Websites should have a domain;
-}
-
-*[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|leafless/]::warning 
-{
-    text: Nonexistent value for leaf_type;
-}
-*[leaf_cycle][leaf_cycle!~/evergreen|deciduous|semi_evergreen|semi_deciduous|mixed/]::warning 
-{
-    text: Nonexistent value for leaf_cycle;
-}
-
-
-
-way[bridge][!layer]::warning,
-way[tunnel][!layer]::warning
-{
-    color: yellow;
-    dashes-background-color: red;
-    dashes: 6,24;
-    opacity: 1;
-    width: prop(width, default) * 3 * prop(zoom);
-    text: Missing layer;
-    
-}
-way[bridge]["layer"=~/-/]::warning,
-way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]::warning
-{
-    color: yellow;
-    dashes-background-color: red;
-    dashes: 6,24;
-    opacity: 1;
-    width: prop(width, default) * 3 * prop(zoom);
-    text: Wrong layer value;
 }
