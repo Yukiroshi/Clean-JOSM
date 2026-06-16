@@ -5534,6 +5534,8 @@ node["name"="Mikołów"] {
 
 /* Errors etc*/
 
+
+
 /*Unclosed areas*/
 
 way[shop]!:closed,
@@ -5590,6 +5592,78 @@ node[building=entrance]
 {
     icon-image: "presets/misc/deprecated.svg";
 }
+
+/* measurement values and units warnings (tickets #8687, #15719) */
+
+*[/^[0-9]+$/] {
+  text: tr("numerical key");
+  set notice;
+}
+
+*[layer =~ /^\+\d/] {
+  text: tr("layer value with + symbol");
+  set notice;
+}
+
+*[layer][layer !~ /^0$|^(-|\+)?[1-5]$/] {
+  throwWarning: tr("layer should be an integer value between -5 and 5");
+  set notice;
+}
+
+/* negative values, #21026 */
+*[building:levels^="-"] {
+  text: tr("negative building:levels value");
+  set notice;
+}
+
+/* the numbers for percentage and degrees include could probably be bracketed a bit more precisely */
+way[incline][incline !~ /^(up|down|-?([0-9]+?(\.[1-9]%)?|100)[%°]?)$/] {
+  text: tr("unusual value of for incline");
+  set notice;
+}
+
+/* #14989 */
+*[direction][direction<0],
+*[direction][direction>=360],
+*[direction][direction !~ /^([0-9][0-9]?[0-9]?|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW|forward|backward|both|clockwise|anti-clockwise|anticlockwise|up|down)((-|;)([0-9][0-9]?[0-9]?|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW))*$/] {
+  text: tr("Unusual value for direction");
+  set notice;
+}
+
+/* #14786 (should be safe to just remove the meters unit from the value) */
+*[ele][ele =~ /^-?[0-9]+(\.[0-9]+)? ?m$/] {
+  text: tr("Ele must be a numeric value, in meters and without units");
+  set notice;
+}
+*[ele][ele =~ /^[0-9]+,[0-9][0-9]?$/] {
+  text: tr("Unusual value of ele: use . instead of , as decimal separator");
+  set notice;
+}
+
+/* #17530 */
+*[ele][ele =~ /^-?[0-9]+\.[0-9][0-9][0-9]+$/] {
+  text: tr("Unnecessary amount of decimal places");
+  set notice;
+}
+
+/* #18573 */
+*[isced:level][isced:level !~ /^(0|1|2|3|4|5|6|7|8)((;|-)(1|2|3|4|5|6|7|8))*$/] {
+  text: tr("Unusual value of {0}", "isced:level");
+  set notice;
+}
+
+/* #19536 */
+*[name][name =~ /^([0-9.,]+)$/] {
+  text: tr("Numeric name. Maybe {0} or {1} is meant.", "ref", "addr:housenumber");
+  set notice;
+}
+
+/* #23621 */
+node[natural=tree][circumference][siunit_length(tag(circumference)) > 45] {
+  text: tr("Unusually large value of {0}, possibly centimeter units are meant?", "circumference");
+  set notice;
+}
+
 
 /* {0} on a node, should be a way */
 node[area=no],
@@ -5767,15 +5841,6 @@ way[highway][area!=yes][!tunnel][!covered]:closed > node {
 way[highway][area!=yes][!tunnel][!covered] >[index=1] node,
 way[highway][area!=yes][!tunnel][!covered] >[index=-1] node {
     set first_last_highway_node;
-}
-way[building][building!=no] > node[!entrance].node_in_closed_highway {
-    set node_connects_highway_and_building; /* avoids duplicate warnings with following rule */
-    text: tr("node connects highway and building");
-    set notice;
-}
-way[building][building!=no] > node[!entrance].node_in_highway!.first_last_highway_node!.node_connects_highway_and_building {
-    text: tr("node connects highway and building");
-    set notice;
 }
 
 /* #15035, must not warn for node 3815077900*/
@@ -6004,7 +6069,7 @@ area:closed[waterway = river][area!=no] {
 
 /* #15097 */
 way[highway][area!=yes] > node,
-way[man_made=pier] > node: {
+way[man_made=pier] > node {
     set node_in_highway_pier;
 }
 way[route=ferry][tunnel=yes] > node,
@@ -6038,6 +6103,27 @@ node[railway=switch]!:connection:in-downloaded-area {
     set notice;
 }
 
+/* absent/unknown denomination (ticket #7811) */
+*[religion =~ /^(christian|jewish|muslim)$/][!denomination][type!=route] {
+  text: tr("religion without denomination");
+  set notice;
+}
+*[religion=christian][denomination][denomination !~ /^(anglican|apostolic|baptist|catholic|church_of_scotland|christian_community|christian_scientist|coptic_orthodox|czechoslovak_hussite|dutch_reformed|evangelical|foursquare|greek_catholic|greek_orthodox|iglesia_ni_cristo|jehovahs_witness|kabbalah|karaite|living_waters_church|lutheran|maronite|mennonite|methodist|mormon|new_apostolic|nondenominational|old_catholic|orthodox|pentecostal|presbyterian|protestant|quaker|reformed|roman_catholic|romanian_orthodox|russian_orthodox|salvation_army|serbian_orthodox|seventh_day_adventist|spiritist|united|united_reformed|united|united_methodist|united_reformed|uniting)$/] {
+  text: tr("unknown christian denomination");
+  set notice;
+}
+*[religion=muslim][denomination][denomination !~ /^(alaouite|druze|ibadi|ismaili|nondenominational|shia|sunni)$/] {
+  text: tr("unknown muslim denomination");
+  set notice;
+}
+*[religion=jewish][denomination][denomination !~ /^(alternative|ashkenazi|conservative|hasidic|humanistic|liberal|modern_orthodox|neo_orthodox|nondenominational|orthodox|progressive|reconstructionist|reform|renewal|samaritan|ultra_orthodox)$/] {
+  text: tr("unknown jewish denomination");
+  set notice;
+}
+*[religion=catholic] {
+  text: "Should be religion=christian + denomination=catholic";
+  set notice;
+}
 
 *[website][website!~/https?:\/\/.*/], *["contact:website"]["contact:website"!~/https?:\/\//] 
 {
