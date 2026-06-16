@@ -52,6 +52,11 @@ setting::scaling {
     label: tr("Bigger icons");
     default: false;
 }
+setting::warnings {
+    type: boolean;
+    label: tr("Inline validation");
+    default: true;
+}
 canvas {
     fill-color: #5b5b5b;
 }
@@ -65,9 +70,6 @@ canvas {
     linecap: none;
     linejoin: none;
     set icon_z17;
-}
-way!:tagged {
-    color: #fff;
 }
 node {
     color: #333;
@@ -3971,6 +3973,7 @@ area[natural=wood],
 relation[natural=wood] >[role=outer] way,
 area[landuse=forest],
 relation[landuse=forest] >[role=outer] way {
+    color: wood#077e07;
     fill-color: wood#077e07;
     width: 2 * prop(zoom);
 }
@@ -5591,6 +5594,9 @@ node[boundary=~/national|administrative|postal_code|political|national_park/],
 node[building=entrance]
 {
     icon-image: "presets/misc/deprecated.svg";
+    repeat-image: "presets/misc/deprecated.svg";
+    repeat-image-spacing: 50;
+    set warning;
 }
 
 /* measurement values and units warnings (tickets #8687, #15719) */
@@ -5856,7 +5862,7 @@ node[source:geometry] {
 }
 
 /* Overlapping areas (spatial test) */
-area[natural =~ /^(water|wetland)$/],
+area[natural=water],
 area[natural=coastline]:clockwise,
 area[waterway=riverbank],
 area[landuse=reservoir] {
@@ -5864,7 +5870,7 @@ area[landuse=reservoir] {
 }
 
 /* area:closed.water_area ⧉ area:closed.water_area -- does not work for now -- see ticket#10215 */
-area:closed[natural =~ /^(water|wetland|coastline)$/] ⧉ area:closed.water_area,
+area:closed[natural =~ /^(water|coastline)$/] ⧉ area:closed.water_area,
 area:closed[waterway=riverbank]                       ⧉ area:closed.water_area,
 area:closed[landuse=reservoir]                        ⧉ area:closed.water_area {
     text: tr("Overlapping Water Areas");
@@ -6188,7 +6194,7 @@ node!:tagged {
     major-z-index: 6;
 }
 
-*.notice 
+*[setting("warnings")].notice 
 {
     major-z-index: 5;
     z-index: 99;
@@ -6202,11 +6208,11 @@ node!:tagged {
     color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
     color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
 }
-area:closed.notice 
+area:closed[setting("warnings")].notice 
 {
     text-position: center;
 }
-*.warning 
+*[setting("warnings")].warning 
 {
     major-z-index: 5;
     z-index: 99;
@@ -6219,7 +6225,7 @@ area:closed.notice
     width: prop(width, default) * 3;
     color: red;
 }
-area:closed.warning 
+area:closed[setting("warnings")].warning 
 {
     text-position: center;
 }
