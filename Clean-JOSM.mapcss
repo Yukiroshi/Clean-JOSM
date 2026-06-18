@@ -631,7 +631,7 @@ way[highway=service][!area?] {
     color: service#ddccaa;
     casing-color: #444;
 }
-way[highway=service][service=~/driveway|parking_aisle/][!area?] {
+way[highway=service][service=~/driveway|parking_aisle|drive-through/][!area?] {
     width: 3.5;
 }
 way[highway=service][service][tunnel] {
@@ -1417,10 +1417,13 @@ way[man_made=embankment][railway]::embankment,
 way[man_made=embankment][waterway]::embankment {
     repeat-image: "presets/misc/embankment-pattern-centered.svg";
 }
+
 way[man_made=pipeline][!waterway] {
+    text: concat(tag("operator")," (", tag(ref), ")", "  |  ", "⌀", tag("diameter"), " - ", tag("substance"));
     width: 2;
     color: pipeline#660000;
 }
+
 node[pipeline=substation] {
     icon-image: "presets/misc/pipeline_substation.svg";
 }
@@ -3062,12 +3065,12 @@ node[tourism=information][information=board] {
 
 /*TO DO*/
 
-area[landuse],
-area[leisure],
-area[amenity],
-area[place],
-area[natural],
-area[man_made] {
+area[landuse]:closed,
+area[leisure]:closed,
+area[amenity]:closed,
+area[place]:closed,
+area[natural]:closed,
+area[man_made]:closed {
     z-index: -2; /* put areas that can have other areas inside (e.g. building) a little lower */
     width: 1 * prop(zoom);
 }
@@ -5186,6 +5189,14 @@ way[highway][access=private][!area]!:area-style::access {
     casing-opacity: 0.75;
     set other;
 }
+way[highway][access=customers][!area]!:area-style::access {
+    color: #eee;
+    casing-color: #6eaaaa;
+    casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
+    casing-dashes: 7,7;
+    casing-opacity: 0.75;
+    set other;
+}
 way[highway][access=no][!area]!:area-style::access {
     color: #000;
     casing-color: #dd0000;
@@ -5215,7 +5226,7 @@ way[waterway][!area]!:area-style::outer_line {
     opacity: 1;
     set other;
 }
-way[setting(surface)][surface]!:area-style::surface {
+way[highway][setting(surface)][surface]!:area-style::surface {
     width: (prop(width, outer_line)) * 1.5;
     color: #aaa;
     z-index: 0.07 + tag(layer);
@@ -5432,7 +5443,6 @@ node|z18- {
     text-halo-radius: 1.5 * prop(zoom);
 }
 way {
-    text: auto;
     font-size: 12 * prop(zoom);
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
     text-offset-y: 0;
@@ -5450,10 +5460,11 @@ area:closed:area-style {
 node[place] {
     text: auto;
     font-size: prop(font-size);
-    text-halo-radius: 1.5 * prop(zoom0);
+    text-halo-radius: 1.5 * prop(zoom);
 }
-*|z18-[ref] {
-text: eval(cond(has_tag_key(ref), concat(tag(name), " (", tag(ref), ")"), tag(name)));
+way[highway],
+way[railway] {
+    text: auto;
 }
 area:closed:area-style[is_prop_set(icon-image)] {
     text-offset-y: -20 * prop(zoom);
@@ -5713,13 +5724,13 @@ node[natural=coastline],
 node[natural=ridge],
 node[natural=valley],
 node[natural=tree_row] {
-    text: tr("{0} on a node. Should be used on a way.", "{0.tag}");
+    text: tr("{0} on a node. Should be used on a way.", "Wrong tag");
     set notice;
 }
 
 /* {0} on a node, should be a way or relation */
 node[boundary=administrative] {
-    text: tr("{0} on a node. Should be used on a way or relation.", "{0.tag}");
+    text: tr("{0} on a node. Should be used on a way or relation.", "Wrong tag");
     set notice;
 }
 
@@ -5754,7 +5765,7 @@ node[power=plant],
 node[power=switchgear],
 node[building:part],
 node[source:outline] {
-    text: tr("{0} on a node. Should be drawn as an area.", "{0.tag}");
+    text: tr("{0} on a node. Should be drawn as an area.", "Wrong tag");
     set notice;
 }
 
@@ -5765,7 +5776,7 @@ node[route],
 node[restriction],
 node[power=circuit],
 node[power=line_section] {
-    throwError: tr("{0} on a node. Should be used in a relation", "{0.tag}"); 
+    throwError: tr("{0} on a node. Should be used in a relation", "Wrong tag"); 
     set warning;
 }
 
@@ -5794,7 +5805,7 @@ way[highway=traffic_signals],
 way[highway=turning_loop],
 way[highway=turning_circle],
 way[highway=motorway_junction] {
-    text: tr("{0} on a way. Should be used on a node.", "{0.tag}"); 
+    text: tr("{0} on a way. Should be used on a node.", "Wrong tag"); 
     set notice;
 }
 
@@ -5808,7 +5819,7 @@ way[line_attachment],
 way[line_management],
 way[entrance],
 way[door] {
-    text: tr("{0} on a way. Should be used on a node.", "{0.key}"); 
+    text: tr("{0} on a way. Should be used on a node.", "Wrong key"); 
     set notice;
 }
 
@@ -5819,7 +5830,7 @@ way[interval][route!=ferry],
 way[route=bus],
 way[power=circuit],
 way[power=line_section] {
-    text: tr("{0} on a way. Should be used in a relation", "{0.tag}"); 
+    text: tr("{0} on a way. Should be used in a relation", "Wrong tag"); 
     set warning;
 }
 
@@ -6051,7 +6062,7 @@ way[waterway=~/^(stream|river|drain)$/]!:closed >[index=-1] node[natural!=sinkho
 /* #10717, #14535 */
 way:closed[natural=coastline] ∈ area[natural=water],
 way:closed[natural=coastline] ∈ area[waterway=riverbank] {
-    text: tr("Coastline inside {1}", "{0.tag}");
+    text: tr("Coastline inside {1}", "Wrong tag");
     set notice;
 }
 
@@ -6208,10 +6219,6 @@ node!:tagged {
     color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
     color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
 }
-area:closed[setting("warnings")].notice 
-{
-    text-position: center;
-}
 *[setting("warnings")].warning 
 {
     major-z-index: 5;
@@ -6224,8 +6231,4 @@ area:closed[setting("warnings")].notice
     text-halo-radius: 1.5;
     width: prop(width, default) * 3;
     color: red;
-}
-area:closed[setting("warnings")].warning 
-{
-    text-position: center;
 }
