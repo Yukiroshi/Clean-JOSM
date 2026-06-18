@@ -5173,7 +5173,8 @@ way.note_fixme::note_fixme {
 }
 
 /* Way renderer */
-way[highway][access][access!=yes][!area]!:area-style::access {
+way[highway][access][access!=yes][!area]!:area-style::access 
+{
     width: prop(casing-width, default) * 1.25;
     color: #555;
     z-index: tag(layer)  + 0.1;
@@ -5181,7 +5182,8 @@ way[highway][access][access!=yes][!area]!:area-style::access {
     opacity: 0.9;
     set other;
 }
-way[highway][access=private][!area]!:area-style::access {
+way[highway][access=private][!area]!:area-style::access 
+{
     color: #555;
     casing-color: #555;
     casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
@@ -5189,7 +5191,8 @@ way[highway][access=private][!area]!:area-style::access {
     casing-opacity: 0.75;
     set other;
 }
-way[highway][access=customers][!area]!:area-style::access {
+way[highway][access=customers][!area]!:area-style::access 
+{
     color: #eee;
     casing-color: #6eaaaa;
     casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
@@ -5197,7 +5200,8 @@ way[highway][access=customers][!area]!:area-style::access {
     casing-opacity: 0.75;
     set other;
 }
-way[highway][access=no][!area]!:area-style::access {
+way[highway][access=no][!area]!:area-style::access 
+{
     color: #000;
     casing-color: #dd0000;
     casing-width: prop(casing-width, default) * 0.75 * prop(zoom, default);
@@ -5207,7 +5211,8 @@ way[highway][access=no][!area]!:area-style::access {
 }
 way[highway][!area]!:area-style,
 way[railway][!area]!:area-style,
-way[waterway][!area]!:area-style {
+way[waterway][!area]!:area-style 
+{
     width: prop(width, default);
     color: prop(color, default);
     dashes: prop(dashes, default);
@@ -5217,7 +5222,8 @@ way[waterway][!area]!:area-style {
 }
 way[highway][!area]!:area-style::outer_line,
 way[railway][!area]!:area-style::outer_line,
-way[waterway][!area]!:area-style::outer_line {
+way[waterway][!area]!:area-style::outer_line 
+{
     width: (prop(width, default) + prop("casing-width", default)) * 1.5;
     color: prop("casing-color", default);
     dashes: prop("casing-dashes", default);
@@ -5226,7 +5232,8 @@ way[waterway][!area]!:area-style::outer_line {
     opacity: 1;
     set other;
 }
-way[highway][setting(surface)][surface]!:area-style::surface {
+way[highway][setting(surface)][surface]!:area-style::surface 
+{
     width: (prop(width, outer_line)) * 1.5;
     color: #aaa;
     z-index: 0.07 + tag(layer);
@@ -6199,6 +6206,11 @@ way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]
     dashes: 24,6;
     text: Wrong layer value;
     set warning;
+}
+node[kerb][barrier!=kerb]
+{
+    text: kerb without barrier=kerb;
+    set notice;
 }
 
 node!:tagged {
