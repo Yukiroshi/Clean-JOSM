@@ -4035,7 +4035,7 @@ node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-height: 16 * prop(zoom);
     icon-offset-y: 10 * prop(zoom);
     icon-offset-x: 10 * prop(zoom);
-    z-index: 1; 
+    z-index: 0.99; 
 }
 
 /****************/
@@ -4188,7 +4188,7 @@ node[historic=city_gate] {
 node[historic=manor] {
     icon-image: "presets/sightseeing/manor.svg";
 }
-node[historic=church] {
+*[historic=church] {
     icon-image: "presets/religion/historic_church.svg";
 }
 node[historic=monastery] {
@@ -4229,14 +4229,12 @@ node[historic=tomb] {
     icon-image: "presets/misc/tomb.svg";
 }
 
-*[heritage] {
-    icon-height: 20;
-    text-offset-y: -25;
-}
 *|z17-[heritage]::heritage {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/heritage.svg";
-    icon-height: eval(15 * prop(zoom));
-    icon-offset-y: 15;
+    icon-height: 16 * prop(zoom);
+    icon-offset-y: -10 * prop(zoom);
+    icon-offset-x: 10 * prop(zoom);
+    z-index: 0.99; 
 }
 
 
@@ -4388,7 +4386,7 @@ way[boundary=maritime] {
     dashes-background-color: prop(casing-color);
 }
 way[boundary=religious_administration],
-relation[boundary=religious_administration] > way {
+relation[boundary=religious_administration] > way[!building] {
     z-index: 2;
     modifier: false;
     width: 1.25 * prop(zoom);
@@ -4449,11 +4447,11 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)] 
     maxspeedprop: get(split(" knots",tag(maxspeed)),0);
     set maxspeedclass;
 }
-node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::core_maxnode {
+node[prop(maxspeedclass, default)][!is_prop_set(icon-image, default)]::maxspeed {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
     icon-height: 25 * prop(zoom, default);
 }
-node[prop(maxspeedclass, default)]::core_maxnode {
+node[prop(maxspeedclass, default)]::maxspeed {
     text: prop(maxspeedprop, default);
     font-size: 11 * prop(zoom, default);
     font-weight: bold;
@@ -4463,7 +4461,7 @@ node[prop(maxspeedclass, default)]::core_maxnode {
     text-offset-x: 0.5 * prop(zoom, default);
     text-offset-y: -1;
 }
-node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::core_maxnode {
+node|z-15[prop(maxspeedclass, default)][setting("hide_icons")]::maxspeed {
     text: false;
     symbol-shape: none;
     icon-image: none;
@@ -4764,7 +4762,7 @@ way[barrier=kerb] {
 }
 way[barrier=wall] {
     width: 3;
-    color: barrier#aaa;
+    color: wall#ddd;
     dashes: 12,3,6,3;
 }
 area[barrier=wall][area=yes]:closed {
@@ -6057,37 +6055,37 @@ way[building][building!~/no|entrance/]:closed
     set building;
 }
 
-area[building][building!~/no|entrance/]:closed ⧉ *.building
+area[building][building!~/no|entrance/]:closed ⧉ *[setting("warnings")].building
 {
     text: Building crossing building;
     width: 3 * prop(zoom);
     color: red;
     set warning;
 }
-area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")]:closed ∈ way[building][building!~/no|entrance/]:closed
+area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")]:closed ∈ way[building][building!~/no|entrance/][setting("warnings")]:closed
 {
     text: Building inside building;
     width: 3 * prop(zoom);
     color: red;
     set warning;
 }
-way[bridge][!layer],
-way[tunnel][tunnel!=building_passage][!layer]
+way[bridge][!layer][setting("warnings")],
+way[tunnel][tunnel!=building_passage][!layer][setting("warnings")]
 {
     dashes-background-color: yellow;
     dashes: 24,6;
     text: Missing layer or building_passage;
     set warning;
 }   
-way[bridge]["layer"=~/-/],
-way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/]
+way[bridge]["layer"=~/-/][setting("warnings")],
+way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][setting("warnings")]
 {
     dashes-background-color: yellow;
     dashes: 24,6;
     text: Wrong layer value;
     set warning;
 }
-node[kerb][kerb!=no][!highway][barrier!=kerb]
+node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
 {
     text: kerb without barrier=kerb;
     set notice;
