@@ -5185,7 +5185,7 @@ node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
 way[bridge][man_made!=bridge]::bridge {
-    width: prop(width, outer_line) * 1.15;
+    width: (prop(width, outer_line) + prop(width, default)) * 1.25;
     color: bridge#111;
     opacity: 0.75;
     z-index: 0.06 + tag(layer);
