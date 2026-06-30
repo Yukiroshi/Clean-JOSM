@@ -959,7 +959,7 @@ area["area:highway"=pedestrian] {
 
 node[traffic_calming] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming.svg";
-    icon-height: 30 * prop(zoom);
+    icon-height: 35 * prop(zoom);
 }
 node[traffic_calming=chicane] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/traffic-calming-chicane.svg";
