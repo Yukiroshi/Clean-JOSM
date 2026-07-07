@@ -4155,77 +4155,75 @@ node[tourism=museum] {
 area[historic][!is_prop_set(fill-color)] {
     fill-color: historic#663300;
 }
-node[historic=fort] {
+*[historic=fort] {
     icon-image: "presets/sightseeing/fort.svg";
 }
-node[historic=castle] {
+*[historic=castle] {
     icon-image: "presets/sightseeing/castle.svg";
 }
-node[historic=monument] {
+*[historic=monument] {
     icon-image: "presets/sightseeing/monument.svg";
 }
-node[historic=memorial] {
+*[historic=memorial] {
     icon-image: "presets/sightseeing/memorial.svg";
 }
-node[historic=memorial][memorial=plaque] {
+*[historic=memorial][memorial=plaque] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/plaque.svg";
 }
 *[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
 }
-node[historic=ruins] {
+*[historic=ruins] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/ruins.svg";
 }
-node[historic=battlefield] {
+*[historic=battlefield] {
     icon-image: "presets/sightseeing/battlefield.svg";
 }
-node[geological=palaeontological_site] {
+*[geological=palaeontological_site] {
     icon-image: "presets/sightseeing/palaeontological_site.svg";
 }
-node[historic=city_gate] {
+*[historic=city_gate] {
     icon-image: "presets/sightseeing/city_gate.svg";
 }
-node[historic=manor] {
+*[historic=manor] {
     icon-image: "presets/sightseeing/manor.svg";
 }
 *[historic=church] {
     icon-image: "presets/religion/historic_church.svg";
 }
-node[historic=monastery] {
+*[historic=monastery] {
     icon-image: "presets/sightseeing/monastery.svg";
 }
-node[historic=charcoal_pile] {
+*[historic=charcoal_pile] {
     icon-image: "presets/misc/charcoal_pile.svg";
 }
-node[historic=mine],
-node[historic=mine_shaft] {
+*[historic=mine],
+*[historic=mine_shaft] {
     icon-image: "presets/landmark/historic_mine.svg";
 }
-node[historic=shieling] {
+*[historic=shieling] {
     icon-image: "presets/landmark/shieling.svg";
 }
-node[historic=wayside_cross] {
+*[historic=wayside_cross] {
     icon-image: "presets/religion/wayside_cross.svg";
 }
-node[historic=wayside_shrine] {
+*[historic=wayside_shrine] {
     icon-image: "presets/religion/wayside_shrine.svg";
 }
-node[historic=boundary_stone] {
+*[historic=boundary_stone] {
     icon-image: "presets/landmark/boundary_stone.svg";
 }
-node[historic=milestone] {
+*[historic=milestone] {
     icon-image: "presets/landmark/milestone.svg";
 }
-area[cemetery=grave] {
+*[cemetery=grave] {
+    icon-image: "presets/misc/grave.svg";
     fill-color: grave#663300;
 }
-node[cemetery=grave] {
-    icon-image: "presets/misc/grave.svg";
-}
-node[cemetery=sector] {
+*[cemetery=sector] {
     icon-image: "presets/misc/cemetery_sector.svg";
 }
-node[historic=tomb] {
+*[historic=tomb] {
     icon-image: "presets/misc/tomb.svg";
 }
 
