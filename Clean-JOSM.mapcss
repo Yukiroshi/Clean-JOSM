@@ -1914,10 +1914,13 @@ way[advertising=totem] {
     icon-image: "presets/shop/boutique.svg";
 }
 *[shop=car] {
-    icon-image: "presets/shop/vehicle.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-dealer.svg";
 }
 *[shop=car_repair] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-repair.svg";
+}
+*[shop=car_parts] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car.svg";
 }
 *[shop=tyres] {
     icon-image: "presets/vehicle/tyres.svg";
@@ -2135,12 +2138,6 @@ way[advertising=totem] {
 }
 *[shop=interior_decoration] {
     icon-image: "presets/shop/interior_decoration.svg";
-}
-*[shop=car_parts] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car.svg";
-}
-*[shop=car] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-dealer.svg";
 }
 *[shop=video_games] {
     icon-image: "presets/shop/video_games.svg";
@@ -2408,15 +2405,13 @@ area[amenity] {
 node[amenity=parking_entrance] {
     icon-image: "presets/vehicle/parking/parking.svg";
 }
-node[amenity=parking_entrance][parking=multi-storey],
-node[amenity=parking][parking=multi-storey] {
+node[amenity=parking_entrance][parking=multi-storey] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-structure.svg";
 }
-node[amenity=parking_entrance][parking=underground],
-node[amenity=parking][parking=underground] {
-    icon-image: "presets/vehicle/parking/underground.svg";
+node[amenity=parking_entrance][parking=underground] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-structure.svg";
 }
-node[amenity=motorcycle_parking] {
+*[amenity=motorcycle_parking] {
     icon-image: "presets/vehicle/parking/motorbike.svg";
 } 
 *[amenity=bicycle_parking] {
@@ -2482,16 +2477,16 @@ area[building=toilets] {
 node[amenity=shower] { 
     icon-image: "presets/service/shower.svg";
 }
-node[amenity=internet_cafe] { 
+*[amenity=internet_cafe] { 
     icon-image: "presets/service/internet_cafe.svg";
 }
-node[amenity=recycling] {
+*[amenity=recycling] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/recycling.svg";
 }
-node[amenity=recycling][recycling_type=container] {
+*[amenity=recycling][recycling_type=container] {
     icon-image: "presets/service/recycling/recycling_container.svg";
 }
-node[amenity=recycling][recycling_type=centre] {
+*[amenity=recycling][recycling_type=centre] {
     icon-image: "presets/service/recycling/recycling_centre.svg";
 }
 node[amenity=waste_basket] {
@@ -2504,28 +2499,27 @@ node[vending=excrement_bags] {
 *[amenity=waste_disposal] {
     icon-image: "presets/service/recycling/waste_disposal.svg";
 }
-node[amenity=sanitary_dump_station] {
+*[amenity=sanitary_dump_station] {
     icon-image: "presets/service/recycling/sanitary_dump_station.svg";
 }
 area[amenity=townhall],
 area[amenity=community_centre] {
     fill-color: amenity_light#f7efb7;
 }
-node[amenity=townhall] {
+*[amenity=townhall] {
     icon-image: "presets/service/townhall.svg";
 }
-node[amenity=events_venue] {
+*[amenity=events_venue] {
     icon-image: "presets/service/events_venue.svg";
 }
-node[amenity=community_centre] {
+*[amenity=community_centre] {
     icon-image: "presets/service/community_centre.svg";
 }
 area[amenity=water_point],
 area[amenity=fountain] {
     fill-color: light_water#3959ff;
 }
-node[amenity=water_point],
-area[amenity=water_point]
+*[amenity=water_point],
 node[man_made=water_tap] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/water-tap.svg";
 }
@@ -2630,72 +2624,72 @@ node[amenity=crematorium][!is_prop_set(icon-image)] {
 node[amenity=letter_box] {
     icon-image: "presets/service/letter_box.svg";
 }
-node[amenity=studio] {
+*[amenity=studio] {
     icon-image: "presets/service/studio.svg";
 }
-node[amenity=school] {
+*[amenity=school] {
     icon-image: "presets/education/school.svg";
 }
-node[amenity=university] {
+*[amenity=university] {
     icon-image: "presets/education/university.svg";
 }
-node[amenity=college] {
+*[amenity=college] {
     icon-image: "presets/education/college.svg";
 }
-node[amenity=kindergarten] {
+*[amenity=kindergarten] {
     icon-image: "presets/education/kindergarten.svg";
 }
-node[amenity=language_school] {
+*[amenity=language_school] {
     icon-image: "presets/education/language_school.svg";
 }
-node[amenity=driving_school],
-node[amenity=driver_training] {
+*[amenity=driving_school],
+*[amenity=driver_training] {
     icon-image: "presets/education/driving_school.svg";
 }
-node[amenity=music_school] {
+*[amenity=music_school] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg"; /*TO DO needs unique icon*/
 }
 area[amenity=~/pharmacy|hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
     fill-color: health#eeeeee;
 }
-node[amenity=pharmacy] {
+*[amenity=pharmacy] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pharmacy.svg";
 }
 *[amenity=hospital] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/asterisk.svg";
 }
-node[amenity=clinic] {
+*[amenity=clinic] {
     icon-image: "presets/health/clinic.svg";
 }
-node[amenity=social_facility][social_facility=nursing_home],
-node[amenity=nursing_home] {
+*[amenity=social_facility][social_facility=nursing_home],
+*[amenity=nursing_home] {
     icon-image: "presets/social_facility/nursing_home.svg";
 }
-node[amenity=social_facility][social_facility=group_home] {
+*[amenity=social_facility][social_facility=group_home] {
     icon-image: "presets/social_facility/group_home.svg";
 }
-node[amenity=social_facility][social_facility=assisted_living] {
+*[amenity=social_facility][social_facility=assisted_living] {
     icon-image: "presets/social_facility/assisted_living.svg";
 }
-node[amenity=social_facility][social_facility=outreach] {
+*[amenity=social_facility][social_facility=outreach] {
     icon-image: "presets/social_facility/outreach.svg";
 }
-node[amenity=social_facility][social_facility=shelter] {
+*[amenity=social_facility][social_facility=shelter] {
     icon-image: "presets/social_facility/shelter.svg";
 }
-node[amenity=social_facility][social_facility=food_bank] {
+*[amenity=social_facility][social_facility=food_bank] {
     icon-image: "presets/social_facility/food_bank.svg";
 }
-node[amenity=baby_hatch] {
+*[amenity=baby_hatch] {
     icon-image: "presets/health/baby_hatch.svg";
 }
-node[amenity=doctors] {
+*[amenity=doctors] {
     icon-image: "presets/health/doctors.svg";
 }
-node[amenity=dentist] {
+*[amenity=dentist] {
     icon-image: "presets/health/dentist.svg";
 }
-node[amenity=animal_shelter] {
+*[amenity=animal_shelter] {
     icon-image: "presets/health/animal_shelter.svg";
 }
 *[amenity=veterinary] {
@@ -2708,55 +2702,55 @@ area[amenity=~/library|public_bookcase|bus_station|ferry_terminal|theatre|cinema
 area[amenity=~/police|ranger_station|fire_station/] {
     fill-color: amenity_duties#4e7aff;
 }
-node[amenity=library] {
+*[amenity=library] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/book-library.svg";
 }
-node[amenity=public_bookcase] {
+*[amenity=public_bookcase] {
     icon-image: "presets/education/public_bookcase.svg";
 }
-node[amenity=police] {
+*[amenity=police] {
     icon-image: "presets/service/police.svg";
 }
-node[amenity=ranger_station] {
+*[amenity=ranger_station] {
     icon-image: "presets/service/ranger_station.svg";
 }
-node[amenity=fire_station] {
+*[amenity=fire_station] {
     icon-image: "presets/service/firebrigade.svg";
 }
-node[amenity=bus_station] {
+*[amenity=bus_station] {
     icon-image: "presets/transport/bus_old.svg";
 }
-node[amenity=ferry_terminal] {
+*[amenity=ferry_terminal] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/board-ferry.svg";
 }
 *[amenity=theatre] {
     icon-image: "presets/leisure/theater.svg";
 }
-node[amenity=cinema] {
+*[amenity=cinema] {
     icon-image: "presets/leisure/cinema.svg";
 }
-node[amenity=dive_centre] {
+*[amenity=dive_centre] {
     icon-image: "presets/leisure/dive_centre.svg";
 }
-node[amenity=public_bath] {
+*[amenity=public_bath] {
     icon-image: "presets/leisure/public_bath.svg";
 }
-node[amenity=arts_centre] {
+*[amenity=arts_centre] {
     icon-image: "presets/sightseeing/arts_centre.svg";
 }
-node[amenity=courthouse] {
+*[amenity=courthouse] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/law.svg";
 }
-node[amenity=prison] {
+*[amenity=prison] {
     icon-image: "presets/service/prison.svg";
 }
-node[amenity=bank] {
+*[amenity=bank] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bank.svg";
 }
-node[amenity=bureau_de_change] {
+*[amenity=bureau_de_change] {
     icon-image: "presets/money/exchange.svg";
 }
-node[amenity=money_transfer] {
+*[amenity=money_transfer] {
     icon-image: "presets/money/money_transfer.svg";
 }
 node[amenity=atm] {
@@ -2813,19 +2807,19 @@ area[amenity=wlan] {
 *[amenity=shelter][shelter_type=lean_to] {
     icon-image: "presets/accommodation/shelter_lean_to.svg";
 }
-node[amenity=hunting_stand] {
+*[amenity=hunting_stand] {
     icon-image: "presets/landmark/hunting_stand.svg";
 }
-node[amenity=marketplace] {
+*[amenity=marketplace] {
     icon-image: "presets/shop/marketplace.svg";
 }
-node[amenity=vending_machine] {
+*[amenity=vending_machine] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-machine.svg";
 }
-node[amenity=vending_machine][vending=parking_tickets] {
+*[amenity=vending_machine][vending=parking_tickets] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-parking.svg";
 }
-node[amenity=vending_machine][vending=public_transport_tickets] {
+*[amenity=vending_machine][vending=public_transport_tickets] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/vending-tickets.svg";
 }
 *[amenity=parcel_locker]{
@@ -2842,82 +2836,82 @@ node[amenity=vending_machine][vending=public_transport_tickets] {
 area[craft] {
     fill-color: craft#999900;
 }
-node[craft=carpenter] {
+*[craft=carpenter] {
     icon-image: "presets/craft/carpenter.svg";
 }
-node[craft=dressmaker] {
+*[craft=dressmaker] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
 }
-node[craft=shoemaker] {
+*[craft=shoemaker] {
     icon-image: "presets/craft/shoemaker.svg";
 }
 *[craft=photographer] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/camera.svg";
 }
-node[craft=metal_construction] {
+*[craft=metal_construction] {
     icon-image: "presets/craft/metal_construction.svg";
 }
-node[craft=electrician] {
+*[craft=electrician] {
     icon-image: "presets/craft/electrician.svg";
 }
-node[craft=electronics_repair] {
+*[craft=electronics_repair] {
     icon-image: "presets/craft/electronics_repair.svg";
 }
-node[craft=brewery] {
+*[craft=brewery] {
     icon-image: "presets/craft/brewery.svg";
 }
-node[craft=plumber] {
+*[craft=plumber] {
     icon-image: "presets/craft/plumber.svg";
 }
-node[craft=sawmill] {
+*[craft=sawmill] {
     icon-image: "presets/craft/sawmill.svg";
 }
-node[craft=gardener] {
+*[craft=gardener] {
     icon-image: "presets/craft/gardener.svg";
 }
-node[craft=winery] {
+*[craft=winery] {
     icon-image: "presets/craft/winery.svg";
 }
-node[craft=hvac] {
+*[craft=hvac] {
     icon-image: "presets/craft/hvac.svg";
 }
-node[craft=painter] {
+*[craft=painter] {
     icon-image: "presets/craft/painter.svg";
 }
-node[craft=stonemason] {
+*[craft=stonemason] {
     icon-image: "presets/craft/stonemason.svg";
 }
-node[craft=handicraft] {
+*[craft=handicraft] {
     icon-image: "presets/craft/handicraft.svg";
 }
-node[craft=pottery] {
+*[craft=pottery] {
     icon-image: "presets/craft/pottery.svg";
 }
-node[craft=key_cutter] {
+*[craft=key_cutter] {
     icon-image: "presets/craft/key_cutter.svg";
 }
-node[craft=caterer] {
+*[craft=caterer] {
     icon-image: "presets/craft/caterer.svg";
 }
-node[craft=roofer] {
+*[craft=roofer] {
     icon-image: "presets/craft/roofer.svg";
 }
-node[craft=beekeeper] {
+*[craft=beekeeper] {
     icon-image: "presets/craft/beekeeper.svg";
 }
-node[craft=blacksmith] {
+*[craft=blacksmith] {
     icon-image: "presets/craft/blacksmith.svg";
 }
-node[craft=locksmith] {
+*[craft=locksmith] {
     icon-image: "presets/craft/locksmith.svg";
 }
-node[craft=window_construction] {
+*[craft=window_construction] {
     icon-image: "presets/craft/window_construction.svg";
 }
-node[craft=upholsterer] {
+*[craft=upholsterer] {
     icon-image: "presets/craft/upholsterer.svg";
 }
-node[craft=tiler] {
+*[craft=tiler] {
     icon-image: "presets/craft/tiler.svg";
 }
 
@@ -2937,7 +2931,7 @@ area[attraction=animal] {
     fill-color: attraction_animal#ffbfd3;
     color: attraction_animal#ffbfd3; /* color explizitly needed here to overwrite the color already set by (a lot of wrongly tagged) tourism=attraction */
 }
-node[attraction=animal] {
+*[attraction=animal] {
     icon-image: "presets/attraction/animal.svg";
 }
 way[attraction=summer_toboggan] {
@@ -2946,7 +2940,7 @@ way[attraction=summer_toboggan] {
     casing-width: 1; 
     casing-color: #686868;
 }
-node[attraction=water_slide] {
+*[attraction=water_slide] {
     icon-image: "presets/attraction/water_slide.svg";
 }
 
@@ -4609,6 +4603,9 @@ area[building:part][!building:part?!] {
 
 *[building=~/barn|farm_auxiliary/][!is_prop_set(icon-image)] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
+}
+*[building=carport][!is_prop_set(icon-image)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/carport.svg";
 }
 *[building=garage][!is_prop_set(icon-image)] {
     icon-image: "presets/landuse/garages.svg"; /*TO DO*/
