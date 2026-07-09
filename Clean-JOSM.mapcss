@@ -3254,7 +3254,7 @@ way[railway=preserved][service=~/crossover|siding|yard|spur/] {
     color: rail#ddd;
     dashes: 12,12;
     casing-color: raildashed#ddccaa;
-    opacity: 2;
+    opacity: 1;
 }
 
 /* disused often appears together with highway=xy */
@@ -5274,7 +5274,7 @@ area:closed:area-style {
     text-position: center;
     text-offset-y: -15 * prop(zoom, default);
     fill-opacity: 0.3;
-    icon-opacity: 0.5;
+    icon-opacity: 0.75;
 }
 area:closed:area-style[is_prop_set(icon-image)] {
     icon-position: inside;
