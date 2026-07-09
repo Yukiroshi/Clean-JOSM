@@ -1416,7 +1416,7 @@ node[man_made=surveillance] {
     icon-image: "presets/service/surveillance.svg";
 }
 node[man_made=survey_point] {
-    icon-image: "presets/landmark/survey_point.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/benchmark-disk.svg";
 }
 node[man_made=tower] {
     icon-image: "presets/tower/tower.svg";
@@ -2302,11 +2302,16 @@ node[emergency=siren] {
 
 /*TO DO*/
 
-node[healthcare=laboratory] {
+*[healthcare=laboratory] {
     icon-image: "presets/health/laboratory.svg";
 }
-
-
+*[healthcare=blood_bank],
+*[amenity=blood_bank] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/blood-bank.svg";
+}
+*[healthcare=blood_donation] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/blood-bank.svg";
+}
 
 /****************/
 /* amenity tags */
@@ -5703,7 +5708,7 @@ way[highway=traffic_signals],
 way[highway=turning_loop],
 way[highway=turning_circle],
 way[highway=motorway_junction] {
-    text: tr("{0} on a way. Should be used on a node.", "Wrong tag"); 
+    text: Wrong tag on a way. Should be used on a node; 
     set notice;
 }
 
@@ -5717,7 +5722,7 @@ way[line_attachment],
 way[line_management],
 way[entrance],
 way[door] {
-    text: tr("{0} on a way. Should be used on a node.", "Wrong key"); 
+    text: Wrong key on a way. Should be used on a node; 
     set notice;
 }
 
@@ -5728,7 +5733,7 @@ way[interval][route!=ferry],
 way[route=bus],
 way[power=circuit],
 way[power=line_section] {
-    text: tr("{0} on a way. Should be used in a relation", "Wrong tag"); 
+    text: Wrong tag on a way. Should be used in a relation; 
     set warning;
 }
 
@@ -5736,13 +5741,13 @@ way[power=line_section] {
 way:closed[power=line],
 way:closed[power=cable],
 way:closed[power=minor_line] {
-    text: tr("{0} on a closed way. Should be used on an unclosed way.", "{1.tag}"); 
+    text: power tag on a closed way. Should be used on an unclosed way; 
     set notice;
 }
 
 /* #20902 */
 relation[area?] {
-    text: tr("{0} on a relation", "area");
+    text: area on a relation;
     set notice;
 }
 
@@ -5760,13 +5765,13 @@ way[highway][area!=yes][!tunnel][!covered] >[index=-1] node {
 
 /* #15035, must not warn for node 3815077900*/
 node[man_made!=monitoring_station][at(0.0,0.0)] {
-    text: tr("Object at Position 0.00E 0.00N. There is nothing at this position except an already mapped weather buoy.");
+    text: Object at position 0.00E 0.00N. There is nothing at this position except an already mapped weather buoy;
     set warning;
 }
 
 /* #10125 */
 node[source:geometry] {
-    text: tr("{0} on a node", "source:geometry");
+    text: source:geometry on a node, use source:position;
     set notice;
 }
 
@@ -5782,7 +5787,7 @@ area[landuse=reservoir] {
 area:closed[natural =~ /^(water|coastline)$/] ⧉ area:closed.water_area,
 area:closed[waterway=riverbank]                       ⧉ area:closed.water_area,
 area:closed[landuse=reservoir]                        ⧉ area:closed.water_area {
-    text: tr("Overlapping Water Areas");
+    text: Overlapping Water Areas;
     set notice;
 }
 
@@ -5795,24 +5800,24 @@ area:closed[natural=water]                           ⊇  area:closed.water_area
 area:closed[natural=coastline]:clockwise             ⊇  area:closed.water_area,
 area:closed[waterway=riverbank]                      ⊇  area:closed.water_area,
 area:closed[landuse=reservoir]                       ⊇  area:closed.water_area {
-    text: tr("Water area inside water area");
+    text: Water area inside water area;
     set notice;
 }
 
 /* #9311 */
 node[amenity=parking]["capacity:disabled" !~ /^(yes|[0-9]+)$/] ∈ area[amenity=parking] {
-    text: tr("{0} inside {1}", "amenity=parking", "amenity=parking");
+    text: amenity=parking inside amenity=parking;
     set notice;
 }
 
 /* #9556, #20570 */
 area:closed:areaStyle[tag("natural") = parent_tag("natural")] ⧉ area:closed:areaStyle[natural][natural !~ /^(water|wetland|coastline)$/] {
-    text: tr("Overlapping Identical Natural Areas");
+    text: Overlapping identical natural areas;
     set notice;
 }
 
 area:closed[tag("landuse") = parent_tag("landuse")] ⧉ area:closed[landuse] {
-    text: tr("Overlapping Identical Landuses");
+    text: Overlapping identical landuses;
     set notice;
 }
 
@@ -5886,7 +5891,7 @@ node:unconnected:in-downloaded-area[barrier=cycle_barrier],
 node:unconnected:in-downloaded-area[barrier=hampshire_gate],
 node:unconnected:in-downloaded-area[barrier=height_restrictor],
 node:unconnected:in-downloaded-area[barrier=debris] {
-    text: tr("Node must be connected to a way");
+    text: Node must be connected to a way;
     set notice;
 }
 
@@ -5896,14 +5901,14 @@ way[highway][bridge] > node {
     set node_in_bridge;
 }
 way[waterway] > node.node_in_bridge {
-    text: tr("node connects waterway and bridge");
+    text: Node connects waterway and bridge;
     set notice;
 }
 
 /* #11128, #14812, #15032 */
 way[highway] > node[tourism=information][information=guidepost] {
     set guidepost;
-    text: tr("{0} node connected to a highway", concat(tag("information")));
+    text: concat(tag("information")), "node connected to a highway";
     set notice;
 }
 way >[index=1] node,
@@ -5917,50 +5922,47 @@ way[highway] > node[office][!entrance],
 way[highway][highway!=corridor] > node[shop][!entrance],
 way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost.first_last_node:connection,
 way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost!.first_last_node {
-    text: tr("Incorrect node connected to highway");
+    text: Wrong node connected to highway;
     set notice;
 }
 
-/* #18817 */
 way[man_made=pipeline][location=underground] > node[marker],
 way[power=cable      ][location=underground] > node[marker] {
-    text: tr("marker node connected to underground object");
+    text: marker node connected to underground object;
     set notice;
 }
 
 way[junction=roundabout]:righthandtraffic:clockwise,
 way[junction=roundabout]!:righthandtraffic:anticlockwise {
-    text: tr("suspicious roundabout direction");
+    text: suspicious roundabout direction;
     set notice;
 }
 
 /* #12496 */
 area:closed[place=islet][eval(areasize()) > 1500000] {
-    text: tr("place=islet on a large area");
+    text: place=islet on a large area;
     set notice;
 }
 
 area:closed[place=island][eval(areasize()) < 500000] {
-    text: tr("place=island on a small area");
+    text: place=island on a small area;
     set notice;
 }
 
 /* #12561 - building larger than Lada car factory (906280 m^2 in OSM) way id 47121317 at N53.56, E49.25, https://en.wikipedia.org/wiki/List_of_largest_buildings#Largest_footprint*/
-area:closed[building][building!=no][eval(areasize()) > 920000]::warning {
-    text: tr("Too large building");
+area:closed[building][building!=no][eval(areasize()) > 906280]::warning {
+    text: Too large building;
     set warning;
 }
 
-/* #12646, #12992, #16334 */
 way[waterway=~/^(stream|river|drain)$/]!:closed >[index=-1] node[natural!=sinkhole][natural!=cave_entrance][waterway!=stream_end]!:connection:in-downloaded-area { 
-    text: tr("Waterway ends without a connection to another waterway or the direction of the waterway is wrong.");
+    text: Waterway ends without a connection to another waterway or the direction of the waterway is wrong;
     set notice;
 }
 
-/* #10717, #14535 */
 way:closed[natural=coastline] ∈ area[natural=water],
 way:closed[natural=coastline] ∈ area[waterway=riverbank] {
-    text: tr("Coastline inside {1}", "Wrong tag");
+    text: Coastline inside wrong tag;
     set notice;
 }
 
@@ -5968,7 +5970,7 @@ way:closed[natural=coastline] ∈ area[waterway=riverbank] {
 way[waterway] > node[ford?] { set ford_on_waterway; }
 way[highway] > node[ford?] { set ford_on_highway; }
 node[ford?]:in-downloaded-area!.ford_on_waterway, node[ford?]:in-downloaded-area!.ford_on_highway {
-    text: tr("{0} should be on the node where {1} and {2} intersect", "ford", "highway", "waterway");
+    text: ford should be on a node where highway and waterway intersect;
     set notice;
 }
 
@@ -5993,7 +5995,7 @@ way[route=ferry][bridge=yes] > node {
 }
 way[route=ferry]!:closed >[index= 1] node!.node_in_highway_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area,
 way[route=ferry]!:closed >[index=-1] node!.node_in_highway_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area { 
-    text: tr("Ferry route is not connected to the road network or branches.");
+    text: Ferry route is not connected to the road network or branches;
     set notice;
 }
 way[amenity=ferry_terminal] > node,
@@ -6002,7 +6004,7 @@ way[man_made=pier] > node {
 }
 way[route=ferry]!:closed >[index= 1] node[amenity!=ferry_terminal][man_made!=pier]!.node_in_terminal_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area,
 way[route=ferry]!:closed >[index=-1] node[amenity!=ferry_terminal][man_made!=pier]!.node_in_terminal_pier!.node_in_ferry_bridge_tunnel:in-downloaded-area { 
-    text: tr("Ferry route is not connected to a ferry terminal or branches.");
+    text: Ferry route is not connected to a ferry terminal or branches;
     set notice;
 }
 
@@ -6014,29 +6016,29 @@ way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop
 }
 node[railway=railway_crossing]!:connection:in-downloaded-area,
 node[railway=switch]!:connection:in-downloaded-area {
-    text: tr("Node should be connected to two or more ways");
+    text: Node should be connected to two or more ways;
     set notice;
 }
 
 /* absent/unknown denomination (ticket #7811) */
 *[religion =~ /^(christian|jewish|muslim)$/][!denomination][type!=route] {
-  text: tr("religion without denomination");
+  text: religion without denomination;
   set notice;
 }
 *[religion=christian][denomination][denomination !~ /^(anglican|apostolic|baptist|catholic|church_of_scotland|christian_community|christian_scientist|coptic_orthodox|czechoslovak_hussite|dutch_reformed|evangelical|foursquare|greek_catholic|greek_orthodox|iglesia_ni_cristo|jehovahs_witness|kabbalah|karaite|living_waters_church|lutheran|maronite|mennonite|methodist|mormon|new_apostolic|nondenominational|old_catholic|orthodox|pentecostal|presbyterian|protestant|quaker|reformed|roman_catholic|romanian_orthodox|russian_orthodox|salvation_army|serbian_orthodox|seventh_day_adventist|spiritist|united|united_reformed|united|united_methodist|united_reformed|uniting)$/] {
-  text: tr("unknown christian denomination");
+  text: unknown christian denomination;
   set notice;
 }
 *[religion=muslim][denomination][denomination !~ /^(alaouite|druze|ibadi|ismaili|nondenominational|shia|sunni)$/] {
-  text: tr("unknown muslim denomination");
+  text: unknown muslim denomination;
   set notice;
 }
 *[religion=jewish][denomination][denomination !~ /^(alternative|ashkenazi|conservative|hasidic|humanistic|liberal|modern_orthodox|neo_orthodox|nondenominational|orthodox|progressive|reconstructionist|reform|renewal|samaritan|ultra_orthodox)$/] {
-  text: tr("unknown jewish denomination");
+  text: unknown jewish denomination;
   set notice;
 }
 *[religion=catholic] {
-  text: "Should be religion=christian + denomination=catholic";
+  text: Should be religion=christian + denomination=catholic;
   set notice;
 }
 
@@ -6085,17 +6087,17 @@ area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("
 way[bridge][!layer][setting("warnings")],
 way[tunnel][tunnel!=building_passage][!layer][setting("warnings")]
 {
+    text: Missing layer or building_passage;
     dashes-background-color: yellow;
     dashes: 24,6;
-    text: Missing layer or building_passage;
     set warning;
 }   
 way[bridge]["layer"=~/-/][setting("warnings")],
 way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][setting("warnings")]
 {
+    text: Wrong layer value;
     dashes-background-color: yellow;
     dashes: 24,6;
-    text: Wrong layer value;
     set warning;
 }
 node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
