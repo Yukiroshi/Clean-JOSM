@@ -1689,8 +1689,10 @@ area[leisure=track][!area?!]:closed {
     fill-color: leisuretrack#d4f4b9;
 }
 way[leisure=track] {
-    width: 2;
-    color: leisuretrack#de5b82b;
+    width: 3.3;
+    color: leisuretrack#79c8aa;
+    casing-width: 1;
+    casing-color: #49a781;
 }
 node[leisure=track] {
     icon-image: "presets/sport/track.svg";
