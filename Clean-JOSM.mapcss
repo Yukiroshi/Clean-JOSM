@@ -4605,7 +4605,9 @@ area[building][!building?!][wall?!],
 area[building:part][!building:part?!] {
     fill-color: buildingpart#b59494;
 }
-
+*[building=~/house|detached/][!is_prop_set(icon-image)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/building-house.svg";
+}
 *[building=~/barn|farm_auxiliary/][!is_prop_set(icon-image)] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barn.svg";
 }
