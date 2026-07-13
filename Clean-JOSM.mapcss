@@ -4030,7 +4030,10 @@ node[natural=tree][leaf_type=leafless] {
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
-
+node|z-17[natural=tree] {
+    icon-image: false;
+    symbol-fill-color: #6bb018;
+}
 node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16 * prop(zoom);
@@ -5245,6 +5248,8 @@ node|z10- {
     symbol-stroke-color: #333;
     symbol-stroke-width: 1 * prop(zoom, default);
     symbol-stroke-opacity: 0.75;
+}
+node|z10-[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: #ddd;
 }
 node|z10-[setting("high_contrast")] {
@@ -5269,6 +5274,8 @@ way!:closed >[index=1] node!:connection {
 }
 node:tagged {
     symbol-size: 8 * prop(zoom, default);
+}
+node[!is_prop_set(symbol-fill-color)]:tagged {
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
 }
