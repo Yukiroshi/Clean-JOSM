@@ -5168,7 +5168,7 @@ way[surface=grass]::surface {
 }
 
 /******************/
-/* Bridge, tunnel */
+/* Bridge, tunnel etc*/
 /******************/
 
 area[man_made=bridge] {
@@ -5197,6 +5197,14 @@ way[tunnel][man_made!=tunnel]::tunnel {
     width: prop(width, outer_line);
     color: tunnel#333;
     opacity: 0.5;
+    z-index: 0.09 + tag(layer);
+    major-z-index: 3;
+}
+way[covered][covered!=no]::tunnel,
+way[bridge=covered]::tunnel {
+    width: prop(width, outer_line);
+    color: tunnel#555;
+    opacity: 0.25;
     z-index: 0.09 + tag(layer);
     major-z-index: 3;
 }
