@@ -5512,8 +5512,7 @@ node[aerialway=~/cable_car|gondola|chair_lift|mixed_lift|drag_lift|t-bar|j-bar|p
 node[sport=skating],
 
 node[natural=~/glacier|scree|shingle|scrub|shrubbery|fell|heath|tree_row|grassland|wetland|water|coastline|mud|beach|sand|land|bare_rock|arete|ridge|valley/],
-*[leaf_type][!natural][landuse!=forest],
-way[leaf_type][!barrier=hedge],
+*[leaf_type][!natural][landuse!=forest][!barrier=hedge],
 
 node[waterway=~/water_point|waste_disposal|mooring|river|riverbank|canal|wadi|stream|ditch|drain/],
 
