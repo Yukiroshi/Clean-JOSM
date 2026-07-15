@@ -3895,16 +3895,16 @@ area[natural=wetland]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland.png";
 }
 area[natural=wetland][wetland=bog]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-bog.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-bog.png";
 }
 area[natural=wetland][wetland=marsh]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-marsh.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-marsh.png";
 }
 area[natural=wetland][wetland=reedbed]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-reedbed.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-reedbed.png";
 }
 area[natural=wetland][wetland=swamp]::fill {
-    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-swamp.svg";
+    fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-wetland-swamp.png";
 }
 area[natural=water][!is_prop_set("fill-color")],
 relation[natural=water][!is_prop_set("fill-color")] >[role=outer] way[!is_prop_set("fill-color")] {
