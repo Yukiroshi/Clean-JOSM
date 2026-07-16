@@ -5383,6 +5383,12 @@ way[highway],
 way[railway] {
     text: auto;
 }
+way[highway][ref],
+way[railway][ref] {
+    text: concat(tag("name")," (", tag(ref), ")")
+}
+
+
 area:closed:area-style[is_prop_set(icon-image)] {
     text-offset-y: -20 * prop(zoom);
 }
