@@ -5276,8 +5276,6 @@ way!:closed >[index=1] node!:connection {
 }
 node:tagged {
     symbol-size: 8 * prop(zoom, default);
-}
-node[!is_prop_set(symbol-fill-color)]:tagged {
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
 }
