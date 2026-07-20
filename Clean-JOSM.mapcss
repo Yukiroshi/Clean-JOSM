@@ -2394,8 +2394,8 @@ area[amenity] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space.svg";
     fill-color: parking_space#ddd;
 }
-*[amenity=parking_space][wheelchair?] {
-    icon-image: "presets/vehicle/parking/handicapped.svg";
+*[amenity=parking_space][parking_space=disabled] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space-disabled.svg";
 }
 *[amenity=trolley_bay] {
     icon-image: "presets/vehicle/parking/trolley_bay.svg";
