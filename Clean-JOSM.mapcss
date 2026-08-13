@@ -74,19 +74,20 @@ canvas {
 node {
     color: #333;
 }
-/* Most accurate pixel/metre */
-*|z-15 { pixel_per_metre: 0.22; }
-*|z16  { pixel_per_metre: 0.44; }
-*|z17  { pixel_per_metre: 0.88; }
-*|z18  { pixel_per_metre: 1.76; }
-*|z19  { pixel_per_metre: 3.52; }
-*|z20  { pixel_per_metre: 7.03; }
-*|z21  { pixel_per_metre: 14.06; }
-*|z22  { pixel_per_metre: 28.13; }
-*|z23  { pixel_per_metre: 56.25; }
-*|z24  { pixel_per_metre: 112.5; }
-*|z25  { pixel_per_metre: 225; }
-*|z26- { pixel_per_metre: 450; }
+
+/* Pixel/metre */
+*|z-15 { pixel_per_metre: 0.312; }
+*|z16  { pixel_per_metre: 0.625; }
+*|z17  { pixel_per_metre: 1.25; }
+*|z18  { pixel_per_metre: 2.5; }
+*|z19  { pixel_per_metre: 5; }
+*|z20  { pixel_per_metre: 10; }
+*|z21  { pixel_per_metre: 20; }
+*|z22  { pixel_per_metre: 40; }
+*|z23  { pixel_per_metre: 80; }
+*|z24  { pixel_per_metre: 160; }
+*|z25  { pixel_per_metre: 320; }
+*|z26- { pixel_per_metre: 640; }
 
 /* Zoom level scaling */
 *|z-13 { zoom: 0.6; }
@@ -3100,7 +3101,7 @@ relation[landuse=greenfield] >[role=outer] way {
 }
 area[landuse=railway],
 relation[landuse=railway] >[role=outer] way {
-    fill-color: railland#888888;
+    fill-color: landuse_railway#d795c4;
 }
 area[landuse=construction],
 relation[landuse=construction] >[role=outer] way {
@@ -3249,7 +3250,7 @@ way[railway=preserved][service=~/crossover|siding|yard|spur/] {
     width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
-    casing-color: raildashed#ddccaa;
+    casing-color: raildashed#777;
     opacity: 1;
 }
 
@@ -3288,7 +3289,7 @@ way[railway=monorail][service=yard],
 way[railway=monorail][service=spur] {
     dashes: 6,6;
 }
-area[railway=turntable] {
+area[railway=~/turntable|loading_ramp/] {
     fill-color: rail#404040;
 }
 node[railway=turntable] {
@@ -4061,37 +4062,37 @@ area[tourism=camp_pitch],
 area[tourism=caravan_site] {
     fill-color: hotel#feced0;
 }
-node[tourism=hotel] {
+*[tourism=hotel] {
     icon-image: "presets/accommodation/hotel.svg";
 }
-node[tourism=motel] {
+*[tourism=motel] {
     icon-image: "presets/accommodation/motel.svg";
 }
-node[tourism=guest_house] {
+*[tourism=guest_house] {
     icon-image: "presets/accommodation/guest_house.svg";
 }
-node[tourism=apartment] {
+*[tourism=apartment] {
     icon-image: "presets/accommodation/apartment.svg";
 }
-node[tourism=hostel] {
+*[tourism=hostel] {
     icon-image: "presets/accommodation/hostel.svg";
 }
-node[tourism=chalet] {
+*[tourism=chalet] {
     icon-image: "presets/accommodation/chalet.svg";
 }
-node[tourism=alpine_hut] {
+*[tourism=alpine_hut] {
     icon-image: "presets/accommodation/alpine_hut.svg";
 }
-node[tourism=wilderness_hut] {
+*[tourism=wilderness_hut] {
     icon-image: "presets/accommodation/wilderness_hut.svg";
 }
-node[tourism=camp_site] {
+*[tourism=camp_site] {
     icon-image: "presets/accommodation/camping.svg";
 }
-node[tourism=camp_pitch] {
+*[tourism=camp_pitch] {
     icon-image: "presets/accommodation/camp_pitch.svg";
 }
-node[tourism=caravan_site] {
+*[tourism=caravan_site] {
     icon-image: "presets/accommodation/caravan.svg";
 }
 area[tourism=attraction]:closed {
@@ -4101,7 +4102,7 @@ way[tourism=attraction] {
     width: 2;
     color: tourism#e180a2;
 }
-node[tourism=attraction] {
+*[tourism=attraction] {
     icon-image: "presets/sightseeing/attraction.svg";
 }
 area[tourism=picnic_site],
@@ -4112,16 +4113,16 @@ area[tourism=gallery],
 area[tourism=museum] {
     fill-color: tourism#e180a2;
 }
-node[tourism=picnic_site] {
+*[tourism=picnic_site] {
     icon-image: "presets/leisure/picnic.svg";
 }
 node[tourism=viewpoint] {
     icon-image: "presets/sightseeing/viewpoint.svg";
 }
-node[tourism=theme_park] {
+*[tourism=theme_park] {
     icon-image: "presets/leisure/theme_park.svg";
 }
-node[tourism=zoo] {
+*[tourism=zoo] {
     icon-image: "presets/leisure/zoo.svg";
 }
 *[tourism=artwork][!highway] {
@@ -4141,10 +4142,10 @@ node[tourism=zoo] {
 *[historic=memorial][memorial=bust] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bust.svg";
 }
-node[tourism=gallery] {
+*[tourism=gallery] {
     icon-image: "presets/sightseeing/gallery.svg";
 }
-node[tourism=museum] {
+*[tourism=museum] {
     icon-image: "presets/sightseeing/museum.svg";
 }
 
@@ -5385,9 +5386,8 @@ way[railway] {
 }
 way[highway][ref],
 way[railway][ref] {
-    text: concat(tag("name")," (", tag(ref), ")")
+    text: concat(tag("name"), " | ", tag("operator:short"), " (", tag(ref), ")")
 }
-
 
 area:closed:area-style[is_prop_set(icon-image)] {
     text-offset-y: -20 * prop(zoom);
@@ -5489,11 +5489,11 @@ node[tunnel?!],
 node[cutting?!],
 node[embankment?!],
 
-node[barrier=~/hedge|wall|guard_rail|city_wall|retaining_wall|ditch/],
+node[barrier=~/hedge|^wall$|guard_rail|city_wall|retaining_wall|ditch/],
 
-node[highway=~/motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|road|unsurfaced|track|residential|living_street|service|bridleway|cycleway|footway|path|pedestrian|bus_guideway|platform/][highway!=motorway_junction],
+node[highway=~/^motorway$|motorway_link|^trunk$|trunk_link|^primary$|primary_link|^secondary$|secondary_link|^tertiary$|tertiary_link|unclassified|^road$|unsurfaced|track|residential|living_street|^service$|bridleway|cycleway|footway|path|pedestrian|bus_guideway|platform/],
 
-node[cycleway=~/lane|opposite_lane|track|opposite_track|opposite/],
+node[cycleway=~/^lane$|opposite_lane|^track$|opposite_track|^opposite$/],
 
 node[power=~/plant|sub_station|line|cable|minor_line/],
 
@@ -5505,7 +5505,7 @@ node[leisure=park],
 
 node[landuse],
 
-node[railway=~/rail|light_rail|subway|preserved|disused|railway=abandoned|narrow_gauge|monorail|platform|funicular/][railway!~/subway_entrance|railway_crossing/],
+node[railway=~/^rail$|light_rail|^subway$|preserved|disused|abandoned|narrow_gauge|monorail|platform|funicular/],
 
 node[service=~/yard|siding|spur/],
 
@@ -5522,7 +5522,7 @@ node[waterway=~/water_point|waste_disposal|mooring|river|riverbank|canal|wadi|st
 
 node[route=~/bus|ferry|flight|ncn|subsea|ski|tour|pub_crawl/],
 
-node[boundary=~/national|administrative|postal_code|political|national_park/],
+node[boundary=~/^national$|administrative|postal_code|political|national_park/],
 
 node[building=entrance]
 {
