@@ -3202,10 +3202,10 @@ node[railway=level_crossing] {
     icon-image: "presets/transport/railway/level_crossing.svg";
 }
 way[railway=rail] {
-    width: 2 * prop(zoom);
+    width: 2.5 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
-    casing-color: raildashed#555555;
+    casing-color: raildashed#333;
     casing-width: 2 * prop(zoom);
 }
 
@@ -3217,18 +3217,18 @@ way[!highway][railway=tram] {
     width: 2 * prop(zoom, default);
     color: rail#ddd;
     dashes: 12,12;
-    casing-color: raildashed#555555;
+    casing-color: raildashed#555;
     casing-width: 2 * prop(zoom);
 }
 way[railway=light_rail] {
     width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
-    casing-color: raildashed#555555;
+    casing-color: raildashed#555;
     casing-width: 2 * prop(zoom);
 }
 way[railway=subway] {
-    width: 2 * prop(zoom);
+    width: 2.5 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     casing-color: raildashed#333;
@@ -3239,7 +3239,7 @@ way[railway=preserved] {
     width: 2 * prop(zoom);
     color: oldrail#ddd;
     dashes: 9,9;
-    casing-color: raildashed#555555;
+    casing-color: raildashed#555;
     casing-width: 2 * prop(zoom);
 }
 way[railway=rail][service=~/crossover|siding|yard|spur/],
@@ -3248,7 +3248,7 @@ way[railway=light_rail][service=~/crossover|siding|yard|spur/],
 way[railway=subway][service=~/crossover|siding|yard|spur/],
 way[railway=preserved][service=~/crossover|siding|yard|spur/] {
     width: 2 * prop(zoom);
-    color: rail#ddd;
+    color: rail#eee;
     dashes: 12,12;
     casing-color: raildashed#777;
     opacity: 1;
@@ -4393,7 +4393,7 @@ relation[boundary=religious_administration] > way[!building] {
     z-index: 2;
     modifier: false;
     width: 1.25 * prop(zoom);
-    color: boundary#ddd;
+    color: boundary#fff;
     casing-color: #ffd454;
     casing-background-color: prop(color);
     casing-width: prop(width) * 1.5 * prop(zoom);
@@ -4823,9 +4823,6 @@ way[barrier=jersey_barrier] {
 }
 
 /* Brands */
-*[brand] {
-    icon-height: 35 * prop(zoom);
-}
 *[shop][brand*="Aldi"]  {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Aldi-Nord.svg";
 }
@@ -5010,6 +5007,7 @@ way[barrier=jersey_barrier] {
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/5/5e/PKO_Bank_Polski_2011.svg";
 }
 *[amenity][brand*="mBank"] {
+    icon-height: 15;
     icon-image: "https://static.wikia.nocookie.net/logopedia/images/8/8c/MBank_individual_%282020%29.svg";
 }
 *[amenity][brand*="Millennium Bank"] {
@@ -5128,14 +5126,13 @@ way[highway][access=permissive][!area]!:area-style::access
 
 way[highway][setting(surface)][surface]!:area-style::surface 
 {
-    width: prop(width, outer_line) * 1.25;
+    width: prop(width, outer_line) * 1.5;
     color: #aaa;
     z-index: 0.07 + tag(layer);
     opacity: 1;
     set other;
 }
 way[surface=paved]::surface {
-    dashes: 9,3;
     color: #555;
 }
 way[surface=asphalt]::surface {
