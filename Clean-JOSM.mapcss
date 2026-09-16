@@ -305,6 +305,10 @@ node|z18-.has_cone::direction_cone
 }
 
 
+relation > * {
+    set member;
+}
+
 
 /* Incline by Klumbumbus */
 
@@ -4031,10 +4035,6 @@ node[natural=tree][leaf_type=leafless] {
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
-node|z-17[natural=tree] {
-    icon-image: false;
-    symbol-fill-color: #6bb018;
-}
 node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16 * prop(zoom);
@@ -5240,14 +5240,24 @@ node[/^disused:/] {
 node|z10- {
     symbol-shape: circle;
 }
-node|z10-[!setting("round_symbols")] {
+node|z10-[!setting("round_symbols")],
+node:unconnected {
     symbol-shape: square;
+}
+node|z10-[!setting("round_symbols")]:unconnected {
+    symbol-shape: triangle;
 }
 node|z10- {
     symbol-size: 6 * prop(zoom, default);
     symbol-stroke-color: #333;
     symbol-stroke-width: 1 * prop(zoom, default);
     symbol-stroke-opacity: 0.75;
+}
+node:unconnected{
+    symbol-size: 8 * prop(zoom, default);
+}
+node!:connection {
+    symbol-fill-color: #fff;
 }
 node|z10-[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: #ddd;
@@ -5260,8 +5270,7 @@ node|z10-[setting("high_contrast")] {
     symbol-fill-color: #333;
 }
 way > node:connection {
-    symbol-size: 7 * prop(zoom, default);
-    symbol-fill-color: #ccc;
+    symbol-fill-color: #bbb;
 }
 way > node:connection[setting("high_contrast")] {
     symbol-stroke-color: #eee;
@@ -5273,7 +5282,6 @@ way!:closed >[index=1] node!:connection {
     symbol-fill-color: #fff;
 }
 node:tagged {
-    symbol-size: 8 * prop(zoom, default);
     symbol-fill-color: #007bff;
     symbol-stroke-color: #ddd;
 }
@@ -6024,14 +6032,9 @@ way[route=ferry]!:closed >[index=-1] node[amenity!=ferry_terminal][man_made!=pie
     set notice;
 }
 
-
-relation[type=railway][railway=interlocking] > node
-{
-    set railway_interlocking;
-}
 /* #21801 */
-way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] > node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) > 2]!.railway_interlocking:connection,
-way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] >[index!=1][index!=-1] node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) == 2]!.railway_interlocking:connection {
+way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] > node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) > 2]!.member:connection,
+way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] >[index!=1][index!=-1] node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) == 2]!.member:connection {
     text: tr("Railways connection node without {0} or {1}", "railway=switch", "railway=railway_crossing");
     set notice;
 }
@@ -6047,7 +6050,7 @@ node[railway=switch]!:connection:in-downloaded-area {
   set notice;
 }
 *[religion=christian][denomination][denomination !~ /^(anglican|apostolic|baptist|catholic|church_of_scotland|christian_community|christian_scientist|coptic_orthodox|czechoslovak_hussite|dutch_reformed|evangelical|foursquare|greek_catholic|greek_orthodox|iglesia_ni_cristo|jehovahs_witness|kabbalah|karaite|living_waters_church|lutheran|maronite|mennonite|methodist|mormon|new_apostolic|nondenominational|old_catholic|orthodox|pentecostal|presbyterian|protestant|quaker|reformed|roman_catholic|romanian_orthodox|russian_orthodox|salvation_army|serbian_orthodox|seventh_day_adventist|spiritist|united|united_reformed|united|united_methodist|united_reformed|uniting)$/] {
-  text: unknown christian denomination;
+  text: unknown Christian denomination;
   set notice;
 }
 *[religion=muslim][denomination][denomination !~ /^(alaouite|druze|ibadi|ismaili|nondenominational|shia|sunni)$/] {
@@ -6126,13 +6129,21 @@ node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
     text: kerb without barrier=kerb;
     set notice;
 }
-
+node!:tagged:unconnected[setting("warnings")]!.member
+{
+    text: Lonely node without tags;
+    set notice;
+}
+way!:tagged[setting("warnings")]!.member
+{
+    text: Lonely way without tags;
+    set notice;
+}
 node!:tagged {
     major-z-index: 6;
 }
 
-*[setting("warnings")].notice 
-{
+*[setting("warnings")].notice {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
