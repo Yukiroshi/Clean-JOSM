@@ -5450,6 +5450,7 @@ way[shop]!:closed,
 way[office]!:closed,
 way[amenity][amenity!~/bench|check_in/]!:closed,
 way[landuse]!:closed,
+way[leisure=garden]!:closed,
 
 
 node[restriction],
@@ -5801,7 +5802,7 @@ node[amenity=parking]["capacity:disabled" !~ /^(yes|[0-9]+)$/] ∈ area[amenity=
 }
 
 /* #9556, #20570 */
-area:closed:areaStyle[tag("natural") = parent_tag("natural")] ⧉ area:closed:areaStyle[natural][natural !~ /^(water|wetland|coastline)$/] {
+area:closed:area-style[tag("natural") = parent_tag("natural")] ⧉ area:closed:area-style[natural][natural !~ /^(water|wetland|coastline)$/] {
     text: Overlapping identical natural areas;
     set notice;
 }
@@ -6095,12 +6096,12 @@ node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
 }
 node!:tagged:unconnected[setting("warnings")]!.member
 {
-    text: Lonely node without tags;
+    text: Untagged lonely node;
     set notice;
 }
 way!:tagged[setting("warnings")]!.member
 {
-    text: Lonely way without tags;
+    text: Untagged lonely way;
     set notice;
 }
 node!:tagged {
@@ -6137,6 +6138,7 @@ node!:tagged {
 /* Scaling (final)*/
 
 * {
+    icon-height: prop(icon-height) * prop(zoom);
     width: prop(width) * prop(zoom);
     symbol-size: prop(symbol-size) * prop(zoom);
     font-size: prop(font-size) * prop(zoom);
