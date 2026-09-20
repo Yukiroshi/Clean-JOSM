@@ -846,7 +846,7 @@ node[highway=services] {
     fill-color: services#ed6464;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/services.svg";
 }
-area[highway=rest_area],
+area[highway=rest_area]:closed,
 node[highway=rest_area] {
     fill-color: services#c0c0c0;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/rest-area.svg";
@@ -1967,9 +1967,6 @@ way[advertising=totem] {
 *[shop=curtain] {
     icon-image: "presets/shop/curtain.svg";
 }
-*[shop=cycle_repair] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bicycle-repair.svg";
-}
 *[shop=department_store] {
     icon-image: "presets/shop/mall.svg";
 }
@@ -2412,7 +2409,7 @@ area[amenity] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking.svg";
 }
 node[amenity=parking_entrance] {
-    icon-image: "presets/vehicle/parking/parking.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking.svg";
 }
 node[amenity=parking_entrance][parking=multi-storey] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-structure.svg";
@@ -4176,6 +4173,13 @@ area[historic][!is_prop_set(fill-color)] {
 *[historic=memorial][memorial=plaque] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/plaque.svg";
 }
+*[historic=memorial][memorial=bust] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bust.svg";
+}
+*[historic=memorial][memorial=statue] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/statue.svg";
+}
+
 *[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
 }
@@ -4665,7 +4669,8 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
 node[barrier] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/barrier.svg";
 }
-node[barrier=bollard] {
+node[barrier=bollard],
+node[lamp_mount=bollard] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bollard.svg";
 }
 node[barrier=gate] {
@@ -4756,9 +4761,10 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
-    z-index: 0.15;
+    z-index: 0.15 + tag(layer);
 }
-way[barrier=fence][fence_type=railing] {
+way[barrier=fence][fence_type=railing],
+way[barrier=handrail] {
     width: 1.5;
 }
 way[barrier=fence][fence_type=wood] {
@@ -5542,17 +5548,22 @@ way[incline][incline !~ /^(up|down|-?([0-9]+?(\.[1-9]%)?|100)[%°]?)$/] {
 }
 
 /* #14786 (should be safe to just remove the meters unit from the value) */
-*[ele][ele =~ /^-?[0-9]+(\.[0-9]+)? ?m$/] {
+*[ele =~ /^-?[0-9]+(\.[0-9]+)? ?m$/] {
   text: tr("Ele must be a numeric value, in meters and without units");
   set notice;
 }
-*[ele][ele =~ /^[0-9]+,[0-9][0-9]?$/] {
-  text: tr("Unusual value of ele: use . instead of , as decimal separator");
+*[ele =~ /^-?[0-9]+(\.[0-9]+)? ?m$/] {
+  text: tr("Ele must be a numeric value, in meters and without units");
+  set notice;
+}
+*[ele =~ /,/],
+*[height =~ /,/] {
+  text: tr("Use . instead of , as decimal separator");
   set notice;
 }
 
 /* #17530 */
-*[ele][ele =~ /^-?[0-9]+\.[0-9][0-9][0-9]+$/] {
+*[ele =~ /^-?[0-9]+\.[0-9][0-9][0-9]+$/] {
   text: tr("Unnecessary amount of decimal places");
   set notice;
 }
@@ -5882,7 +5893,13 @@ node:unconnected:in-downloaded-area[barrier=cycle_barrier],
 node:unconnected:in-downloaded-area[barrier=hampshire_gate],
 node:unconnected:in-downloaded-area[barrier=height_restrictor],
 node:unconnected:in-downloaded-area[barrier=debris] {
-    text: Node must be connected to a way;
+    text: Node should be connected to a way;
+    set notice;
+}
+
+node[bollard][barrier!=bollard],
+*[fence_type][barrier!=fence] {
+    text: Missing main tag;
     set notice;
 }
 
