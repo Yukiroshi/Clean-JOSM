@@ -1649,8 +1649,8 @@ node[club] {
 
 /*TO DO*/
 
-area[leisure=~/bandstand|sports_centre|leisure=fitness_centre|leisure=stadium|horse_riding|resort|beach_resort|water_park|outdoor_seating/],
-relation[leisure=~/bandstand|sports_centre|leisure=fitness_centre|leisure=stadium|horse_riding|resort|beach_resort|water_park|outdoor_seating/] >[role=outer] way {
+area[leisure],
+relation[leisure] >[role=outer] way {
     fill-color: leisure#c7f1a3;
 }
 *[leisure=bandstand] {
@@ -4093,7 +4093,7 @@ area[tourism=caravan_site] {
 *[tourism=caravan_site] {
     icon-image: "presets/accommodation/caravan.svg";
 }
-area[tourism=attraction]:closed {
+area[tourism=attraction][!is_prop_set(fill-color)]:closed {
     fill-color: tourism#e180a2;
 }
 way[tourism=attraction] {
@@ -5168,7 +5168,7 @@ node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
 way[bridge][man_made!=bridge]::bridge {
-    width: (((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 )) * 1.25;
+    width: (((prop(width, outer_line) + prop("outer-width", default) * prop("casing-width", default)) + 3 )) * 1.25;
     color: bridge#111;
     opacity: 0.75;
     z-index: 0.06 + tag(layer);
