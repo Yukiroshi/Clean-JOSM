@@ -2656,7 +2656,7 @@ node[amenity=letter_box] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg"; /*TO DO needs unique icon*/
 }
 area[amenity=~/pharmacy|hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
-    fill-color: health#eeeeee;
+    fill-color: health#ddd;
 }
 *[amenity=pharmacy] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pharmacy.svg";
@@ -5213,32 +5213,32 @@ node {
 node[/^disused:/] {
     text: tr("");
 }
-node|z10- {
+node {
     symbol-shape: circle;
 }
-node|z10-[!setting("round_symbols")],
+node[!setting("round_symbols")],
 node:unconnected {
     symbol-shape: square;
 }
-node|z10-[!setting("round_symbols")]:unconnected {
+node[!setting("round_symbols")]:unconnected {
     symbol-shape: triangle;
 }
-node|z10- {
+node {
     symbol-size: 5;
     symbol-stroke-color: #333;
     symbol-stroke-width: 1 * prop(zoom, default);
     symbol-stroke-opacity: 0.75;
 }
-node:unconnected{
-    symbol-size: 7;
+node:unconnected {
+    symbol-size: prop(symbol-size) + 2;
 }
 node!:connection {
     symbol-fill-color: #fff;
 }
-node|z10-[!is_prop_set(symbol-fill-color)] {
+node[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: #ddd;
 }
-node|z10-[setting("high_contrast")] {
+node[setting("high_contrast")] {
     symbol-size: 6;
     symbol-stroke-color: #eee;
     symbol-stroke-width: 1 * prop(zoom, default);
@@ -5306,7 +5306,7 @@ area|z-16[setting("hide_icons")]:closed2:area-style {
 area|z-15[setting("hide_icons")][building] {
     fill-opacity: 0;
 }
-*|z-18[setting("hide_icons")]!.text_z0 {
+*|z-18[setting("hide_icons")] {
     text: false;
 }
 *[setting("high_contrast")] {
@@ -5314,7 +5314,7 @@ area|z-15[setting("hide_icons")][building] {
     casing-width: prop(casing-width) * 1.05;
 }
 node:selected {
-    symbol-size: 8;
+    symbol-size: prop(symbol-size) * 1.1;
     symbol-fill-color: #ff0055;
     symbol-stroke-color: #fff;
     symbol-fill-opacity: 1;
@@ -6111,15 +6111,19 @@ node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
     text: kerb without barrier=kerb;
     set notice;
 }
-node!:tagged:unconnected[setting("warnings")]!.member
+node!:tagged:unconnected!:selected[setting("warnings")]!.member
 {
     text: Untagged lonely node;
     set notice;
 }
-way!:tagged[setting("warnings")]!.member
+way!:tagged!:selected[setting("warnings")]!.member
 {
     text: Untagged lonely way;
     set notice;
+}
+way!:tagged:selected
+{
+    color: #ff0000;
 }
 node!:tagged {
     major-z-index: 6;
@@ -6129,7 +6133,7 @@ node!:tagged {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
-    font-size: 14;
+    font-size: 13;
     font-weight: bold;
     text-color: #eee;
     text-halo-color: #333;
@@ -6148,7 +6152,7 @@ node!:tagged {
     text-color: red;
     text-halo-color: yellow;
     text-halo-radius: 1.5;
-    width: prop(width, default) * 3;
+    width: prop(width, default) * 2;
     color: red;
 }
 
