@@ -332,7 +332,7 @@ way[highway][incline][incline =~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline
 /* Render arrows */
 way[highway][incline] > node|z19-.incline_down::incline_down {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/arrow-up.svg";
-    icon-height: 20 * prop(zoom);
+    icon-height: 20 * prop(zoom,default);
     icon-anchor-horizontal: center;
     icon-anchor-vertical: center;
 }
@@ -344,7 +344,7 @@ way[highway][incline] >[index=-1] node|z19-.incline_down::incline_down {
 }
 way[highway][incline] > node|z19-.incline_up::incline_up {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/arrow-down.svg";
-    icon-height: 20 * prop(zoom);
+    icon-height: 20 * prop(zoom,default);
     icon-anchor-horizontal: center;
     icon-anchor-vertical: center;
 }
@@ -654,7 +654,7 @@ way[highway=footway][!area?][footway=sidewalk] {
     color: sidewalk#d9a1a1;
 }
 way[highway=path] {
-    width: 2.5;
+    width: 2;
     color: path#998888;
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
     outer-width: 2;
@@ -678,7 +678,7 @@ way[highway=pedestrian][!area?] {
     casing-color: #555;
 }
 way[highway=steps] {
-    width: 2.5;
+    width: 2;
     dashes: list(3 * prop(zoom), 3 * prop(zoom));
     color: steps#81d25c;
     outer-width: 2;
@@ -1725,13 +1725,15 @@ way[leisure=slipway] {
 node[leisure=slipway] {
     icon-image: "presets/nautical/slipway.svg";
 }
-area[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/],
-relation[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/] >[role=outer] way {
+area[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/] {
     fill-color: leisure#7bed88;
 }
 area[leisure=~/playground|fitness_station/],
-relation[leisure=~/playground|fitness_station/] >[role=outer] way {
+area[playground]:closed {
     fill-color: leisure_playground#b2ffbb;
+}
+way[playground] {
+    color: leisure_playground#b2ffbb;
 }
 node[leisure=fishing] {
     icon-image: "presets/sport/fishing.svg";
@@ -4763,7 +4765,8 @@ way[barrier] {
     width: 2;
     color: barrier#ddd;
     dashes: 12,2,2,2;
-    z-index: 0.15 + tag(layer);
+    z-index: tag(layer) + 0.15;
+    major-z-index: 3;
 }
 way[barrier=fence][fence_type=railing],
 way[barrier=handrail] {
@@ -5316,7 +5319,7 @@ area|z-15[setting("hide_icons")][building] {
     casing-width: prop(casing-width) * 1.05;
 }
 node:selected {
-    symbol-size: prop(symbol-size) * 1.1;
+    symbol-size: prop(symbol-size) + 2;
     symbol-fill-color: #ff0055;
     symbol-stroke-color: #fff;
     symbol-fill-opacity: 1;
