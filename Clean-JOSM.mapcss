@@ -557,7 +557,7 @@ way[highway=track] {
     width: 5;
     track: #c5b59f;
     color: prop(track);
-    casing-dashes: list(3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),5 * prop(zoom), * prop(zoom)3 * prop(zoom));
+    casing-dashes: list(3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),5 * prop(zoom),3 * prop(zoom));
     casing-color: #ddd;
 }
 way[highway=track][tracktype=grade1] {
