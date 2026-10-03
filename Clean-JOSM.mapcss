@@ -74,6 +74,9 @@ canvas {
 node {
     color: #333;
 }
+relation > * {
+    set member;
+}
 
 /* Pixel/metre */
 *|z-15 { pixel_per_metre: 0.312; }
@@ -90,26 +93,25 @@ node {
 *|z26- { pixel_per_metre: 640; }
 
 /* Zoom level scaling */
-*|z-13 { zoom: 0.6; }
-*|z14-  { zoom: 0.65; }
-*|z15-  { zoom: 0.7; }
-*|z16-  { zoom: 0.75; }
-*|z17-  { zoom: 0.8; }
-*|z18-  { zoom: 0.85; }
-*|z19-  { zoom: 0.9; }
-*|z20-  { zoom: 0.95; }
-*|z21-  { zoom: 1.1; }
-*|z22-  { zoom: 1.2; }
-*|z23-  { zoom: 1.3; }
-*|z24-  { zoom: 1.4; }
-*|z25- { zoom: 1.5; }
+*|z-13::*  { zoom: 0.6; }
+*|z14-::*  { zoom: 0.65; }
+*|z15-::*  { zoom: 0.7; }
+*|z16-::*  { zoom: 0.75; }
+*|z17-::*  { zoom: 0.8; }
+*|z18-::*  { zoom: 0.85; }
+*|z19-::*  { zoom: 0.9; }
+*|z20-::*  { zoom: 0.95; }
+*|z21-::*  { zoom: 1.1; }
+*|z22-::*  { zoom: 1.2; }
+*|z23-::*  { zoom: 1.3; }
+*|z24-::*  { zoom: 1.4; }
+*|z25-::*  { zoom: 1.5; }
 
-*[setting("scaling")] { zoom: prop(zoom) * 1.25}
+*[setting("scaling")]::* { zoom: prop(zoom) * 1.25}
 
-* {
-    icon-height: 20;
+*::* {
+    icon-height: 17;
 }
-
 
 
 /**********/
@@ -149,22 +151,18 @@ way[highway=~/footway|pedestrian|path/] > node[highway] {
 }
 way[highway] > node[crossing:island=yes]::traffic_island {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
-    icon-height: prop(icon-height, "default");
 }
 way[highway] > node[crossing=traffic_signals]::traffic_signals,
 way[highway] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
-    icon-height: prop(icon-height, "default");
 }
 
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-    icon-height: prop(icon-height, "default");
 }
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
-    icon-height: prop(icon-height, "default");
 }
 
 /* Numeric and cardinal directions */
@@ -188,61 +186,45 @@ node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direc
     set has_cone;
     icon-rotation: cardinal_to_radians(tag("camera:direction"));
 }
-node["light:direction">=0]["light:direction"<360]::direction_cone {
-    set has_cone;
-    icon-rotation: degree_to_radians(tag("light:direction"));
-}
-node["light:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
-    set has_cone;
-    icon-rotation: cardinal_to_radians(tag("light:direction"));
-}
 
 /* Secondary intercardinal direction (not supported by cardinal_to_radians) */
 
 node[camera:direction=NNE]::direction_cone,
-node[light:direction=NNE]::direction_cone,
 node[direction=NNE]::direction_cone {
     set has_cone;
     icon-rotation: 22.5deg;
 }
 node[camera:direction=ENE]::direction_cone,
-node[light:direction=ENE]::direction_cone,
 node[direction=ENE]::direction_cone {
     set has_cone;
     icon-rotation: 67.5deg;
 }
 node[camera:direction=ESE]::direction_cone,
-node[light:direction=ESE]::direction_cone,
 node[direction=ESE]::direction_cone {
     set has_cone;
     icon-rotation: 112.5deg;
 }
 node[camera:direction=SSE]::direction_cone,
-node[light:direction=SSE]::direction_cone,
 node[direction=SSE]::direction_cone {
     set has_cone;
     icon-rotation: 157.5deg;
 }
-node[camera:direction=SSW]::direction_cone,
 node[camera:direction=SSW]::direction_cone,
 node[direction=SSW]::direction_cone {
     set has_cone;
     icon-rotation: 202.5deg;
 }
 node[camera:direction=WSW]::direction_cone,
-node[light:direction=WSW]::direction_cone,
 node[direction=WSW]::direction_cone {
     set has_cone;
     icon-rotation: 247.5deg;
 }
 node[camera:direction=WNW]::direction_cone,
-node[light:direction=WNW]::direction_cone,
 node[direction=WNW]::direction_cone {
     set has_cone;
     icon-rotation: 292.5deg;
 }
 node[camera:direction=NNW]::direction_cone,
-node[light:direction=NNW]::direction_cone,
 node[direction=NNW]::direction_cone {
     set has_cone;
     icon-rotation: 337.5deg;
@@ -290,26 +272,271 @@ way|z18-[oneway != -1] > node[direction=both]::direction_cone_back
 node|z18-.has_cone_back::direction_cone_back  /* Render cone for matched nodes */
 {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25 * prop(zoom, default);
-    icon-offset-y: -13 * prop(zoom, default);
+    icon-height: 25 * prop(zoom);
+    icon-offset-y: -13 * prop(zoom);
     z-index: -1;
 }
-
-
-
 
 node|z18-.has_cone::direction_cone 
 {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25 * prop(zoom, default);
-    icon-offset-y: -12 * prop(zoom, default);
+    icon-height: 25 * prop(zoom);
+    icon-offset-y: -12 * prop(zoom);
     z-index: -1;
 }
 
+/* Lights by NieWnen */
 
-relation > * {
-    set member;
+setting::base_circle_glow_size {
+    type: double;
+    label: tr("Base circle glow size");
+    default: 30;
 }
+
+setting::base_circle_glow_opacity {
+    type: double;
+    label: tr("Base circle glow opacity (0.0-1.0)");
+    default: 0.4;
+}
+
+setting::light_point_icon_size {
+    type: double;
+    label: tr("Light point icon size.");
+    default: 35;
+}
+
+setting::light_point_icon_opacity {
+    type: double;
+    label: tr("Light point icon opacity (0.0-1.0)");
+    default: 0.85;
+}
+
+setting::light_point_icon_radius {
+    type: double;
+    label: tr("Light point icon position from center (radius)");
+    default: 10;
+}
+
+node[highway=street_lamp]::*,
+node[light_source]::* { prop_lamp_type: "electric"; prop_symbol_fill_color: "#ffbb44"; }
+node[lamp_type=~/led|electric/]::*,
+node[light:method=~/led|electric/]::* { prop_lamp_type: "led"; prop_symbol_fill_color: "#faf9f0"; }
+
+/* Base glow */
+node[highway=street_lamp]::light_glow,
+node[light_source]::light_glow {
+    object-z-index: -1.0;
+    symbol-shape: circle;
+    symbol-size: setting(base_circle_glow_size) * prop(zoom);
+    symbol-fill-opacity: setting(base_circle_glow_opacity);
+    symbol-fill-color: prop(prop_symbol_fill_color);
+}
+
+/* Light points with light:count/light:direction tags */
+
+/*
+Each lamp point contains invisible text, because lamp points tend to glitch slightly.
+For example, when the direction value changes, the lamp point start to jump when selecting object or zooming the view.
+The "text" label forces JOSM to re-render on each degree change.
+
+I suppose that JOSM caches certain attribute values, such as "text", but not "icon-offset-*",  and it listens for any changes in those cache attributes to trigger a re-render.
+*/
+
+/* --- Light point 1 --- */
+node[highway=street_lamp]::light_1,
+node[light_source]::light_1 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 0;
+    degree: cond(prop(direction_len) > 0, get(prop(direction_list), 0), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 0 || tag("light:count") > 0, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 2 --- */
+node[highway=street_lamp]::light_2,
+node[light_source]::light_2 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 360/tag("light:count");
+    degree: cond(prop(direction_len) > 1, get(prop(direction_list), 1), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 1 || tag("light:count") > 1, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 3 --- */
+node[highway=street_lamp]::light_3,
+node[light_source]::light_3 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 2*360/tag("light:count");
+    degree: cond(prop(direction_len) > 2, get(prop(direction_list), 2), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 2 || tag("light:count") > 2, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 4 --- */
+node[highway=street_lamp]::light_4,
+node[light_source]::light_4 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 3*360/tag("light:count");
+    degree: cond(prop(direction_len) > 3, get(prop(direction_list), 3), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 3 || tag("light:count") > 3, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 5 --- */
+node[highway=street_lamp]::light_5,
+node[light_source]::light_5 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 4*360/tag("light:count");
+    degree: cond(prop(direction_len) > 4, get(prop(direction_list), 4), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 4 || tag("light:count") > 4, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 6 --- */
+node[highway=street_lamp]::light_6,
+node[light_source]::light_6 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 5*360/tag("light:count");
+    degree: cond(prop(direction_len) > 5, get(prop(direction_list), 5), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 5 || tag("light:count") > 5, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 7 --- */
+node[highway=street_lamp]::light_7,
+node[light_source]::light_7 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 6*360/tag("light:count");
+    degree: cond(prop(direction_len) > 6, get(prop(direction_list), 6), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 6 || tag("light:count") > 6, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+/* --- Light point 8 --- */
+node[highway=street_lamp]::light_8,
+node[light_source]::light_8 {
+    direction_list: split(";", tag("light:direction"));
+    direction_len: length(prop(direction_list));
+    
+    default_degree: 7*360/tag("light:count");
+    degree: cond(prop(direction_len) > 7, get(prop(direction_list), 7), prop(default_degree));
+    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
+    text: concat(prop(x), ", ", prop(y));
+    text-opacity: 0.0;
+    
+    icon-height: setting(light_point_icon_size) * prop(zoom);
+    icon-opacity: cond(prop(direction_len) > 7 || tag("light:count") > 7, setting(light_point_icon_opacity), 0);
+    icon-offset-x: prop(x);
+    icon-offset-y: prop(y);
+}
+
+node[prop("prop_lamp_type")="led"]::light_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+node[prop("prop_lamp_type")="led"]::light_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
+
+node[prop("prop_lamp_type")!="led"]::light_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+node[prop("prop_lamp_type")!="led"]::light_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
+
+/*MIT License
+
+Copyright (c) 2025 Paweł Raszuk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+
+/* End of lights */
+
+
 
 
 /* Incline by Klumbumbus */
@@ -532,10 +759,10 @@ way[highway=unclassified] {
 }
 
 way[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
-    width: 4 * prop(zoom, default);
+    width: 4 * prop(zoom);
 }
 way[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
-    width: 6 * prop(zoom, default);
+    width: 6 * prop(zoom);
     casing-color: #70372f;
 }
 
@@ -719,7 +946,7 @@ node[junction=yes] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/junction.svg";
 }
 node[highway] {
-    icon-height: 25;
+    icon-height: 20;
 }
 node[highway=traffic_mirror] {
     icon-image: "presets/vehicle/traffic_mirror.svg";
@@ -797,32 +1024,22 @@ node[highway=crossing]["crossing:markings"="ladder:paired"] {
 node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
 node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
-    icon-height: 30 * prop(zoom, default);
+    icon-height: 30 * prop(zoom);
 }
 node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
 node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
-    icon-height: 30 * prop(zoom, default);
+    icon-height: 30 * prop(zoom);
 }
 node[highway=street_lamp] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp.svg";
+    icon-height: 17;
 }
 node[highway=street_lamp][lamp_mount=straight_mast] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-straight.svg";
 }
 node[highway=street_lamp][lamp_mount=bent_mast] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
-}
-node|z17-[highway="street_lamp"]::light {
-    symbol-shape: circle;
-    symbol-size: 30 * prop(zoom, default);
-    symbol-fill-color: #ffee55;
-    symbol-fill-opacity: 0.4;
-    object-z-index: -1.0;
-}
-node|z17-[highway="street_lamp"][lamp_type=electric]::Light
-{
-    symbol-fill-color: #ddd;
 }
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
@@ -861,7 +1078,7 @@ node[ford] {
 }
 way[ford]::core_ford {
     z-index: 1;
-    width: 2 * prop(zoom, default);
+    width: 2 * prop(zoom);
     color: water#3330ff;
     dashes: 9,9;
     dashes-offset: 9;
@@ -1332,14 +1549,14 @@ way[man_made=embankment][!highway][!railway][!waterway] {
 way[embankment?][highway]::embankment,
 way[embankment?][railway]::embankment,
 way[embankment?][waterway]::embankment {
-    casing-width: eval(3 * prop(zoom, default) * prop(width, default));
+    casing-width: eval(3 * prop(zoom) * prop(width, default));
     casing-color: #9a5943;
     casing-dashes: 2,7;
 }
 way[cutting?][highway]::cutting,
 way[cutting?][railway]::cutting,
 way[cutting?][waterway]::cutting {
-    casing-width: eval(3 * prop(zoom, default) * prop(width, default));
+    casing-width: eval(3 * prop(zoom) * prop(width, default));
     casing-color: #B7FF07;
     casing-dashes: 2,4;
 }
@@ -3230,7 +3447,7 @@ way[railway=rail] {
 way[highway][railway=tram]::core_railway,
 way[!highway][railway=tram] {
     modifier: false; /* don't draw default way if there is no line on default layer */
-    width: 2 * prop(zoom, default);
+    width: 2 * prop(zoom);
     color: rail#ddd;
     dashes: 12,12;
     outer-color: raildashed#555;
@@ -4480,15 +4697,15 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)]
 node[prop(maxspeedclass, default)] 
 {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
-    icon-height: 25 * prop(zoom, default);
+    icon-height: 25 * prop(zoom);
 
     text: prop(maxspeedprop, default);
-    font-size: 11 * prop(zoom, default);
+    font-size: 11 * prop(zoom);
     font-weight: bold;
     text-color: black;
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-offset-x: 0.5 * prop(zoom, default);
+    text-offset-x: 0.5 * prop(zoom);
     text-offset-y: -1;
 }
 node[traffic_sign=maxspeed][maxspeed=implicit] 
@@ -4667,11 +4884,11 @@ area[indoor][!is_prop_set(fill-color)]:closed {
 area[building][!source:building][setting(highlight_buildings)]::highlight, relation[building][!source:building] > way[setting(highlight_buildings)]::highlight,
 area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::highlight, relation[building][source="www.geoportal.gov.pl"] > way[setting(highlight_buildings)]::highlight {
     color: #FF0055;
-    width: 3 * prop(zoom, default);
+    width: 3 * prop(zoom);
     dashes: 6,2;
     opacity: 1;
     text-color: #FF0055;
-    font-size: 12 * prop(zoom, default);
+    font-size: 12 * prop(zoom);
     major-z-index: 3.1;
 }
 
@@ -5244,7 +5461,7 @@ node[!setting("round_symbols")]:unconnected {
 node {
     symbol-size: 5;
     symbol-stroke-color: #333;
-    symbol-stroke-width: 1 * prop(zoom, default);
+    symbol-stroke-width: 1 * prop(zoom);
     symbol-stroke-opacity: 0.75;
 }
 node:unconnected {
@@ -5259,7 +5476,7 @@ node[!is_prop_set(symbol-fill-color)] {
 node[setting("high_contrast")] {
     symbol-size: 6;
     symbol-stroke-color: #eee;
-    symbol-stroke-width: 1 * prop(zoom, default);
+    symbol-stroke-width: 1 * prop(zoom);
     symbol-stroke-opacity: 1;
     symbol-fill-color: #333;
 }
@@ -5272,7 +5489,7 @@ way > node:connection[setting("high_contrast")] {
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
-    symbol-size: 7 * prop(zoom, default);
+    symbol-size: 7 * prop(zoom);
     symbol-fill-color: #fff;
 }
 node:tagged {
@@ -5282,11 +5499,11 @@ node:tagged {
 way {
     icon-position: line;
     text-position: line;
-    text-offset-y: prop(width) -15 * prop(zoom, default);
+    text-offset-y: prop(width) -15 * prop(zoom);
 }
 area:closed:area-style {
     text-position: center;
-    text-offset-y: -15 * prop(zoom, default);
+    text-offset-y: -15 * prop(zoom);
     fill-opacity: 0.3;
     icon-opacity: 0.75;
 }
@@ -5308,7 +5525,7 @@ node|z-17!:tagged[setting("hide_icons")] {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
-    width: 0.5 * prop(zoom, default);
+    width: 0.5 * prop(zoom);
     casing-width: 0;
 }
 
