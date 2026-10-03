@@ -4,6 +4,8 @@
 
 Modified incline originally made by Klumbumbus
 
+Modified lights [originally](https://github.com/praszuk/josm-street-lamps-style) made by [NieWnen](https://github.com/praszuk)
+
 See [upgraded icons](https://github.com/Yukiroshi/MakiMaki)
 
 # Installation
