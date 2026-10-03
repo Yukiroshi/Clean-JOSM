@@ -3072,11 +3072,20 @@ area[landuse=grass]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.png";
 }
 area[landuse=flowerbed],
+area[man_made=planter],
+area[barrier=planter],
 relation[landuse=flowerbed] >[role=outer] way {
     fill-color: flowerbedc#e6e872;
 }
-area[landuse=flowerbed]::fill {
+area[landuse=flowerbed]::fill,
+area[man_made=planter]::fill,
+area[barrier=planter]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-flower.svg";
+}
+area[man_made=planter]::fill,
+area[barrier=planter]::fill
+{
+    fill-extent: 15;
 }
 area[landuse=residential],
 relation[landuse=residential] >[role=outer] way {
@@ -4833,6 +4842,10 @@ way[barrier=jersey_barrier] {
     repeat-image: "presets/barrier/kerb_pattern.svg";
     repeat-image-align: top;
 }
+area[barrier=planter] {
+    width: 2;
+    dashes: 12,2;
+}
 
 /* Brands */
 *[shop][brand*="Aldi"]  {
@@ -5400,10 +5413,10 @@ area[leisure] {
 }
 
 /* small extent for unclosed area (see below for closed) */
-area[setting("partial_fill")]  {
+area[setting("partial_fill")]!:closed  {
     fill-extent: 5;
 }
-area[setting("partial_fill")]::fill  {
+area[setting("partial_fill")]!:closed::fill  {
     fill-extent: 5;
 }
 /* Turn partial fill off and use plain fill, when the partial fill covers about
@@ -5433,7 +5446,7 @@ area[setting("partial_fill")]:closed2.bold_area {
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
 }
 area[setting("partial_fill")]:closed2::fill {
-    fill-extent: 25;
+    fill-extent: cond(is_prop_set(fill-extent), prop(fill-extent), 25);
     fill-extent-threshold: JOSM_pref("draw.area.extent_threshold", 0.5);
     fill-opacity: 0.35;
 }
@@ -6105,7 +6118,7 @@ way[tunnel][tunnel!=building_passage][!layer][setting("warnings")]{
     set warning;
 }   
 way[bridge]["layer"=~/-/][setting("warnings")],
-way[tunnel]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][setting("warnings")]{
+way[tunnel][tunnel!=building_passage]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][setting("warnings")]{
     text: Wrong layer value;
     dashes-background-color: yellow;
     dashes: 24,6;
