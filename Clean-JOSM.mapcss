@@ -83,22 +83,27 @@ canvas {
     gray2: #777;            /* prop(gray2); */
     
     tan: #ddccaa;
+    gray_tan: #ddd9b3;
     gray_brown: #998888;
     brown: #663300;
+    pink_red: #cf2081;
+    red: #dd2522;
+    orange: #f99806;
+    yellow: #f4f458;
     green: #81d25c;
-    
+    blue: #58a9ed;
     
 
     /* Specific */
-    motorway: #cf2081;
-    trunk: #dd2522;
-    primary: #f99806;
-    secondary: #f4f458;
-    tertiary: #ddd9b3;
+    motorway: prop(pink_red);
+    trunk: prop(red);
+    primary: prop(orange);
+    secondary: prop(yellow);
+    tertiary: prop(gray_tan);
     unclassified: prop(tan);
     residential: prop(white2);
-    living_street: #c0c0c0;
-    cycleway: #58a9ed;
+    living_street: prop(white3);
+    cycleway: prop(blue);
 }
 
 * {
@@ -523,9 +528,9 @@ setting::light_point_icon_radius {
 }
 
 node[highway=street_lamp]::*,
-node[light_source]::* { prop_lamp_type: "electric"; prop_symbol_fill_color: "#ffbb44"; }
+node[light_source]::* { prop_lamp_type: "electric"; light_color: #ffbb44; }
 node[lamp_type=~/led|electric/]::*,
-node[light:method=~/led|electric/]::* { prop_lamp_type: "led"; prop_symbol_fill_color: "#faf9f0"; }
+node[light:method=~/led|electric/]::* { prop_lamp_type: "led"; light_color: #faf9f0; }
 
 /* Base glow */
 node[highway=street_lamp]::light_glow,
@@ -534,7 +539,7 @@ node[light_source]::light_glow {
     symbol-shape: circle;
     symbol-size: setting(base_circle_glow_size) * prop(zoom);
     symbol-fill-opacity: setting(base_circle_glow_opacity);
-    symbol-fill-color: prop(prop_symbol_fill_color);
+    symbol-fill-color: prop(light_color);
 }
 
 /* Light points with light:count/light:direction tags */
@@ -5583,13 +5588,13 @@ way[highway][access=permissive][!area]!:area-style::access
     color: #00ffbb;
 }
 
-way[highway!~/track|proposed/][surface=paving_stones]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=paving_stones]!:area-style::casing_line {
     dashes: list(15 * prop(zoom,default),2 * prop(zoom,default));
 }
-way[highway!~/track|proposed/][surface=~/sett|unhewn_cobblestone/]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=~/sett|bricks|cobblestone|unhewn_cobblestone/]!:area-style::casing_line {
     dashes: list(10 * prop(zoom,default),5 * prop(zoom,default));
 }
-way[highway!~/track|proposed/][surface=gravel]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=gravel]!:area-style::casing_line {
     dashes: list(3 * prop(zoom,default),6 * prop(zoom,default),2 * prop(zoom,default),4 * prop(zoom,default),5 * prop(zoom,default),3 * prop(zoom,default));
 }
 
@@ -6376,7 +6381,7 @@ way[highway] > node[leisure][!entrance][leisure!=slipway][leisure!=fitness_stati
 way[highway] > node[office][!entrance],
 way[highway][highway!=corridor] > node[shop][!entrance],
 way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost.first_last_node:connection,
-way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost!.first_last_node {
+way[highway] > node[tourism][!entrance][tourism!~/viewpoint|information/]!.guidepost!.first_last_node {
     text: Wrong node connected to highway;
     set notice;
 }
@@ -6580,10 +6585,10 @@ node!:tagged {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
-    font-size: 13;
+    font-size: 12;
     font-weight: bold;
     text-color: prop(white1);
-    text-halo-color: #333;
+    text-halo-color: prop(black0);
     text-halo-radius: 2;
     width: prop(width, default) * 1.25;
     color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
@@ -6594,10 +6599,10 @@ node!:tagged {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
-    font-size: 15;
+    font-size: 14;
     font-weight: bold;
-    text-color: red;
-    text-halo-color: yellow;
+    text-color: prop(pink_red);
+    text-halo-color: prop(yellow);
     text-halo-radius: 1.5;
     width: prop(width, default) * 2;
     color: red;
