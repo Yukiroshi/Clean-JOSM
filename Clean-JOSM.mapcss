@@ -57,15 +57,56 @@ setting::warnings {
     label: tr("Inline validation");
     default: true;
 }
+
 canvas {
     fill-color: #5b5b5b;
 }
+
+/* Color properties */
+
+*::* {
+    /* Basic */
+    white0: #fff;           /* prop(white0); */
+    white1: #eee;           /* prop(white1); */
+    white2: #ddd;           /* prop(white2); */
+    white3: #ccc;           /* prop(white3); */
+    white4: #bbb;           /* prop(white4); */
+    white5: #aaa;           /* prop(white5); */
+    
+    black0: #111;           /* prop(black0); */
+    black1: #222;           /* prop(black1); */
+    black2: #333;           /* prop(black2); */
+        
+    gray0: #444;            /* prop(gray0); */
+    gray1: #555;           /* prop(gray1); */
+    gray_neutral: #5b5b5b;  /* prop(gray_neutral); */
+    gray2: #777;            /* prop(gray2); */
+    
+    tan: #ddccaa;
+    gray_brown: #998888;
+    brown: #663300;
+    green: #81d25c;
+    
+    
+
+    /* Specific */
+    motorway: #cf2081;
+    trunk: #dd2522;
+    primary: #f99806;
+    secondary: #f4f458;
+    tertiary: #ddd9b3;
+    unclassified: prop(tan);
+    residential: prop(white2);
+    living_street: #c0c0c0;
+    cycleway: #58a9ed;
+}
+
 * {
     font-family: "Bahnschrift";
     text: auto;
     text-anchor-horizontal: center;
     text-halo-radius: 1.5;
-    text-color: #ddd;
+    text-color: prop(white2);
     text-halo-color: #333;
     linecap: none;
     linejoin: none;
@@ -730,31 +771,25 @@ node[traffic_sign][toll][!is_prop_set(icon-image)] {
 
 way[highway=~/motorway|motorway_link/],
 area["area:highway"=~/motorway|motorway_link/] {
-    motorway: #cf2081;
     color: prop(motorway);
 }
 way[highway=~/trunk|trunk_link/],
 area["area:highway"=~/trunk|trunk_link/] {
-    trunk: #dd2522;
     color: prop(trunk);
 }
 way[highway=~/primary|primary_link/],
 area["area:highway"=~/primary|primary_link/] {
-    primary: #f99806;
     color: prop(primary);
 }
 way[highway=~/secondary|secondary_link/],
 area["area:highway"=~/secondary|secondary_link/] {
-    secondary: #f4f458;
     color: prop(secondary);
 }
 way[highway=~/tertiary|tertiary_link/],
 area["area:highway"=~/tertiary|tertiary_link/] {
-    tertiary: #ddd9b3;
     color: prop(tertiary);
 }
 way[highway=unclassified] {
-    unclassified: #ddccaa;
     color: prop(unclassified);
 }
 
@@ -775,7 +810,7 @@ way[highway=escape] {
 way[highway=road] {
     width: 2;
     color: highway_road#9E9E9E;
-    casing-color: #555;
+    casing-color: prop(gray1);
 }
 way[highway=track][area?], relation[type=multipolygon][highway=track] {
     fill-color: track#6e541c;
@@ -785,7 +820,7 @@ way[highway=track] {
     track: #c5b59f;
     color: prop(track);
     casing-dashes: list(3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),3 * prop(zoom),5 * prop(zoom),3 * prop(zoom));
-    casing-color: #ddd;
+    casing-color: prop(white2);
 }
 way[highway=track][tracktype=grade1] {
     casing-dashes: 0;
@@ -808,16 +843,14 @@ way[highway=track][tracktype=grade6] {
 
 way[highway=residential] {
     width: 6;
-    residential: #ddd;
     color: prop(residential);
     casing-color: #444;
 }
 
 way[highway=living_street] {
     width: 5.5;
-    living_street: #c0c0c0;
     color: prop(living_street);
-    casing-color: #ddd;
+    casing-color: prop(white2);
 }
 
 way[highway=service][area?], relation[type=multipolygon][highway=service] {
@@ -825,20 +858,15 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
 }
 way[highway=service][!area?] {
     width: 5;
-    color: service#ddccaa;
-    casing-color: #444;
+    color: prop(white1);
+    casing-color: prop(gray0);
 }
 way[highway=service][service=~/driveway|parking_aisle|drive-through/][!area?] {
     width: 4;
 }
-way[highway=service][!area?],
-way[highway=service][service=driveway] {
-    color: service_driveway#eee;
-    casing-color: #444;
-}
 way[highway=service][service=parking_aisle] {
     color: parking_aisle#CCCAC7;
-    casing-color: #555;
+    casing-color: prop(gray1);
 }
 way[highway=service][service=emergency_access] {
     color: emergency_access#DDB2AA;
@@ -849,33 +877,33 @@ way[highway=bridleway]{
     color: horse#e06d5f;
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
     outer-width: 2;
-    outer-color: #eee;
+    outer-color: prop(white1);
     z-index: 0.009;
 }
 way[highway=cycleway] {
     width: 2.5;
-    color: cyccleway#58a9ed;
+    color: prop(cycleway);
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
     outer-width: 2;
-    outer-color: #eee;
+    outer-color: prop(white1);
 }
 way[highway=cycleway][cycleway=crossing] {
-    outer-color: #ddccaa;
+    outer-color: prop(tan);
 }
 way[highway=footway][area], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
 way[highway=footway][!area] {
     width: 2.5;
-    color: footway#998888;
+    color: prop(footway);
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
     outer-width: 2;
-    outer-color: #eee;
+    outer-color: prop(white1);
 }
 way[highway=footway][!area?][footway=crossing], 
 way[highway=footway][!area?][footway=parking_aisle] {
-    color: crossing#998888;
-    outer-color: #ddccaa;
+    color: prop(footway);
+    outer-color: prop(tan);
 }
 way[highway=footway][!area?][footway=sidewalk] {
     color: sidewalk#d9a1a1;
@@ -885,31 +913,31 @@ way[highway=path] {
     color: path#998888;
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
     outer-width: 2;
-    outer-color: #ddccaa;
+    outer-color: prop(tan);
 }
 way[highway=path][foot=designated][bicycle=designated],
 way[highway=cycleway][foot=designated] {
     width: 3;
     color: path#b458ed;
-    outer-color: #eee;
+    outer-color: prop(white1);
 }
 way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] {
-    fill-color: pedestrian#998888;
+    fill-color: prop(gray_brown);
 }
 way[highway=pedestrian][!area?] {
     width: 3;
-    color: pedestrian#eee;
+    color: prop(white1);
     dashes: list(5 * prop(zoom), 5 * prop(zoom));
     outer-width: 5;
-    outer-color: #998888;
-    casing-color: #555;
+    outer-color: prop(gray_brown);
+    casing-color: prop(gray1);
 }
 way[highway=steps] {
     width: 2;
     dashes: list(3 * prop(zoom), 3 * prop(zoom));
-    color: steps#81d25c;
+    color: prop(green);
     outer-width: 2;
-    outer-color: #eee;
+    outer-color: prop(white1);
 }
 way[highway=bus_guideway] {
     width: 3;
@@ -927,12 +955,12 @@ way[highway=construction]{
     width: 6;
     color: construction#FC6C14;
     dashes: list(9 * prop(zoom), 9 * prop(zoom));
-    dashes-background-color: constructiondashed#ddd;
+    dashes-background-color: prop(white2);
 }
 way[highway=proposed] {
     width: 6;
     dashes: 9,3;
-    color: street#ccc;
+    color: prop(white3);
     casing-color: #888888;
     dashes: list(7 * prop(zoom), 3 * prop(zoom));
     casing-dashes: list(7 * prop(zoom), 3 * prop(zoom));
@@ -1087,7 +1115,7 @@ node[hazard] {
     icon-image: "presets/transport/hazard.svg";
 }
 area[highway=platform]:closed {
-    fill-color: highway_platform#ddccaa;
+    fill-color: prop(tan);
 }
 node[highway=turning_circle] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/turning-circle.svg";
@@ -1130,10 +1158,10 @@ area["area:highway"=~/emergency|prohibited/]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-stripe.svg";
 }
 area["area:highway"=traffic_island] {
-    fill-color: #555;
+    fill-color: prop(gray1);
 }
 area["area:highway"=emergency] {
-    fill-color: #fff;
+    fill-color: prop(white0);
 }
 area["area:highway"=~/motorway|motorway_link/] {
     fill-color: prop(motorway);
@@ -1151,10 +1179,10 @@ area["area:highway"=~/tertiary|tertiary_link/] {
     fill-color: prop(tertiary);
 }
 area["area:highway"=unclassified] {
-    fill-color: street#ddccaa;
+    fill-color: streetprop(tan);
 }
 area["area:highway"=residential] {
-    fill-color: residential#ddd;
+    fill-color: prop(white2);
 }
 area["area:highway"=escape] {
     fill-color: street#c0c0c0;
@@ -1172,10 +1200,10 @@ area["area:highway"=footway] {
     fill-color: footway#999;
 }
 area["area:highway"=steps] {
-    fill-color: steps#89a17e;
+    fill-color: prop(green);
 }
 area["area:highway"=pedestrian] {
-    fill-color: pedestrian#998888;
+    fill-color: prop(gray_brown);
 }
 
 /************************/
@@ -1569,7 +1597,7 @@ way[man_made=embankment][waterway]::embankment {
 way[man_made=pipeline][!waterway] {
     text: concat(tag("operator")," (", tag(ref), ")", "  |  ", "⌀", tag("diameter"), " - ", tag("substance"));
     width: 3;
-    color: #aaa;
+    color: prop(white5);
     casing-color: pipeline#660000;
 }
 
@@ -2617,7 +2645,7 @@ area[amenity] {
 }
 *[amenity=parking_space] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space.svg";
-    fill-color: parking_space#ddd;
+    fill-color: prop(white2);
 }
 *[amenity=parking_space][parking_space=disabled] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/parking-space-disabled.svg";
@@ -2877,7 +2905,7 @@ node[amenity=letter_box] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/music.svg"; /*TO DO needs unique icon*/
 }
 area[amenity=~/pharmacy|hospital|clinic|nursing_home|social_facility|baby_hatch|doctors|dentist|animal_shelter|veterinary/] {
-    fill-color: health#ddd;
+    fill-color: prop(white2);
 }
 *[amenity=pharmacy] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/pharmacy.svg";
@@ -3020,7 +3048,7 @@ area[amenity=wlan] {
 }
 *[amenity=shelter][shelter_type=public_transport] {
     icon-image: "presets/accommodation/shelter_public_transport.svg";
-    fill-color: #ddccaa;
+    fill-color: prop(tan);
 }
 *[amenity=shelter][shelter_type=picnic_shelter] {
     icon-image: "presets/accommodation/shelter_picnic.svg";
@@ -3283,7 +3311,7 @@ relation[landuse=aquaculture] >[role=outer] way {
 }
 area[landuse=grass],
 relation[landuse=grass] >[role=outer] way {
-    fill-color: grass#7eda45;
+    fill-color: prop(green);
 }
 area[landuse=grass]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/pattern-grass.png";
@@ -3436,7 +3464,7 @@ node[railway=level_crossing] {
 }
 way[railway=rail] {
     width: 2.5;
-    color: rail#ddd;
+    color: prop(white2);
     dashes: 12,12;
     outer-color: raildashed#333;
     outer-width: 2;
@@ -3448,21 +3476,21 @@ way[highway][railway=tram]::core_railway,
 way[!highway][railway=tram] {
     modifier: false; /* don't draw default way if there is no line on default layer */
     width: 2 * prop(zoom);
-    color: rail#ddd;
+    color: prop(white2);
     dashes: 12,12;
-    outer-color: raildashed#555;
+    outer-color: prop(gray1);
     outer-width: 2;
 }
 way[railway=light_rail] {
     width: 2;
-    color: rail#ddd;
+    color: prop(white2);
     dashes: 12,12;
-    outer-color: raildashed#555;
+    outer-color: prop(gray1);
     outer-width: 2;
 }
 way[railway=subway] {
     width: 2.5;
-    color: rail#ddd;
+    color: prop(white2);
     dashes: 12,12;
     outer-color: raildashed#333;
     outer-width: 2;
@@ -3470,9 +3498,9 @@ way[railway=subway] {
 
 way[railway=preserved] {
     width: 2;
-    color: oldrail#ddd;
+    color: prop(white2);
     dashes: 9,9;
-    outer-color: raildashed#555;
+    outer-color: prop(gray1);
     outer-width: 2;
 }
 way[railway=rail][service=~/crossover|siding|yard|spur/],
@@ -3481,7 +3509,7 @@ way[railway=light_rail][service=~/crossover|siding|yard|spur/],
 way[railway=subway][service=~/crossover|siding|yard|spur/],
 way[railway=preserved][service=~/crossover|siding|yard|spur/] {
     width: 2;
-    color: rail#eee;
+    color: prop(white1);
     dashes: 12,12;
     outer-color: raildashed#777;
     opacity: 1;
@@ -3610,7 +3638,7 @@ way[aeroway=runway] {
     z-index: 2;
     modifier: false;
     width: 3 * prop(zoom);
-    color: runway#ddd;
+    color: prop(white2);
     casing-color: #330000;
     casing-width: 2 * prop(zoom);
     dashes: 20,20;
@@ -3748,7 +3776,7 @@ way[public_transport=platform]!:closed,
 way[railway=platform]!:closed,
 way[highway=platform]!:closed {
     width: 5;
-    color: highway_platform#ddccaa;
+    color: highway_platformprop(tan);
     outer-color: #333;
     outer-width: 1;
 }
@@ -4034,7 +4062,7 @@ node[natural=peak][tourism=viewpoint] {
     set text_z0;
 }
 area[natural=glacier] {
-    fill-color: glacier#ddd;
+    fill-color: prop(white2);
 }
 node[natural=volcano] {
     icon-image: "presets/landmark/volcano.svg";
@@ -4385,8 +4413,11 @@ node[tourism=viewpoint] {
 
 /*TO DO*/
 
-area[historic][!is_prop_set(fill-color)] {
-    fill-color: historic#663300;
+area[historic][historic!=citywalls][!is_prop_set(fill-color)]:closed {
+    fill-color: prop(brown);
+}
+area[historic=citywalls][area=yes][!is_prop_set(fill-color)]:closed {
+    fill-color: prop(brown);
 }
 *[historic=fort] {
     icon-image: "presets/sightseeing/fort.svg";
@@ -4458,7 +4489,7 @@ area[historic][!is_prop_set(fill-color)] {
 }
 *[cemetery=grave] {
     icon-image: "presets/misc/grave.svg";
-    fill-color: grave#663300;
+    fill-color: prop(brown);
 }
 *[cemetery=sector] {
     icon-image: "presets/misc/cemetery_sector.svg";
@@ -4554,7 +4585,7 @@ area[waterway=dam] {
 }
 way[waterway=dam][!area] {
     width: 4;
-    color: manmade#aaa;
+    color: prop(white5);
     outer-color: #626262;
     outer-width: 2;
 }
@@ -4617,7 +4648,7 @@ way[boundary=maritime] {
     z-index: 2;
     modifier: false;
     width: 1.5;
-    color: boundary#ddd;
+    color: prop(white2);
     casing-color: #82B5FE;
     casing-width: prop(width) * 1.5 * prop(zoom);
     dashes: 16,4,4,4;
@@ -4628,7 +4659,7 @@ relation[boundary=religious_administration] > way[!building] {
     z-index: 2;
     modifier: false;
     width: 1.25;
-    color: boundary#fff;
+    color: prop(white0);
     casing-color: #ffd454;
     casing-background-color: prop(color);
     casing-width: prop(width) * 1.5 * prop(zoom);
@@ -4642,7 +4673,7 @@ relation[boundary=national_park] > way {
     z-index: 2;
     modifier: false;
     width: 2;
-    color: boundary#ddd;
+    color: prop(white2);
     casing-color: #a4e686;
     casing-width: 2 * prop(zoom);
     dashes: 16,4,4,4;
@@ -4702,7 +4733,7 @@ node[prop(maxspeedclass, default)]
     text: prop(maxspeedprop, default);
     font-size: 11 * prop(zoom);
     font-weight: bold;
-    text-color: black;
+    text-color: prop(black0);
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
     text-offset-x: 0.5 * prop(zoom);
@@ -4879,7 +4910,7 @@ node[entrance=emergency] {
 }
 area[indoor][!is_prop_set(fill-color)]:closed {
     width: 1;
-    fill-color: #eee;
+    fill-color: prop(white1);
 }
 area[building][!source:building][setting(highlight_buildings)]::highlight, relation[building][!source:building] > way[setting(highlight_buildings)]::highlight,
 area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::highlight, relation[building][source="www.geoportal.gov.pl"] > way[setting(highlight_buildings)]::highlight {
@@ -4988,69 +5019,74 @@ node[barrier=hampshire_gate] {
     icon-image: "presets/misc/no_icon.svg";
 }
 way[barrier] {
-    width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    z-index: tag(layer) + 0.15;
-    major-z-index: 3;
+    width: 1.5;
+    color: prop(white2);
+    casing-color: prop(gray1);
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
+    z-index: 0.15;
 }
 way[barrier=fence][fence_type=railing],
 way[barrier=handrail] {
-    width: 1.5;
+    width: 1;
 }
 way[barrier=fence][fence_type=wood] {
-    width: 2;
     color: fence_wood#b47e50;
-    dashes: 12,2,2,2;
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
 }
 way[barrier=bollard] {
-    width: 6;
-    dashes: 1,10;
+    width: 3;
+    casing-width: 1;
+    casing-color: #333;
+    casing-dashes: list(1 * prop(zoom), 15 * prop(zoom));
+    casing-linecap: round;
+    dashes: list(1 * prop(zoom), 15 * prop(zoom));
     linecap: round;
 }
 way[barrier=hedge] {
     width: 2;
     color: wood#8cd05f;
-    dashes: 12,2,2,2;
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
 }
 way[barrier=kerb] {
-    width: 2;
-    color: kerb#aaa;
-    dashes: 12,2;
+    width: 1.5;
+    color: prop(white5);
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
     right-casing-color: kerb#dade72;
     right-casing-width: 3;
     right-casing-opacity: 0.35;
 }
 way[barrier=wall] {
-    width: 3;
-    color: wall#ddd;
-    dashes: 12,3,6,3;
+    width: 2;
+    color: prop(white2);
+    dashes: list(12 * prop(zoom), 3 * prop(zoom), 6 * prop(zoom), 3 * prop(zoom));
 }
-area[barrier=wall][area=yes]:closed {
-    width: 3;
-    fill-color: barrier#aaa;
-    dashes: 12,3,6,3;
+area[barrier=wall][area=yes][!is_prop_set(fill-color)]:closed {
+    fill-color: prop(gray2);
+}
+area[barrier=city_wall][area=yes][!is_prop_set(fill-color)]:closed {
+    fill-color: prop(gray2);
 }
 way[barrier=city_wall] {
-    width: 4;
-    color: barrier#ccc;
-    dashes: 12,3,6,3;
-    right-casing-color: coastline#ddd;
-    right-casing-width: 2;
-    right-casing-opacity: 0.35;
+    width: 3;
+    color: prop(white3);
+    dashes: list(12 * prop(zoom), 3 * prop(zoom), 6 * prop(zoom), 3 * prop(zoom));
+    casing-color: #663300;
+    right-casing-color: prop(white2);
+    right-casing-width: 4;
+    right-casing-opacity: 0.5;
 }
 way[barrier=guard_rail] {
     width: 2;
-    color: barrier#ddd;
-    dashes: 12,2,2,2;
-    right-casing-color: #ddd;
+    color: prop(white2);
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
+    right-casing-color: prop(white2);
     right-casing-width: 4;
     right-casing-opacity: 0.35;
 }
 way[barrier=retaining_wall] {
     width: 2;
-    color: barrier#ddd;
-    dashes: 12,3,6,3;
+    color: prop(white2);
+    dashes: list(12 * prop(zoom), 3 * prop(zoom), 6 * prop(zoom), 3 * prop(zoom));
     right-casing-color: coastline#996644;
     right-casing-width: 8;
     right-casing-opacity: 0.35;
@@ -5061,7 +5097,7 @@ way[barrier=jersey_barrier] {
 }
 area[barrier=planter] {
     width: 2;
-    dashes: 12,2;
+    dashes: list(12 * prop(zoom), 2 * prop(zoom));
 }
 
 /* Brands */
@@ -5303,22 +5339,32 @@ way.note_fixme::note_fixme {
 way[highway][!area]!:area-style,
 way[railway][!area]!:area-style,
 way[waterway][!area]!:area-style,
-way[man_made=pipeline][!area]!:area-style {
+way[man_made=pipeline][!area]!:area-style {    
+    z-index: 0.09;
+}
+
+way[highway][!area]!:area-style,
+way[railway][!area]!:area-style,
+way[waterway][!area]!:area-style,
+way[man_made=pipeline][!area]!:area-style,
+way[barrier] {
     width: prop(width) * prop(zoom,default);
     color: prop(color);
     dashes: prop(dashes);
     dashes-background-color: prop("dashes-background-color");
-    z-index: tag(layer)  + 0.09;
+    z-index: tag(layer) + prop(z-index);
     opacity: 1;
 }
 way[highway][!area]!:area-style::outer_line,
 way[railway][!area]!:area-style::outer_line,
 way[waterway][!area]!:area-style::outer_line,
-way[man_made=pipeline][!area]!:area-style::outer_line {
+way[man_made=pipeline][!area]!:area-style::outer_line,
+way[barrier]::outer_line {
     width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default);
     color: prop("outer-color", default);
     dashes: prop("outer-dashes", default);
-    z-index: tag(layer) + 0.08;
+    linecap: prop("outer-linecap", default);
+    z-index: prop(z-index, default) -0.01;
     major-z-index: 3;
     opacity: is_prop_set(outer-color, default) ? 1 : 0;
     set other;
@@ -5327,18 +5373,20 @@ way[man_made=pipeline][!area]!:area-style::outer_line {
 way[highway][!area]!:area-style::casing_line,
 way[railway][!area]!:area-style::casing_line,
 way[waterway][!area]!:area-style::casing_line,
-way[man_made=pipeline][!area]!:area-style::casing_line {
+way[man_made=pipeline][!area]!:area-style::casing_line,
+way[barrier]::casing_line {
     width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default);
     color: prop("casing-color", default);
     dashes: prop("casing-dashes", default);
-    z-index: tag(layer) + 0.075;
+    linecap: prop("casing-linecap", default);
+    z-index: prop(z-index, default) -0.015;
     major-z-index: 3;
     opacity: 1;
     set other;
 }
 way[highway][access][access!=yes][!area]!:area-style::access {
     width: prop(width, outer_line);
-    color: #555;
+    color: prop(gray1);
     dashes: 2,5;
 
     z-index: tag(layer)  + 0.1;
@@ -5389,22 +5437,22 @@ way[highway!~/track|proposed/][surface=gravel]!:area-style::casing_line {
 
 area[man_made=bridge] {
     width: 3;
-    color: #333;
-    fill-color: #555;
+    color: prop(black2);
+    fill-color: prop(black2);
     z-index: 0.06 + tag(layer);
     major-z-index: 3;
 }
 area[bridge:support] {
     width: 2;
-    color: #555;
-    fill-color: #555;
+    color: prop(gray1);
+    fill-color: prop(gray1);
 }
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
 way[bridge][man_made!=bridge]::bridge {
     width: (((prop(width, outer_line) + prop("outer-width", default) * prop("casing-width", default)) + 3 )) * 1.25;
-    color: bridge#111;
+    color: prop(black0);
     opacity: 0.75;
     z-index: 0.06 + tag(layer);
     major-z-index: 3;
@@ -5425,7 +5473,7 @@ way[tunnel][man_made!=tunnel]::casing_line {
 way[covered][covered!=no]::tunnel,
 way[bridge=covered]::tunnel {
     width: prop(width, outer_line);
-    color: tunnel#555;
+    color: prop(gray1);
     opacity: 0.25;
     z-index: 0.1 + tag(layer);
     major-z-index: 3;
@@ -5468,33 +5516,33 @@ node:unconnected {
     symbol-size: prop(symbol-size) + 2;
 }
 node!:connection {
-    symbol-fill-color: #fff;
+    symbol-fill-color: prop(white0);
 }
 node[!is_prop_set(symbol-fill-color)] {
-    symbol-fill-color: #ddd;
+    symbol-fill-color: prop(white2);
 }
 node[setting("high_contrast")] {
     symbol-size: 6;
-    symbol-stroke-color: #eee;
+    symbol-stroke-color: prop(white1);
     symbol-stroke-width: 1 * prop(zoom);
     symbol-stroke-opacity: 1;
     symbol-fill-color: #333;
 }
 way > node:connection {
-    symbol-fill-color: #bbb;
+    symbol-fill-color: prop(white4);
 }
 way > node:connection[setting("high_contrast")] {
-    symbol-stroke-color: #eee;
-    symbol-fill-color: #222;
+    symbol-stroke-color: prop(white1);
+    symbol-fill-color: prop(black1);
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
     symbol-size: 7 * prop(zoom);
-    symbol-fill-color: #fff;
+    symbol-fill-color: prop(white0);
 }
 node:tagged {
     symbol-fill-color: #007bff;
-    symbol-stroke-color: #ddd;
+    symbol-stroke-color: prop(white2);
 }
 way {
     icon-position: line;
@@ -5551,7 +5599,7 @@ area|z-15[setting("hide_icons")][building] {
 node:selected {
     symbol-size: prop(symbol-size) + 2;
     symbol-fill-color: #ff0055;
-    symbol-stroke-color: #fff;
+    symbol-stroke-color: prop(white0);
     symbol-fill-opacity: 1;
     symbol-stroke-opacity: 1;
 }
@@ -6370,7 +6418,7 @@ node!:tagged {
     opacity: 1;
     font-size: 13;
     font-weight: bold;
-    text-color: #eee;
+    text-color: prop(white1);
     text-halo-color: #333;
     text-halo-radius: 2;
     width: prop(width, default) * 1.25;
@@ -6395,9 +6443,15 @@ node!:tagged {
 
 * {
     icon-height: prop(icon-height) * prop(zoom);
+
     width: prop(width) * prop(zoom);
+    right-casing-width: cond(is_prop_set(right-casing-width), prop(right-casing-width) * prop(zoom), 0);
+    left-casing-width: cond(is_prop_set(left-casing-width), prop(left-casing-width) * prop(zoom), 0);
+
     symbol-size: prop(symbol-size) * prop(zoom);
+
     font-size: prop(font-size) * prop(zoom);
+
     text-offset-x: prop(text-offset-x) * prop(zoom);
     text-offset-y: prop(text-offset-y) * prop(zoom);
     text-halo-radius: prop(text-halo-radius) * prop(zoom);
