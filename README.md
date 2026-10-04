@@ -12,7 +12,7 @@ Improved lights [originally](https://github.com/praszuk/josm-street-lamps-style)
 Improved direction cones [originally](https://github.com/tordanik/direction-cones-style) made by [tordanik](https://github.com/tordanik)
 
 
-Improved incline originally made by Klumbumbus
+Improved incline originally made by [Klumbumbus](https://github.com/Klumbumbus)
 
 
 See [upgraded icons](https://github.com/Yukiroshi/MakiMaki)
