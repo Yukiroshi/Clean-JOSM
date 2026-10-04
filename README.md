@@ -5,13 +5,14 @@
 
 <img width="360" alt="Lights showcase" src="https://github.com/user-attachments/assets/14a06f12-4551-44bb-b3b3-b50cb7426758" />
 
-Modified lights [originally](https://github.com/praszuk/josm-street-lamps-style) made by [NieWnen](https://github.com/praszuk)
+Improved lights [originally](https://github.com/praszuk/josm-street-lamps-style) made by [NieWnen](https://github.com/praszuk)
+
+<img width="360" alt="Directions showcase" src="https://github.com/user-attachments/assets/0db4fbd7-7d31-433b-ba45-9992a7ea7442" />
+
+Improved direction cones [originally](https://github.com/tordanik/direction-cones-style) made by [tordanik](https://github.com/tordanik)
 
 
-Modified direction cones [originally](https://github.com/tordanik/direction-cones-style) made by [tordanik](https://github.com/tordanik)
-
-
-Modified incline originally made by Klumbumbus
+Improved incline originally made by Klumbumbus
 
 
 See [upgraded icons](https://github.com/Yukiroshi/MakiMaki)
