@@ -156,7 +156,7 @@ relation > * {
 
 
 /**********/
-/* Rotate */
+/* Rotation / Direction */
 /**********/
 
 /* Nodes on ways direction */
@@ -206,125 +206,289 @@ way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::t
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
 }
 
+
+setting::direction_cone_opacity {
+    type: double;
+    label: tr("Direction cone opacity (0.0-1.0)");
+    default: 0.75;
+}
+setting::direction_cone_size {
+    type: double;
+    label: tr("Direction cone size");
+    default: 10;
+}
+node[direction]::direction_cone_1{
+    icon-opacity: setting(direction_cone_opacity);
+}
+
 /* Numeric and cardinal directions */
 
-node[direction>=0][direction<360]::direction_cone {
-    set has_cone;
+node[direction>=0][direction<360]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: degree_to_radians(tag(direction));
 }
-node[direction=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
-    set has_cone;
+node[direction=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: cardinal_to_radians(tag(direction));
 }
 
-/* Numeric and cardinal directions (copies for camera:direction and light:direction) */
+/* Numeric and cardinal directions (copies for camera:direction */
 
-node["camera:direction">=0]["camera:direction"<360]::direction_cone {
-    set has_cone;
+node["camera:direction">=0]["camera:direction"<360]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: degree_to_radians(tag("camera:direction"));
 }
-node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone {
-    set has_cone;
+node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: cardinal_to_radians(tag("camera:direction"));
 }
 
 /* Secondary intercardinal direction (not supported by cardinal_to_radians) */
 
-node[camera:direction=NNE]::direction_cone,
-node[direction=NNE]::direction_cone {
-    set has_cone;
+node[camera:direction=NNE]::direction_cone_1,
+node[direction=NNE]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 22.5deg;
 }
-node[camera:direction=ENE]::direction_cone,
-node[direction=ENE]::direction_cone {
-    set has_cone;
+node[camera:direction=ENE]::direction_cone_1,
+node[direction=ENE]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 67.5deg;
 }
-node[camera:direction=ESE]::direction_cone,
-node[direction=ESE]::direction_cone {
-    set has_cone;
+node[camera:direction=ESE]::direction_cone_1,
+node[direction=ESE]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 112.5deg;
 }
-node[camera:direction=SSE]::direction_cone,
-node[direction=SSE]::direction_cone {
-    set has_cone;
+node[camera:direction=SSE]::direction_cone_1,
+node[direction=SSE]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 157.5deg;
 }
-node[camera:direction=SSW]::direction_cone,
-node[direction=SSW]::direction_cone {
-    set has_cone;
+node[camera:direction=SSW]::direction_cone_1,
+node[direction=SSW]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 202.5deg;
 }
-node[camera:direction=WSW]::direction_cone,
-node[direction=WSW]::direction_cone {
-    set has_cone;
+node[camera:direction=WSW]::direction_cone_1,
+node[direction=WSW]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 247.5deg;
 }
-node[camera:direction=WNW]::direction_cone,
-node[direction=WNW]::direction_cone {
-    set has_cone;
+node[camera:direction=WNW]::direction_cone_1,
+node[direction=WNW]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 292.5deg;
 }
-node[camera:direction=NNW]::direction_cone,
-node[direction=NNW]::direction_cone {
-    set has_cone;
+node[camera:direction=NNW]::direction_cone_1,
+node[direction=NNW]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: 337.5deg;
+}
+
+/* Up to eight numeric or cardinal directions in semicolon-separated values */
+
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_1,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_1 {
+    set has_cone_1;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 0);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 0, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_2,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_2 {
+    set has_cone_2;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 1);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 1, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_3,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_3 {
+    set has_cone_3;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 2);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 2, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_4,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_4 {
+    set has_cone_4;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 3);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 3, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_5,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_5 {
+    set has_cone_5;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 4);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 4, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_6,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_6 {
+    set has_cone_6;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 5);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 5, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_7,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_7 {
+    set has_cone_7;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 6);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 6, setting(direction_cone_opacity), 0);
+}
+node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_8,
+node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_8 {
+    set has_cone_8;
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+    direction_value: get(prop(direction_list), 7);
+    icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
+        degree_to_radians(prop(direction_value)),
+        cond(prop(direction_value) = "NNE", 22.5deg,
+        cond(prop(direction_value) = "ENE", 67.5deg,
+        cond(prop(direction_value) = "ESE", 112.5deg,
+        cond(prop(direction_value) = "SSE", 157.5deg,
+        cond(prop(direction_value) = "SSW", 202.5deg,
+        cond(prop(direction_value) = "WSW", 247.5deg,
+        cond(prop(direction_value) = "WNW", 292.5deg,
+        cond(prop(direction_value) = "NNW", 337.5deg,
+        cardinal_to_radians(prop(direction_value)))))))))));
+    icon-opacity: cond(prop(direction_len) > 7, setting(direction_cone_opacity), 0);
 }
 
 /* Forward/backward direction */
 
-way[oneway != -1] > node[stop_position:direction=forward]::direction_cone,
-way[railway][oneway != -1] > node[railway:signal:direction=forward]::direction_cone,
-way[highway][oneway != -1] > node[traffic_sign:direction=forward]::direction_cone,
-way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=forward]::direction_cone,
-way[oneway != -1] > node[direction=forward]::direction_cone {
-    set has_cone;
+way > node[stop_position:direction=forward]::direction_cone_1,
+way[railway] > node[railway:signal:direction=forward]::direction_cone_1,
+way[highway] > node[traffic_sign:direction=forward]::direction_cone_1,
+way[highway][highway!~/footway|pedestrian|path/] > node[traffic_signals:direction=forward]::direction_cone_1,
+way > node[direction=forward]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: parent_way_angle() - 180deg;
+    icon-opacity: setting(direction_cone_opacity);
 }
-way[oneway != -1] > node[stop_position:direction=backward]::direction_cone,
-way[railway][oneway != -1] > node[railway:signal:direction=backward]::direction_cone,
-way[highway][oneway != -1] > node[traffic_sign:direction=backward]::direction_cone,
-way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=backward]::direction_cone,
-way[oneway != -1] > node[direction=backward]::direction_cone {
-    set has_cone;
+way > node[stop_position:direction=backward]::direction_cone_1,
+way[railway] > node[railway:signal:direction=backward]::direction_cone_1,
+way[highway] > node[traffic_sign:direction=backward]::direction_cone_1,
+way[highway][highway!~/footway|pedestrian|path/] > node[traffic_signals:direction=backward]::direction_cone_1,
+way > node[direction=backward]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: parent_way_angle();
+    icon-opacity: setting(direction_cone_opacity);
 }
-way[oneway=yes] > node::direction_cone {
-    icon-offset-x: 0;
-}
-way[oneway != -1] > node[stop_position:direction=both]::direction_cone,
-way[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone,
-way[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone,
-way[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=both]::direction_cone,
-way[oneway != -1] > node[direction=both]::direction_cone {
-    set has_cone;
+way > node[stop_position:direction=both]::direction_cone_1,
+way[railway] > node[railway:signal:direction=both]::direction_cone_1,
+way[highway] > node[traffic_sign:direction=both]::direction_cone_1,
+way[highway][highway!~/footway|pedestrian|path/] > node[traffic_signals:direction=both]::direction_cone_1,
+way > node[direction=both]::direction_cone_1 {
+    set has_cone_1;
     icon-rotation: parent_way_angle();
+    icon-opacity: setting(direction_cone_opacity);
 }
 
-way|z18-[oneway != -1] > node[stop_position:direction=both]::direction_cone_back,
-way|z18-[railway][oneway != -1] > node[railway:signal:direction=both]::direction_cone_back,
-way|z18-[highway][oneway != -1] > node[traffic_sign:direction=both]::direction_cone_back,
-way|z18-[highway][highway!~/footway|pedestrian|path/][oneway != -1] > node[traffic_signals:direction=both]::direction_cone_back,
-way|z18-[oneway != -1] > node[direction=both]::direction_cone_back 
+way > node[stop_position:direction=both]::direction_cone_2,
+way[railway] > node[railway:signal:direction=both]::direction_cone_2,
+way[highway] > node[traffic_sign:direction=both]::direction_cone_2,
+way[highway][highway!~/footway|pedestrian|path/] > node[traffic_signals:direction=both]::direction_cone_2,
+way > node[direction=both]::direction_cone_2 
 {
-    set has_cone_back;
+    set has_cone_2;
     icon-rotation: parent_way_angle() + 180deg;
+    icon-opacity: setting(direction_cone_opacity);
 }
-node|z18-.has_cone_back::direction_cone_back  /* Render cone for matched nodes */
-{
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25 * prop(zoom);
-    icon-offset-y: -13 * prop(zoom);
-    z-index: -1;
-}
-
-node|z18-.has_cone::direction_cone 
-{
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg";
-    icon-height: 25 * prop(zoom);
-    icon-offset-y: -12 * prop(zoom);
-    z-index: -1;
-}
+node|z18-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
+node|z18-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
 
 /* Lights by NieWnen */
 
