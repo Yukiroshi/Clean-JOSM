@@ -1,5 +1,5 @@
 # <img width="32" alt="Icon" src="https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg" /> Clean-JOSM
-!Style is still being developed, not all icons are nice! All-in-one style for JOSM. Improved and cleaner looks, covers all common objects.
+!Style is still being developed, not all icons are nice! All-in-one style for JOSM. Improved and cleaner looks, covers almost all objects.
 
 ## Features:
 
