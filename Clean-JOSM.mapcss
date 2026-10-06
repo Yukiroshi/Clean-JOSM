@@ -5499,10 +5499,15 @@ area[barrier=planter] {
     z-index: 0.99;
     set note_fixme;
 }
-way.note_fixme::note_fixme {
+way!:closed.note_fixme::note_fixme {
     icon-position: line;
 }
-
+way:closed.note_fixme::note_fixme {
+    icon-position: center;
+}
+*.note_fixme::note_fixme {
+    icon-height: 20 * prop(zoom, default);
+}
 /* Way renderer */
 
 way[highway][!area]!:area-style,
@@ -6504,7 +6509,12 @@ node[railway=switch]!:connection:in-downloaded-area {
 
 *[website][website!~/https?:\/\/.*/], *["contact:website"]["contact:website"!~/https?:\/\//] 
 {
-    text: Websites should start with http:// or https://;
+    text: Website without http:// or https://;
+    set notice;
+}
+*[website][website=~/cm_mmc|cmpid|fbclid|gad_source|gclid|gclsrc|igsh|igshid|mc_id|mibextid|si|srsltid|utm_campaign|utm_content|utm_medium|utm_source|utm_term|yclid|ysclid/], *["contact:website"]["contact:website"=~/cm_mmc|cmpid|fbclid|gad_source|gclid|gclsrc|igsh|igshid|mc_id|mibextid|si|srsltid|utm_campaign|utm_content|utm_medium|utm_source|utm_term|yclid|ysclid/] 
+{
+    text: Tracking parameter in URL;
     set notice;
 }
 *[website][website!~/\./], *["contact:website"]["contact:website"!~/\./] 
@@ -6513,7 +6523,7 @@ node[railway=switch]!:connection:in-downloaded-area {
     set notice;
 }
 
-*[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|leafless/] 
+*[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|palm|leafless/] 
 {
     text: Nonexistent value for leaf_type;
     set warning;
