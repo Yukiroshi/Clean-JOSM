@@ -13,7 +13,7 @@ Improved [Direction Cones](https://github.com/tordanik/direction-cones-style) or
 
 
 Improved [Incline](https://josm.openstreetmap.de/wiki/Styles/Incline) originally made by [Klumbumbus](https://github.com/Klumbumbus)
-
+Improved [Bench](https://josm.openstreetmap.de/wiki/Styles/Bench) originally made by [Klumbumbus](https://github.com/Klumbumbus)
 
 See [upgraded icons](https://github.com/Yukiroshi/MakiMaki)
 
