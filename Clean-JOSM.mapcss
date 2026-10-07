@@ -6544,14 +6544,14 @@ area[building][building!~/no|entrance/]:closed ⧉ *[setting("warnings")].buildi
 {
     text: Building crossing building;
     width: 2;
-    color: red;
+    color: prop(red);
     set warning;
 }
 area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")]:closed ∈ way[building][building!~/no|entrance/][setting("warnings")]:closed
 {
     text: Building inside building;
     width: 2;
-    color: red;
+    color: prop(red);
     set warning;
 }
 way[bridge][!layer][setting("warnings")],
@@ -6615,7 +6615,7 @@ node!:tagged {
     text-halo-color: prop(yellow);
     text-halo-radius: 1.5;
     width: prop(width, default) * 2;
-    color: red;
+    color: prop(red));
 }
 
 /* Scaling (final)*/
