@@ -3389,10 +3389,9 @@ node[tourism=information][information=route_marker] {
 node[tourism=information][information=audioguide] {
     icon-image: "presets/misc/information/audioguide.svg"; }
 *[tourism=information][information=office] {
-    fill-color: tourism#e180a2;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-info.svg";
 }
-node[tourism=information][information=map] {
+node[tourism=information][information=~/map|tactile_map/], {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-map.svg";
 }
 node[tourism=information][information=board] {
