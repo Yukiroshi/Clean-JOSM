@@ -37,11 +37,7 @@ setting::partial_fill {
   label: tr("Areas are drawn with fill only around their inner edges");
   default: true;
 }
-setting::highlight_buildings {
-    type: boolean;
-    label: tr("Highlight buildings which might need changes");
-    default: true;
-}
+
 setting::surface {
     type: boolean;
     label: tr("Add surface indicator");
@@ -87,6 +83,7 @@ canvas {
     gray_brown: #998888;
     brown: #663300;
     pink_red: #cf2081;
+    reddish: #ff0055;
     red: #dd2522;
     orange: #f99806;
     yellow: #f4f458;
@@ -139,21 +136,21 @@ relation > * {
 *|z26- { pixel_per_metre: 640; }
 
 /* Zoom level scaling */
-*|z-13::*  { zoom: 0.6; }
-*|z14-::*  { zoom: 0.65; }
-*|z15-::*  { zoom: 0.7; }
-*|z16-::*  { zoom: 0.75; }
-*|z17-::*  { zoom: 0.8; }
-*|z18-::*  { zoom: 0.85; }
-*|z19-::*  { zoom: 0.9; }
-*|z20-::*  { zoom: 0.95; }
-*|z21-::*  { zoom: 1.1; }
-*|z22-::*  { zoom: 1.2; }
-*|z23-::*  { zoom: 1.3; }
-*|z24-::*  { zoom: 1.4; }
+*|z-13::*  { zoom: 0.3; }
+*|z14::*  { zoom: 0.4; }
+*|z15::*  { zoom: 0.5; }
+*|z16::*  { zoom: 0.6; }
+*|z17::*  { zoom: 0.8; }
+*|z18::*  { zoom: 0.85; }
+*|z19::*  { zoom: 0.9; }
+*|z20::*  { zoom: 0.95; }
+*|z21::*  { zoom: 1.1; }
+*|z22::*  { zoom: 1.2; }
+*|z23::*  { zoom: 1.3; }
+*|z24::*  { zoom: 1.4; }
 *|z25-::*  { zoom: 1.5; }
 
-*[setting("scaling")]::* { zoom: prop(zoom) * 1.25}
+*[setting("scaling")]::* { zoom: prop(zoom, default) * 1.25}
 
 *::* {
     icon-height: 17;
@@ -3391,7 +3388,7 @@ node[tourism=information][information=audioguide] {
 *[tourism=information][information=office] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/briefcase-info.svg";
 }
-node[tourism=information][information=~/map|tactile_map/], {
+node[tourism=information][information=~/map|tactile_map/] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/info-map.svg";
 }
 node[tourism=information][information=board] {
@@ -5080,13 +5077,20 @@ area[indoor][!is_prop_set(fill-color)]:closed {
     width: 1;
     fill-color: prop(white1);
 }
+
+setting::highlight_buildings {
+    type: boolean;
+    label: tr("Highlight buildings which might need changes (mainly for plbuldings plugin)");
+    default: false;
+}
+
 area[building][!source:building][setting(highlight_buildings)]::highlight, relation[building][!source:building] > way[setting(highlight_buildings)]::highlight,
 area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::highlight, relation[building][source="www.geoportal.gov.pl"] > way[setting(highlight_buildings)]::highlight {
-    color: #FF0055;
-    width: 3 * prop(zoom);
+    color: prop(reddish, default);
+    width: 3 * prop(zoom, default);
     dashes: 6,2;
     opacity: 1;
-    text-color: #FF0055;
+    text-color: prop(reddish, default);
     font-size: 12 * prop(zoom);
     major-z-index: 3.1;
 }
@@ -5680,13 +5684,13 @@ node[!setting("round_symbols")]:unconnected {
     symbol-shape: triangle;
 }
 node {
-    symbol-size: 5;
+    symbol-size: 6;
     symbol-stroke-color: #333;
     symbol-stroke-width: 1 * prop(zoom);
     symbol-stroke-opacity: 0.75;
 }
 node:unconnected {
-    symbol-size: prop(symbol-size) + 2;
+    symbol-size: prop(symbol-size) + 1;
 }
 node!:connection {
     symbol-fill-color: prop(white0);
@@ -5695,22 +5699,24 @@ node[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: prop(white2);
 }
 node[setting("high_contrast")] {
-    symbol-size: 6;
+    symbol-size: 7;
     symbol-stroke-color: prop(white1);
     symbol-stroke-width: 1 * prop(zoom);
     symbol-stroke-opacity: 1;
     symbol-fill-color: #333;
 }
 way > node:connection {
+    symbol-size: prop(symbol-size) + 1;
     symbol-fill-color: prop(white4);
 }
+
 way > node:connection[setting("high_contrast")] {
     symbol-stroke-color: prop(white1);
     symbol-fill-color: prop(black1);
 }
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
-    symbol-size: 7 * prop(zoom);
+    symbol-size: prop(symbol-size) + 2;
     symbol-fill-color: prop(white0);
 }
 node:tagged {
@@ -5740,27 +5746,14 @@ node|z-17!:tagged[setting("hide_icons")] {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
-    casing-width: 0;
 }
-*|z-15[setting("hide_icons")].other {
+*|z-15[setting("hide_icons")].other::* {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
-    width: 0.5 * prop(zoom);
-    casing-width: 0;
 }
-
-area|z-15[setting("hide_icons")]:closed2:area-style {
-    symbol-fill-opacity: 0;
-    symbol-stroke-opacity: 0;
-    width: 1;
-    casing-width: 0;
-}
-area|z-16[setting("hide_icons")]:closed2:area-style {
+area|z-16[setting("hide_icons")]:closed:area-style {
     icon-image: none;
-}
-area|z-15[setting("hide_icons")][building] {
-    fill-opacity: 0;
 }
 *|z-18[setting("hide_icons")] {
     text: false;
@@ -5771,7 +5764,7 @@ area|z-15[setting("hide_icons")][building] {
 }
 node:selected {
     symbol-size: prop(symbol-size) + 2;
-    symbol-fill-color: #ff0055;
+    symbol-fill-color: prop(reddish);
     symbol-stroke-color: prop(white0);
     symbol-fill-opacity: 1;
     symbol-stroke-opacity: 1;
@@ -5832,8 +5825,12 @@ way|z15-[highway][setting("highway_labels")] {
 way[highway][!setting("highway_labels")] {
     text: false;
 }
-
-
+way|z-14[highway!~/trunk|primary|secondary|tertiary/] {
+    text: false;
+}
+way|z-10[highway] {
+    text: false;
+}
 
 /*************/
 /* Area fill */
@@ -6543,14 +6540,14 @@ area[building][building!~/no|entrance/]:closed ⧉ *[setting("warnings")].buildi
 {
     text: Building crossing building;
     width: 2;
-    color: prop(red);
+    color: prop(red, default);
     set warning;
 }
 area[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")]:closed ∈ way[building][building!~/no|entrance/][setting("warnings")]:closed
 {
     text: Building inside building;
     width: 2;
-    color: prop(red);
+    color: prop(red, default);
     set warning;
 }
 way[bridge][!layer][setting("warnings")],
@@ -6599,7 +6596,7 @@ node!:tagged {
     text-color: prop(white1);
     text-halo-color: prop(black0);
     text-halo-radius: 2;
-    width: prop(width, default) * 1.25;
+    width: prop(width, default) * 1.1;
     color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
     color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
 }
@@ -6613,8 +6610,8 @@ node!:tagged {
     text-color: prop(pink_red);
     text-halo-color: prop(yellow);
     text-halo-radius: 1.5;
-    width: prop(width, default) * 2;
-    color: prop(red));
+    width: prop(width, default) * 1.5;
+    color: prop(red);
 }
 
 /* Scaling (final)*/
