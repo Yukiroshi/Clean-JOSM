@@ -1664,6 +1664,9 @@ node[man_made=flagpole] {
 node[man_made=cross] {
     icon-image: "presets/landmark/cross.svg";
 }
+node[man_made=carpet_hanger] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cloth.svg";
+}
 node[man_made=gasometer] {
     icon-image: "presets/landmark/gasometer.svg";
 }
