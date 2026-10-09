@@ -5220,6 +5220,7 @@ way[barrier=bollard] {
 way[barrier=hedge] {
     width: 2;
     color: wood#8cd05f;
+    casing-color: #52932d;
     dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
 }
 way[barrier=kerb] {
@@ -6580,6 +6581,10 @@ node!:tagged:unconnected!:selected[setting("warnings")]!.member
 way!:tagged!:selected[setting("warnings")]!.member
 {
     text: Untagged lonely way;
+    set notice;
+}
+way[area?]!:closed {
+    text: Area on unclosed way;
     set notice;
 }
 way!:tagged:selected
