@@ -3944,9 +3944,9 @@ way[public_transport=platform]!:closed,
 way[railway=platform]!:closed,
 way[highway=platform]!:closed {
     width: 5;
-    color: highway_platformprop(tan);
-    outer-color: #333;
-    outer-width: 1;
+    color: prop(tan);
+    casing-color: prop(gray1);
+    casing-width: 1;
 }
 node[public_transport=platform] {
     icon-image: "presets/transport/platform.svg";
@@ -5226,7 +5226,8 @@ way[barrier=hedge] {
 way[barrier=kerb] {
     width: 1.5;
     color: prop(white5);
-    dashes: list(12 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom), 2 * prop(zoom));
+    casing-color: prop(gray2);
+    dashes: list(12 * prop(zoom), 2 * prop(zoom), 6 * prop(zoom), 2 * prop(zoom));
     right-casing-color: kerb#dade72;
     right-casing-width: 3;
     right-casing-opacity: 0.35;
@@ -5621,6 +5622,13 @@ area[man_made=bridge] {
     color: prop(black2);
     fill-color: prop(black2);
     z-index: 0.06 + tag(layer);
+    major-z-index: 3;
+}
+area[man_made=tunnel] {
+    width: 3;
+    color: prop(black2);
+    fill-color: prop(black2);
+    z-index: 0.1 + tag(layer);
     major-z-index: 3;
 }
 area[bridge:support] {
@@ -6117,10 +6125,11 @@ node[natural=shrubbery],
 node[natural=water],
 node[natural=wetland],
 node[natural=wood],
-node[leisure=park][natural!=tree], /* For nodes with both tags another warning is created in combinations.mapcss */
+node[leisure=park][natural!=tree],
 node[leisure=nature_reserve],
 node[waterway=riverbank],
 node[man_made=bridge],
+node[man_made=tunnel],
 node[man_made=breakwater],
 node[aeroway=apron],
 node[power=plant],
