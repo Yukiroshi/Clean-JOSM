@@ -5,14 +5,16 @@ No more guessing which style will look good; this one looks better than good. Ev
 
 ## Fully working layer system
 
-## Improved [Street lamps JOSM style](https://github.com/praszuk/josm-street-lamps-style) originally made by [NieWnen](https://github.com/praszuk)
+## Rewritten [Street lamps JOSM style](https://github.com/praszuk/josm-street-lamps-style) originally made by [NieWnen](https://github.com/praszuk)
 <img width="360" alt="Lights showcase" src="https://github.com/user-attachments/assets/14a06f12-4551-44bb-b3b3-b50cb7426758" />
 
-
+Fancier (and somehow smaller by a few bytes) lights. Changes color depending on ```lamp_type``` or ```light:method```.
+Supports both ```light:count``` and ```light:direction```, up to eight directions simultaneously, separated with ```;```.
 
 ## Improved [Direction Cones](https://github.com/tordanik/direction-cones-style) originally made by [tordanik](https://github.com/tordanik)
 <img width="360" alt="Directions showcase" src="https://github.com/user-attachments/assets/0db4fbd7-7d31-433b-ba45-9992a7ea7442" />
 
+Supports every correct ```direction``` and ```camera:direction``` value, up to eight values simultaneously, separated with ```;```.
 
 ## Improved [Incline](https://josm.openstreetmap.de/wiki/Styles/Incline) originally made by [Klumbumbus](https://github.com/Klumbumbus)
 
