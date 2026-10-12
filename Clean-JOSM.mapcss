@@ -157,9 +157,7 @@ relation > * {
 }
 
 
-/**********/
-/* Rotation / Direction */
-/**********/
+/* Improved Rotation / Direction originally by Tordanik*/
 
 /* Nodes on ways direction */
 
@@ -492,42 +490,33 @@ node|z18-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercont
 node|z18-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
 node|z18-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom); icon-offset-y: -11 * prop(zoom); z-index: -1;}
 
-/* Lights by NieWnen */
+/* Improved lights originally by NieWnen */
 
 setting::base_circle_glow_size {
     type: double;
     label: tr("Base circle glow size");
     default: 30;
 }
-
 setting::base_circle_glow_opacity {
     type: double;
     label: tr("Base circle glow opacity (0.0-1.0)");
     default: 0.4;
 }
-
 setting::light_point_icon_size {
     type: double;
-    label: tr("Light point icon size.");
-    default: 35;
+    label: tr("Light point icon size");
+    default: 40;
 }
-
 setting::light_point_icon_opacity {
     type: double;
     label: tr("Light point icon opacity (0.0-1.0)");
-    default: 0.85;
+    default: 0.9;
 }
-
-setting::light_point_icon_radius {
-    type: double;
-    label: tr("Light point icon position from center (radius)");
-    default: 10;
-}
-
 node[highway=street_lamp]::*,
-node[light_source]::* { prop_lamp_type: "electric"; light_color: #ffbb44; }
+node[light_source]::* { set light; lamp_type: "electric"; light_color: #ffbb44; }
+
 node[lamp_type=~/led|electric/]::*,
-node[light:method=~/led|electric/]::* { prop_lamp_type: "led"; light_color: #faf9f0; }
+node[light:method=~/led|electric/]::* { lamp_type: "led"; light_color: #faf9f0; }
 
 /* Base glow */
 node[highway=street_lamp]::light_glow,
@@ -539,214 +528,96 @@ node[light_source]::light_glow {
     symbol-fill-color: prop(light_color);
 }
 
-/* Light points with light:count/light:direction tags */
-
-/*
-Each lamp point contains invisible text, because lamp points tend to glitch slightly.
-For example, when the direction value changes, the lamp point start to jump when selecting object or zooming the view.
-The "text" label forces JOSM to re-render on each degree change.
-
-I suppose that JOSM caches certain attribute values, such as "text", but not "icon-offset-*",  and it listens for any changes in those cache attributes to trigger a re-render.
-*/
-
-/* --- Light point 1 --- */
-node[highway=street_lamp]::light_1,
-node[light_source]::light_1 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
-    default_degree: 0;
-    degree: cond(prop(direction_len) > 0, get(prop(direction_list), 0), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 0 || tag("light:count") > 0, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+node["light:direction">=0]["light:direction"<360]::light_1 {
+    icon-rotation: degree_to_radians(tag("light:direction"));
 }
 
-/* --- Light point 2 --- */
+node["light:direction"]::light_1,
+node["light:count"]::light_1 {
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
+    default_degree: 0;
+    degree: cond(prop(light_direction_len) > 0, get(prop(light_direction_list), 0), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 0 || tag("light:count") > 0, setting(light_point_icon_opacity), 0);
+}
 node[highway=street_lamp]::light_2,
 node[light_source]::light_2 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 360/tag("light:count");
-    degree: cond(prop(direction_len) > 1, get(prop(direction_list), 1), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 1 || tag("light:count") > 1, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 1, get(prop(light_direction_list), 1), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 1 || tag("light:count") > 1, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 3 --- */
 node[highway=street_lamp]::light_3,
 node[light_source]::light_3 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 2*360/tag("light:count");
-    degree: cond(prop(direction_len) > 2, get(prop(direction_list), 2), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 2 || tag("light:count") > 2, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 2, get(prop(light_direction_list), 2), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 2 || tag("light:count") > 2, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 4 --- */
 node[highway=street_lamp]::light_4,
 node[light_source]::light_4 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 3*360/tag("light:count");
-    degree: cond(prop(direction_len) > 3, get(prop(direction_list), 3), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 3 || tag("light:count") > 3, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 3, get(prop(light_direction_list), 3), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 3 || tag("light:count") > 3, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 5 --- */
 node[highway=street_lamp]::light_5,
 node[light_source]::light_5 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 4*360/tag("light:count");
-    degree: cond(prop(direction_len) > 4, get(prop(direction_list), 4), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 4 || tag("light:count") > 4, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 4, get(prop(light_direction_list), 4), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 4 || tag("light:count") > 4, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 6 --- */
 node[highway=street_lamp]::light_6,
 node[light_source]::light_6 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 5*360/tag("light:count");
-    degree: cond(prop(direction_len) > 5, get(prop(direction_list), 5), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 5 || tag("light:count") > 5, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 5, get(prop(light_direction_list), 5), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 5 || tag("light:count") > 5, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 7 --- */
 node[highway=street_lamp]::light_7,
 node[light_source]::light_7 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 6*360/tag("light:count");
-    degree: cond(prop(direction_len) > 6, get(prop(direction_list), 6), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 6 || tag("light:count") > 6, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 6, get(prop(light_direction_list), 6), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 6 || tag("light:count") > 6, setting(light_point_icon_opacity), 0);
 }
-
-/* --- Light point 8 --- */
 node[highway=street_lamp]::light_8,
 node[light_source]::light_8 {
-    direction_list: split(";", tag("light:direction"));
-    direction_len: length(prop(direction_list));
-    
+    light_direction_list: split(";", tag("light:direction"));
+    light_direction_len: length(prop(light_direction_list));
     default_degree: 7*360/tag("light:count");
-    degree: cond(prop(direction_len) > 7, get(prop(direction_list), 7), prop(default_degree));
-    x: round(sin(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    y: round(-cos(degree_to_radians(prop(degree))) * setting(light_point_icon_radius) * prop(zoom));
-    text: concat(prop(x), ", ", prop(y));
-    text-opacity: 0.0;
-    
-    icon-height: setting(light_point_icon_size) * prop(zoom);
-    icon-opacity: cond(prop(direction_len) > 7 || tag("light:count") > 7, setting(light_point_icon_opacity), 0);
-    icon-offset-x: prop(x);
-    icon-offset-y: prop(y);
+    degree: cond(prop(light_direction_len) > 7, get(prop(light_direction_list), 7), prop(default_degree));
+    icon-rotation: degree_to_radians(prop(degree));
+    icon-opacity: cond(prop(light_direction_len) > 7 || tag("light:count") > 7, setting(light_point_icon_opacity), 0);
 }
 
-node[prop("prop_lamp_type")="led"]::light_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-node[prop("prop_lamp_type")="led"]::light_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric_led.svg" }
-
-node[prop("prop_lamp_type")!="led"]::light_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-node[prop("prop_lamp_type")!="led"]::light_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/electric.svg" }
-
-/*MIT License
-
-Copyright (c) 2025 Paweł Raszuk
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
+node.light::light_1 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_2 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_3 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_4 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_5 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_6 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_7 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_8 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
 
 /* End of lights */
 
 
-
-
-/* Incline by Klumbumbus */
+/* Improved Incline by Klumbumbus */
 
 way[highway][incline][incline =~ /^(up|([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=-1] node::incline_down,
 way[highway][incline][incline =~ /^(down|-([0-9]+(\.?[0-9]+)?)[%°])$/][incline !~ /^((0(\.0+)?)[%°])$/] >[index=1] node::incline_down {
@@ -1085,7 +956,7 @@ way[highway=path][foot=designated][bicycle=designated],
 way[highway=cycleway][foot=designated] {
     width: 3;
     color: path#b458ed;
-    outer-color: prop(white1);
+    outer-color: cond(tag(path) = crossing || tag(cycleway) = crossing, prop(tan),prop(white1));
 }
 way[highway=pedestrian][area?], relation[type=multipolygon][highway=pedestrian] {
     fill-color: prop(gray_brown);
@@ -4282,8 +4153,10 @@ relation[natural=heath] >[role=outer] way {
     fill-color: heath#dddfc0;
 }
 way[natural=tree_row] {
-    width: 4;
-    color: wood#077e07;
+    width: 5;
+    casing-width: 3;
+    color: wood#8cd05f;
+    casing-color: #52932d;
 }
 area[natural=wood],
 relation[natural=wood] >[role=outer] way,
