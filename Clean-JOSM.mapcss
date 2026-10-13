@@ -513,10 +513,11 @@ setting::light_point_icon_opacity {
     default: 0.9;
 }
 node[highway=street_lamp]::*,
-node[light_source]::* { set light; lamp_type: "electric"; light_color: #ffbb44; }
+node[light_source]::* { set light; lamp_type: "electric"; light_color: eval("#ff4"); }
 
 node[lamp_type=~/led|electric/]::*,
-node[light:method=~/led|electric/]::* { lamp_type: "led"; light_color: #faf9f0; }
+node[light:method=~/led|electric/]::* { lamp_type: "led"; light_color: eval("#cef"); }
+
 
 /* Base glow */
 node[highway=street_lamp]::light_glow,
@@ -528,12 +529,8 @@ node[light_source]::light_glow {
     symbol-fill-color: prop(light_color);
 }
 
-node["light:direction">=0]["light:direction"<360]::light_1 {
-    icon-rotation: degree_to_radians(tag("light:direction"));
-}
-
-node["light:direction"]::light_1,
-node["light:count"]::light_1 {
+node[highway=street_lamp]::light_1,
+node[light_source]::light_1 {
     light_direction_list: split(";", tag("light:direction"));
     light_direction_len: length(prop(light_direction_list));
     default_degree: 0;
@@ -604,8 +601,7 @@ node[light_source]::light_8 {
     icon-rotation: degree_to_radians(prop(degree));
     icon-opacity: cond(prop(light_direction_len) > 7 || tag("light:count") > 7, setting(light_point_icon_opacity), 0);
 }
-
-node.light::light_1 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_1 {icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
 node.light::light_2 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
 node.light::light_3 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
 node.light::light_4 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
