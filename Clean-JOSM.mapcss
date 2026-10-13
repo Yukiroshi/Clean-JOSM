@@ -103,6 +103,10 @@ canvas {
     cycleway: prop(blue);
 }
 
+/* SVG properties */
+
+*::* { svg: eval("data:image/svg+xml, <svg viewBox='0 0 15 15'>"); }
+
 * {
     font-family: "Bahnschrift";
     text: auto;
@@ -495,12 +499,12 @@ node|z18-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercont
 setting::base_circle_glow_size {
     type: double;
     label: tr("Base circle glow size");
-    default: 30;
+    default: 50;
 }
 setting::base_circle_glow_opacity {
     type: double;
     label: tr("Base circle glow opacity (0.0-1.0)");
-    default: 0.4;
+    default: 0.75;
 }
 setting::light_point_icon_size {
     type: double;
@@ -510,23 +514,65 @@ setting::light_point_icon_size {
 setting::light_point_icon_opacity {
     type: double;
     label: tr("Light point icon opacity (0.0-1.0)");
-    default: 0.9;
+    default: 0.75;
 }
 node[highway=street_lamp]::*,
-node[light_source]::* { set light; lamp_type: "electric"; light_color: eval("#ff4"); }
+node[light_source]::* { 
+    set light; 
+    light_color: "#ff4"; 
+    light_color2: "#ffd344"; 
+    base_circle_glow_size: setting(base_circle_glow_size);
+    light_point_icon_size: setting(light_point_icon_size);
 
-node[lamp_type=~/led|electric/]::*,
-node[light:method=~/led|electric/]::* { lamp_type: "led"; light_color: eval("#cef"); }
+    light_error: cond(tag(lamp_type) != tag("light:method"), true, false);
+}
 
+node[lamp_type]::*,
+node[light:method]::* 
+{
+    light_color: cond(tag(lamp_type) = electric || tag("light:method") = electric, "#dff", 
+                    cond(tag(lamp_type) = led || tag("light:method") = led,"#eff",
+                    cond(tag(lamp_type) = fluorescent || tag("light:method") = fluorescent,"#fff",
+                    cond(tag(lamp_type) = mercury || tag("light:method") = mercury,"#a3fdff",
+                    cond(tag(lamp_type) = gaslight || tag("light:method") = gaslight,"#ffd773",
+                    cond(tag(lamp_type) = incandescent || tag("light:method") = incandescent,"#ffd",
+                    cond(tag(lamp_type) = halogen || tag("light:method") = halogen,"#eff",
+                    cond(tag(lamp_type) = sodium || tag("light:method") = sodium,"#ffc19b",
+                    cond( tag("light:method") = arc,"#fff",
+                    "#ff4")))))))));
+    light_color2: cond(tag(lamp_type) = electric || tag("light:method") = electric, "#cef", 
+                    cond(tag(lamp_type) = led || tag("light:method") = led,"#dff",
+                    cond(tag(lamp_type) = fluorescent || tag("light:method") = fluorescent,"#eef4da",
+                    cond(tag(lamp_type) = mercury || tag("light:method") = mercury,"#60ffc4",
+                    cond(tag(lamp_type) = gaslight || tag("light:method") = gaslight,"#ffb700",
+                    cond(tag(lamp_type) = incandescent || tag("light:method") = incandescent,"#ecba3c",
+                    cond(tag(lamp_type) = halogen || tag("light:method") = halogen,"#b2f0ff",
+                    cond(tag(lamp_type) = sodium || tag("light:method") = sodium,"#ff9429",
+                    cond( tag("light:method") = arc,"#96cfe9",
+                    "#ffd344")))))))));
+}
+node[light_source=warning]::* { light_color: "#fcc"; light_color2: "#f00"; }
+node["light:colour"=~/#|white|silver|gray|black|brown|red|orange|yellow|green|blue|purple/]::* { light_color: tag("light:colour"); light_color2: tag("light:colour"); }
 
-/* Base glow */
+node[light_source=floodlight]::* { 
+    base_circle_glow_size: setting(base_circle_glow_size) * 1.5;
+    light_point_icon_size: setting(light_point_icon_size) * 1.5; 
+}
+node[light_source=signal_lamp]::* { 
+    base_circle_glow_size: setting(base_circle_glow_size) * 0.75;
+    light_point_icon_size: setting(light_point_icon_size) * 0.75; 
+}
+
 node[highway=street_lamp]::light_glow,
 node[light_source]::light_glow {
     object-z-index: -1.0;
-    symbol-shape: circle;
-    symbol-size: setting(base_circle_glow_size) * prop(zoom);
-    symbol-fill-opacity: setting(base_circle_glow_opacity);
-    symbol-fill-color: prop(light_color);
+    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/></svg>"); 
+    icon-height: prop(base_circle_glow_size) * prop(zoom);
+    icon-opacity: setting(base_circle_glow_opacity);
+}
+node[light_source] {
+    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/><circle cx='7.5' cy='7.5' r='1' fill='",prop(light_color),"'/></svg>");icon-height: prop(base_circle_glow_size) * prop(zoom);
+    icon-opacity: setting(base_circle_glow_opacity);
 }
 
 node[highway=street_lamp]::light_1,
@@ -601,16 +647,23 @@ node[light_source]::light_8 {
     icon-rotation: degree_to_radians(prop(degree));
     icon-opacity: cond(prop(light_direction_len) > 7 || tag("light:count") > 7, setting(light_point_icon_opacity), 0);
 }
-node.light::light_1 {icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_2 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_3 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_4 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_5 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_6 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_7 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
-node.light::light_8 { icon-image: cond(prop(lamp_type) = led, "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric-led.svg", "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/light-electric.svg"); icon-height: setting(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+
+node.light::* {
+    light_point_svg: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='0.75' stop-color='",prop(light_color2),"' stop-opacity='0.1'/><stop offset='1' stop-color='",prop(light_color),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='4' r='4' fill='url(#a)'/><circle cx='7.5' cy='4' r='.5' fill='",prop(light_color),"'/></svg>");
+}
+
+/* Embedded lights to support dynamic color changes */
+node.light::light_1 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_2 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_3 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_4 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_5 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_6 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_7 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
+node.light::light_8 { icon-image: prop(light_point_svg); icon-height: prop(light_point_icon_size) * prop(zoom); icon-offset-y: -5 * prop(zoom);}
 
 /* End of lights */
+
 
 
 /* Improved Incline by Klumbumbus */
@@ -6449,6 +6502,10 @@ way[tunnel][tunnel!=building_passage]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/][setting(
 node[kerb][kerb!=no][!highway][barrier!=kerb][setting("warnings")]
 {
     text: kerb without barrier=kerb;
+    set notice;
+}
+node[prop(light_error)=true] {
+    text: lamp_type and light:method are different;
     set notice;
 }
 node!:tagged:unconnected!:selected[setting("warnings")]!.member
