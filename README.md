@@ -47,4 +47,6 @@ Changed icons are from [MakiMaki](https://github.com/Yukiroshi/MakiMaki), where 
 # Installation
 [Installation instructions](https://josm.openstreetmap.de/wiki/Help/Preferences/MapPaintPreference) from official JOSM website
 
-
+# General settings
+Open JOSM's Advanced Preferences and type "Clean-JOSM". You can modify the following attributes:
+- `scaling` (default: 1)
