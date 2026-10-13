@@ -44,9 +44,9 @@ setting::surface {
     default: true;
 }
 setting::scaling {
-    type: boolean;
-    label: tr("Enlarge everything");
-    default: false;
+    type: double;
+    label: tr("General scaling");
+    default: 1;
 }
 setting::warnings {
     type: boolean;
@@ -140,25 +140,23 @@ relation > * {
 *|z26- { pixel_per_metre: 640; }
 
 /* Zoom level scaling */
-*|z-13::*  { zoom: 0.3; }
-*|z14::*  { zoom: 0.4; }
-*|z15::*  { zoom: 0.5; }
-*|z16::*  { zoom: 0.6; }
-*|z17::*  { zoom: 0.8; }
-*|z18::*  { zoom: 0.85; }
-*|z19::*  { zoom: 0.9; }
-*|z20::*  { zoom: 0.95; }
-*|z21::*  { zoom: 1.1; }
-*|z22::*  { zoom: 1.2; }
-*|z23::*  { zoom: 1.3; }
-*|z24::*  { zoom: 1.4; }
-*|z25-::*  { zoom: 1.5; }
+*|z-13::* { zoom: 0.375; }
+*|z14::*  { zoom: 0.5; }
+*|z15::*  { zoom: 0.63; }
+*|z16::*  { zoom: 0.75; }
+*|z17::*  { zoom: 1; }
+*|z18::*  { zoom: 1.1; }
+*|z19::*  { zoom: 1.2; }
+*|z20::*  { zoom: 1.3; }
+*|z21::*  { zoom: 1.4; }
+*|z22::*  { zoom: 1.5; }
+*|z23::*  { zoom: 1.6; }
+*|z24::*  { zoom: 1.7; }
+*|z25-::* { zoom: 1.8; }
 
-*[setting("scaling")]::* { zoom: prop(zoom, default) * 1.25}
+*::* { zoom: prop(zoom, default) * setting(scaling,default); }
 
-*::* {
-    icon-height: 17;
-}
+*::* { icon-height: 17; }
 
 
 /* Improved Rotation / Direction originally by Tordanik*/
