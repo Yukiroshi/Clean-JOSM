@@ -44,6 +44,8 @@ And also parts of [Bench](https://josm.openstreetmap.de/wiki/Styles/Bench)
 # Much nicer icons (at least some of them)
 Changed icons are from [MakiMaki](https://github.com/Yukiroshi/MakiMaki), where every icon is an improved and coloured version from Maki, Temaki or OSM Carto. When needed, additional icons are created from scratch by me.
 
+Roof icons by [Mxdanger](https://github.com/mxdanger)
+
 # Installation
 [Installation instructions](https://josm.openstreetmap.de/wiki/Help/Preferences/MapPaintPreference) from official JOSM website
 
