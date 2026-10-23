@@ -6432,15 +6432,14 @@ node[railway=switch]!:connection:in-downloaded-area {
   text: Should be religion=christian + denomination=catholic;
   set notice;
 }
-
+/*[website=~/^cm_mmc$|^cmpid$|^fbclid$|^gad_source$|^gclid$|^gclsrc$|^igsh$|^igshid$|^mc_id$|^mibextid$|^si$|^srsltid$|^utm_campaign$|^utm_content$|^utm_medium$|^utm_source$|utm_term|yclid|ysclid/], *["contact:website"=~/cm_mmc|cmpid|fbclid|gad_source|gclid|gclsrc|igsh|igshid|mc_id|mibextid|si|srsltid|utm_campaign|utm_content|utm_medium|utm_source|utm_term|yclid|ysclid/] 
+{
+    text: Tracking parameter in URL;
+    set notice;
+}*/
 *[website][website!~/https?:\/\/.*/], *["contact:website"]["contact:website"!~/https?:\/\//] 
 {
     text: Website without http:// or https://;
-    set notice;
-}
-*[website][website=~/cm_mmc|cmpid|fbclid|gad_source|gclid|gclsrc|igsh|igshid|mc_id|mibextid|si|srsltid|utm_campaign|utm_content|utm_medium|utm_source|utm_term|yclid|ysclid/], *["contact:website"]["contact:website"=~/cm_mmc|cmpid|fbclid|gad_source|gclid|gclsrc|igsh|igshid|mc_id|mibextid|si|srsltid|utm_campaign|utm_content|utm_medium|utm_source|utm_term|yclid|ysclid/] 
-{
-    text: Tracking parameter in URL;
     set notice;
 }
 *[website][website!~/\./], *["contact:website"]["contact:website"!~/\./] 
@@ -6448,7 +6447,6 @@ node[railway=switch]!:connection:in-downloaded-area {
     text: Websites should have a domain;
     set notice;
 }
-
 *[leaf_type][leaf_type!~/broadleaved|needleleaved|mixed|palm|leafless/] 
 {
     text: Nonexistent value for leaf_type;
