@@ -1132,6 +1132,9 @@ node[highway=crossing]["crossing:markings"="ladder:skewed"] {
 node[highway=crossing]["crossing:markings"="ladder:paired"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-markings-ladder-paired.svg";
 }
+node[highway=crossing]["crossing:markings"=pictograms] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-pictogram.svg";
+}
 node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
 node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
