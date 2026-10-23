@@ -4515,18 +4515,13 @@ area[historic=citywalls][area=yes][!is_prop_set(fill-color)]:closed {
 *[historic=monument] {
     icon-image: "presets/sightseeing/monument.svg";
 }
-*[historic=memorial] {
+*[historic=memorial][!is_prop_set(icon-image)] {
     icon-image: "presets/sightseeing/memorial.svg";
 }
 *[historic=memorial][memorial=plaque] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/plaque.svg";
 }
-*[historic=memorial][memorial=bust] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/bust.svg";
-}
-*[historic=memorial][memorial=statue] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/statue.svg";
-}
+/* Some icons for memorial are in tourism section */
 
 *[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
