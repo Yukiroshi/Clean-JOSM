@@ -973,10 +973,10 @@ way[highway=cycleway] {
 way[highway=cycleway][cycleway=crossing] {
     outer-color: prop(tan);
 }
-way[highway=footway][area], relation[type=multipolygon][highway=footway] {
+area[highway=footway][area?], relation[type=multipolygon][highway=footway] {
     fill-color: foot#adadad;
 }
-way[highway=footway][!area] {
+way[highway=footway][!area?] {
     width: 2.5;
     color: prop(footway);
     dashes: list(6 * prop(zoom), 6 * prop(zoom));
@@ -1362,7 +1362,7 @@ way[route=ski]::core_piste {
     width: 6;
     color: ski#809bc0;
 }
-area[piste:difficulty=easy][!highway][area=yes]::core_piste {
+area[piste:difficulty=easy][!highway][area?]::core_piste {
     fill-color: piste_easy#3330ff;
 }
 way[piste:difficulty=easy]::core_piste {
@@ -1371,7 +1371,7 @@ way[piste:difficulty=easy]::core_piste {
     width: 6;
     color: piste_easy#3330ff;
 }
-area[piste:difficulty=intermediate][!highway][area=yes]::core_piste {
+area[piste:difficulty=intermediate][!highway][area?]::core_piste {
     fill-color: piste_intermediate#ff0000;
 }
 way[piste:difficulty=intermediate]::core_piste {
@@ -1380,7 +1380,7 @@ way[piste:difficulty=intermediate]::core_piste {
     width: 6;
     color: piste_intermediate#ff0000;
 }
-area[piste:difficulty=advanced][!highway][area=yes]::core_piste {
+area[piste:difficulty=advanced][!highway][area?]::core_piste {
     fill-color: piste_advanced#606060;
 }
 way[piste:difficulty=advanced]::core_piste {
@@ -1389,7 +1389,7 @@ way[piste:difficulty=advanced]::core_piste {
     width: 6;
     color: piste_advanced#606060;
 }
-area[piste:difficulty=expert][!highway][area=yes]::core_piste {
+area[piste:difficulty=expert][!highway][area?]::core_piste {
     fill-color: piste_expert#606060;
 }
 way[piste:difficulty=expert]::core_piste {
@@ -1398,7 +1398,7 @@ way[piste:difficulty=expert]::core_piste {
     width: 6;
     color: piste_expert#606060;
 }
-area[piste:difficulty=freeride][!highway][area=yes]::core_piste {
+area[piste:difficulty=freeride][!highway][area?]::core_piste {
     fill-color: piste_freeride#dddf00;
 }
 way[piste:difficulty=freeride]::core_piste {
@@ -1407,7 +1407,7 @@ way[piste:difficulty=freeride]::core_piste {
     width: 6;
     color: piste_freeride#dddf00;
 }
-area[piste:difficulty=novice][!highway][area=yes]::core_piste {
+area[piste:difficulty=novice][!highway][area?]::core_piste {
     fill-color: piste_novice#00ff00;
 }
 way[piste:difficulty=novice]::core_piste {
@@ -3953,7 +3953,7 @@ node[sport=croquet] {
 }
 area[sport=~/cycling|dog_racing|equestrian|golf|gymnastics|field_hockey|ice_hockey|horse_racing/],
 area[sport=~/karting|motocross|motor/][highway!=raceway],
-area[sport=~/karting|motocross|motor/][highway=raceway][area=yes] {
+area[sport=~/karting|motocross|motor/][highway=raceway][area?] {
     fill-color: sport#bde3cb;
 }
 node[sport=cycling] {
@@ -4506,7 +4506,7 @@ node[tourism=viewpoint] {
 area[historic][historic!=citywalls][!is_prop_set(fill-color)]:closed {
     fill-color: prop(brown);
 }
-area[historic=citywalls][area=yes][!is_prop_set(fill-color)]:closed {
+area[historic=citywalls][area?][!is_prop_set(fill-color)]:closed {
     fill-color: prop(brown);
 }
 *[historic=fort] {
@@ -4668,7 +4668,7 @@ node[waterway=weir] {
 area[waterway=dam] {
     fill-color: manmade#a8a8a8;
 }
-way[waterway=dam][!area] {
+way[waterway=dam][!area?] {
     width: 4;
     color: prop(white5);
     outer-color: #626262;
@@ -5154,10 +5154,10 @@ way[barrier=wall] {
     color: prop(white2);
     dashes: list(12 * prop(zoom), 3 * prop(zoom), 6 * prop(zoom), 3 * prop(zoom));
 }
-area[barrier=wall][area=yes][!is_prop_set(fill-color)]:closed {
+area[barrier=wall][area?][!is_prop_set(fill-color)]:closed {
     fill-color: prop(gray2);
 }
-area[barrier=city_wall][area=yes][!is_prop_set(fill-color)]:closed {
+area[barrier=city_wall][area?][!is_prop_set(fill-color)]:closed {
     fill-color: prop(gray2);
 }
 way[barrier=city_wall] {
@@ -5435,17 +5435,17 @@ way:closed.note_fixme::note_fixme {
 }
 /* Way renderer */
 
-way[highway][!area]!:area-style,
-way[railway][!area]!:area-style,
-way[waterway][!area]!:area-style,
-way[man_made=pipeline][!area]!:area-style {    
+way[highway][!area?]!:area-style,
+way[railway][!area?]!:area-style,
+way[waterway][!area?]!:area-style,
+way[man_made=pipeline][!area?]!:area-style {    
     z-index: 0.09;
 }
 
-way[highway][!area]!:area-style,
-way[railway][!area]!:area-style,
-way[waterway][!area]!:area-style,
-way[man_made=pipeline][!area]!:area-style,
+way[highway][!area?]!:area-style,
+way[railway][!area?]!:area-style,
+way[waterway][!area?]!:area-style,
+way[man_made=pipeline][!area?]!:area-style,
 way[barrier] {
     width: prop(width) * prop(zoom,default);
     color: prop(color);
@@ -5454,10 +5454,10 @@ way[barrier] {
     z-index: tag(layer) + prop(z-index);
     opacity: 1;
 }
-way[highway][!area]!:area-style::outer_line,
-way[railway][!area]!:area-style::outer_line,
-way[waterway][!area]!:area-style::outer_line,
-way[man_made=pipeline][!area]!:area-style::outer_line,
+way[highway][!area?]!:area-style::outer_line,
+way[railway][!area?]!:area-style::outer_line,
+way[waterway][!area?]!:area-style::outer_line,
+way[man_made=pipeline][!area?]!:area-style::outer_line,
 way[barrier]::outer_line {
     width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default);
     color: prop("outer-color", default);
@@ -5469,10 +5469,10 @@ way[barrier]::outer_line {
     set other;
 }
 
-way[highway][!area]!:area-style::casing_line,
-way[railway][!area]!:area-style::casing_line,
-way[waterway][!area]!:area-style::casing_line,
-way[man_made=pipeline][!area]!:area-style::casing_line,
+way[highway][!area?]!:area-style::casing_line,
+way[railway][!area?]!:area-style::casing_line,
+way[waterway][!area?]!:area-style::casing_line,
+way[man_made=pipeline][!area?]!:area-style::casing_line,
 way[barrier]::casing_line {
     width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default);
     color: prop("casing-color", default);
@@ -5483,7 +5483,7 @@ way[barrier]::casing_line {
     opacity: 1;
     set other;
 }
-way[highway][access][access!=yes][!area]!:area-style::access {
+way[highway][access][access!=yes][!area?]!:area-style::access {
     width: prop(width, outer_line);
     color: prop(gray1);
     dashes: 2,5;
@@ -5493,27 +5493,27 @@ way[highway][access][access!=yes][!area]!:area-style::access {
     opacity: 1;
     set other;
 }
-way[highway][access=no][!area]!:area-style::access 
+way[highway][access=no][!area?]!:area-style::access 
 {
     color: #ff0000;
 }
-way[highway][access=private][!area]!:area-style::access 
+way[highway][access=private][!area?]!:area-style::access 
 {
     color: #9000ff;
 }
-way[highway][access=forestry][!area]!:area-style::access 
+way[highway][access=forestry][!area?]!:area-style::access 
 {
     color: #489f00;
 }
-way[highway][access=customers][!area]!:area-style::access 
+way[highway][access=customers][!area?]!:area-style::access 
 {
     color: #00d0ff;
 }
-way[highway][access=destination][!area]!:area-style::access 
+way[highway][access=destination][!area?]!:area-style::access 
 {
     color: #ff9500;
 }
-way[highway][access=permissive][!area]!:area-style::access 
+way[highway][access=permissive][!area?]!:area-style::access 
 {
     color: #00ffbb;
 }
@@ -5924,7 +5924,7 @@ way[incline][incline !~ /^(up|down|-?([0-9]+?(\.[1-9]%)?|100)[%°]?)$/] {
 /* #14989 */
 *[direction][direction<0],
 *[direction][direction>=360],
-*[direction][direction !~ /^([0-9][0-9]?[0-9]?|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW|forward|backward|both|clockwise|anti-clockwise|anticlockwise|up|down)((-|;)([0-9][0-9]?[0-9]?|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW))*$/] {
+*[direction][direction !~ /^([0-9]+(?:\.[0-9]+)?|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW|forward|backward|both|clockwise|anti-clockwise|anticlockwise|up|down)((-|;)([0-9]+(?:\.[0-9]+)?|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW))*$/] {
   text: tr("Unusual value for direction");
   set notice;
 }
@@ -5934,18 +5934,16 @@ way[incline][incline !~ /^(up|down|-?([0-9]+?(\.[1-9]%)?|100)[%°]?)$/] {
   text: tr("Ele must be a numeric value, in meters and without units");
   set notice;
 }
-*[ele =~ /^-?[0-9]+(\.[0-9]+)? ?m$/] {
-  text: tr("Ele must be a numeric value, in meters and without units");
-  set notice;
-}
-*[ele =~ /,/],
-*[height =~ /,/] {
+*[direction][direction =~ /,/],
+*[ele][ele =~ /,/],
+*[height][height =~ /,/] {
   text: tr("Use . instead of , as decimal separator");
   set notice;
 }
 
-/* #17530 */
-*[ele =~ /^-?[0-9]+\.[0-9][0-9][0-9]+$/] {
+*[direction][direction !~ /^-?[0-9]+(\.[0-9]{1,2})?$/],
+*[ele][ele !~ /^-?[0-9]+(\.[0-9]{1,2})?$/]
+ {
   text: tr("Unnecessary amount of decimal places");
   set notice;
 }
@@ -6025,7 +6023,7 @@ node[boundary=administrative] {
 node[golf=green],
 node[golf=bunker],
 node[golf=fairway],
-node[area=yes],
+node[area?],
 node[area:highway],
 node[landuse],
 node[natural=bare_rock],
