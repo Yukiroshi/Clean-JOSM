@@ -883,14 +883,14 @@ way[highway=unclassified] {
     color: prop(unclassified);
 }
 
-way[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
-    width: 4 * prop(zoom);
-}
+
 way[highway=~/motorway|trunk|primary|secondary|tertiary|unclassified/] {
     width: 6 * prop(zoom);
     casing-color: #70372f;
 }
-
+way[highway=~/motorway_link|trunk_link|primary_link|secondary_link|tertiary_link/] {
+    width: 4 * prop(zoom);
+}
 way[highway=escape] {
     width: 3;
     color: street#c0c0c0;
@@ -1250,7 +1250,7 @@ area["area:highway"=~/emergency|prohibited/]::fill {
 area["area:highway"=traffic_island] {
     fill-color: prop(gray1);
 }
-area["area:highway"=emergency] {
+area["area:highway"=~/emergency|prohibited/] {
     fill-color: prop(white0);
 }
 area["area:highway"=~/motorway|motorway_link/] {
