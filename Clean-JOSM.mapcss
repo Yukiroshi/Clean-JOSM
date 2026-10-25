@@ -6,7 +6,11 @@ meta {
     author: "Yukiro";
     link: "https://github.com/Yukiroshi/Clean-JOSM";
 }
-
+setting::font {
+  type: string;
+  label: tr("Style font");
+  default: Bahnschrift;
+}
 setting::high_contrast {
   type: boolean;
   label: tr("Make everything a bit more prominent");
@@ -110,7 +114,7 @@ canvas {
 /**/
 
 * {
-    font-family: "Bahnschrift";
+    font-family: setting(font);
     text: auto;
     text-anchor-horizontal: center;
     text-halo-radius: 1.5;
@@ -2081,11 +2085,11 @@ node[leisure=nature_reserve] {
 *[leisure=playground] {
     icon-image: "presets/leisure/playground.svg";
 }
-*[leisure=garden] {
+*[leisure=garden][name] {
     icon-image: "presets/leisure/garden.svg";
 }
 area[leisure=garden] {
-    fill-color: garden#5ce340;
+    fill-color: gardenc#4bf629;
 }
 area[leisure=garden]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/patterns/pattern-dots.png";
@@ -5972,7 +5976,7 @@ node[area=no],
 node[oneway],
 node[bridge],
 node[sidewalk],
-node[footway][footway!=crossing], /* footway=crossing has own warning in highway.mapcss */
+node[footway][footway!=crossing],
 node[man_made=embankment],
 node[man_made=groyne],
 node[man_made=cutline],
