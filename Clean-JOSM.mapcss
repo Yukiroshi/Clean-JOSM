@@ -5945,8 +5945,8 @@ way[incline][incline !~ /^(up|down|-?([0-9]+?(\.[1-9]%)?|100)[%°]?)$/] {
   set notice;
 }
 
-*[direction][direction !~ /^-?[0-9]+(\.[0-9]{1,2})?$/],
-*[ele][ele !~ /^-?[0-9]+(\.[0-9]{1,2})?$/]
+*[direction][direction =~ /-?\d+(\.\d{3,})*.*\.\d{3,}/],
+*[ele][ele =~ /-?\d+(\.\d{3,})*.*\.\d{3,}/]
  {
   text: tr("Unnecessary amount of decimal places");
   set notice;
