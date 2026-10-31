@@ -2148,16 +2148,15 @@ node[leisure=golf_course] {
 
 /*TO DO*/
 
-area[golf=tee] {
-    fill-color: golf#c7f1a3;
-}
+area[golf=tee],
 node[golf=tee] {
+    fill-color: golf#c7f1a3;
     icon-image: "presets/sport/golf/tee.svg";
 }
 way[golf=hole] {
-    width: 1;
-    dashes: 10,10;
-    color: golf_hole#808080;
+    width: 2;
+    dashes: list(14 * prop(zoom), 14 * prop(zoom));
+    color: prop(white3);
 }
 node[golf=pin] {
     icon-image: "presets/sport/golf/pin.svg";
@@ -2178,10 +2177,9 @@ area[golf=fairway] {
 area[golf=rough] {
     fill-color: golf_rough#006700;
 }
-area[golf=driving_range] {
-    fill-color: golf_driving_range#c7f1a3;
-}
+area[golf=driving_range],
 node[golf=driving_range] {
+    fill-color: golf_driving_range#c7f1a3;
     icon-image: "presets/sport/golf/driving_range.svg";
 }
 
