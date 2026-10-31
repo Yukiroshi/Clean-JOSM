@@ -47,7 +47,20 @@ Changed icons are from [MakiMaki](https://github.com/Yukiroshi/MakiMaki), where 
 Roof icons by [Mxdanger](https://github.com/mxdanger)
 
 # Installation
-[Installation instructions](https://josm.openstreetmap.de/wiki/Help/Preferences/MapPaintPreference) from official JOSM website
+
+- Open JOSM settings panel (`F12`),
+- then look for <img width="20" src="https://josm.openstreetmap.de/browser/trunk/resources/images/dialogs/mapstyle.svg?format=raw"/> Map Paint Styles
+- type `Better JOSM` (or author name, `Yukiro`) in the search box
+- click on it
+- then click on the <img width="20" src="https://josm.openstreetmap.de/browser/trunk/resources/images/preferences/activate-right.svg?format=raw"/> blue arrow between the available and active styles:
+
+
+- make sure to disable JOSM internal style and any other styles, which are merged into this one, otherwise there might be a mess!
+- don't forget to click <img height="20" src="https://github.com/user-attachments/assets/7a722b4e-fc73-4b8e-86c7-39e1f6726537" /> OK button at the bottom, otherwise it won't save changes!
+
+Alternatively:
+
+See [installation instructions from official JOSM website](https://josm.openstreetmap.de/wiki/Help/Preferences/MapPaintPreference).
 
 # General settings
 Open JOSM's Advanced Preferences and type "Clean-JOSM". You can modify the following attributes:
