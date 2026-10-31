@@ -575,7 +575,7 @@ node[light_source]::light_glow {
     icon-opacity: setting(base_circle_glow_opacity);
 }
 node[light_source] {
-    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/><circle cx='7.5' cy='7.5' r='1' fill='",prop(light_color),"'/></svg>");icon-height: prop(base_circle_glow_size) * prop(zoom);
+    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/><circle cx='7.5' cy='7.5' r='1' fill='",prop(light_color),"'/></svg>");
     icon-opacity: setting(base_circle_glow_opacity);
 }
 
