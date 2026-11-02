@@ -93,6 +93,7 @@ canvas {
     yellow: #f4f458;
     green: #81d25c;
     blue: #58a9ed;
+    water_color: #77d3ee;
     
 
     /* Specific */
@@ -2181,7 +2182,7 @@ area[golf=bunker] {
 }
 area[golf=water_hazard],
 area[golf=lateral_water_hazard] {
-    fill-color: golf_water_hazard#3330ff;
+    fill-color: prop(water_color);
 }
 area[golf=green] {
     fill-color: golf_green#00e700;
@@ -4276,7 +4277,7 @@ area[natural=wetland][wetland=swamp]::fill {
 }
 area[natural=water][!is_prop_set("fill-color")],
 relation[natural=water][!is_prop_set("fill-color")] >[role=outer] way[!is_prop_set("fill-color")] {
-    fill-color: water#77d3ee;
+    fill-color: prop(water_color);
 }
 area[natural=water]::fill {
     fill-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/patterns/pattern-waves.png";
@@ -6546,7 +6547,7 @@ node!:tagged {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
-    font-size: 14;
+    font-size: 14;f
     font-weight: bold;
     text-color: prop(pink_red);
     text-halo-color: prop(yellow);
