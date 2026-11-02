@@ -115,6 +115,7 @@ canvas {
 
 * {
     font-family: setting(font);
+    font-size: 12;
     text: auto;
     text-anchor-horizontal: center;
     text-halo-radius: 1.5;
@@ -5723,30 +5724,23 @@ node:selected {
 
 node|z18- {
     text: auto;
-    font-size: 12;
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
     text-halo-color: prop(color);
-    text-halo-radius: 1.5;
 }
 way {
-    font-size: 12;
     text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
     text-offset-y: 0;
     text-halo-color: prop(color);
-    text-halo-radius: 1.5;
 }
 area:closed:area-style {
     text: auto;
-    font-size: 12;
     text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? #333 : #eee );
     text-halo-color: prop(fill-color);
-    text-halo-radius: 1.5;
 }
 
 node[place] {
     text: auto;
     font-size: prop(font-size);
-    text-halo-radius: 1.5;
 }
 way[highway],
 way[railway] {
@@ -5765,7 +5759,6 @@ area:closed:area-style[is_prop_set(icon-image)] {
 }
 way|z15-[highway][setting("highway_labels")] {
     text-position: line;
-    font-size: 12;
 }
 way[highway][!setting("highway_labels")] {
     text: false;
@@ -6541,11 +6534,9 @@ node!:tagged {
     major-z-index: 5;
     z-index: 99;
     opacity: 1;
-    font-size: 12;
     font-weight: bold;
     text-color: prop(white1);
     text-halo-color: prop(black0);
-    text-halo-radius: 2;
     width: prop(width, default) * 1.1;
     color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
     color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
@@ -6559,7 +6550,6 @@ node!:tagged {
     font-weight: bold;
     text-color: prop(pink_red);
     text-halo-color: prop(yellow);
-    text-halo-radius: 1.5;
     width: prop(width, default) * 1.5;
     color: prop(red);
 }
