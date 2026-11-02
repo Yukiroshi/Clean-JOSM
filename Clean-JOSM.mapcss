@@ -4121,27 +4121,24 @@ node[sport=rc_car] {
 
 /*TO DO*/
 
-node|z20-[species]::species {
+node|z20-[natural]::species {
     font-size: 10 * prop(zoom,default);
     font-style: italic;
-    text-color: white;
-    text: "species";  
+    text-color: prop(white0);
+    text-halo-radius: 1 * prop(zoom,default);
+    text-halo-color: #333;
+    text: has_tag_key(species) ? tag(species) : tag(genus);
     text-anchor-horizontal: center;
-    text-offset-y: -20 * prop(zoom,default);
+    text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19) * prop(zoom,default);
 }
 node|z19-[ref:gid]::ref { 
     font-size: 10 * prop(zoom,default);
-    text-color: white;
+    text-color: prop(white0);
+    text-halo-radius: 1 * prop(zoom,default);
+    text-halo-color: #333;
     text: "ref:gid";
     text-anchor-horizontal: center;
-    text-offset-y: 20 * prop(zoom,default);
-}
-node|z18-[natural][ref] { 
-    font-size: 9 * prop(zoom,default);
-    text-color: white;
-    text: "ref";
-    text-anchor-horizontal: center;
-    text-offset-y: 45 * prop(zoom,default);
+    text-offset-y: 15 * prop(zoom,default);
 }
 area[natural=spring] {
     fill-color: light_water#3959ff;
@@ -5688,8 +5685,6 @@ node|z-17!:tagged[setting("hide_icons")] {
 }
 *|z-15[setting("hide_icons")] {
     icon-image: none;
-    symbol-fill-opacity: 0;
-    symbol-stroke-opacity: 0;
 }
 *|z-15[setting("hide_icons")].other::* {
     icon-image: none;
