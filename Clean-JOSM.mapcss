@@ -4393,7 +4393,7 @@ node[natural=tree][leaf_type=leafless] {
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
-node|z17-[denotation=natural_monument][inside("PL")]::natural_monument {
+node|z16-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16 * prop(zoom,default);
     icon-offset-y: 10 * prop(zoom,default);
