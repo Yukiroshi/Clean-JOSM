@@ -5625,10 +5625,17 @@ node[!setting("round_symbols")]:unconnected {
     symbol-shape: triangle;
 }
 node {
-    symbol-size: 6;
+    symbol-size: 6 ;
     symbol-stroke-color: #333;
-    symbol-stroke-width: 1 * prop(zoom,default);
+    symbol-stroke-width: 1 * prop(zoom_font,default);
     symbol-stroke-opacity: 0.75;
+}
+node[setting("high_contrast")] {
+    symbol-size: 7 ;
+    symbol-stroke-color: prop(white1);
+    symbol-stroke-width: 1 * prop(zoom_font,default);
+    symbol-stroke-opacity: 1;
+    symbol-fill-color: #333;
 }
 node:unconnected {
     symbol-size: prop(symbol-size) + 1;
@@ -5638,13 +5645,6 @@ node!:connection {
 }
 node[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: prop(white2);
-}
-node[setting("high_contrast")] {
-    symbol-size: 7;
-    symbol-stroke-color: prop(white1);
-    symbol-stroke-width: 1 * prop(zoom,default);
-    symbol-stroke-opacity: 1;
-    symbol-fill-color: #333;
 }
 way > node:connection {
     symbol-size: prop(symbol-size) + 1;
