@@ -5968,7 +5968,6 @@ node[natural=tree][circumference][siunit_length(tag(circumference)) > 45] {
   set notice;
 }
 
-
 /* {0} on a node, should be a way */
 node[area=no],
 node[oneway],
@@ -6280,9 +6279,32 @@ node:unconnected:in-downloaded-area[barrier=debris] {
     set notice;
 }
 
+
+*[historic=archaeological_site][!archaeological_site][megalith_type],
+*[historic=archaeological_site][!archaeological_site][fortification_type],
+*[!archaeological_site][megalith_type],
+*[!archaeological_site][fortification_type] {
+    text: Lonely subtag;
+    set notice;
+}
+
+/* Missing main tag */
+
 node[bollard][barrier!=bollard],
-*[fence_type][barrier!=fence] {
+*[fence_type][barrier!=fence],
+*[!historic][archaeological_site] {
     text: Missing main tag;
+    set notice;
+}
+
+
+
+/* Conflicting tags */
+
+*[historic=archaeological_site][archaeological_site=megalith][fortification_type][!megalith_type],
+*[historic=archaeological_site][archaeological_site=fortification][megalith_type][!fortification_type]
+{
+    text: Conflicting tags;
     set notice;
 }
 
@@ -6319,13 +6341,13 @@ way[highway] > node[tourism][!entrance][tourism!~/viewpoint|information/]!.guide
 
 way[man_made=pipeline][location=underground] > node[marker],
 way[power=cable      ][location=underground] > node[marker] {
-    text: marker node connected to underground object;
+    text: Marker node connected to underground object;
     set notice;
 }
 
 way[junction=roundabout]:righthandtraffic:clockwise,
 way[junction=roundabout]!:righthandtraffic:anticlockwise {
-    text: suspicious roundabout direction;
+    text: Suspicious roundabout direction;
     set notice;
 }
 
