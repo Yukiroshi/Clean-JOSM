@@ -66,7 +66,7 @@ canvas {
 
 *::* {
     /* Basic */
-    white0: #fff;           /* prop(white0); */
+    white: #fff;           /* prop(white); */
     white1: #eee;           /* prop(white1); */
     white2: #ddd;           /* prop(white2); */
     white3: #ccc;           /* prop(white3); */
@@ -183,8 +183,42 @@ relation > *::* {
 
 /* Improved Rotation / Direction originally by Tordanik*/
 
+setting::direction_cone_opacity {
+    type: double;
+    label: tr("Direction cone opacity (0.0-1.0)");
+    default: 0.75;
+}
+setting::direction_cone_size {
+    type: double;
+    label: tr("Direction cone size");
+    default: 15;
+}
+
 /* Nodes on ways direction */
 
+way > node[side=left]::arrow,
+way >[index=1] node[railway:turnout_side=left]::arrow,
+way >[index!=1] node[railway:signal:position=left]::arrow
+{
+    icon-rotation: parent_way_angle() - 90deg;
+}
+way > node[side=right]::arrow,
+way >[index=1] node[railway:turnout_side=right]::arrow,
+way >[index!=1] node[railway:signal:position=right]::arrow
+{
+    icon-rotation: parent_way_angle() + 90deg;
+}
+node[side]::arrow,
+node[railway:turnout_side]::arrow,
+node[railway:signal:position]::arrow
+{
+    icon-image: concat(prop(svg,default),"<path fill='#171717' d='M13.691 14.18c.344 0 .603-.411.447-.724L7.947 1.074c-.169-.339-.725-.339-.894 0L.862 13.456c-.156.312.103.724.447.724z'/><path fill='#f4f4f4' d='M13.691 14.68c-2.108.007-10.274.007-12.382 0-.798-.002-1.191-.851-.894-1.447C1.461 11.126 5.545 2.955 6.606.851c.423-.839 1.43-.712 1.789 0a4329 4329 0 0 1 6.191 12.382c.347.7-.23 1.445-.894 1.447Zm0-.5c.344 0 .603-.411.447-.724L7.947 1.074c-.169-.339-.725-.339-.894 0L.862 13.456c-.156.312.103.724.447.724z'/></svg>");
+    icon-height: setting(direction_cone_size) / 1.1 * prop(zoom,default);
+    icon-offset-y: -10 * prop(zoom,default); 
+    z-index: -1;
+    icon-opacity: setting(direction_cone_opacity) ;
+}
+way[highway] > node[traffic_sign],
 way[highway] > node[highway],
 way[highway] > node[cycleway],
 way[oneway != -1] > node[stop_position:direction=forward],
@@ -217,17 +251,6 @@ way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::t
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
 }
 
-
-setting::direction_cone_opacity {
-    type: double;
-    label: tr("Direction cone opacity (0.0-1.0)");
-    default: 0.75;
-}
-setting::direction_cone_size {
-    type: double;
-    label: tr("Direction cone size");
-    default: 10;
-}
 node[direction]::direction_cone_1{
     icon-opacity: setting(direction_cone_opacity);
 }
@@ -492,14 +515,14 @@ way > node[direction=both]::direction_cone_2
     icon-rotation: parent_way_angle() + 180deg;
     icon-opacity: setting(direction_cone_opacity);
 }
-node|z18-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
-node|z18-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: 20 * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
+node|z16-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size) * prop(zoom,default); icon-offset-y: -11 * prop(zoom,default); z-index: -1;}
 
 /* Improved lights originally by NieWnen */
 
@@ -573,12 +596,12 @@ node[light_source=signal_lamp]::* {
 node|z15-[highway=street_lamp]::light_glow,
 node|z15-[light_source]::light_glow {
     object-z-index: -1.0;
-    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/></svg>"); 
+    icon-image: concat(prop(svg,default),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/></svg>"); 
     icon-height: prop(base_circle_glow_size) * prop(zoom,default);
     icon-opacity: setting(base_circle_glow_opacity);
 }
 node[light_source] {
-    icon-image: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/><circle cx='7.5' cy='7.5' r='1' fill='",prop(light_color),"'/></svg>");
+    icon-image: concat(prop(svg,default),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='1' stop-color='",prop(light_color2),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='7.5' r='7.5' fill='url(#a)'/><circle cx='7.5' cy='7.5' r='1' fill='",prop(light_color),"'/></svg>");
     icon-opacity: setting(base_circle_glow_opacity);
 }
 
@@ -656,7 +679,7 @@ node[light_source]::light_8 {
 }
 
 node.light::* {
-    light_point_svg: concat(prop(svg),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='0.75' stop-color='",prop(light_color2),"' stop-opacity='0.1'/><stop offset='1' stop-color='",prop(light_color),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='4' r='4' fill='url(#a)'/><circle cx='7.5' cy='4' r='.5' fill='",prop(light_color),"'/></svg>");
+    light_point_svg: concat(prop(svg,default),"<radialGradient id='a'><stop offset='0' stop-color='",prop(light_color2),"' stop-opacity='1'/><stop offset='0.75' stop-color='",prop(light_color2),"' stop-opacity='0.1'/><stop offset='1' stop-color='",prop(light_color),"' stop-opacity='0'/></radialGradient><circle cx='7.5' cy='4' r='4' fill='url(#a)'/><circle cx='7.5' cy='4' r='.5' fill='",prop(light_color),"'/></svg>");
 }
 
 /* Embedded lights to support dynamic color changes */
@@ -783,11 +806,11 @@ relation[restriction=only_straight_on] {
 
 
 /*****************/
-/* traffic signs */
+/* Traffic signs */
 /*****************/
 
-node[traffic_sign][access?!] {
-    icon-image: "presets/vehicle/restriction/restrictions.svg";
+node[traffic_sign] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-only-right-turn.svg";
 }
 node[traffic_sign][access=permissive][!is_prop_set(icon-image)],
 node[traffic_sign][access=private][!is_prop_set(icon-image)],
@@ -1041,13 +1064,15 @@ way[highway=raceway] {
 way[highway=raceway][area?], relation[type=multipolygon][highway=raceway] {
     fill-color: raceway#ff80ff;
 }
-way[highway=construction]{
+way[highway=construction]
+{
     width: 6;
     color: construction#FC6C14;
     dashes: list(9 * prop(zoom,default), 9 * prop(zoom,default));
     dashes-background-color: prop(white2);
 }
-way[highway=proposed] {
+way[highway=proposed]
+{
     width: 6;
     dashes: 9,3;
     color: prop(white3);
@@ -1253,7 +1278,7 @@ area["area:highway"=traffic_island] {
     fill-color: prop(gray1);
 }
 area["area:highway"=~/emergency|prohibited/] {
-    fill-color: prop(white0);
+    fill-color: prop(white);
 }
 area["area:highway"=~/motorway|motorway_link/] {
     fill-color: prop(motorway);
@@ -3529,6 +3554,12 @@ area[military=range] {
 /* Railway (OpenRailwayMap) */
 /****************************/
 
+setting::railway_maxspeed {
+    type: boolean;
+    label: tr("Show maxspeed for all railways");
+    default: false;
+}
+
 /*TO DO*/
 
 
@@ -3671,27 +3702,17 @@ node[railway=milestone] {
     icon-image: "presets/transport/railway/milestone.svg";
 }
 way[railway=construction][!highway] {
-    width: 1;
-    color: construction#dddf00;
-    dashes: 9,9;
+    width: 2.5;
+    color: construction#FC6C14;
+    outer-color: raildashed#333;
+    outer-width: 2;
+    dashes: list(12 * prop(zoom,default), 12 * prop(zoom,default));
 }
 way[railway=construction][construction=rail] {
-    width: 2;
-    color: rail#404040;
-    dashes: 9,9;
-    outer-color: construction#dddf00;
+    width: 3;
 }
 way[railway=construction][construction=light_rail] {
     width: 2;
-}
-way[railway=construction][construction=tram][highway]::core_railway,
-way[railway=construction][construction=tram][!highway] {
-    width: 1;
-    color: railover#202020;
-    dashes: 9,9;
-    outer-width: 1;
-    outer-color: construction#dddf00;
-    outer-dashes: 9,9;
 }
 
 /* Group tracks */
@@ -3789,6 +3810,14 @@ way.tracks_construction,
 way.tracks_disused
 {
 	set .dtracks;
+}
+
+way.tracks_proposed,
+way.tracks_construction,
+way.tracks_razed,
+way.tracks_abandoned
+{
+	set ghosttracks;
 }
 
 /* common parts for all lines with maxspeed tag */
@@ -3895,7 +3924,7 @@ way[maxspeed=~/^[1-9][0-9]* mph$/].dtracks
 	set .cspeedshown;
 }
 
-way.cspeedshown
+way.cspeedshown[setting(railway_maxspeed)]
 {
 	casing-color: eval(
 		cond(prop("_maxspeed") <=  10, "#9595e9",
@@ -3936,11 +3965,11 @@ way.cspeedshown
 	set .trackmaxspeed;
 }
 
-way[is_prop_set(trackmaxspeed,default)]::maxspeed
+way::maxspeed
 {
 	text-position: line;
     text-offset-y: -10;
-    text-color: prop(black1,default);
+    text-color: prop(white,default);
 	font-size: 9;
     font-family: setting(font);
 	font-weight: bold;
@@ -4364,7 +4393,7 @@ node[sport=rc_car] {
 node|z20-[natural]::species {
     font-size: 10 * prop(zoom,default);
     font-style: italic;
-    text-color: prop(white0);
+    text-color: prop(white);
     text-halo-radius: 1 * prop(zoom,default);
     text-halo-color: #333;
     text: has_tag_key(species) ? tag(species) : tag(genus);
@@ -4373,7 +4402,7 @@ node|z20-[natural]::species {
 }
 node|z19-[ref:gid]::ref { 
     font-size: 10 * prop(zoom,default);
-    text-color: prop(white0);
+    text-color: prop(white);
     text-halo-radius: 1 * prop(zoom,default);
     text-halo-color: #333;
     text: "ref:gid";
@@ -4999,7 +5028,7 @@ relation[boundary=religious_administration] > way[!building] {
     z-index: 2;
     modifier: false;
     width: 1.25;
-    color: prop(white0);
+    color: prop(white);
     casing-color: #ffd454;
     casing-background-color: prop(color);
     casing-width: prop(width) * 1.5 * prop(zoom,default);
@@ -5884,7 +5913,7 @@ node:unconnected {
     symbol-size: prop(symbol-size) + 1;
 }
 node!:connection {
-    symbol-fill-color: prop(white0);
+    symbol-fill-color: prop(white);
 }
 node[!is_prop_set(symbol-fill-color)] {
     symbol-fill-color: prop(white2);
@@ -5901,7 +5930,7 @@ way > node:connection[setting("high_contrast")] {
 way!:closed >[index=-1] node!:connection,
 way!:closed >[index=1] node!:connection {
     symbol-size: prop(symbol-size) + 2;
-    symbol-fill-color: prop(white0);
+    symbol-fill-color: prop(white);
 }
 node:tagged {
     symbol-fill-color: #007bff;
@@ -5947,7 +5976,7 @@ area|z-16[setting("hide_icons")]:closed:area-style {
 node:selected {
     symbol-size: prop(symbol-size) + 2;
     symbol-fill-color: prop(reddish);
-    symbol-stroke-color: prop(white0);
+    symbol-stroke-color: prop(white);
     symbol-fill-opacity: 1;
     symbol-stroke-opacity: 1;
 }
@@ -5975,13 +6004,13 @@ area:closed:area-style {
     text-halo-color: prop(fill-color);
 }
 *[man_made] {
-    text: concat(tag(name), has_tag_key("operator") ? concat("  | ", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
+    text: concat(tag(name), has_tag_key("operator") ? concat(has_tag_key("name") ? "  | " : "", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
 }
 *[man_made=pipeline] {
-    text: concat(tag(name), has_tag_key("operator") ? concat("  | ", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "", has_tag_key(diameter) ? concat("  |  ", "⌀", tag("diameter")) : "", has_tag_key(substance) ? concat(" - ", tag("substance")) : "");
+    text: concat(tag(name), has_tag_key("operator") ? concat(has_tag_key("name") ? "  | " : "", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "", has_tag_key(diameter) ? concat(has_tag_key("name") || has_tag_key("operator") || has_tag_key(ref) ? "  |  " : "", "⌀", tag("diameter")) : "", has_tag_key(substance) ? concat(" - ", tag("substance")) : "");
 }
 way[railway] {
-    text: concat(tag(name), has_tag_key("operator:short") ? concat("  | ", tag("operator:short")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
+    text: concat(tag(name), has_tag_key("operator:short") ? concat(has_tag_key("name") ? "  | " : "", tag("operator:short")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
 }
 area:closed:area-style[is_prop_set(icon-image)] {
     text-offset-y: -20;
@@ -6664,8 +6693,8 @@ way[route=ferry]!:closed >[index=-1] node[amenity!=ferry_terminal][man_made!=pie
 }
 
 /* #21801 */
-way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] > node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) > 2]!.member:connection,
-way[railway][railway !~ /^(turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] >[index!=1][index!=-1] node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) == 2]!.member:connection {
+way[railway][railway !~ /^(abandoned|construction|razed|proposed|turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] > node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) > 2]!.member:connection,
+way[railway][railway !~ /^(abandoned|construction|razed|proposed|turntable|traverser|platform_edge|roundhouse|workshop|platform)$/] >[index!=1][index!=-1] node[/railway$/ !~ /^(switch|railway_crossing)$/][count(parent_osm_primitives("railway")) == 2]!.member:connection {
     text: tr("Railways connection node without {0} or {1}", "railway=switch", "railway=railway_crossing");
     set notice;
 }
