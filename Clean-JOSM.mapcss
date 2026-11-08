@@ -1072,11 +1072,10 @@ way[highway=construction]
 way[highway=proposed]
 {
     width: 6;
-    dashes: 9,3;
     color: prop(white3);
     casing-color: #888888;
-    dashes: list(7 * prop(zoom,default), 3 * prop(zoom,default));
-    casing-dashes: list(7 * prop(zoom,default), 3 * prop(zoom,default));
+    dashes: list(15 * prop(zoom,default), 3 * prop(zoom,default));
+    casing-dashes: prop(dashes);
 }
 
 
@@ -3704,6 +3703,13 @@ node[railway=signal] {
 }
 node[railway=milestone] {
     icon-image: "presets/transport/railway/milestone.svg";
+}
+way[railway=proposed] {
+    width: 3;
+    color: prop(white3);
+    casing-color: #888888;
+    dashes: list(10 * prop(zoom,default), 5 * prop(zoom,default));
+    casing-dashes: prop(dashes);
 }
 way[railway=construction][!highway] {
     width: 2.5;
