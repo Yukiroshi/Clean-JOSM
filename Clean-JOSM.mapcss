@@ -4786,8 +4786,6 @@ node[tourism=viewpoint] {
     icon-image: "presets/sightseeing/museum.svg";
 }
 
-
-
 /*****************/
 /* historic tags */
 /*****************/
@@ -4831,6 +4829,9 @@ area[historic=citywalls][area?][!is_prop_set(fill-color)]:closed {
 }
 node[historic=cannon] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cannon.svg";
+}
+*[historic=locomotive] {
+    icon-image: "presets/transport/railway/preserved.svg";
 }
 *[historic=city_gate] {
     icon-image: "presets/sightseeing/city_gate.svg";
