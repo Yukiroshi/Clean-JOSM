@@ -5717,19 +5717,27 @@ way:closed.note_fixme::note_fixme {
 *.note_fixme::note_fixme {
     icon-height: 20 * prop(zoom, default);
 }
+
+area[building],
+area[landuse]
+area[area?]
+{
+    set area;
+}
+
 /* Way renderer */
 
-way[highway][!area?]!:area-style,
-way[railway][!area?]!:area-style,
-way[waterway][!area?]!:area-style,
-way[man_made=pipeline][!area?]!:area-style {    
+way[highway][!is_prop_set(area,default)],
+way[railway][!is_prop_set(area,default)],
+way[waterway][!is_prop_set(area,default)],
+way[man_made=pipeline][!is_prop_set(area,default)] {    
     z-index: 0.09;
 }
 
-way[highway][!area?]!:area-style,
-way[railway][!area?]!:area-style,
-way[waterway][!area?]!:area-style,
-way[man_made=pipeline][!area?]!:area-style,
+way[highway][!is_prop_set(area,default)],
+way[railway][!is_prop_set(area,default)],
+way[waterway][!is_prop_set(area,default)],
+way[man_made=pipeline][!is_prop_set(area,default)],
 way[barrier] {
     width: prop(width) * prop(zoom,default);
     color: prop(color);
@@ -5738,10 +5746,10 @@ way[barrier] {
     z-index: tag(layer) + prop(z-index);
     opacity: 1;
 }
-way[highway][!area?]!:area-style::outer_line,
-way[railway][!area?]!:area-style::outer_line,
-way[waterway][!area?]!:area-style::outer_line,
-way[man_made=pipeline][!area?]!:area-style::outer_line,
+way[highway][!is_prop_set(area,default)]::outer_line,
+way[railway][!is_prop_set(area,default)]::outer_line,
+way[waterway][!is_prop_set(area,default)]::outer_line,
+way[man_made=pipeline][!is_prop_set(area,default)]::outer_line,
 way[barrier]::outer_line {
     width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default);
     color: prop("outer-color", default);
@@ -5753,10 +5761,10 @@ way[barrier]::outer_line {
     set other;
 }
 
-way[highway][!area?]!:area-style::casing_line,
-way[railway][!area?]!:area-style::casing_line,
-way[waterway][!area?]!:area-style::casing_line,
-way[man_made=pipeline][!area?]!:area-style::casing_line,
+way[highway][!is_prop_set(area,default)]::casing_line,
+way[railway][!is_prop_set(area,default)]::casing_line,
+way[waterway][!is_prop_set(area,default)]::casing_line,
+way[man_made=pipeline][!is_prop_set(area,default)]::casing_line,
 way[barrier]::casing_line {
     width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default);
     color: prop("casing-color", default);
@@ -5767,7 +5775,7 @@ way[barrier]::casing_line {
     opacity: 1;
     set other;
 }
-way[highway][access][access!=yes][!area?]!:area-style::access {
+way[highway][access][access!=yes][!is_prop_set(area,default)]::access {
     width: prop(width, outer_line);
     color: prop(gray1);
     dashes: 2,5;
@@ -5777,27 +5785,27 @@ way[highway][access][access!=yes][!area?]!:area-style::access {
     opacity: 1;
     set other;
 }
-way[highway][access=no][!area?]!:area-style::access 
+way[highway][access=no][!is_prop_set(area,default)]::access 
 {
     color: #ff0000;
 }
-way[highway][access=private][!area?]!:area-style::access 
+way[highway][access=private][!is_prop_set(area,default)]::access 
 {
     color: #9000ff;
 }
-way[highway][access=forestry][!area?]!:area-style::access 
+way[highway][access=forestry][!is_prop_set(area,default)]::access 
 {
     color: #489f00;
 }
-way[highway][access=customers][!area?]!:area-style::access 
+way[highway][access=customers][!is_prop_set(area,default)]::access 
 {
     color: #00d0ff;
 }
-way[highway][access=destination][!area?]!:area-style::access 
+way[highway][access=destination][!is_prop_set(area,default)]::access 
 {
     color: #ff9500;
 }
-way[highway][access=permissive][!area?]!:area-style::access 
+way[highway][access=permissive][!is_prop_set(area,default)]::access 
 {
     color: #00ffbb;
 }
