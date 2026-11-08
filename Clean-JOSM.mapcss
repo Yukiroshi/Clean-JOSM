@@ -197,19 +197,16 @@ setting::direction_cone_size {
 /* Nodes on ways direction */
 
 way > node[side=left]::arrow,
-way >[index=1] node[railway:turnout_side=left]::arrow,
 way >[index!=1] node[railway:signal:position=left]::arrow
 {
     icon-rotation: parent_way_angle() - 90deg;
 }
 way > node[side=right]::arrow,
-way >[index=1] node[railway:turnout_side=right]::arrow,
 way >[index!=1] node[railway:signal:position=right]::arrow
 {
     icon-rotation: parent_way_angle() + 90deg;
 }
 node[side]::arrow,
-node[railway:turnout_side]::arrow,
 node[railway:signal:position]::arrow
 {
     icon-image: concat(prop(svg,default),"<path fill='#171717' d='M13.691 14.18c.344 0 .603-.411.447-.724L7.947 1.074c-.169-.339-.725-.339-.894 0L.862 13.456c-.156.312.103.724.447.724z'/><path fill='#f4f4f4' d='M13.691 14.68c-2.108.007-10.274.007-12.382 0-.798-.002-1.191-.851-.894-1.447C1.461 11.126 5.545 2.955 6.606.851c.423-.839 1.43-.712 1.789 0a4329 4329 0 0 1 6.191 12.382c.347.7-.23 1.445-.894 1.447Zm0-.5c.344 0 .603-.411.447-.724L7.947 1.074c-.169-.339-.725-.339-.894 0L.862 13.456c-.156.312.103.724.447.724z'/></svg>");
@@ -225,7 +222,8 @@ way[oneway != -1] > node[stop_position:direction=forward],
 way[railway][oneway != -1] > node[railway:signal:direction=forward],
 way[highway][oneway != -1] > node[traffic_sign:direction=forward],
 way[highway][oneway != -1] > node[traffic_signals:direction=forward],
-way[oneway != -1] > node[direction=forward] {
+way[oneway != -1] > node[direction=forward],
+way >[index=1] node[railway:turnout_side] {
     icon-rotation: parent_way_angle();
 }
 way >[index=1] node[noexit],
@@ -3690,7 +3688,13 @@ way[railway=funicular] {
     dashes: 9,9;
 }
 node[railway=switch] {
-    icon-image: "presets/transport/railway/switch.svg";
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch.svg";
+}
+node[railway=switch][railway:turnout_side=right] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-right.svg";
+}
+node[railway=switch][railway:turnout_side=left] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-left.svg";
 }
 node[railway=railway_crossing] {
     icon-image: "presets/transport/railway/railway_crossing.svg";
