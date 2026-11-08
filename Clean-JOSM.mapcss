@@ -4541,14 +4541,17 @@ area[historic=citywalls][area?][!is_prop_set(fill-color)]:closed {
 *[historic=archaeological_site] {
     icon-image: "presets/sightseeing/archaeological.svg";
 }
+*[geological=palaeontological_site] {
+    icon-image: "presets/sightseeing/palaeontological_site.svg";
+}
 *[historic=ruins] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/ruins.svg";
 }
 *[historic=battlefield] {
     icon-image: "presets/sightseeing/battlefield.svg";
 }
-*[geological=palaeontological_site] {
-    icon-image: "presets/sightseeing/palaeontological_site.svg";
+node[historic=cannon] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/cannon.svg";
 }
 *[historic=city_gate] {
     icon-image: "presets/sightseeing/city_gate.svg";
