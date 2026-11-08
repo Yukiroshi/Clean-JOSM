@@ -163,18 +163,18 @@ relation > *::* {
 *|z25-::* { zoom: 1.8; }
 
 *|z-13::* { zoom_font: 0.9; }
-*|z14::*  { zoom_font: 0.95; }
-*|z15::*  { zoom_font: 1.0; }
-*|z16::*  { zoom_font: 1.1; }
-*|z17::*  { zoom_font: 1.2; }
-*|z18::*  { zoom_font: 1.3; }
-*|z19::*  { zoom_font: 1.4; }
+*|z14::*  { zoom_font: 1,0; }
+*|z15::*  { zoom_font: 1.15; }
+*|z16::*  { zoom_font: 1.25; }
+*|z17::*  { zoom_font: 1.35; }
+*|z18::*  { zoom_font: 1.4; }
+*|z19::*  { zoom_font: 1.45; }
 *|z20::*  { zoom_font: 1.5; }
-*|z21::*  { zoom_font: 1.6; }
-*|z22::*  { zoom_font: 1.7; }
-*|z23::*  { zoom_font: 1.8; }
-*|z24::*  { zoom_font: 1.9; }
-*|z25-::* { zoom_font: 2; }
+*|z21::*  { zoom_font: 1.55; }
+*|z22::*  { zoom_font: 1.6; }
+*|z23::*  { zoom_font: 1.65; }
+*|z24::*  { zoom_font: 1.7; }
+*|z25-::* { zoom_font: 1.75; }
 
 *::* { zoom: prop(zoom, default) * setting(scaling,default); zoom_font: prop(zoom_font, default) * setting(scaling,default);  }
 
@@ -3525,11 +3525,12 @@ area[military=range] {
 
 
 
-/****************/
-/* railway tags */
-/****************/
+/****************************/
+/* Railway (OpenRailwayMap) */
+/****************************/
 
 /*TO DO*/
+
 
 area[railway=station] {
     fill-color: railwaypoint#f7efb7;
@@ -3693,7 +3694,259 @@ way[railway=construction][construction=tram][!highway] {
     outer-dashes: 9,9;
 }
 
+/* Group tracks */
+way|z2-[railway=rail][usage=main][!service],
+way|z8-[railway=rail][usage=branch][!service],
+way|z10-[railway=rail],
+way|z9-[railway=narrow_gauge],
+way|z10-[railway=light_rail],
+way|z10-[railway=subway],
+way|z11-[railway=tram]
+{
+	set .tracks_present;
+}
 
+way|z9-[railway=disused]["disused:usage"="branch"][!"disused:service"]["disused:railway"!="light_rail"]["disused:railway"!="subway"]["disused:railway"!="tram"],
+way|z9-[railway=disused]["usage"="branch"][!"service"]["disused:railway"!="light_rail"]["disused:railway"!="subway"]["disused:railway"!="tram"],
+way|z9-[railway=disused]["disused:usage"="main"][!"disused:service"]["disused:railway"!="light_rail"]["disused:railway"!="subway"]["disused:railway"!="tram"],
+way|z9-[railway=disused]["usage"="main"][!"service"]["disused:railway"!="light_rail"]["disused:railway"!="subway"]["disused:railway"!="tram"],
+way|z10-[railway=disused]["disused:railway"!="tram"],
+way|z11-[railway=disused]["disused:railway"="tram"]
+{
+	set .tracks_disused;
+}
+
+way|z9-[railway=abandoned]["abandoned:usage"="branch"][!"abandoned:service"]["abandoned:railway"!="light_rail"]["abandoned:railway"!="subway"]["abandoned:railway"!="tram"],
+way|z9-[railway=abandoned]["usage"="branch"][!"service"]["abandoned:railway"!="light_rail"]["abandoned:railway"!="subway"]["abandoned:railway"!="tram"],
+way|z9-[railway=abandoned]["abandoned:usage"="main"][!"abandoned:service"]["abandoned:railway"!="light_rail"]["abandoned:railway"!="subway"]["abandoned:railway"!="tram"],
+way|z9-[railway=abandoned]["usage"="main"][!"service"]["abandoned:railway"!="light_rail"]["abandoned:railway"!="subway"]["abandoned:railway"!="tram"],
+way|z10-[railway=abandoned]["abandoned:railway"!="tram"],
+way|z11-[railway=abandoned]["abandoned:railway"="tram"]
+{
+	set .tracks_abandoned;
+}
+
+way|z9-[railway=preserved]["preserved:usage"="branch"][!"preserved:service"]["preserved:railway"!="light_rail"]["preserved:railway"!="subway"]["preserved:railway"!="tram"],
+way|z9-[railway=preserved]["usage"="branch"][!"service"]["preserved:railway"!="light_rail"]["preserved:railway"!="subway"]["preserved:railway"!="tram"],
+way|z9-[railway=preserved]["preserved:usage"="main"][!"preserved:service"]["preserved:railway"!="light_rail"]["preserved:railway"!="subway"]["preserved:railway"!="tram"],
+way|z9-[railway=preserved]["usage"="main"][!"service"]["preserved:railway"!="light_rail"]["preserved:railway"!="subway"]["preserved:railway"!="tram"],
+way|z10-[railway=preserved]["preserved:railway"!="tram"],
+way|z11-[railway=preserved]["preserved:railway"="tram"]
+{
+	set .tracks_preserved;
+}
+
+way|z9-[railway=razed]["razed:usage"="branch"][!"razed:service"]["razed:railway"!="light_rail"]["razed:railway"!="subway"]["razed:railway"!="tram"],
+way|z9-[railway=razed]["usage"="branch"][!"service"]["razed:railway"!="light_rail"]["razed:railway"!="subway"]["razed:railway"!="tram"],
+way|z9-[railway=razed]["razed:usage"="main"][!"razed:service"]["razed:railway"!="light_rail"]["razed:railway"!="subway"]["razed:railway"!="tram"],
+way|z9-[railway=razed]["usage"="main"][!"service"]["razed:railway"!="light_rail"]["razed:railway"!="subway"]["razed:railway"!="tram"],
+way|z10-[railway=razed]["razed:railway"!="tram"],
+way|z11-[railway=razed]["razed:railway"="tram"]
+{
+	set .tracks_razed;
+}
+
+way|z9-[railway=proposed]["proposed:usage"="branch"][!"proposed:service"][!"proposed"]["proposed:railway"!="light_rail"]["proposed:railway"!="subway"]["proposed:railway"!="tram"]["proposed:railway"!="platform"],
+way|z9-[railway=proposed]["usage"="branch"][!"service"][!"proposed"]["proposed:railway"!="light_rail"]["proposed:railway"!="subway"]["proposed:railway"!="tram"]["proposed:railway"!="platform"],
+way|z9-[railway=proposed]["proposed:usage"="main"][!"proposed:service"][!"proposed:railway"]["proposed"!="light_rail"]["proposed"!="subway"]["proposed"!="tram"]["proposed"!="platform"],
+way|z9-[railway=proposed]["usage"="main"][!"service"][!"proposed:railway"]["proposed"!="light_rail"]["proposed"!="subway"]["proposed"!="tram"]["proposed"!="platform"],
+way|z10-[railway=proposed]["proposed:railway"]["proposed:railway"!="tram"],
+way|z10-[railway=proposed][!"proposed:railway"]["proposed"!="tram"],
+way|z11-[railway=proposed]["proposed:railway"="tram"],
+way|z11-[railway=proposed][!"proposed:railway"]["proposed"="tram"]
+{
+	set .tracks_proposed;
+}
+
+way|z9-[railway=construction]["construction:usage"="branch"][!"construction:service"][!"construction"]["construction:railway"!="light_rail"]["construction:railway"!="subway"]["construction:railway"!="tram"]["construction:railway"!="platform"],
+way|z9-[railway=construction]["usage"="branch"][!"service"][!"construction"]["construction:railway"!="light_rail"]["construction:railway"!="subway"]["construction:railway"!="tram"]["construction:railway"!="platform"],
+way|z9-[railway=construction]["construction:usage"="main"][!"construction:service"][!"construction:railway"]["construction"!="light_rail"]["construction"!="subway"]["construction"!="tram"]["construction"!="platform"],
+way|z9-[railway=construction]["usage"="main"][!"service"][!"construction:railway"]["construction"!="light_rail"]["construction"!="subway"]["construction"!="tram"]["construction"!="platform"],
+way|z10-[railway=construction]["construction:railway"]["construction:railway"!="tram"],
+way|z10-[railway=construction][!"construction:railway"]["construction"!="tram"],
+way|z11-[railway=construction]["construction:railway"="tram"],
+way|z11-[railway=construction][!"construction:railway"]["construction"="tram"]
+{
+	set .tracks_construction;
+}
+
+node|z14-[railway=signal]["railway:signal:direction"]["railway:signal:speed_limit:deactivated"=yes]::deactivatedcross,
+node|z14-[railway=signal]["railway:signal:direction"]["railway:signal:speed_limit_distant:deactivated"=yes]::deactivatedcross
+{
+	z-index: 100;
+	icon-image: "icons/light-signal-deactivated-18.png";
+	icon-width: 9;
+	icon-height: 9;
+}
+
+way.tracks_present,
+way.tracks_preserved
+{
+	set .tracks;
+}
+
+way.tracks_construction,
+way.tracks_disused
+{
+	set .dtracks;
+}
+
+/* common parts for all lines with maxspeed tag */
+way[maxspeed=~/^[1-9][0-9]*$/]::maxspeed
+{
+    text: "maxspeed";
+}
+
+way[maxspeed=~/^[1-9][0-9]*$/].tracks
+{
+	_maxspeed: eval(tag("maxspeed"));
+	set .trackmaxspeed;
+	set .speedshown;
+}
+/* Forward maxspeed */
+way|z12-["railway:preferred_direction"="forward"]["maxspeed:forward"=~/^[1-9][0-9]*$/][is_prop_set(tracks,default)]::maxspeed,
+way|z12-["railway:preferred_direction"="backward"]["maxspeed:backward"!~/^[1-9][0-9]*$/]["maxspeed:forward"=~/^[1-9][0-9]*$/][is_prop_set(tracks,default)]::maxspeed,
+way|z12-[!"railway:preferred_direction"]["maxspeed:forward"=~/^[1-9][0-9]*$/][is_prop_set(tracks,default)]::maxspeed
+{
+    text: "maxspeed:forward";
+}
+way|z12-["railway:preferred_direction"="forward"]["maxspeed:forward"=~/^[1-9][0-9]*$/].tracks,
+way|z12-["railway:preferred_direction"="backward"]["maxspeed:backward"!~/^[1-9][0-9]*$/]["maxspeed:forward"=~/^[1-9][0-9]*$/].tracks,
+way|z12-[!"railway:preferred_direction"]["maxspeed:forward"=~/^[1-9][0-9]*$/].tracks
+{
+    text: "maxspeed:forward";
+	_maxspeed: eval(tag("maxspeed:forward"));
+	set .trackmaxspeed;
+	set .speedshown;
+}
+
+/* Backward maxspeed */
+way|z12-["railway:preferred_direction"="backward"]["maxspeed:backward"=~/^[1-9][0-9]*$/].tracks,
+way|z12-["railway:preferred_direction"="forward"]["maxspeed:forward"!~/^[1-9][0-9]*$/]["maxspeed:backward"=~/^[1-9][0-9]*$/].tracks,
+way|z12-[!"railway:preferred_direction"]["maxspeed:forward"!~/^[1-9][0-9]*$/]["maxspeed:backward"=~/^[1-9][0-9]*$/].tracks
+{
+    text: "maxspeed:backward";
+	_maxspeed: eval(tag("maxspeed:backward"));
+	set .trackmaxspeed;
+	set .speedshown;
+}
+
+/* lines tagged in mph (miles per hour) */
+way[maxspeed=~/^[1-9][0-9]* mph$/].tracks
+{
+	_maxspeed: eval(replace(tag("maxspeed"), " mph", "") * 1.609344);
+	set .speedshown;
+}
+
+way.speedshown
+{
+	casing-color: eval(
+		cond(prop("_maxspeed") <=  10, "#0100CB",
+		cond(prop("_maxspeed") <=  20, "#001ECB",
+		cond(prop("_maxspeed") <=  30, "#003DCB",
+		cond(prop("_maxspeed") <=  40, "#005BCB",
+		cond(prop("_maxspeed") <=  50, "#007ACB",
+		cond(prop("_maxspeed") <=  60, "#0098CB",
+		cond(prop("_maxspeed") <=  70, "#00B7CB",
+		cond(prop("_maxspeed") <=  80, "#00CBC1",
+		cond(prop("_maxspeed") <=  90, "#00CBA2",
+		cond(prop("_maxspeed") <= 100, "#00CB84",
+		cond(prop("_maxspeed") <= 110, "#00CB66",
+		cond(prop("_maxspeed") <= 120, "#00CB47",
+		cond(prop("_maxspeed") <= 130, "#00CB29",
+		cond(prop("_maxspeed") <= 140, "#00CB0A",
+		cond(prop("_maxspeed") <= 150, "#14CB00",
+		cond(prop("_maxspeed") <= 160, "#33CB00",
+		cond(prop("_maxspeed") <= 170, "#51CB00",
+		cond(prop("_maxspeed") <= 180, "#70CB00",
+		cond(prop("_maxspeed") <= 190, "#8ECB00",
+		cond(prop("_maxspeed") <= 200, "#ADCB00",
+		cond(prop("_maxspeed") <= 210, "#CBCB00",
+		cond(prop("_maxspeed") <= 220, "#CBAD00",
+		cond(prop("_maxspeed") <= 230, "#CB8E00",
+		cond(prop("_maxspeed") <= 240, "#CB7000",
+		cond(prop("_maxspeed") <= 250, "#CB5100",
+		cond(prop("_maxspeed") <= 260, "#CB3300",
+		cond(prop("_maxspeed") <= 270, "#CB1400",
+		cond(prop("_maxspeed") <= 280, "#CB0007",
+		cond(prop("_maxspeed") <= 290, "#CB0025",
+		cond(prop("_maxspeed") <= 300, "#CB0044",
+		cond(prop("_maxspeed") <= 320, "#CB0062",
+		cond(prop("_maxspeed") <= 340, "#CB0081",
+		cond(prop("_maxspeed") <= 360, "#CB009F",
+		cond(prop("_maxspeed") <= 380, "#CB00BD",
+		     "#BA00CB")))))))))))))))))))))))))))))))))));
+	set .trackmaxspeed;
+}
+
+way[maxspeed=~/^[1-9][0-9]*$/].dtracks
+{
+	z-index: eval(1+tag("maxspeed")/10);
+	_maxspeed: eval(tag("maxspeed"));
+	set .trackmaxspeed;
+	set .cspeedshown;
+}
+
+/* lines tagged in mph (miles per hour) */
+way[maxspeed=~/^[1-9][0-9]* mph$/].dtracks
+{
+	z-index: eval(1 + (replace(tag("maxspeed"), " mph", "") * 1.609344 / 10));
+	_maxspeed: eval(replace(tag("maxspeed"), " mph", "") * 1.609344);
+	set .cspeedshown;
+}
+
+way.cspeedshown
+{
+	casing-color: eval(
+		cond(prop("_maxspeed") <=  10, "#9595e9",
+		cond(prop("_maxspeed") <=  20, "#95a1e9",
+		cond(prop("_maxspeed") <=  30, "#95aee9",
+		cond(prop("_maxspeed") <=  40, "#95bbe9",
+		cond(prop("_maxspeed") <=  50, "#95c8e9",
+		cond(prop("_maxspeed") <=  60, "#95d4e9",
+		cond(prop("_maxspeed") <=  70, "#95e1e9",
+		cond(prop("_maxspeed") <=  80, "#95e9e5",
+		cond(prop("_maxspeed") <=  90, "#95e9d8",
+		cond(prop("_maxspeed") <= 100, "#95e9cc",
+		cond(prop("_maxspeed") <= 110, "#95e9bf",
+		cond(prop("_maxspeed") <= 120, "#95e9b3",
+		cond(prop("_maxspeed") <= 130, "#95e9a6",
+		cond(prop("_maxspeed") <= 140, "#95e999",
+		cond(prop("_maxspeed") <= 150, "#9de995",
+		cond(prop("_maxspeed") <= 160, "#aae995",
+		cond(prop("_maxspeed") <= 170, "#b7e995",
+		cond(prop("_maxspeed") <= 180, "#c4e995",
+		cond(prop("_maxspeed") <= 190, "#d0e995",
+		cond(prop("_maxspeed") <= 200, "#dde995",
+		cond(prop("_maxspeed") <= 210, "#e9e995",
+		cond(prop("_maxspeed") <= 220, "#e9dd95",
+		cond(prop("_maxspeed") <= 230, "#e9d095",
+		cond(prop("_maxspeed") <= 240, "#e9c495",
+		cond(prop("_maxspeed") <= 250, "#e9b795",
+		cond(prop("_maxspeed") <= 260, "#e9aa95",
+		cond(prop("_maxspeed") <= 270, "#e99d95",
+		cond(prop("_maxspeed") <= 280, "#e99598",
+		cond(prop("_maxspeed") <= 290, "#e995a4",
+		cond(prop("_maxspeed") <= 300, "#e995b1",
+		cond(prop("_maxspeed") <= 320, "#e995be",
+		cond(prop("_maxspeed") <= 340, "#e995cb",
+		cond(prop("_maxspeed") <= 360, "#e995d7",
+		cond(prop("_maxspeed") <= 380, "#e995e4",
+		     "#e295e9")))))))))))))))))))))))))))))))))));
+	set .trackmaxspeed;
+}
+
+way[is_prop_set(trackmaxspeed,default)]::maxspeed
+{
+	text-position: line;
+    text-offset-y: -10;
+    text-color: prop(black1,default);
+	font-size: 9;
+    font-family: setting(font);
+	font-weight: bold;
+	text-halo-radius: 1;
+    text-halo-color: prop(casing-color,default);
+}
 
 /****************/
 /* aeroway tags */
@@ -5602,7 +5855,7 @@ node {
     text-offset-y: -10;
 }
 node[/^disused:/] {
-    text: tr("");
+    text: false;
 }
 node {
     symbol-shape: circle;
@@ -5673,10 +5926,10 @@ node|z-17!:tagged[setting("hide_icons")] {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
 }
-*|z-15[setting("hide_icons")] {
+*|z-13[setting("hide_icons")] {
     icon-image: none;
 }
-*|z-15[setting("hide_icons")].other::* {
+*|z-13[setting("hide_icons")][is_prop_set(other,default)]::* {
     icon-image: none;
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
@@ -5684,7 +5937,7 @@ node|z-17!:tagged[setting("hide_icons")] {
 area|z-16[setting("hide_icons")]:closed:area-style {
     icon-image: none;
 }
-*|z-18[setting("hide_icons")] {
+*|z-17[setting("hide_icons")] {
     text: false;
 }
 *[setting("high_contrast")] {
@@ -5721,20 +5974,13 @@ area:closed:area-style {
     text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? #333 : #eee );
     text-halo-color: prop(fill-color);
 }
-
-node[place] {
-    font-size: prop(font-size);
-}
-*:tagged {
-    text: concat(tag(name), has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
-}
 *[man_made] {
     text: concat(tag(name), has_tag_key("operator") ? concat("  | ", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
 }
 *[man_made=pipeline] {
     text: concat(tag(name), has_tag_key("operator") ? concat("  | ", tag("operator")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "", has_tag_key(diameter) ? concat("  |  ", "⌀", tag("diameter")) : "", has_tag_key(substance) ? concat(" - ", tag("substance")) : "");
 }
-*[railway] {
+way[railway] {
     text: concat(tag(name), has_tag_key("operator:short") ? concat("  | ", tag("operator:short")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
 }
 area:closed:area-style[is_prop_set(icon-image)] {
@@ -5750,6 +5996,12 @@ way|z-14[highway!~/trunk|primary|secondary|tertiary/] {
     text: false;
 }
 way|z-10[highway] {
+    text: false;
+}
+node|z-17!.place {
+    text: false;
+}
+*|z-13!.place {
     text: false;
 }
 
@@ -6563,17 +6815,17 @@ node!:tagged {
 /* Scaling (final)*/
 
 * {
-    icon-height: prop(icon-height) * prop(zoom,default);
-
     width: prop(width) * prop(zoom,default);
-    right-casing-width: cond(is_prop_set(right-casing-width), prop(right-casing-width) * prop(zoom,default), 0);
-    left-casing-width: cond(is_prop_set(left-casing-width), prop(left-casing-width) * prop(zoom,default), 0);
+    right-casing-width: is_prop_set(right-casing-width) ? prop(right-casing-width) * prop(zoom,default) : 0;
+    left-casing-width: is_prop_set(left-casing-width) ? prop(left-casing-width) * prop(zoom,default) : 0;
 
     symbol-size: prop(symbol-size) * prop(zoom,default);
-
+}
+*::*
+{
+    icon-height: prop(icon-height) * prop(zoom,default);
+    text-offset-x: prop(text-offset-x) * prop(zoom_font,default);
+    text-offset-y: prop(text-offset-y) * prop(zoom_font,default);
     font-size: prop(font-size) * prop(zoom_font,default);
-
-    text-offset-x: prop(text-offset-x) * prop(zoom,default);
-    text-offset-y: prop(text-offset-y) * prop(zoom,default);
     text-halo-radius: prop(text-halo-radius) * prop(zoom_font,default);
 }
