@@ -5864,9 +5864,8 @@ way[tunnel][man_made!=tunnel]::tunnel {
     major-z-index: 3;
 }
 way[tunnel][man_made!=tunnel]::casing_line {
-    brightness: (((red(prop(color)) * 0.299) + (green(prop(color)))* 0.587) + (blue(prop(color))* 0.114)) / 3;
-
-    color: hsb_color(0, 0, prop(brightness) >= 0.1 ? prop(brightness) * 1.5 : prop(brightness));
+    brightness: red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114;
+    color: eval(rgb(red(prop(color)) * 0.5 + prop(brightness) * 0.5, green(prop(color)) * 0.5 + prop(brightness) * 0.5, blue(prop(color)) * 0.5 + prop(brightness) * 0.5));
 }
 way[covered][covered!=no]::tunnel,
 way[bridge=covered]::tunnel {
