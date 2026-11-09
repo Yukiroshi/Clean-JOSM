@@ -1804,7 +1804,7 @@ area[man_made=works],
 area[man_made=water_works] {
     fill-color: manmade#d8d8d8;
 }
-node[man_made=reservoir_covered] {
+*[man_made=reservoir_covered] {
     icon-image: "presets/landmark/reservoir_covered.svg";
 }
 node[man_made=surveillance] {
@@ -1813,31 +1813,31 @@ node[man_made=surveillance] {
 node[man_made=survey_point] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/benchmark-disk.svg";
 }
-node[man_made=tower] {
+*[man_made=tower] {
     icon-image: "presets/tower/tower.svg";
 }
-node[man_made=tower][tower:type=bell_tower] {
+*[man_made=tower][tower:type=bell_tower] {
     icon-image: "presets/tower/bell_tower.svg";
 }
-node[man_made=tower][tower:type=communication] {
+*[man_made=tower][tower:type=communication] {
     icon-image: "presets/tower/communication.svg";
 }
-node[man_made=tower][tower:type=cooling] {
+*[man_made=tower][tower:type=cooling] {
     icon-image: "presets/tower/cooling.svg";
 }
-node[man_made=tower][tower:type=defensive] {
+*[man_made=tower][tower:type=defensive] {
     icon-image: "presets/tower/defensive.svg";
 }
-node[man_made=tower][tower:type=lighting] {
+*[man_made=tower][tower:type=lighting] {
     icon-image: "presets/tower/lighting.svg";
 }
-node[man_made=tower][tower:type=observation] {
+*[man_made=tower][tower:type=observation] {
     icon-image: "presets/tower/observation.svg";
 }
-node[man_made=tower][tower:type=watchtower] {
+*[man_made=tower][tower:type=watchtower] {
     icon-image: "presets/tower/observation.svg";
 }
-node[man_made=communications_tower] {
+*[man_made=communications_tower] {
     icon-image: "presets/tower/communications_tower.svg";
 }
 node[man_made=wastewater_plant] {
