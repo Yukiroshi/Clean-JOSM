@@ -85,6 +85,7 @@ canvas {
     tan: #ddccaa;
     gray_tan: #ddd9b3;
     gray_brown: #998888;
+    light_brown: #a47026;
     brown: #663300;
     pink_red: #cf2081;
     reddish: #ff0055;
@@ -5446,13 +5447,19 @@ way[barrier] {
     dashes: list(12 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default));
     z-index: 0.15;
 }
+way[barrier=log] {
+    width: 2;
+    casing-width: 2;
+    color: prop(light_brown);
+    casing-color: prop(brown);
+    dashes: list(12 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default));
+}
 way[barrier=fence][fence_type=railing],
 way[barrier=handrail] {
     width: 1;
 }
 way[barrier=fence][fence_type=wood] {
     color: fence_wood#b47e50;
-    dashes: list(12 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default));
 }
 way[barrier=bollard] {
     width: 3;
@@ -5467,7 +5474,6 @@ way[barrier=hedge] {
     width: 2;
     color: wood#8cd05f;
     casing-color: #52932d;
-    dashes: list(12 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default));
 }
 way[barrier=kerb] {
     width: 1.5;
@@ -5498,7 +5504,6 @@ way[barrier=city_wall] {
 way[barrier=guard_rail] {
     width: 2;
     color: prop(white2);
-    dashes: list(12 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default), 2 * prop(zoom,default));
     right-casing-color: prop(white2);
     right-casing-width: 4;
     right-casing-opacity: 0.35;
