@@ -5042,11 +5042,13 @@ way[boundary=maritime] {
     z-index: 2;
     modifier: false;
     width: 1.5;
-    color: prop(white2);
+    color: prop(white);
     casing-color: #82B5FE;
     casing-width: prop(width) * 1.5 * prop(zoom,default);
     dashes: 16,4,4,4;
     dashes-background-color: prop(casing-color);
+    opacity: 0.75;
+    casing-opacity: prop(opacity);
 }
 way[boundary=religious_administration],
 relation[boundary=religious_administration] > way[!building] {
@@ -5059,6 +5061,8 @@ relation[boundary=religious_administration] > way[!building] {
     casing-width: prop(width) * 1.5 * prop(zoom,default);
     dashes: 16,4,4,4;
     dashes-background-color: prop(casing-color);
+    opacity: 0.75;
+    casing-opacity: prop(opacity);
 }
 way[boundary=protected_area],
 relation[boundary=protected_area] > way,
@@ -5071,6 +5075,8 @@ relation[boundary=national_park] > way {
     casing-color: #a4e686;
     casing-width: 2 * prop(zoom,default);
     dashes: 16,4,4,4;
+    opacity: 0.75;
+    casing-opacity: prop(opacity);
 }
 
 node[boundary=marker] {
@@ -5732,10 +5738,10 @@ area[barrier=planter] {
     z-index: 0.99;
     set note_fixme;
 }
-way!:closed.note_fixme::note_fixme {
+way[!is_prop_set(area,default)].note_fixme::note_fixme {
     icon-position: line;
 }
-way:closed.note_fixme::note_fixme {
+way[is_prop_set(area,default)].note_fixme::note_fixme {
     icon-position: center;
 }
 *.note_fixme::note_fixme {
@@ -5743,8 +5749,9 @@ way:closed.note_fixme::note_fixme {
 }
 
 area[building],
-area[landuse]
-area[area?]
+area[landuse],
+area[area?],
+relation[type=multipolygon] > way
 {
     set area;
 }
@@ -5834,13 +5841,13 @@ way[highway][access=permissive][!is_prop_set(area,default)]::access
     color: #00ffbb;
 }
 
-way[highway][highway!~/track|proposed/][surface=paving_stones]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=paving_stones][!is_prop_set(area,default)]::casing_line {
     dashes: list(15 * prop(zoom,default),2 * prop(zoom,default));
 }
-way[highway][highway!~/track|proposed/][surface=~/sett|bricks|cobblestone|unhewn_cobblestone/]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=~/sett|bricks|cobblestone|unhewn_cobblestone/][!is_prop_set(area,default)]::casing_line {
     dashes: list(10 * prop(zoom,default),5 * prop(zoom,default));
 }
-way[highway][highway!~/track|proposed/][surface=gravel]!:area-style::casing_line {
+way[highway][highway!~/track|proposed/][surface=gravel][!is_prop_set(area,default)]::casing_line {
     dashes: list(3 * prop(zoom,default),6 * prop(zoom,default),2 * prop(zoom,default),4 * prop(zoom,default),5 * prop(zoom,default),3 * prop(zoom,default));
 }
 
