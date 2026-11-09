@@ -234,16 +234,26 @@ way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
 }
-way[highway] > node[highway=crossing],
-way[highway] > node[crossing:island=yes]::traffic_island,
-way[highway] > node[crossing=traffic_signals]::traffic_signals,
-way[highway] > node[crossing:signals=yes]::traffic_signals {
+
+way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
+way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
+    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+}
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+}
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
 }
 way[highway] >[index=-1] node[noexit],
 way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island,
+way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+}
+way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+}
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
 way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
     icon-rotation: parent_way_angle(); /*rotate to match way direction*/
@@ -1167,22 +1177,16 @@ node[highway=crossing]["crossing:markings"=pictograms] {
 node|z18-[highway=crossing][crossing:island=yes]::traffic_island,
 node|z18-[highway=crossing][crossing=island]::traffic_island {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-island.svg";
-    icon-height: 30 * prop(zoom,default);
+    icon-height: 25 * prop(zoom,default);
 }
 node|z18-[highway=crossing][crossing=traffic_signals]::traffic_signals,
 node|z18-[highway=crossing][crossing:signals=yes]::traffic_signals {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/crossing-traffic-lights.svg";
-    icon-height: 30 * prop(zoom,default);
+    icon-height: 25 * prop(zoom,default);
 }
 node[highway=street_lamp] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp.svg";
-    icon-height: 17;
-}
-node[highway=street_lamp][lamp_mount=straight_mast] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-straight.svg";
-}
-node[highway=street_lamp][lamp_mount=bent_mast] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/street-lamp-bent.svg";
+    icon-height: 15 * prop(zoom,default);
 }
 node[highway=speed_camera] {
     icon-image: "presets/vehicle/restriction/speed_camera.svg";
