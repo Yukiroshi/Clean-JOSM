@@ -133,6 +133,13 @@ node {
 relation > *::* {
     set member;
 }
+area[building]::*,
+area[landuse]::*,
+area[area?]::*,
+relation[type=multipolygon] > way::*
+{
+    set area;
+}
 
 /* Pixel/metre */
 *|z-15 { pixel_per_metre: 0.312; }
@@ -4432,23 +4439,23 @@ node[sport=rc_car] {
 /*TO DO*/
 
 node|z20-[natural]::species {
-    font-size: 10 * prop(zoom,default);
+    font-size: 10;
     font-style: italic;
     text-color: prop(white);
     text-halo-radius: 1 * prop(zoom,default);
     text-halo-color: #333;
     text: has_tag_key(species) ? tag(species) : tag(genus);
     text-anchor-horizontal: center;
-    text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19) * prop(zoom,default);
+    text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19);
 }
 node|z19-[ref:gid]::ref { 
-    font-size: 10 * prop(zoom,default);
+    font-size: 10;
     text-color: prop(white);
     text-halo-radius: 1 * prop(zoom,default);
     text-halo-color: #333;
     text: "ref:gid";
     text-anchor-horizontal: center;
-    text-offset-y: 15 * prop(zoom,default);
+    text-offset-y: 15;
 }
 area[natural=spring] {
     fill-color: light_water#3959ff;
@@ -5746,37 +5753,29 @@ area[barrier=planter] {
     z-index: 0.99;
     set note_fixme;
 }
-way[!is_prop_set(area,default)].note_fixme::note_fixme {
+way!.area::note_fixme {
     icon-position: line;
 }
-way[is_prop_set(area,default)].note_fixme::note_fixme {
+way.area::note_fixme {
     icon-position: center;
 }
 *.note_fixme::note_fixme {
     icon-height: 20 * prop(zoom, default);
 }
 
-area[building],
-area[landuse],
-area[area?],
-relation[type=multipolygon] > way
-{
-    set area;
-}
-
 /* Way renderer */
 
-way[highway][!is_prop_set(area,default)],
-way[railway][!is_prop_set(area,default)],
-way[waterway][!is_prop_set(area,default)],
-way[man_made=pipeline][!is_prop_set(area,default)] {    
+way[highway]!.area,
+way[railway]!.area,
+way[waterway]!.area,
+way[man_made=pipeline]!.area {    
     z-index: 0.09;
 }
 
-way[highway][!is_prop_set(area,default)],
-way[railway][!is_prop_set(area,default)],
-way[waterway][!is_prop_set(area,default)],
-way[man_made=pipeline][!is_prop_set(area,default)],
+way[highway]!.area,
+way[railway]!.area,
+way[waterway]!.area,
+way[man_made=pipeline]!.area,
 way[barrier] {
     width: prop(width) * prop(zoom,default);
     color: prop(color);
@@ -5785,10 +5784,10 @@ way[barrier] {
     z-index: tag(layer) + prop(z-index);
     opacity: 1;
 }
-way[highway][!is_prop_set(area,default)]::outer_line,
-way[railway][!is_prop_set(area,default)]::outer_line,
-way[waterway][!is_prop_set(area,default)]::outer_line,
-way[man_made=pipeline][!is_prop_set(area,default)]::outer_line,
+way[highway]!.area::outer_line,
+way[railway]!.area::outer_line,
+way[waterway]!.area::outer_line,
+way[man_made=pipeline]!.area::outer_line,
 way[barrier]::outer_line {
     width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default);
     color: prop("outer-color", default);
@@ -5800,10 +5799,10 @@ way[barrier]::outer_line {
     set other;
 }
 
-way[highway][!is_prop_set(area,default)]::casing_line,
-way[railway][!is_prop_set(area,default)]::casing_line,
-way[waterway][!is_prop_set(area,default)]::casing_line,
-way[man_made=pipeline][!is_prop_set(area,default)]::casing_line,
+way[highway]!.area::casing_line,
+way[railway]!.area::casing_line,
+way[waterway]!.area::casing_line,
+way[man_made=pipeline]!.area::casing_line,
 way[barrier]::casing_line {
     width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default);
     color: prop("casing-color", default);
@@ -5814,7 +5813,7 @@ way[barrier]::casing_line {
     opacity: 1;
     set other;
 }
-way[highway][access][access!=yes][!is_prop_set(area,default)]::access {
+way[highway][access][access!=yes]!.area::access {
     width: prop(width, outer_line);
     color: prop(gray1);
     dashes: 2,5;
@@ -5824,38 +5823,38 @@ way[highway][access][access!=yes][!is_prop_set(area,default)]::access {
     opacity: 1;
     set other;
 }
-way[highway][access=no][!is_prop_set(area,default)]::access 
+way[highway][access=no]!.area::access 
 {
     color: #ff0000;
 }
-way[highway][access=private][!is_prop_set(area,default)]::access 
+way[highway][access=private]!.area::access 
 {
     color: #9000ff;
 }
-way[highway][access=forestry][!is_prop_set(area,default)]::access 
+way[highway][access=forestry]!.area::access 
 {
     color: #489f00;
 }
-way[highway][access=customers][!is_prop_set(area,default)]::access 
+way[highway][access=customers]!.area::access 
 {
     color: #00d0ff;
 }
-way[highway][access=destination][!is_prop_set(area,default)]::access 
+way[highway][access=destination]!.area::access 
 {
     color: #ff9500;
 }
-way[highway][access=permissive][!is_prop_set(area,default)]::access 
+way[highway][access=permissive]!.area::access 
 {
     color: #00ffbb;
 }
 
-way[highway][highway!~/track|proposed/][surface=paving_stones][!is_prop_set(area,default)]::casing_line {
+way[highway][highway!~/track|proposed/][surface=paving_stones]!.area::casing_line {
     dashes: list(15 * prop(zoom,default),2 * prop(zoom,default));
 }
-way[highway][highway!~/track|proposed/][surface=~/sett|bricks|cobblestone|unhewn_cobblestone/][!is_prop_set(area,default)]::casing_line {
+way[highway][highway!~/track|proposed/][surface=~/sett|bricks|cobblestone|unhewn_cobblestone/]!.area::casing_line {
     dashes: list(10 * prop(zoom,default),5 * prop(zoom,default));
 }
-way[highway][highway!~/track|proposed/][surface=gravel][!is_prop_set(area,default)]::casing_line {
+way[highway][highway!~/track|proposed/][surface=gravel]!.area::casing_line {
     dashes: list(3 * prop(zoom,default),6 * prop(zoom,default),2 * prop(zoom,default),4 * prop(zoom,default),5 * prop(zoom,default),3 * prop(zoom,default));
 }
 
@@ -5982,7 +5981,7 @@ node:tagged {
     symbol-fill-color: #007bff;
     symbol-stroke-color: prop(white2);
 }
-way {
+way!.area {
     icon-position: line;
     text-position: line;
     text-offset-y: prop(width) -15 * prop(zoom,default);
