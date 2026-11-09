@@ -5630,15 +5630,15 @@ area[barrier=planter] {
 }
 
 *[brand*="InPost"] {
-    icon-height: 50;
+    icon-height: 30;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/InPost.svg";
 }
-*[brand*="DHL"] {
-    icon-height: 10;
-    icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg";
+*[brand*="DHL"] {   
+    /* icon-image: "https://static.wikia.nocookie.net/logopedia/images/f/fc/DHL_Logo_2002.svg"; Broken for some reason */
 }
 *[brand*="DPD"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/DPD.svg";
+    icon-height: 25;
 }
 *[brand*="Poczta Polska"] {
     icon-height: 10;
@@ -5663,7 +5663,6 @@ area[barrier=planter] {
 }
 *[brand*="Orlen"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen.svg";
-    icon-height: 25;
 }
 *[brand*="Orlen Paczka"] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/Logos/refs/heads/main/Orlen-paczka.svg";
