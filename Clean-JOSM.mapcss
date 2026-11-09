@@ -1707,7 +1707,7 @@ way[natural=cliff] {
     repeat-image-offset: -3 * prop(zoom,default);
     repeat-image-spacing: 15 * prop(zoom,default);
     repeat-image-phase: 20 * prop(zoom,default);
-    repeat-image-opacity: setting(direction_cone_opacity) / 1.5;
+    repeat-image-opacity: setting(direction_cone_opacity);
 }
 
 way[embankment?][highway]::embankment,
