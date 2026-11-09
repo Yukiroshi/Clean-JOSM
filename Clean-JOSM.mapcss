@@ -4442,7 +4442,7 @@ node|z20-[natural]::species {
     font-size: 10;
     font-style: italic;
     text-color: prop(white);
-    text-halo-radius: 1 * prop(zoom,default);
+    text-halo-radius: 1;
     text-halo-color: #333;
     text: has_tag_key(species) ? tag(species) : tag(genus);
     text-anchor-horizontal: center;
@@ -4451,7 +4451,7 @@ node|z20-[natural]::species {
 node|z19-[ref:gid]::ref { 
     font-size: 10;
     text-color: prop(white);
-    text-halo-radius: 1 * prop(zoom,default);
+    text-halo-radius: 1;
     text-halo-color: #333;
     text: "ref:gid";
     text-anchor-horizontal: center;
@@ -4601,7 +4601,7 @@ way[natural=coastline] {
     dashes: 5,3;
     z-index: 5;
     right-casing-color: coastline#4ee9d6;
-    right-casing-width: 8 * prop(zoom,default);
+    right-casing-width: 8;
     right-casing-opacity: 0.35;
 }
 area[natural=mud],
@@ -4710,9 +4710,9 @@ node[natural=tree_stump] {
 }
 node|z16-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
-    icon-height: 16 * prop(zoom,default);
-    icon-offset-y: 10 * prop(zoom,default);
-    icon-offset-x: 10 * prop(zoom,default);
+    icon-height: 16;
+    icon-offset-y: 10;
+    icon-offset-x: 10;
     z-index: 0.99; 
 }
 
@@ -4916,9 +4916,9 @@ node[historic=cannon] {
 
 *|z17-[heritage]::heritage {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/heritage.svg";
-    icon-height: 16 * prop(zoom,default);
-    icon-offset-y: -10 * prop(zoom,default);
-    icon-offset-x: 10 * prop(zoom,default);
+    icon-height: 16;
+    icon-offset-y: -10;
+    icon-offset-x: 10;
     z-index: 0.99; 
 }
 
@@ -4990,7 +4990,7 @@ way[waterway=weir] {
     width: 4;
     color: weir#77dddd;
     right-casing-color: weir#77dede;
-    right-casing-width: 8 * prop(zoom,default);
+    right-casing-width: 8;
     right-casing-opacity: 0.35;
 }
 node[waterway=weir] {
@@ -5066,7 +5066,7 @@ way[boundary=maritime] {
     width: 1.5;
     color: prop(white);
     casing-color: #82B5FE;
-    casing-width: prop(width) * 1.5 * prop(zoom,default);
+    casing-width: prop(width) * 1.5;
     dashes: 16,4,4,4;
     dashes-background-color: prop(casing-color);
     opacity: 0.75;
@@ -5080,7 +5080,7 @@ relation[boundary=religious_administration] > way[!building] {
     color: prop(white);
     casing-color: #ffd454;
     casing-background-color: prop(color);
-    casing-width: prop(width) * 1.5 * prop(zoom,default);
+    casing-width: prop(width) * 1.5;
     dashes: 16,4,4,4;
     dashes-background-color: prop(casing-color);
     opacity: 0.75;
@@ -5095,7 +5095,7 @@ relation[boundary=national_park] > way {
     width: 2;
     color: prop(white2);
     casing-color: #a4e686;
-    casing-width: 2 * prop(zoom,default);
+    casing-width: 2;
     dashes: 16,4,4,4;
     opacity: 0.75;
     casing-opacity: prop(opacity);
@@ -5150,15 +5150,15 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)]
 node[prop(maxspeedclass, default)] 
 {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
-    icon-height: 25 * prop(zoom,default);
+    icon-height: 25;
 
     text: prop(maxspeedprop, default);
-    font-size: 11 * prop(zoom,default);
+    font-size: 11;
     font-weight: bold;
     text-color: prop(black);
     text-anchor-horizontal: center;
     text-anchor-vertical: center;
-    text-offset-x: 0.5 * prop(zoom,default);
+    text-offset-x: 0.5;
     text-offset-y: -1;
 }
 node[traffic_sign=maxspeed][maxspeed=implicit] 
@@ -5348,7 +5348,7 @@ area[building][source="www.geoportal.gov.pl"][setting(highlight_buildings)]::hig
     dashes: 6,2;
     opacity: 1;
     text-color: prop(reddish, default);
-    font-size: 12 * prop(zoom,default);
+    font-size: 12;
     major-z-index: 3.1;
 }
 
@@ -5789,7 +5789,7 @@ way[railway]!.area::outer_line,
 way[waterway]!.area::outer_line,
 way[man_made=pipeline]!.area::outer_line,
 way[barrier]::outer_line {
-    width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default);
+    width: (prop(width, default) + prop("outer-width", default)) * prop(zoom,default); /* Needs zoom */
     color: prop("outer-color", default);
     dashes: prop("outer-dashes", default);
     linecap: prop("outer-linecap", default);
@@ -5804,7 +5804,7 @@ way[railway]!.area::casing_line,
 way[waterway]!.area::casing_line,
 way[man_made=pipeline]!.area::casing_line,
 way[barrier]::casing_line {
-    width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default);
+    width: ((prop(width, default) + prop("outer-width", default) * prop("casing-width", default)) + 3 ) * prop(zoom,default); /* Needs zoom */
     color: prop("casing-color", default);
     dashes: prop("casing-dashes", default);
     linecap: prop("casing-linecap", default);
@@ -5984,11 +5984,11 @@ node:tagged {
 way!.area {
     icon-position: line;
     text-position: line;
-    text-offset-y: prop(width) -15 * prop(zoom,default);
+    text-offset-y: prop(width) -15;
 }
 area:closed:area-style {
     text-position: center;
-    text-offset-y: -15 * prop(zoom,default);
+    text-offset-y: -15;
     fill-opacity: 0.3;
     icon-opacity: 0.75;
 }
