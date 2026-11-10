@@ -4444,11 +4444,11 @@ node|z20-[natural]::species {
     text-color: prop(white);
     text-halo-radius: 1;
     text-halo-color: #333;
-    text: has_tag_key(species) ? tag(species) : tag(genus);
+    text: has_tag_key(species) ? tag(species) : has_tag_key(genus) ? tag(genus) : tag(geological);
     text-anchor-horizontal: center;
     text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19);
 }
-node|z19-[ref:gid]::ref { 
+node|z18-[ref:gid]::ref { 
     font-size: 10;
     text-color: prop(white);
     text-halo-radius: 1;
