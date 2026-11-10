@@ -2943,67 +2943,67 @@ area[amenity=driving_school],
 area[amenity=driver_training] {
     fill-color: amenity_light#f7efb7;
 }
-node[amenity=animal_boarding] {
+*[amenity=animal_boarding] {
     icon-image: "presets/accommodation/animal_boarding.svg";
 }
-node[amenity=animal_breeding] {
+*[amenity=animal_breeding] {
     icon-image: "presets/misc/animal_breeding.svg";
 }
-node[amenity=place_of_worship] {
+*[amenity=place_of_worship] {
     icon-image: "presets/religion/religion.svg";
 }
-node[amenity=place_of_worship][religion=bahai] {
+*[amenity=place_of_worship][religion=bahai] {
     icon-image: "presets/religion/bahai.svg";
 }
-node[amenity=place_of_worship][religion=buddhist] {
+*[amenity=place_of_worship][religion=buddhist] {
     icon-image: "presets/religion/buddhism.svg";
 }
-node[amenity=place_of_worship][religion=caodaism][!is_prop_set(icon-image)] {
+*[amenity=place_of_worship][religion=caodaism][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-node[amenity=place_of_worship][religion=christian] {
+*[amenity=place_of_worship][religion=christian] {
     icon-image: "presets/religion/church.svg";
 }
-node[amenity=place_of_worship][religion=confucian] {
+*[amenity=place_of_worship][religion=confucian] {
     icon-image: "presets/religion/confucian.svg";
 }
-node[amenity=place_of_worship][religion=hindu] {
+*[amenity=place_of_worship][religion=hindu] {
     icon-image: "presets/religion/hinduism.svg";
 }
-node[amenity=place_of_worship][religion=jain] {
+*[amenity=place_of_worship][religion=jain] {
     icon-image: "presets/religion/jainism.svg";
 }
-node[amenity=place_of_worship][religion=jewish] {
+*[amenity=place_of_worship][religion=jewish] {
     icon-image: "presets/religion/jewish.svg";
 }
-node[amenity=place_of_worship][religion=muslim] {
+*[amenity=place_of_worship][religion=muslim] {
     icon-image: "presets/religion/muslim.svg";
 }
-node[amenity=place_of_worship][religion=sikh] {
+*[amenity=place_of_worship][religion=sikh] {
     icon-image: "presets/religion/sikhism.svg";
 }
-node[amenity=place_of_worship][religion=shinto] {
+*[amenity=place_of_worship][religion=shinto] {
     icon-image: "presets/religion/shinto.svg";
 }
-node[amenity=place_of_worship][religion=spiritualist][!is_prop_set(icon-image)] {
+*[amenity=place_of_worship][religion=spiritualist][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-node[amenity=place_of_worship][religion=taoist] {
+*[amenity=place_of_worship][religion=taoist] {
     icon-image: "presets/religion/taoism.svg";
 }
-node[amenity=place_of_worship][religion=tenrikyo] {
+*[amenity=place_of_worship][religion=tenrikyo] {
     icon-image: "presets/religion/tenrikyo.svg";
 }
-node[amenity=place_of_worship][religion=unitarian][!is_prop_set(icon-image)] {
+*[amenity=place_of_worship][religion=unitarian][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-node[amenity=place_of_worship][religion=zoroastrian][!is_prop_set(icon-image)] {
+*[amenity=place_of_worship][religion=zoroastrian][!is_prop_set(icon-image)] {
     icon-image: "presets/misc/no_icon.svg";
 }
-node[amenity=monastery] {
+*[amenity=monastery] {
     icon-image: "presets/religion/monastery.svg";
 }
-node[amenity=grave_yard] {
+*[amenity=grave_yard] {
     icon-image: "presets/landuse/graveyard.svg";
 }
 node[amenity=crematorium][!is_prop_set(icon-image)] {
