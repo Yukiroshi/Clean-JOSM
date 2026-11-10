@@ -4690,7 +4690,7 @@ node[natural=shrub] {
 }
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
-    icon-opacity: 0.85;
+    icon-opacity: 0.9;
     icon-height: 25;
 }
 node[natural=tree][leaf_type=needleleaved] {
