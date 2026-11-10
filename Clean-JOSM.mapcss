@@ -77,7 +77,7 @@ canvas {
     black1: #222;           /* prop(black1); */
     black2: #333;           /* prop(black2); */
         
-    gray0: #444;            /* prop(gray0); */
+    gray: #444;            /* prop(gray); */
     gray1: #555;           /* prop(gray1); */
     gray_neutral: #5b5b5b;  /* prop(gray_neutral); */
     gray2: #777;            /* prop(gray2); */
@@ -122,13 +122,13 @@ canvas {
     text-anchor-horizontal: center;
     text-halo-radius: 1.5;
     text-color: prop(white2);
-    text-halo-color: #333;
+    text-halo-color: prop(black2);
     linecap: none;
     linejoin: none;
     set icon_z17;
 }
 node {
-    color: #333;
+    color: prop(black2);
 }
 relation > *::* {
     set member;
@@ -977,7 +977,7 @@ way[highway=track][tracktype=grade5] {
 way[highway=residential] {
     width: 6;
     color: prop(residential);
-    casing-color: prop(gray0);
+    casing-color: prop(gray);
 }
 
 way[highway=living_street] {
@@ -992,7 +992,7 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
 way[highway=service][!area?] {
     width: 5;
     color: prop(white1);
-    casing-color: prop(gray0);
+    casing-color: prop(gray);
 }
 way[highway=service][service=~/driveway|parking_aisle|drive-through/][!area?] {
     width: 4;
@@ -1003,7 +1003,7 @@ way[highway=service][service=parking_aisle] {
 }
 way[highway=service][service=emergency_access] {
     color: emergency_access#DDB2AA;
-    casing-color: prop(gray0);
+    casing-color: prop(gray);
 }
 way[highway=bridleway]{
     width: 2.5;
@@ -4004,12 +4004,12 @@ way|z16-::maxspeed
 {
 	text-position: line;
     text-offset-y: -10;
-    text-color: prop(black,default);
 	font-size: 9;
     font-family: setting(font);
 	font-weight: bold;
 	text-halo-radius: 1;
     text-halo-color: is_prop_set(trackmaxspeed,default) ? prop(casing-color,default) : prop(white,default);
+    text-color: eval((red(prop(text-halo-color)) * 0.299 + green(prop(text-halo-color)) * 0.587 + blue(prop(text-halo-color)) * 0.114) > 0.5 ? prop(black2) : prop(white1) );
 }
 way|z16-::track_ref
 {
@@ -4116,7 +4116,7 @@ way[aerialway] {
     width: 4 * prop(zoom,default);
     color: aerialway#cc5555;
     casing-width: 1 * prop(zoom,default);
-    casing-color: prop(gray0);
+    casing-color: prop(gray);
 }
 *[aerialway] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/aerialway.svg";
@@ -4443,7 +4443,7 @@ node|z20-[natural]::species {
     font-style: italic;
     text-color: prop(white);
     text-halo-radius: 1;
-    text-halo-color: #333;
+    text-halo-color: prop(black2);
     text: has_tag_key(species) ? tag(species) : has_tag_key(genus) ? tag(genus) : tag(geological);
     text-anchor-horizontal: center;
     text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19);
@@ -4452,7 +4452,7 @@ node|z18-[ref:gid]::ref {
     font-size: 10;
     text-color: prop(white);
     text-halo-radius: 1;
-    text-halo-color: #333;
+    text-halo-color: prop(black2);
     text: "ref:gid";
     text-anchor-horizontal: center;
     text-offset-y: 15;
@@ -5471,7 +5471,7 @@ way[barrier=fence][fence_type=wood] {
 way[barrier=bollard] {
     width: 3;
     casing-width: 1;
-    casing-color: #333;
+    casing-color: prop(black2);
     casing-dashes: list(1 * prop(zoom,default), 15 * prop(zoom,default));
     casing-linecap: round;
     dashes: list(1 * prop(zoom,default), 15 * prop(zoom,default));
@@ -5944,7 +5944,7 @@ node[!setting("round_symbols")]:unconnected {
 }
 node {
     symbol-size: 6 ;
-    symbol-stroke-color: #333;
+    symbol-stroke-color: prop(black2);
     symbol-stroke-width: 1 * prop(zoom_font,default);
     symbol-stroke-opacity: 0.75;
 }
@@ -5953,7 +5953,7 @@ node[setting("high_contrast")] {
     symbol-stroke-color: prop(white1);
     symbol-stroke-width: 1 * prop(zoom_font,default);
     symbol-stroke-opacity: 1;
-    symbol-fill-color: #333;
+    symbol-fill-color: prop(black2);
 }
 node:unconnected {
     symbol-size: prop(symbol-size) + 1;
@@ -6035,18 +6035,18 @@ node:selected {
 
 node|z18- {
     font-size: 12;
-    text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
+    text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? prop(black2) : prop(white1) );
     text-halo-color: prop(color);
 }
 way {
     font-size: 12;
-    text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? #333 : #eee );
+    text-color: eval((red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114) > 0.5 ? prop(black2) : prop(white1) );
     text-offset-y: 0;
     text-halo-color: prop(color);
 }
 area:closed:area-style {
     font-size: 12;
-    text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? #333 : #eee );
+    text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? prop(black2) : prop(white1) );
     text-halo-color: prop(fill-color);
 }
 *[man_made] {
