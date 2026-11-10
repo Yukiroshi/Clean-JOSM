@@ -5781,7 +5781,7 @@ way[barrier] {
     color: prop(color);
     dashes: prop(dashes);
     dashes-background-color: prop("dashes-background-color");
-    z-index: tag(layer) + prop(z-index);
+    z-index: tag(location) = underground ? -0.1 + tag(layer) + prop(z-index) : tag(layer) + prop(z-index);
     opacity: 1;
 }
 way[highway]!.area::outer_line,
@@ -5886,14 +5886,14 @@ area[bridge:support] {
 node[bridge:support] {
     icon-image: "presets/transport/bridge/bridge_support.svg";
 }
-way[bridge][man_made!=bridge]::bridge {
+way[bridge][man_made!=bridge]!.area::bridge {
     width: (((prop(width, outer_line) + prop("outer-width", default) * prop("casing-width", default)) + 3 )) * 1.25;
     color: prop(black);
     opacity: 0.75;
     z-index: 0.06 + tag(layer);
     major-z-index: 3;
 }
-way[tunnel][man_made!=tunnel]::tunnel {
+way[tunnel][man_made!=tunnel]!.area::tunnel {
     width: prop(width, outer_line);
     color: tunnel#333;
     dashes: is_prop_set(casing-dashes, default) ? prop(dashes, default) : 0;
@@ -5901,16 +5901,17 @@ way[tunnel][man_made!=tunnel]::tunnel {
     z-index: 0.1 + tag(layer);
     major-z-index: 3;
 }
-way[tunnel][man_made!=tunnel]::casing_line {
+way[tunnel][man_made!=tunnel]!.area::casing_line {
     brightness: red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114;
     color: eval(rgb(red(prop(color)) * 0.5 + prop(brightness) * 0.5, green(prop(color)) * 0.5 + prop(brightness) * 0.5, blue(prop(color)) * 0.5 + prop(brightness) * 0.5));
 }
-way[covered][covered!=no]::tunnel,
-way[bridge=covered]::tunnel {
-    width: prop(width, outer_line);
-    color: prop(gray1);
-    opacity: 0.25;
-    z-index: 0.1 + tag(layer);
+way[covered][covered!=no]!.area::tunnel,
+way[bridge=covered]!.area::tunnel,
+way[location=underground]::tunnel {
+    width: prop(width, casing_line);
+    color: prop(black2);
+    opacity: 0.35;
+    z-index: prop(z-index, default) + 0.01;
     major-z-index: 3;
 }
 
