@@ -4691,7 +4691,7 @@ node[natural=shrub] {
 node[natural=tree] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-BDOT.svg";
     icon-opacity: 0.9;
-    icon-height: 25;
+    icon-height: 22;
 }
 node[natural=tree][leaf_type=needleleaved] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-needleleaved-BDOT.svg";
@@ -4707,6 +4707,9 @@ node[natural=tree][leaf_type=leafless] {
 }
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
+}
+node[denotation=natural_monument] {
+    icon-height: 25;
 }
 node|z16-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
