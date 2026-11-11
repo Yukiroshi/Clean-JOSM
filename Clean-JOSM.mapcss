@@ -4775,6 +4775,7 @@ area[tourism=caravan_site] {
 area[tourism=attraction][!is_prop_set(fill-color)]:closed {
     fill-color: tourism#e180a2;
 }
+relation[tourism=attraction] >[role=outer] way[!is_prop_set(color)],
 way[tourism=attraction] {
     width: 2;
     color: tourism#e180a2;
