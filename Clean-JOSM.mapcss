@@ -4436,15 +4436,13 @@ node[sport=rc_car] {
 /* natural tags */
 /****************/
 
-/*TO DO*/
-
-node|z20-[natural]::species {
+node|z19-[natural]::species {
     font-size: 10;
     font-style: italic;
     text-color: prop(white);
     text-halo-radius: 1;
     text-halo-color: prop(black2);
-    text: has_tag_key(species) ? tag(species) : has_tag_key(genus) ? tag(genus) : tag(geological);
+    text: has_tag_key(concat("species:",JOSM_pref("language", ""))) ? tag(concat("species:",JOSM_pref("language", ""))) : has_tag_key(species) ? tag(species) : has_tag_key(concat("genus:",JOSM_pref("language", ""))) ? tag(concat("genus:",JOSM_pref("language", ""))) : has_tag_key(genus) ? tag(genus) : tag(geological);
     text-anchor-horizontal: center;
     text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19);
 }
@@ -4457,6 +4455,9 @@ node|z18-[ref:gid]::ref {
     text-anchor-horizontal: center;
     text-offset-y: 15;
 }
+
+/*TO DO*/
+
 area[natural=spring] {
     fill-color: light_water#3959ff;
 }
