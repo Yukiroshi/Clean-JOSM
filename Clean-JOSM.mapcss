@@ -5898,22 +5898,19 @@ way[bridge][man_made!=bridge]!.area::bridge {
     major-z-index: 3;
 }
 way[tunnel][man_made!=tunnel]!.area::tunnel {
-    width: prop(width, outer_line);
+    width: prop(width, casing_line);
     color: tunnel#333;
     dashes: is_prop_set(casing-dashes, default) ? prop(dashes, default) : 0;
     opacity: 0.5;
     z-index: 0.1 + tag(layer);
     major-z-index: 3;
 }
-way[tunnel][man_made!=tunnel]!.area::casing_line {
-    brightness: red(prop(color)) * 0.299 + green(prop(color)) * 0.587 + blue(prop(color)) * 0.114;
-    color: eval(rgb(red(prop(color)) * 0.5 + prop(brightness) * 0.5, green(prop(color)) * 0.5 + prop(brightness) * 0.5, blue(prop(color)) * 0.5 + prop(brightness) * 0.5));
-}
 way[covered][covered!=no]!.area::tunnel,
 way[bridge=covered]!.area::tunnel,
 way[location=underground]::tunnel {
     width: prop(width, casing_line);
     color: prop(black2);
+    dashes: is_prop_set(casing-dashes, default) ? prop(dashes, default) : 0;
     opacity: 0.35;
     z-index: prop(z-index, default) + 0.01;
     major-z-index: 3;
