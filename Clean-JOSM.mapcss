@@ -4778,7 +4778,7 @@ way[tourism=attraction] {
     width: 2;
     color: tourism#e180a2;
 }
-*[tourism=attraction] {
+*[tourism=attraction][!is_prop_set(icon-image)] {
     icon-image: "presets/sightseeing/attraction.svg";
 }
 area[tourism=picnic_site],
