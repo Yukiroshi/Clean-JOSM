@@ -61,35 +61,33 @@ canvas {
 
 *::* {
     /* Basic */
-    white: #fff;           /* prop(white); */
-    white1: #eee;           /* prop(white1); */
-    white2: #ddd;           /* prop(white2); */
-    white3: #ccc;           /* prop(white3); */
-    white4: #bbb;           /* prop(white4); */
-    white5: #aaa;           /* prop(white5); */
-    
-    black: #111;           /* prop(black); */
-    black1: #222;           /* prop(black1); */
-    black2: #333;           /* prop(black2); */
-        
-    gray: #444;            /* prop(gray); */
-    gray1: #555;           /* prop(gray1); */
-    gray_neutral: #5b5b5b;  /* prop(gray_neutral); */
-    gray2: #777;            /* prop(gray2); */
-    
-    tan: #ddccaa;
-    gray_tan: #ddd9b3;
-    gray_brown: #998888;
-    light_brown: #a47026;
-    brown: #663300;
-    pink_red: #cf2081;
-    reddish: #ff0055;
-    red: #dd2522;
-    orange: #f99806;
-    yellow: #f4f458;
-    green: #81d25c;
-    blue: #58a9ed;
-    water_color: #77d3ee;
+    black: black#000;
+    black1: black1#111;
+    black2: black2#222;
+    black3: black3#333;
+    gray: gray#444;
+    gray1: gray1#555;
+    gray2: gray2#777;
+    white: white#fff;
+    white1: white1#eee;
+    white2: white2#ddd;
+    white3: white3#ccc;
+    white4: white4#bbb;
+    white5: white5#aaa;
+
+    tan: tan#ddccaa;
+    gray_tan: gray_tan#ddd9b3;
+    gray_brown: gray_brown#998888;
+    light_brown: light_brown#a47026;
+    brown: brown#663300;
+    pink_red: pink_red#cf2081;
+    reddish: reddish#ff0055;
+    red: red#dd2522;
+    orange: orange#f99806;
+    yellow: yellow#f4f458;
+    green: green#81d25c;
+    blue: blue#58a9ed;
+    water_color: water_color#77d3ee;
     
 
     /* Specific */
@@ -222,6 +220,7 @@ node[railway:signal:position]::arrow
     z-index: -1;
     icon-opacity: setting(direction_cone_opacity) ;
 }
+way[highway] >[index=-1] node[noexit],
 way[highway] > node[traffic_sign],
 way[highway] > node[highway],
 way[highway] > node[cycleway],
@@ -241,29 +240,26 @@ way[highway][oneway != -1] > node[traffic_signals:direction=backward],
 way[oneway != -1] > node[direction=backward] {
     icon-rotation: parent_way_angle() - 180deg;
 }
-
-way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
-    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[highway=crossing] {
+    icon-rotation: parent_way_angle() + 90deg;
 }
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
-    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle() + 90deg;
 }
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
-    icon-rotation: parent_way_angle() + 90deg; /*rotate to match way direction if no footway present*/
+way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
+way[highway][highway!~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
+    icon-rotation: parent_way_angle() + 90deg;
 }
-way[highway] >[index=-1] node[noexit],
-way[highway!~/footway|pedestrian|cycleway|path/] > node[traffic_calming],
-way[highway=~/footway|pedestrian|cycleway|path/] > node[highway] {
-    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+way[highway][highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
+    icon-rotation: parent_way_angle();
 }
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:island=yes]::traffic_island {
-    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+way[highway][highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
+way[highway][highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
+    icon-rotation: parent_way_angle();
 }
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing=traffic_signals]::traffic_signals,
-way[highway=~/footway|pedestrian|cycleway|path/] > node[crossing:signals=yes]::traffic_signals {
-    icon-rotation: parent_way_angle(); /*rotate to match way direction*/
+way[highway][highway!~/footway|pedestrian|path/] > node[traffic_calming],
+way[highway][highway!=cycleway] > node[traffic_calming] {
+    icon-rotation: parent_way_angle(); /* Apply rotation again to set correctly when crossing ways */
 }
 
 node[direction]::direction_cone_1{
@@ -271,7 +267,6 @@ node[direction]::direction_cone_1{
 }
 
 /* Numeric and cardinal directions */
-
 node[direction>=0][direction<360]::direction_cone_1 {
     set has_cone_1;
     icon-rotation: degree_to_radians(tag(direction));
@@ -282,7 +277,6 @@ node[direction=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direction_cone
 }
 
 /* Numeric and cardinal directions (copies for camera:direction */
-
 node["camera:direction">=0]["camera:direction"<360]::direction_cone_1 {
     set has_cone_1;
     icon-rotation: degree_to_radians(tag("camera:direction"));
@@ -293,7 +287,6 @@ node["camera:direction"=~/^(north|east|south|west|N|E|S|W|NE|SE|SW|NW)$/]::direc
 }
 
 /* Secondary intercardinal direction (not supported by cardinal_to_radians) */
-
 node[camera:direction=NNE]::direction_cone_1,
 node[direction=NNE]::direction_cone_1 {
     set has_cone_1;
@@ -337,11 +330,15 @@ node[direction=NNW]::direction_cone_1 {
 
 /* Up to eight numeric or cardinal directions in semicolon-separated values */
 
+node[direction=~/;/]::*,
+node["camera:direction"=~/;/]::* {
+    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
+    direction_len: length(prop(direction_list));
+}
+
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_1,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_1 {
     set has_cone_1;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 0);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -359,8 +356,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_2,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_2 {
     set has_cone_2;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 1);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -378,8 +373,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_3,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_3 {
     set has_cone_3;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 2);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -397,8 +390,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_4,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_4 {
     set has_cone_4;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 3);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -416,8 +407,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_5,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_5 {
     set has_cone_5;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 4);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -435,8 +424,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_6,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_6 {
     set has_cone_6;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 5);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -454,8 +441,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_7,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_7 {
     set has_cone_7;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 6);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -473,8 +458,6 @@ node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW
 node[direction=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_8,
 node["camera:direction"=~/^([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)(;([0-9]{1,3}|north|east|south|west|N|E|S|W|NE|SE|SW|NW|NNE|ENE|ESE|SSE|SSW|WSW|WNW|NNW)){1,7}$/]::direction_cone_8 {
     set has_cone_8;
-    direction_list: split(";", cond(has_tag_key("direction"), tag("direction"), tag("camera:direction")));
-    direction_len: length(prop(direction_list));
     direction_value: get(prop(direction_list), 7);
     icon-rotation: cond(regexp_test("^[0-9]{1,3}$", prop(direction_value)),
         degree_to_radians(prop(direction_value)),
@@ -620,10 +603,14 @@ node[light_source] {
     icon-opacity: setting(base_circle_glow_opacity);
 }
 
-node[highway=street_lamp]::light_1,
-node[light_source]::light_1 {
+node[highway=street_lamp]::*,
+node[light_source]::* {
     light_direction_list: split(";", tag("light:direction"));
     light_direction_len: length(prop(light_direction_list));
+}
+
+node[highway=street_lamp]::light_1,
+node[light_source]::light_1 {
     default_degree: 0;
     degree: cond(prop(light_direction_len) > 0, get(prop(light_direction_list), 0), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -631,8 +618,6 @@ node[light_source]::light_1 {
 }
 node[highway=street_lamp]::light_2,
 node[light_source]::light_2 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 360/tag("light:count");
     degree: cond(prop(light_direction_len) > 1, get(prop(light_direction_list), 1), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -640,8 +625,6 @@ node[light_source]::light_2 {
 }
 node[highway=street_lamp]::light_3,
 node[light_source]::light_3 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 2*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 2, get(prop(light_direction_list), 2), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -649,8 +632,6 @@ node[light_source]::light_3 {
 }
 node[highway=street_lamp]::light_4,
 node[light_source]::light_4 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 3*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 3, get(prop(light_direction_list), 3), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -658,8 +639,6 @@ node[light_source]::light_4 {
 }
 node[highway=street_lamp]::light_5,
 node[light_source]::light_5 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 4*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 4, get(prop(light_direction_list), 4), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -667,8 +646,6 @@ node[light_source]::light_5 {
 }
 node[highway=street_lamp]::light_6,
 node[light_source]::light_6 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 5*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 5, get(prop(light_direction_list), 5), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -676,8 +653,6 @@ node[light_source]::light_6 {
 }
 node[highway=street_lamp]::light_7,
 node[light_source]::light_7 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 6*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 6, get(prop(light_direction_list), 6), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -685,8 +660,6 @@ node[light_source]::light_7 {
 }
 node[highway=street_lamp]::light_8,
 node[light_source]::light_8 {
-    light_direction_list: split(";", tag("light:direction"));
-    light_direction_len: length(prop(light_direction_list));
     default_degree: 7*360/tag("light:count");
     degree: cond(prop(light_direction_len) > 7, get(prop(light_direction_list), 7), prop(default_degree));
     icon-rotation: degree_to_radians(prop(degree));
@@ -4678,9 +4651,6 @@ node[natural=cave_entrance] {
     fill-color: reef#80c9ff;
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/coral-reef.svg";
 }
-node[natural=cave_entrance] {
-    icon-image: "presets/landmark/cave_entrance.svg";
-}
 node[natural=shrub] {
     icon-image: "presets/landmark/shrub.svg";
 }
@@ -6416,7 +6386,7 @@ area[landuse=reservoir] {
     set water_area;
 }
 
-/* area:closed.water_area ⧉ area:closed.water_area -- does not work for now -- see ticket#10215 */
+/* area:closed.water_area ⧉ area:closed.water_area -- does not work for now -- see ticket#10215
 area:closed[natural =~ /^(water|coastline)$/] ⧉ area:closed.water_area[setting("notices")],
 area:closed[waterway=riverbank]                       ⧉ area:closed.water_area[setting("notices")],
 area:closed[landuse=reservoir]                        ⧉ area:closed.water_area[setting("notices")] {
@@ -6424,7 +6394,7 @@ area:closed[landuse=reservoir]                        ⧉ area:closed.water_area
     set notice;
 }
 
-/* Water area inside water area (spatial test) */
+Water area inside water area (spatial test)
 area:closed[natural=water]                           ⊆  area:closed.water_area[setting("notices")],
 area:closed[natural=coastline]:clockwise             ⊆  area:closed.water_area[setting("notices")],
 area:closed[waterway=riverbank]                      ⊆  area:closed.water_area[setting("notices")],
@@ -6436,7 +6406,7 @@ area:closed[landuse=reservoir]                       ⊇  area:closed.water_area
     text: Water area inside water area;
     set notice;
 }
-
+*/
 /* #9311 */
 node[amenity=parking]["capacity:disabled" !~ /^(yes|[0-9]+)$/] ∈ area[amenity=parking][setting("notices")] {
     text: amenity=parking inside amenity=parking;
