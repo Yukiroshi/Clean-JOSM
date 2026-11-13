@@ -132,7 +132,6 @@ canvas {
     text-halo-color: prop(black2);
     linecap: none;
     linejoin: none;
-    set icon_z17;
 }
 node {
     color: prop(black2);
@@ -5067,46 +5066,38 @@ node[mountain_pass?] {
 /*****************/
 
 way[boundary=administrative],
-relation[boundary=administrative] > way,
+relation[type=boundary][boundary=administrative] > way,
 way[boundary=postal_code],
 way[boundary=political],
 way[boundary=maritime] {
+    casing-color: #82B5FE;
+}
+way[boundary=religious_administration],
+relation[type=boundary][boundary=religious_administration] > way[!building] {
+    width: 1.25;
+    casing-color: #dba723;
+}
+way[boundary=protected_area],
+relation[type=boundary][boundary=protected_area] > way,
+way[boundary=national_park],
+relation[type=boundary][boundary=national_park] > way {
+    casing-color: #83d75c;
+}
+way[boundary=forest_compartment],
+relation[type=boundary][boundary=forest_compartment] > way {
+    width: 1.25;
+    casing-color: #0c9415;
+}
+
+way[boundary],
+relation[type=boundary][boundary] > way {
     z-index: 2;
     modifier: false;
     width: 1.5;
     color: prop(white);
-    casing-color: #82B5FE;
     casing-width: prop(width) * 1.5;
     dashes: 16,4,4,4;
     dashes-background-color: prop(casing-color);
-    opacity: 0.75;
-    casing-opacity: prop(opacity);
-}
-way[boundary=religious_administration],
-relation[boundary=religious_administration] > way[!building] {
-    z-index: 2;
-    modifier: false;
-    width: 1.25;
-    color: prop(white);
-    casing-color: #ffd454;
-    casing-background-color: prop(color);
-    casing-width: prop(width) * 1.5;
-    dashes: 16,4,4,4;
-    dashes-background-color: prop(casing-color);
-    opacity: 0.75;
-    casing-opacity: prop(opacity);
-}
-way[boundary=protected_area],
-relation[boundary=protected_area] > way,
-way[boundary=national_park],
-relation[boundary=national_park] > way {
-    z-index: 2;
-    modifier: false;
-    width: 2;
-    color: prop(white2);
-    casing-color: #a4e686;
-    casing-width: 2;
-    dashes: 16,4,4,4;
     opacity: 0.75;
     casing-opacity: prop(opacity);
 }
@@ -5192,13 +5183,11 @@ node|z-15[prop(maxspeedclass, default)][setting("clean_view")]
 area[setting("place_fill_colour")][place]
 area[place=~/island|islet/] {
     fill-color: island#8de3cb;
-    set place;
 }
 node[place] {
     set icon_z0;
     set text_z0;
     font-weight: bold;
-    set place;
 }
 
 node[place=~/continent|country|state|region|county/] {
@@ -6006,7 +5995,7 @@ node|z-17!:tagged[setting("clean_view")] {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
 }
-*|z-13[setting("clean_view")] {
+*|z-13[setting("clean_view")]!.icon_z0 {
     icon-image: none;
 }
 *|z-13[setting("clean_view")][is_prop_set(other,default)]::* {
@@ -6014,7 +6003,7 @@ node|z-17!:tagged[setting("clean_view")] {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
 }
-area|z-16[setting("clean_view")]:closed:area-style {
+area|z-16[setting("clean_view")]:closed:area-style!.icon_z0 {
     icon-image: none;
 }
 *|z-15[setting("clean_view")] {
@@ -6081,10 +6070,10 @@ way|z-13[highway!~/trunk|primary|secondary|tertiary/] {
 way|z-10[highway] {
     text: false;
 }
-node|z-15!.place {
+node|z-15!.text_z0 {
     text: false;
 }
-*|z-10!.place {
+*|z-10!.text_z0 {
     text: false;
 }
 
@@ -6800,6 +6789,7 @@ node!:tagged {
 
 * {
     width: prop(width) * prop(zoom,default);
+    casing-width: is_prop_set(casing-width) ? prop(casing-width) * prop(zoom,default) : 0;
     right-casing-width: is_prop_set(right-casing-width) ? prop(right-casing-width) * prop(zoom,default) : 0;
     left-casing-width: is_prop_set(left-casing-width) ? prop(left-casing-width) * prop(zoom,default) : 0;
 
