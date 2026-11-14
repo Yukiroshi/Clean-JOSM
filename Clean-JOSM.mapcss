@@ -6789,7 +6789,6 @@ node!:tagged {
 
 * {
     width: prop(width) * prop(zoom,default);
-    casing-width: is_prop_set(casing-width) ? prop(casing-width) * prop(zoom,default) : 0;
     right-casing-width: is_prop_set(right-casing-width) ? prop(right-casing-width) * prop(zoom,default) : 0;
     left-casing-width: is_prop_set(left-casing-width) ? prop(left-casing-width) * prop(zoom,default) : 0;
 
