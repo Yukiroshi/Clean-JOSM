@@ -6070,6 +6070,11 @@ way|z-13[highway!~/trunk|primary|secondary|tertiary/] {
 way|z-10[highway] {
     text: false;
 }
+node|z-17[amenity]!.text_z0,
+node|z-17[shop]!.text_z0,
+node|z-17[office]!.text_z0 {
+    text: false;
+}
 node|z-15!.text_z0 {
     text: false;
 }
