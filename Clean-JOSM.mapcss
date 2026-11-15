@@ -531,14 +531,14 @@ way > node[direction=both]::direction_cone_2
     icon-rotation: parent_way_angle() + 180deg;
     icon-opacity: setting(direction_cone_opacity);
 }
-node|z16-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
-node|z16-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -11; z-index: -1;}
+node|z16-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
 
 /* Improved lights originally by NieWnen */
 
@@ -5148,7 +5148,7 @@ node[traffic_sign=maxspeed][maxspeed=~/[0-9]+ knots/][!is_prop_set(icon-image)]
     maxspeedprop: get(split(" knots",tag(maxspeed)),0);
     set maxspeedclass;
 }
-node[prop(maxspeedclass, default)] 
+node.maxspeedclass
 {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-maxspeed.svg";
     icon-height: 25;
@@ -6802,8 +6802,8 @@ node!:tagged {
 *::*
 {
     icon-height: prop(icon-height) * prop(zoom,default);
-    icon-offset-x: prop(icon-offset-x) * prop(zoom,default);
-    icon-offset-y: prop(icon-offset-y) * prop(zoom,default);
+    icon-offset-x: is_prop_set(icon-offset-x) ? prop(icon-offset-x) * prop(zoom,default) : 0;
+    icon-offset-y: is_prop_set(icon-offset-y) ? prop(icon-offset-y) * prop(zoom,default) : 0;
     text-offset-x: prop(text-offset-x) * prop(zoom_font,default);
     text-offset-y: prop(text-offset-y) * prop(zoom_font,default);
     font-size: prop(font-size) * prop(zoom_font,default);
