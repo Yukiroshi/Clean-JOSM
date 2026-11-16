@@ -5981,13 +5981,13 @@ way!.area {
     text-position: line;
     text-offset-y: prop(width) -15;
 }
-area:closed:area-style {
+area:closed {
     text-position: center;
     text-offset-y: -15;
     fill-opacity: 0.3;
     icon-opacity: 0.75;
 }
-area:closed:area-style[is_prop_set(icon-image)] {
+area:closed[is_prop_set(icon-image)] {
     icon-position: inside;
 }
 
@@ -6003,7 +6003,7 @@ node|z-17!:tagged[setting("clean_view")] {
     symbol-fill-opacity: 0;
     symbol-stroke-opacity: 0;
 }
-area|z-16[setting("clean_view")]:closed:area-style!.icon_z0 {
+area|z-16[setting("clean_view")]:closed!.icon_z0 {
     icon-image: none;
 }
 *|z-15[setting("clean_view")] {
@@ -6038,7 +6038,7 @@ way {
     text-offset-y: 0;
     text-halo-color: prop(color);
 }
-area:closed:area-style {
+area:closed {
     font-size: 12;
     text-color: eval((red(prop("fill-color")) * 0.299 + green(prop("fill-color")) * 0.587 + blue(prop("fill-color")) * 0.114) > 0.5 ? prop(black2) : prop(white1) );
     text-halo-color: prop(fill-color);
@@ -6055,7 +6055,7 @@ area:closed:area-style {
 way[railway] {
     text: concat(tag(name), has_tag_key("operator:short") ? concat(has_tag_key("name") ? "  | " : "", tag("operator:short")) : "", has_tag_key(ref) ? concat(" (", tag(ref), ")") : "");
 }
-area:closed:area-style[is_prop_set(icon-image)] {
+area:closed[is_prop_set(icon-image)] {
     text-offset-y: -20;
 }
 way|z15-[highway][setting("highway_labels")] {
@@ -6452,7 +6452,7 @@ node[amenity=parking]["capacity:disabled" !~ /^(yes|[0-9]+)$/] ∈ area[amenity=
 }
 
 /* #9556, #20570 */
-area:closed:area-style[tag("natural") = parent_tag("natural")] ⧉ area:closed:area-style[natural][natural !~ /^(water|wetland|coastline)$/][setting("notices")] {
+area:closed[tag("natural") = parent_tag("natural")] ⧉ area:closed[natural][natural !~ /^(water|wetland|coastline)$/][setting("notices")] {
     text: Overlapping identical natural areas;
     set notice;
 }
