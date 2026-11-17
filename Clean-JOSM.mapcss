@@ -1,4 +1,4 @@
-meta {
+﻿meta {
     title: "Better JOSM";
     description: "Improved and cleaner look for JOSM, similiar to iD. All in one. Made with reference to Better-iD by Maerek (spam46200)";
     icon: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/logo_minimal.svg";
@@ -207,7 +207,7 @@ setting::direction_cone_opacity {
 setting::direction_cone_size {
     type: double;
     label: Cones and arrows size;
-    default: 15;
+    default: 25;
     group: cones_arrows;
 }
 
@@ -246,8 +246,7 @@ way[oneway != -1] > node[stop_position:direction=forward],
 way[railway][oneway != -1] > node[railway:signal:direction=forward],
 way[highway][oneway != -1] > node[traffic_sign:direction=forward],
 way[highway][oneway != -1] > node[traffic_signals:direction=forward],
-way[oneway != -1] > node[direction=forward],
-way >[index=1] node[railway:turnout_side] {
+way[oneway != -1] > node[direction=forward] {
     icon-rotation: parent_way_angle();
 }
 way >[index=1] node[noexit],
@@ -531,14 +530,14 @@ way > node[direction=both]::direction_cone_2
     icon-rotation: parent_way_angle() + 180deg;
     icon-opacity: setting(direction_cone_opacity);
 }
-node|z16-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
-node|z16-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -5; z-index: -1;}
+node|z16-.has_cone_1::direction_cone_1 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_2::direction_cone_2 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_3::direction_cone_3 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_4::direction_cone_4 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_5::direction_cone_5 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_6::direction_cone_6 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_7::direction_cone_7 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
+node|z16-.has_cone_8::direction_cone_8 { icon-image: "https://raw.githubusercontent.com/Yukiroshi/Clean-JOSM/refs/heads/main/cone.svg"; icon-height: setting(direction_cone_size); icon-offset-y: -15; z-index: -1;}
 
 /* Improved lights originally by NieWnen */
 
@@ -3714,17 +3713,29 @@ way[railway=funicular] {
     color: rail#404040;
     dashes: 9,9;
 }
-node[railway=switch] {
+node[railway=switch][!setting(railway_icons)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/rails-switch.svg";
+}
+node[railway=switch][setting(railway_icons)] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch.svg";
 }
-node[railway=switch][railway:turnout_side=right] {
+node[railway=switch]["railway:switch"=~/^(single_slip|double_slip)$/][!setting(railway_icons)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/rails-switch-slip.svg";
+}
+node[railway=switch]["railway:switch"=~/^(single_slip|double_slip)$/][setting(railway_icons)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-slip.svg";
+}
+node[railway=switch]["railway:switch"=default][railway:turnout_side=right] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-right.svg";
 }
-node[railway=switch][railway:turnout_side=left] {
+node[railway=switch]["railway:switch"=default][railway:turnout_side=left] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-left.svg";
 }
-node[railway=derail] {
+node[railway=derail][!setting(railway_icons)] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/rails-derailer.svg";
+}
+node[railway=derail][setting(railway_icons)] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-derailer.svg";
 }
 node[railway=railway_crossing] {
     icon-image: "presets/transport/railway/railway_crossing.svg";
