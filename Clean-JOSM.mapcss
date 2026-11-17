@@ -3723,6 +3723,9 @@ node[railway=switch][railway:turnout_side=right] {
 node[railway=switch][railway:turnout_side=left] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/sign-switch-left.svg";
 }
+node[railway=derail] {
+    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/rails-derailer.svg";
+}
 node[railway=railway_crossing] {
     icon-image: "presets/transport/railway/railway_crossing.svg";
 }
