@@ -44,6 +44,9 @@ Open JOSM's Advanced Preferences and type "direction_cone". You can modify the f
 - When no such tag, displays `species`
 - If no `species`, shows `genus` 
 
+Made to easily browse and import natural monuments from various Geoportals
+- [import ready GeoJSON](https://github.com/Yog/gdos_pomniki_przyrody_punktowe) from [GDOŚ](https://geoserwis.gdos.gov.pl/mapy/) for Poland by [Yog Sot](https://github.com/Yog)
+
 # Improved [Incline](https://josm.openstreetmap.de/wiki/Styles/Incline) originally made by [Klumbumbus](https://github.com/Klumbumbus)
 
 And also parts of [Bench](https://josm.openstreetmap.de/wiki/Styles/Bench)
