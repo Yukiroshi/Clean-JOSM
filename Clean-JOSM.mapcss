@@ -6772,6 +6772,10 @@ way[area?]!:closed[setting("notices")] {
     text: Area on unclosed way;
     set notice;
 }
+way[proposed][setting("notices")][JOSM_search("timestamp:/2020")] {
+    text: concat("Old proposed way (",substring((floor((osm_timestamp() / 31556952) + 1970)), 0, 4),")");
+    set notice;
+}
 way!:tagged:selected
 {
     color: #ff0000;
@@ -6787,9 +6791,6 @@ node!:tagged {
     font-size: 12;
     text-color: prop(white);
     text-halo-color: prop(black);
-    width: prop(width, default) * 1.1;
-    color: eval(rgb(1.1 * red(prop(fill-color, default)),1.1 * green(prop(fill-color, default)),1.1 * blue(prop(fill-color, default))));
-    color: eval(rgb(1.1 * red(prop(color, default)),1.1 * green(prop(color, default)),1.1 * blue(prop(color, default))));
 }
 *[setting("warnings")].warning {
     major-z-index: 5;
