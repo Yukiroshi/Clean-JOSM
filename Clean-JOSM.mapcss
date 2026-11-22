@@ -2110,7 +2110,7 @@ node[leisure=slipway] {
 area[leisure=~/fishing|bird_hide|nature_reserve|park|playground|common|firepit/] {
     fill-color: leisure#7bed88;
 }
-area[leisure=~/playground|fitness_station/],
+area[leisure=~/playground|indoor_play|fitness_station/],
 area[playground]:closed {
     fill-color: leisure_playground#b2ffbb;
 }
@@ -2126,9 +2126,10 @@ node[leisure=bird_hide] {
 node[leisure=nature_reserve] {
     icon-image: "presets/leisure/nature_reserve.svg";
 }
-*[leisure=playground] {
+*[leisure=~/playground|indoor_play/] {
     icon-image: "presets/leisure/playground.svg";
 }
+
 *[leisure=garden][name] {
     icon-image: "presets/leisure/garden.svg";
 }
@@ -2313,7 +2314,7 @@ way[advertising=totem] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car-repair.svg";
 }
 *[shop=car_parts] {
-    icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/car.svg";
+    icon-image: "presets/vehicle/car_parts.svg";
 }
 *[shop=tyres] {
     icon-image: "presets/vehicle/tyres.svg";
