@@ -4459,22 +4459,24 @@ node[sport=rc_car] {
 /* natural tags */
 /****************/
 
-node|z19-[/natural/]::species {
+*|z19-[/natural/]::species {
     font-size: 10;
     font-style: italic;
     text-color: prop(white);
     text-halo-radius: 1;
     text-halo-color: prop(black2);
     text: has_tag_key(concat("species:",JOSM_pref("language", ""))) ? tag(concat("species:",JOSM_pref("language", ""))) : has_tag_key(species) ? tag(species) : has_tag_key(concat("genus:",JOSM_pref("language", ""))) ? tag(concat("genus:",JOSM_pref("language", ""))) : has_tag_key(genus) ? tag(genus) : tag(geological);
+    text-position: center;
     text-anchor-horizontal: center;
     text-offset-y: (has_tag_key(name) || has_tag_key(ref) ? -33 : tag(denotation) = natural_monument ? -26 : -19);
 }
-node|z18-[ref:gid]::ref { 
+*|z18-[ref:gid]::ref { 
     font-size: 10;
     text-color: prop(white);
     text-halo-radius: 1;
     text-halo-color: prop(black2);
     text: "ref:gid";
+    text-position: center;
     text-anchor-horizontal: center;
     text-offset-y: 15;
 }
@@ -4652,14 +4654,14 @@ area[natural=rock],
 relation[natural=rock] >[role=outer] way {
     fill-color: stone#9d9d9d;
 }
-node[natural=rock] {
+*[natural=rock] {
     icon-image: "presets/misc/rock.svg";
 }
 area[natural=stone],
 relation[natural=stone] >[role=outer] way {
     fill-color: stone#f8f8c7;
 }
-node[natural=stone] {
+*[natural=stone] {
     icon-image: "presets/misc/stone.svg";
 }
 area[natural=bay],
@@ -4729,10 +4731,10 @@ node[natural=tree][leaf_type=leafless] {
 node[natural=tree_stump] {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/tree-stump.svg";
 }
-node[denotation=natural_monument] {
+*[denotation=natural_monument] {
     icon-height: 25;
 }
-node|z16-[denotation=natural_monument][inside("PL")]::natural_monument {
+*|z16-[denotation=natural_monument][inside("PL")]::natural_monument {
     icon-image: "https://raw.githubusercontent.com/Yukiroshi/MakiMaki/refs/heads/main/icons/natural-monument-PL.svg";
     icon-height: 16;
     icon-offset-y: 10;
