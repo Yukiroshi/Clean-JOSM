@@ -941,7 +941,7 @@ way[highway=track][area?], relation[type=multipolygon][highway=track] {
     fill-color: track#6e541c;
 }
 way[highway=track] {
-    width: 4;
+    width: 3;
     track: #c5b59f;
     color: prop(track);
     casing-dashes: list(12 * prop(zoom,default),5 * prop(zoom,default),5 * prop(zoom,default),5 * prop(zoom,default),5 * prop(zoom,default),5 * prop(zoom,default));
@@ -964,13 +964,13 @@ way[highway=track][tracktype=grade5] {
 }
 
 way[highway=residential] {
-    width: 4;
+    width: 4.5;
     color: prop(residential);
     casing-color: prop(gray);
 }
 
 way[highway=living_street] {
-    width: 5;
+    width: 4;
     color: prop(living_street);
     casing-color: prop(white2);
 }
@@ -979,12 +979,12 @@ way[highway=service][area?], relation[type=multipolygon][highway=service] {
     fill-color: service#809bc0;
 }
 way[highway=service][!area?] {
-    width: 4;
+    width: 3.5;
     color: prop(white1);
     casing-color: prop(gray);
 }
 way[highway=service][service=~/driveway|parking_aisle|drive-through/][!area?] {
-    width: 3;
+    width: 2.5;
 }
 way[highway=service][service=parking_aisle] {
     color: parking_aisle#CCCAC7;
