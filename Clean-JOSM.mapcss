@@ -6558,21 +6558,14 @@ way[waterway] > node.node_in_bridge[setting("notices")] {
 
 /* #11128, #14812, #15032 */
 way[highway] > node[tourism=information][information=guidepost][setting("notices")] {
-    set guidepost;
     text: concat(tag("information")), "node connected to a highway";
     set notice;
-}
-way >[index=1] node,
-way >[index=-1] node {
-    set first_last_node;
 }
 way[highway] > node[amenity][!entrance][amenity!~/^(parking|parking_space|parking_entrance|motorcycle_parking|bicycle_parking|bus_station|car_wash|ferry_terminal|weighbridge|taxi|toilets|ticket_validator)$/][setting("notices")],
 way[highway] > node[building][!entrance][setting("notices")],
 way[highway] > node[leisure][!entrance][leisure!=slipway][leisure!=fitness_station][setting("notices")],
 way[highway] > node[office][!entrance][setting("notices")],
-way[highway][highway!=corridor] > node[shop][!entrance][setting("notices")],
-way[highway] > node[tourism][!entrance][tourism!=viewpoint]!.guidepost.first_last_node:connection[setting("notices")],
-way[highway] > node[tourism][!entrance][tourism!~/viewpoint|information/]!.guidepost!.first_last_node[setting("notices")] {
+way[highway][highway!=corridor] > node[shop][!entrance][setting("notices")] {
     text: Wrong node connected to highway;
     set notice;
 }
